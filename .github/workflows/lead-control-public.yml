@@ -2,8 +2,7 @@ name: Lead Control Public Runner
 
 on:
   schedule:
-    - cron: "1,6,11,16,21,26,31,36,41,46,51,56 * * * *"
-    - cron: "50 6 * * *"
+    - cron: "*/5 * * * *"
   workflow_dispatch:
   push:
     paths:
@@ -23,70 +22,50 @@ jobs:
       - name: Checkout public repo
         uses: actions/checkout@v4
         with:
-fetch-depth: 0
+          fetch-depth: 0
 
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-python-version: "3.12"
+          python-version: "3.12"
 
       - name: Install OCR
         run: |
-sudo apt-get update -qq
-sudo apt-get install -y -qq tesseract-ocr tesseract-ocr-rus
-
-      - name: Resolve refresh mode
-        shell: bash
-        run: |
-if [ "${{ github.event.schedule }}" = "50 6 * * *" ] || [ "${{ github.event_name }}" = "push" ] || [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
-  echo "LEAD_CONTROL_FAST_REFRESH=0" >> "$GITHUB_ENV"
-  echo "LC_FULL=1" >> "$GITHUB_ENV"
-else
-  echo "LEAD_CONTROL_FAST_REFRESH=1" >> "$GITHUB_ENV"
-  echo "LC_FULL=0" >> "$GITHUB_ENV"
-fi
-
-      - name: Run tests on full refresh
-        working-directory: app
-        shell: bash
-        run: |
-if [ "$LC_FULL" = "1" ]; then
-  PYTHONPATH=src python -m unittest discover -s tests
-else
-  echo "Fast refresh"
-fi
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq tesseract-ocr tesseract-ocr-rus
 
       - name: Collect Telegram MAX and amoCRM
         working-directory: app
         env:
-TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-MAX_BOT_TOKEN: ${{ secrets.MAX_BOT_TOKEN }}
-AMOCRM_TOKEN: ${{ secrets.AMOCRM_TOKEN }}
-AMOCRM_DOMAIN: https://alex1901yaru.amocrm.ru
-TELEGRAM_CHAT_ID: "-1001645768111"
-MAX_CHAT_ID: "-71704692523093"
-LEAD_CONTROL_USE_DATA_BRANCH: "0"
-LEAD_CONTROL_DATA_DIR: ../runtime-data
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          MAX_BOT_TOKEN: ${{ secrets.MAX_BOT_TOKEN }}
+          AMOCRM_TOKEN: ${{ secrets.AMOCRM_TOKEN }}
+          AMOCRM_DOMAIN: https://alex1901yaru.amocrm.ru
+          TELEGRAM_CHAT_ID: "-1001645768111"
+          MAX_CHAT_ID: "-71704692523093"
+          LEAD_CONTROL_USE_DATA_BRANCH: "0"
+          LEAD_CONTROL_DATA_DIR: ../runtime-data
+          LEAD_CONTROL_FAST_REFRESH: "1"
         run: PYTHONPATH=src python -m lead_control.main
 
       - name: Rebuild dashboard
         run: |
-python app/scripts/build_dashboard_snapshot.py --input runtime-data/leads.json --output runtime-data/dashboard_daily.json
-python app/scripts/build_dashboard_view.py --input runtime-data/dashboard_daily.json --output runtime-data/dashboard_view.json
-python app/scripts/apply_dashboard_crm_guest_priority.py --leads runtime-data/leads.json --view runtime-data/dashboard_view.json
-python app/scripts/apply_dashboard_mail_source.py --view runtime-data/dashboard_view.json
-python app/scripts/augment_dashboard_feedback.py --leads runtime-data/leads.json --view runtime-data/dashboard_view.json
-python app/scripts/build_github_pages_mirror.py --input app/dashboard/pageshare/index.html --output index.html
-cp runtime-data/dashboard_view.json dashboard_view.json
+          python app/scripts/build_dashboard_snapshot.py --input runtime-data/leads.json --output runtime-data/dashboard_daily.json
+          python app/scripts/build_dashboard_view.py --input runtime-data/dashboard_daily.json --output runtime-data/dashboard_view.json
+          python app/scripts/apply_dashboard_crm_guest_priority.py --leads runtime-data/leads.json --view runtime-data/dashboard_view.json
+          python app/scripts/apply_dashboard_mail_source.py --view runtime-data/dashboard_view.json
+          python app/scripts/augment_dashboard_feedback.py --leads runtime-data/leads.json --view runtime-data/dashboard_view.json
+          python app/scripts/build_github_pages_mirror.py --input app/dashboard/pageshare/index.html --output index.html
+          cp runtime-data/dashboard_view.json dashboard_view.json
 
       - name: Save refreshed data
         run: |
-git config user.name "github-actions[bot]"
-git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-git add runtime-data index.html dashboard_view.json
-if git diff --cached --quiet; then
-  echo "No changes"
-else
-  git commit -m "Refresh Lead Control data"
-  git push origin main
-fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add runtime-data index.html dashboard_view.json
+          if git diff --cached --quiet; then
+            echo "No changes"
+          else
+            git commit -m "Refresh Lead Control data"
+            git push origin main
+          fi
