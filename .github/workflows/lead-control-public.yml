@@ -1,0 +1,178 @@
+name: Lead Control Public Runner
+
+on:
+  schedule:
+    - cron: "5,15,25,35,45,55 * * * *"
+    - cron: "50 6 * * *"
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: "Refresh mode"
+        required: true
+        default: "full"
+        type: choice
+        options:
+          - full
+          - fast
+  push:
+    paths:
+      - ".github/workflows/lead-control-public.yml"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: lead-control-production
+  cancel-in-progress: false
+
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Resolve refresh mode
+        shell: bash
+        run: |
+          MODE=fast
+          if [ "${{ github.event_name }}" = "push" ]; then
+            MODE=full
+          elif [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            MODE="${{ inputs.mode }}"
+          elif [ "${{ github.event.schedule }}" = "50 6 * * *" ]; then
+            MODE=full
+          fi
+          if [ "$MODE" = "fast" ]; then
+            echo "LEAD_CONTROL_FAST_REFRESH=1" >> "$GITHUB_ENV"
+          else
+            echo "LEAD_CONTROL_FAST_REFRESH=0" >> "$GITHUB_ENV"
+          fi
+          echo "LC_MODE=$MODE" >> "$GITHUB_ENV"
+          echo "Refresh mode: $MODE"
+
+      - name: Check required secrets
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          MAX_BOT_TOKEN: ${{ secrets.MAX_BOT_TOKEN }}
+          AMOCRM_TOKEN: ${{ secrets.AMOCRM_TOKEN }}
+          LEAD_CONTROL_PRIVATE_REPO_TOKEN: ${{ secrets.LEAD_CONTROL_PRIVATE_REPO_TOKEN }}
+        shell: bash
+        run: |
+          missing=0
+          for name in TELEGRAM_BOT_TOKEN MAX_BOT_TOKEN AMOCRM_TOKEN LEAD_CONTROL_PRIVATE_REPO_TOKEN; do
+            if [ -z "${!name}" ]; then
+              echo "::error::Missing required secret: $name"
+              missing=1
+            else
+              echo "$name=PRESENT"
+            fi
+          done
+          exit "$missing"
+
+      - name: Checkout public dashboard
+        uses: actions/checkout@v4
+        with:
+          path: public-site
+          fetch-depth: 0
+
+      - name: Checkout private Lead Control
+        uses: actions/checkout@v4
+        with:
+          repository: Alex19011901/lead-control
+          token: ${{ secrets.LEAD_CONTROL_PRIVATE_REPO_TOKEN }}
+          path: lead-control
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install OCR
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq tesseract-ocr tesseract-ocr-rus
+
+      - name: Configure private git author
+        working-directory: lead-control
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+      - name: Run full tests on full refresh
+        working-directory: lead-control
+        shell: bash
+        run: |
+          if [ "$LC_MODE" = "full" ]; then
+            PYTHONPATH=src python -m unittest discover -s tests
+          else
+            echo "Fast refresh: full test suite skipped"
+          fi
+
+      - name: Collect Telegram MAX and amoCRM
+        working-directory: lead-control
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          MAX_BOT_TOKEN: ${{ secrets.MAX_BOT_TOKEN }}
+          AMOCRM_TOKEN: ${{ secrets.AMOCRM_TOKEN }}
+          AMOCRM_DOMAIN: https://alex1901yaru.amocrm.ru
+          TELEGRAM_CHAT_ID: "-1001645768111"
+          MAX_CHAT_ID: "-71704692523093"
+          LEAD_CONTROL_USE_DATA_BRANCH: "1"
+          LEAD_CONTROL_DATA_WORKTREE: ../lead-control-data
+        run: PYTHONPATH=src python -m lead_control.main
+
+      - name: Rebuild dashboard snapshot
+        working-directory: lead-control
+        run: |
+          python scripts/build_dashboard_snapshot.py \
+            --input ../lead-control-data/data/leads.json \
+            --output ../lead-control-data/data/dashboard_daily.json
+
+          python scripts/build_dashboard_view.py \
+            --input ../lead-control-data/data/dashboard_daily.json \
+            --output ../lead-control-data/data/dashboard_view.json
+
+          python scripts/apply_dashboard_crm_guest_priority.py \
+            --leads ../lead-control-data/data/leads.json \
+            --view ../lead-control-data/data/dashboard_view.json
+
+          python scripts/apply_dashboard_mail_source.py \
+            --view ../lead-control-data/data/dashboard_view.json
+
+          python scripts/augment_dashboard_feedback.py \
+            --leads ../lead-control-data/data/leads.json \
+            --view ../lead-control-data/data/dashboard_view.json
+
+          cd ../lead-control-data
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/dashboard_daily.json data/dashboard_view.json
+          if git diff --cached --quiet; then
+            echo "Dashboard snapshot unchanged"
+          else
+            git commit -m "Update dashboard snapshot"
+            git push origin data
+          fi
+
+      - name: Publish public GitHub Pages dashboard
+        shell: bash
+        run: |
+          python lead-control/scripts/build_github_pages_mirror.py \
+            --input lead-control/dashboard/pageshare/index.html \
+            --output public-site/index.html
+          cp lead-control-data/data/dashboard_view.json public-site/dashboard_view.json
+
+          if grep -E -n '__GITHUB_TOKEN__|github_pat_|ghp_|gho_|Bearer[[:space:]]|Authorization:' public-site/index.html public-site/dashboard_view.json; then
+            echo "::error::Secret-like value found in public dashboard output"
+            exit 1
+          fi
+
+          cd public-site
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html dashboard_view.json
+          if git diff --cached --quiet; then
+            echo "Public dashboard unchanged"
+          else
+            git commit -m "Update public dashboard"
+            git push origin main
+          fi
