@@ -1,0 +1,276 @@
+from __future__ import annotations
+
+import logging
+import time
+from datetime import datetime, time as datetime_time, timedelta
+from typing import Any
+from zoneinfo import ZoneInfo
+
+from .amocrm_client import AmoCRMClient
+
+
+LOG = logging.getLogger(__name__)
+
+FEEDBACK_RED_DAY = 5
+CLOSED_NOT_REALIZED_STATUS_ID = 143
+MOSCOW_TZ = ZoneInfo("Europe/Moscow")
+
+
+def _status_key(value: object) -> str:
+    return str(value or "").strip().casefold().replace("ё", "е")
+
+
+def _moscow_date(ts: int):
+    return datetime.fromtimestamp(int(ts), MOSCOW_TZ).date()
+
+
+def _calendar_day_number(now_ts: int, created_at: int) -> int:
+    """Return the Moscow calendar day number, with creation date as day 1."""
+    return max(1, (_moscow_date(now_ts) - _moscow_date(created_at)).days + 1)
+
+
+def _feedback_deadline_ts(created_at: int) -> int:
+    """Start of day 5 in Moscow time."""
+    deadline_date = _moscow_date(created_at) + timedelta(days=FEEDBACK_RED_DAY - 1)
+    deadline_dt = datetime.combine(deadline_date, datetime_time.min, tzinfo=MOSCOW_TZ)
+    return int(deadline_dt.timestamp())
+
+
+def _is_later_calendar_date(event_ts: int, created_at: int) -> bool:
+    """True only when the history event is on a later Moscow calendar date."""
+    return _moscow_date(event_ts) > _moscow_date(created_at)
+
+
+def _is_closed_not_realized(status_id: object, status_name: object) -> bool:
+    try:
+        if int(status_id or 0) == CLOSED_NOT_REALIZED_STATUS_ID:
+            return True
+    except (TypeError, ValueError):
+        pass
+    return _status_key(status_name) in {
+        "закрыто и не реализовано",
+        "закрыто и не реализованно",
+    }
+
+
+def _status_name(
+    client: AmoCRMClient,
+    pipeline_id: object,
+    status_id: object,
+    cache: dict[tuple[int, int], str],
+) -> str:
+    try:
+        pipeline = int(pipeline_id or 0)
+        status = int(status_id or 0)
+    except (TypeError, ValueError):
+        return ""
+    if not pipeline or not status:
+        return ""
+    if status == 142:
+        return "Успешно реализовано"
+    if status == 143:
+        return "Закрыто и не реализовано"
+    key = (pipeline, status)
+    if key in cache:
+        return cache[key]
+    try:
+        payload = client._request_json(
+            f"/api/v4/leads/pipelines/{pipeline}/statuses/{status}",
+            {},
+        )
+        name = str(payload.get("name") or "").strip()
+    except RuntimeError as exc:
+        LOG.warning(
+            "CRM status lookup failed pipeline_id=%s status_id=%s error=%s",
+            pipeline,
+            status,
+            exc,
+        )
+        name = ""
+    cache[key] = name
+    return name
+
+
+def _first_event_after_creation(
+    client: AmoCRMClient,
+    crm_lead_id: int,
+    created_at: int,
+) -> int | None:
+    """Return the first amoCRM history event on a later calendar date.
+
+    All rows dated the same Moscow calendar day as the lead creation are treated
+    as part of the creation-day block and ignored, even if their timestamps are
+    later by seconds or hours. The first history row on any later date counts as
+    follow-up activity.
+    """
+    first: int | None = None
+    page = 1
+    while True:
+        payload = client._request_json(
+            "/api/v4/events",
+            {
+                "filter[entity]": "lead",
+                "filter[entity_id]": crm_lead_id,
+                "filter[created_at][from]": created_at + 1,
+                "limit": 100,
+                "page": page,
+            },
+        )
+        events = list(((payload.get("_embedded") or {}).get("events")) or [])
+        for event in events:
+            try:
+                event_entity_id = int(event.get("entity_id") or 0)
+                event_ts = int(event.get("created_at") or 0)
+            except (TypeError, ValueError):
+                continue
+            if event_entity_id != crm_lead_id or event_ts <= created_at:
+                continue
+            if not _is_later_calendar_date(event_ts, created_at):
+                continue
+            if first is None or event_ts < first:
+                first = event_ts
+
+        links = payload.get("_links") or {}
+        if not links.get("next") or not events:
+            break
+        page += 1
+        if page > 50:
+            LOG.warning("CRM events pagination stopped lead_id=%s after 50 pages", crm_lead_id)
+            break
+    return first
+
+
+def apply_crm_feedback_tracking(
+    leads: list[dict[str, Any]],
+    client: AmoCRMClient,
+    previous_leads: list[dict[str, Any]] | None = None,
+    now_ts: int | None = None,
+    reuse_stable: bool = False,
+) -> None:
+    """Attach feedback tracking without changing the existing lead status logic.
+
+    Only CRM-confirmed deals participate. Deals currently in the system status
+    "Закрыто и не реализовано" are excluded. Rows on the lead creation date are
+    ignored. The first timeline row on any later Moscow calendar date is treated
+    as follow-up activity. Calendar days are counted in Moscow time with the lead
+    creation date as day 1. If no later-date row exists on day 5, the internal
+    feedback state is NO_FEEDBACK. As soon as a later-date row appears, the state
+    is CLEAR again.
+
+    Fast refreshes may reuse a previously stable CLEAR or EXCLUDED feedback
+    result for the same amoCRM deal. WAITING, NO_FEEDBACK and UNKNOWN rows are
+    always queried again so newly added follow-up activity is detected.
+    """
+    current_ts = int(now_ts if now_ts is not None else time.time())
+    previous_by_id = {
+        str(item.get("id") or ""): item
+        for item in (previous_leads or [])
+        if item.get("id")
+    }
+    status_cache: dict[tuple[int, int], str] = {}
+
+    for lead in leads:
+        crm = lead.get("crm") or {}
+        if not crm.get("found") or crm.get("entity_type") != "lead" or not crm.get("entity_id"):
+            lead.pop("crm_feedback", None)
+            continue
+
+        crm_lead_id = int(crm["entity_id"])
+        previous = previous_by_id.get(str(lead.get("id") or "")) or {}
+        previous_crm = previous.get("crm") or {}
+        previous_feedback = previous.get("crm_feedback") or {}
+        if (
+            reuse_stable
+            and int(previous_crm.get("entity_id") or 0) == crm_lead_id
+            and previous_feedback.get("state") in {"CLEAR", "EXCLUDED"}
+        ):
+            lead["crm_feedback"] = dict(previous_feedback)
+            continue
+
+        full_lead = client._get_entity("leads", crm_lead_id) or {}
+        try:
+            created_at = int(full_lead.get("created_at") or crm.get("created_at") or 0)
+        except (TypeError, ValueError):
+            created_at = 0
+        status_id = full_lead.get("status_id")
+        pipeline_id = full_lead.get("pipeline_id")
+        status_name = _status_name(client, pipeline_id, status_id, status_cache)
+
+        if _is_closed_not_realized(status_id, status_name):
+            lead["crm_feedback"] = {
+                "state": "EXCLUDED",
+                "crm_lead_id": crm_lead_id,
+                "lead_created_at": created_at or None,
+                "first_activity_at": None,
+                "pipeline_id": pipeline_id,
+                "status_id": status_id,
+                "status_name": status_name,
+                "excluded": True,
+            }
+            continue
+
+        if not created_at:
+            lead["crm_feedback"] = {
+                "state": "UNKNOWN",
+                "crm_lead_id": crm_lead_id,
+                "lead_created_at": None,
+                "first_activity_at": None,
+                "pipeline_id": pipeline_id,
+                "status_id": status_id,
+                "status_name": status_name,
+                "excluded": False,
+            }
+            continue
+
+        # Reuse only a previously confirmed activity from a later calendar date.
+        # Old cached same-day events are deliberately invalidated by this rule and
+        # are re-queried after the calendar-date feedback logic change.
+        first_activity_at: int | None = None
+        if (
+            int(previous_crm.get("entity_id") or 0) == crm_lead_id
+            and previous_feedback.get("first_activity_at")
+        ):
+            try:
+                previous_activity = int(previous_feedback["first_activity_at"])
+            except (TypeError, ValueError):
+                previous_activity = 0
+            if previous_activity > created_at and _is_later_calendar_date(previous_activity, created_at):
+                first_activity_at = previous_activity
+
+        if first_activity_at is None:
+            try:
+                first_activity_at = _first_event_after_creation(client, crm_lead_id, created_at)
+            except RuntimeError as exc:
+                # A history lookup must not corrupt the existing lead-control
+                # result. Keep the row unknown and retry on the next run.
+                LOG.warning("CRM feedback history lookup failed lead_id=%s error=%s", crm_lead_id, exc)
+                lead["crm_feedback"] = {
+                    "state": "UNKNOWN",
+                    "crm_lead_id": crm_lead_id,
+                    "lead_created_at": created_at,
+                    "first_activity_at": None,
+                    "pipeline_id": pipeline_id,
+                    "status_id": status_id,
+                    "status_name": status_name,
+                    "excluded": False,
+                }
+                continue
+
+        if first_activity_at is not None:
+            state = "CLEAR"
+        elif _calendar_day_number(current_ts, created_at) >= FEEDBACK_RED_DAY:
+            state = "NO_FEEDBACK"
+        else:
+            state = "WAITING"
+
+        lead["crm_feedback"] = {
+            "state": state,
+            "crm_lead_id": crm_lead_id,
+            "lead_created_at": created_at,
+            "first_activity_at": first_activity_at,
+            "pipeline_id": pipeline_id,
+            "status_id": status_id,
+            "status_name": status_name,
+            "excluded": False,
+            "deadline_at": _feedback_deadline_ts(created_at),
+        }
