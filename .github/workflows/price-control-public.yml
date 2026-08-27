@@ -1,6 +1,9 @@
 name: Price Control Manual Refresh
 
 on:
+  push:
+    paths:
+      - ".github/workflows/price-control-public.yml"
   workflow_dispatch:
 
 permissions:
@@ -48,7 +51,11 @@ jobs:
       - name: Refresh DocsInBox data
         env:
           DOCSINBOX_STORAGE_STATE: price-control/dxbx-storage-state.json
-        run: node price-control/refresh_dxbx.js price-control/current.json
+        run: |
+          node price-control/refresh_dxbx.js /tmp/price-control-verify.json
+          echo 'VERIFY_PAYLOAD_BEGIN'
+          cat /tmp/price-control-verify.json
+          echo 'VERIFY_PAYLOAD_END'
 
       - name: Save refreshed data
         run: |
