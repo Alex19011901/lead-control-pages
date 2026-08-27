@@ -30,7 +30,7 @@ jobs:
 
       - name: Check full draft and refresh button
         run: |
-          cat > /tmp/check.mjs <<'JS'
+          cat > .price-control-check.mjs <<'JS'
           import { chromium } from 'playwright';
 
           const URL='https://alex19011901.github.io/lead-control-pages/price-control-draft.html?e2e='+Date.now();
@@ -103,7 +103,7 @@ jobs:
           console.log('E2E_OK');
           await browser.close();
           JS
-          node /tmp/check.mjs
+          node .price-control-check.mjs
 
       - name: Upload screenshots
         if: always()
