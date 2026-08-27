@@ -51,7 +51,7 @@ jobs:
       - name: Refresh DocsInBox data
         env:
           DOCSINBOX_STORAGE_STATE: price-control/dxbx-storage-state.json
-        run: node price-control/refresh_dxbx.js price-control/current.json
+        run: node price-control/refresh_dxbx.js /tmp/price-control-parser-test.json
 
       - name: Save refreshed data
         run: |
@@ -66,4 +66,4 @@ jobs:
             git push origin main
           fi
 
-# parser-diag-2
+# parser-fix-test
