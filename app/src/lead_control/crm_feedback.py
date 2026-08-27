@@ -12,7 +12,7 @@ from .amocrm_client import AmoCRMClient
 LOG = logging.getLogger(__name__)
 
 FEEDBACK_RED_DAY = 5
-FEEDBACK_RULE_VERSION = 2
+FEEDBACK_RULE_VERSION = 3
 CLOSED_NOT_REALIZED_STATUS_ID = 143
 MOSCOW_TZ = ZoneInfo("Europe/Moscow")
 
@@ -101,54 +101,48 @@ def _first_manager_comment_after_creation(
     created_at: int,
     responsible_user_id: int,
 ) -> int | None:
-    """Return the first manager-authored common note on a later calendar date.
+    """Return the first manager-authored text note on a later calendar date.
 
-    Feedback counts only when the current responsible manager creates a normal
-    text comment (amoCRM event type common_note_added). Events or comments
-    created by any other user, as well as field/status/system changes, do not
-    count as feedback. Same-day comments remain part of the creation-day block.
+    Feedback counts only from a real amoCRM lead note with note_type "common"
+    whose created_by equals the lead's current responsible manager. Comments
+    from other users and all field/status/system timeline events are ignored.
+    Same-day comments remain part of the creation-day block.
     """
     first: int | None = None
     page = 1
     while True:
         payload = client._request_json(
-            "/api/v4/events",
+            f"/api/v4/leads/{crm_lead_id}/notes",
             {
-                "filter[entity]": "lead",
-                "filter[entity_id]": crm_lead_id,
-                "filter[created_at][from]": created_at + 1,
-                "limit": 100,
+                "limit": 250,
                 "page": page,
             },
         )
-        events = list(((payload.get("_embedded") or {}).get("events")) or [])
-        for event in events:
+        notes = list(((payload.get("_embedded") or {}).get("notes")) or [])
+        for note in notes:
             try:
-                event_entity_id = int(event.get("entity_id") or 0)
-                event_ts = int(event.get("created_at") or 0)
+                note_entity_id = int(note.get("entity_id") or 0)
+                note_ts = int(note.get("created_at") or 0)
+                note_created_by = int(note.get("created_by") or 0)
             except (TypeError, ValueError):
                 continue
-            if event_entity_id != crm_lead_id or event_ts <= created_at:
+            if note_entity_id != crm_lead_id or note_ts <= created_at:
                 continue
-            if str(event.get("type") or "") != "common_note_added":
+            if str(note.get("note_type") or "").strip().casefold() != "common":
                 continue
-            try:
-                event_created_by = int(event.get("created_by") or 0)
-            except (TypeError, ValueError):
+            if note_created_by != responsible_user_id:
                 continue
-            if event_created_by != responsible_user_id:
+            if not _is_later_calendar_date(note_ts, created_at):
                 continue
-            if not _is_later_calendar_date(event_ts, created_at):
-                continue
-            if first is None or event_ts < first:
-                first = event_ts
+            if first is None or note_ts < first:
+                first = note_ts
 
         links = payload.get("_links") or {}
-        if not links.get("next") or not events:
+        if not links.get("next") or not notes:
             break
         page += 1
         if page > 50:
-            LOG.warning("CRM events pagination stopped lead_id=%s after 50 pages", crm_lead_id)
+            LOG.warning("CRM notes pagination stopped lead_id=%s after 50 pages", crm_lead_id)
             break
     return first
 
@@ -166,7 +160,7 @@ def apply_crm_feedback_tracking(
     "Закрыто и не реализовано", "Согласование договора",
     "Внесена п/о идет текущая работа" and "Успешно реализовано" are excluded.
     Feedback is counted only from a
-    normal text comment (common_note_added) authored by the lead's current
+    normal text note (note_type "common") authored by the lead's current
     responsible manager. Comments from any other user and all field/status/system
     events are ignored. Same-day comments are ignored. Calendar days are counted
     in Moscow time with the lead creation date as day 1. If no qualifying manager
