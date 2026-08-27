@@ -39,7 +39,7 @@ jobs:
           page.on('console',m=>console.log('PAGE',m.type(),m.text()));
 
           await page.goto(URL,{waitUntil:'networkidle',timeout:60000});
-          await page.waitForSelector('#weekFilter option',{timeout:30000});
+          await page.waitForFunction(()=>document.querySelectorAll('#weekFilter option').length===5,{timeout:30000});
 
           async function txt(sel){return (await page.locator(sel).innerText()).trim()}
           async function expectText(sel,expected){
