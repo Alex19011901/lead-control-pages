@@ -80,7 +80,7 @@ function buildPriceMap(priceDoc) {
   const page = await context.newPage();
   await page.goto('https://dxbx.ru/fe/supplies?offset=0', { waitUntil: 'domcontentloaded', timeout: 60000 });
 
-  const selected = await page.evaluate(async ({supplierNeedle, startIso, endIso}) => {
+  const selection = await page.evaluate(async ({supplierNeedle, startIso, endIso}) => {
     const ruToIso = s => {
       const m = String(s || '').match(/^(\\d{2})\\.(\\d{2})\\.(\\d{4})$/);
       return m ? `${m[3]}-${m[2]}-${m[1]}` : '';
@@ -100,7 +100,7 @@ function buildPriceMap(priceDoc) {
       if (rows.length < 10) break;
     }
 
-    return all
+    const selected = all
       .filter(s => {
         const iso = ruToIso(s.date);
         return iso >= startIso && iso <= endIso &&
@@ -111,8 +111,15 @@ function buildPriceMap(priceDoc) {
         number: s.number,
         invoices: (s.invoices || []).map(i => ({ number: i.number, publicId: i.publicId, link: i.link }))
       }));
+    return {
+      allCount: all.length,
+      sample: all.slice(0, 5).map(s => ({ date: s.date, supplier: s.supplier?.name || '', invoices: (s.invoices || []).length })),
+      selected
+    };
   }, {supplierNeedle: SUPPLIER, startIso: START_ISO, endIso: END_ISO});
 
+  const selected = selection.selected || [];
+  console.log('ALL_COUNT', selection.allCount, 'SAMPLE', (selection.sample || []).map(x => String(x.date) + '~' + String(x.supplier) + '~' + String(x.invoices)).join('|'));
   console.log('SELECTED_COUNT', selected.length, 'INVOICE_COUNT', selected.reduce((n,s) => n + (s.invoices || []).length, 0), 'DATES', selected.map(s => s.date).join('|'));
   const docs = [];
   const parseNum = v => {
