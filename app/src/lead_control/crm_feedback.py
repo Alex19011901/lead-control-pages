@@ -12,6 +12,7 @@ from .amocrm_client import AmoCRMClient
 LOG = logging.getLogger(__name__)
 
 FEEDBACK_RED_DAY = 5
+FEEDBACK_RULE_VERSION = 2
 CLOSED_NOT_REALIZED_STATUS_ID = 143
 MOSCOW_TZ = ZoneInfo("Europe/Moscow")
 
@@ -91,17 +92,18 @@ def _status_name(
     return name
 
 
-def _first_event_after_creation(
+def _first_manager_comment_after_creation(
     client: AmoCRMClient,
     crm_lead_id: int,
     created_at: int,
+    responsible_user_id: int,
 ) -> int | None:
-    """Return the first amoCRM history event on a later calendar date.
+    """Return the first manager-authored common note on a later calendar date.
 
-    All rows dated the same Moscow calendar day as the lead creation are treated
-    as part of the creation-day block and ignored, even if their timestamps are
-    later by seconds or hours. The first history row on any later date counts as
-    follow-up activity.
+    Feedback counts only when the current responsible manager creates a normal
+    text comment (amoCRM event type common_note_added). Events or comments
+    created by any other user, as well as field/status/system changes, do not
+    count as feedback. Same-day comments remain part of the creation-day block.
     """
     first: int | None = None
     page = 1
@@ -124,6 +126,14 @@ def _first_event_after_creation(
             except (TypeError, ValueError):
                 continue
             if event_entity_id != crm_lead_id or event_ts <= created_at:
+                continue
+            if str(event.get("type") or "") != "common_note_added":
+                continue
+            try:
+                event_created_by = int(event.get("created_by") or 0)
+            except (TypeError, ValueError):
+                continue
+            if event_created_by != responsible_user_id:
                 continue
             if not _is_later_calendar_date(event_ts, created_at):
                 continue
@@ -150,12 +160,13 @@ def apply_crm_feedback_tracking(
     """Attach feedback tracking without changing the existing lead status logic.
 
     Only CRM-confirmed deals participate. Deals currently in the system status
-    "Закрыто и не реализовано" are excluded. Rows on the lead creation date are
-    ignored. The first timeline row on any later Moscow calendar date is treated
-    as follow-up activity. Calendar days are counted in Moscow time with the lead
-    creation date as day 1. If no later-date row exists on day 5, the internal
-    feedback state is NO_FEEDBACK. As soon as a later-date row appears, the state
-    is CLEAR again.
+    "Закрыто и не реализовано" are excluded. Feedback is counted only from a
+    normal text comment (common_note_added) authored by the lead's current
+    responsible manager. Comments from any other user and all field/status/system
+    events are ignored. Same-day comments are ignored. Calendar days are counted
+    in Moscow time with the lead creation date as day 1. If no qualifying manager
+    comment exists on day 5, the internal feedback state is NO_FEEDBACK. As soon
+    as a qualifying later-date manager comment appears, the state is CLEAR again.
 
     Fast refreshes may reuse a previously stable CLEAR or EXCLUDED feedback
     result for the same amoCRM deal. WAITING, NO_FEEDBACK and UNKNOWN rows are
@@ -179,10 +190,17 @@ def apply_crm_feedback_tracking(
         previous = previous_by_id.get(str(lead.get("id") or "")) or {}
         previous_crm = previous.get("crm") or {}
         previous_feedback = previous.get("crm_feedback") or {}
+        try:
+            crm_responsible_user_id = int(crm.get("responsible_user_id") or 0)
+        except (TypeError, ValueError):
+            crm_responsible_user_id = 0
         if (
             reuse_stable
             and int(previous_crm.get("entity_id") or 0) == crm_lead_id
             and previous_feedback.get("state") in {"CLEAR", "EXCLUDED"}
+            and crm_responsible_user_id
+            and int(previous_feedback.get("rule_version") or 0) == FEEDBACK_RULE_VERSION
+            and int(previous_feedback.get("responsible_user_id") or 0) == crm_responsible_user_id
         ):
             lead["crm_feedback"] = dict(previous_feedback)
             continue
@@ -194,6 +212,14 @@ def apply_crm_feedback_tracking(
             created_at = 0
         status_id = full_lead.get("status_id")
         pipeline_id = full_lead.get("pipeline_id")
+        try:
+            responsible_user_id = int(
+                full_lead.get("responsible_user_id")
+                or crm_responsible_user_id
+                or 0
+            )
+        except (TypeError, ValueError):
+            responsible_user_id = 0
         status_name = _status_name(client, pipeline_id, status_id, status_cache)
 
         if _is_closed_not_realized(status_id, status_name):
@@ -206,10 +232,12 @@ def apply_crm_feedback_tracking(
                 "status_id": status_id,
                 "status_name": status_name,
                 "excluded": True,
+                "responsible_user_id": responsible_user_id or None,
+                "rule_version": FEEDBACK_RULE_VERSION,
             }
             continue
 
-        if not created_at:
+        if not created_at or not responsible_user_id:
             lead["crm_feedback"] = {
                 "state": "UNKNOWN",
                 "crm_lead_id": crm_lead_id,
@@ -219,16 +247,20 @@ def apply_crm_feedback_tracking(
                 "status_id": status_id,
                 "status_name": status_name,
                 "excluded": False,
+                "responsible_user_id": responsible_user_id or None,
+                "rule_version": FEEDBACK_RULE_VERSION,
             }
             continue
 
-        # Reuse only a previously confirmed activity from a later calendar date.
-        # Old cached same-day events are deliberately invalidated by this rule and
-        # are re-queried after the calendar-date feedback logic change.
+        # Reuse only a manager comment confirmed by the current feedback rule.
+        # Cached CLEAR results from the old "any timeline event" rule are
+        # deliberately invalidated and re-queried.
         first_activity_at: int | None = None
         if (
             int(previous_crm.get("entity_id") or 0) == crm_lead_id
             and previous_feedback.get("first_activity_at")
+            and int(previous_feedback.get("rule_version") or 0) == FEEDBACK_RULE_VERSION
+            and int(previous_feedback.get("responsible_user_id") or 0) == responsible_user_id
         ):
             try:
                 previous_activity = int(previous_feedback["first_activity_at"])
@@ -239,7 +271,12 @@ def apply_crm_feedback_tracking(
 
         if first_activity_at is None:
             try:
-                first_activity_at = _first_event_after_creation(client, crm_lead_id, created_at)
+                first_activity_at = _first_manager_comment_after_creation(
+                    client,
+                    crm_lead_id,
+                    created_at,
+                    responsible_user_id,
+                )
             except RuntimeError as exc:
                 # A history lookup must not corrupt the existing lead-control
                 # result. Keep the row unknown and retry on the next run.
@@ -253,6 +290,8 @@ def apply_crm_feedback_tracking(
                     "status_id": status_id,
                     "status_name": status_name,
                     "excluded": False,
+                    "responsible_user_id": responsible_user_id,
+                    "rule_version": FEEDBACK_RULE_VERSION,
                 }
                 continue
 
@@ -273,4 +312,6 @@ def apply_crm_feedback_tracking(
             "status_name": status_name,
             "excluded": False,
             "deadline_at": _feedback_deadline_ts(created_at),
+            "responsible_user_id": responsible_user_id,
+            "rule_version": FEEDBACK_RULE_VERSION,
         }
