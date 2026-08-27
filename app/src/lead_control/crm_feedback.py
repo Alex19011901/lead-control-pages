@@ -12,7 +12,7 @@ from .amocrm_client import AmoCRMClient
 LOG = logging.getLogger(__name__)
 
 FEEDBACK_RED_DAY = 5
-FEEDBACK_RULE_VERSION = 5
+FEEDBACK_RULE_VERSION = 6
 CLOSED_NOT_REALIZED_STATUS_ID = 143
 MOSCOW_TZ = ZoneInfo("Europe/Moscow")
 
@@ -104,11 +104,11 @@ def _first_manager_comment_after_creation(
 ) -> int | None:
     """Return the first qualifying manager comment on a later calendar date.
 
-    amoCRM may expose manager comments either as a normal lead note
-    (note_type "common") or as an events timeline row of type
-    "entity_direct_message". Only rows authored by the lead's current
-    responsible manager count. Same-day comments, comments from other users,
-    and field/status/system events do not count.
+    amoCRM may expose manager feedback as a normal lead note (note_type
+    "common"), an events timeline row of type "entity_direct_message", or a
+    completed task with a written result. Only feedback belonging to the lead's
+    current responsible manager counts. Same-day feedback, feedback from other
+    users, empty completed tasks, and field/status/system events do not count.
     """
     first: int | None = None
 
@@ -192,6 +192,48 @@ def _first_manager_comment_after_creation(
             LOG.warning("CRM events pagination stopped lead_id=%s after 50 pages", crm_lead_id)
             break
 
+    # Completed tasks with a written result confirm feedback when the task
+    # belongs to the lead's current responsible manager.
+    page = 1
+    while True:
+        payload = client._request_json(
+            "/api/v4/tasks",
+            {
+                "filter[entity_type]": "leads",
+                "filter[entity_id]": crm_lead_id,
+                "limit": 250,
+                "page": page,
+            },
+        )
+        tasks = list(((payload.get("_embedded") or {}).get("tasks")) or [])
+        for task in tasks:
+            try:
+                task_entity_id = int(task.get("entity_id") or 0)
+                task_responsible = int(task.get("responsible_user_id") or 0)
+                task_updated_at = int(task.get("updated_at") or 0)
+            except (TypeError, ValueError):
+                continue
+            if task_entity_id != crm_lead_id or not task.get("is_completed"):
+                continue
+            result = task.get("result") or {}
+            result_text = str(result.get("text") or "").strip() if isinstance(result, dict) else ""
+            if not result_text:
+                continue
+            if task_responsible != responsible_user_id:
+                continue
+            if task_updated_at <= created_at or not _is_later_calendar_date(task_updated_at, created_at):
+                continue
+            if first is None or task_updated_at < first:
+                first = task_updated_at
+
+        links = payload.get("_links") or {}
+        if not links.get("next") or not tasks:
+            break
+        page += 1
+        if page > 50:
+            LOG.warning("CRM tasks pagination stopped lead_id=%s after 50 pages", crm_lead_id)
+            break
+
     return first
 
 def apply_crm_feedback_tracking(
@@ -207,10 +249,11 @@ def apply_crm_feedback_tracking(
     "Закрыто и не реализовано", "Согласование договора",
     "Внесена п/о идет текущая работа", "Успешно реализовано" and
     "Контакты на декабрь 26" are excluded.
-    Feedback is counted only from a normal text note (note_type "common") or an
-    amoCRM internal chat message (event type "entity_direct_message") authored by
-    the lead's current responsible manager. Comments from any other user and all
-    other field/status/system events are ignored. Same-day comments are ignored. Calendar days are counted
+    Feedback is counted only from a normal text note (note_type "common"), an
+    amoCRM internal chat message (event type "entity_direct_message"), or a
+    completed task with a non-empty result text. The feedback must belong to the
+    lead's current responsible manager. Comments/tasks from any other manager,
+    empty completed tasks, and all other field/status/system events are ignored. Same-day comments are ignored. Calendar days are counted
     in Moscow time with the lead creation date as day 1. If no qualifying manager
     comment exists on day 5, the internal feedback state is NO_FEEDBACK. As soon
     as a qualifying later-date manager comment appears, the state is CLEAR again.
