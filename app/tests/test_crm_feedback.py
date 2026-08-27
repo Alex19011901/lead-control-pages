@@ -26,13 +26,15 @@ def moscow_ts(year, month, day, hour=0, minute=0, second=0):
 
 
 class FakeClient:
-    def __init__(self, lead_card, note_pages=None, event_pages=None, status_name="Первичный контакт"):
+    def __init__(self, lead_card, note_pages=None, event_pages=None, task_pages=None, status_name="Первичный контакт"):
         self.lead_card = dict(lead_card)
         self.note_pages = note_pages or []
         self.event_pages = event_pages or []
+        self.task_pages = task_pages or []
         self.status_name = status_name
         self.note_calls = 0
         self.event_calls = 0
+        self.task_calls = 0
         self.lead_reads = 0
 
     def _get_entity(self, entity_type, entity_id, params=None):
@@ -55,6 +57,12 @@ class FakeClient:
             events = self.event_pages[page - 1] if page <= len(self.event_pages) else []
             links = {"next": {"href": "next"}} if page < len(self.event_pages) else {}
             return {"_embedded": {"events": events}, "_links": links}
+        if path == "/api/v4/tasks":
+            self.task_calls += 1
+            page = int(params.get("page") or 1)
+            tasks = self.task_pages[page - 1] if page <= len(self.task_pages) else []
+            links = {"next": {"href": "next"}} if page < len(self.task_pages) else {}
+            return {"_embedded": {"tasks": tasks}, "_links": links}
         if "/statuses/" in path:
             return {"name": self.status_name}
         raise AssertionError(path)
@@ -103,6 +111,16 @@ def direct_message(ts, created_by, entity_id=111):
         "created_at": ts,
         "created_by": created_by,
         "type": "entity_direct_message",
+    }
+
+
+def completed_task(ts, responsible_user_id, text, entity_id=111):
+    return {
+        "entity_id": entity_id,
+        "responsible_user_id": responsible_user_id,
+        "updated_at": ts,
+        "is_completed": True,
+        "result": {"text": text},
     }
 
 
@@ -206,6 +224,45 @@ class CRMFeedbackTests(unittest.TestCase):
         self.assertEqual(lead["crm_feedback"]["state"], "CLEAR")
         self.assertEqual(lead["crm_feedback"]["first_activity_at"], manager_comment)
 
+    def test_completed_manager_task_with_result_clears_feedback(self):
+        created = moscow_ts(2026, 8, 23, 10, 0, 0)
+        completed_at = moscow_ts(2026, 8, 25, 12, 30, 0)
+        client = FakeClient(
+            make_card(created),
+            note_pages=[[]],
+            event_pages=[[]],
+            task_pages=[[completed_task(completed_at, MANAGER_ID, "Связались с клиентом")]],
+        )
+        lead = make_lead(created)
+
+        apply_crm_feedback_tracking(
+            [lead],
+            client,
+            now_ts=moscow_ts(2026, 8, 27, 12, 0, 0),
+        )
+
+        self.assertEqual(lead["crm_feedback"]["state"], "CLEAR")
+        self.assertEqual(lead["crm_feedback"]["first_activity_at"], completed_at)
+        self.assertGreater(client.task_calls, 0)
+
+    def test_contacts_december_26_status_is_excluded(self):
+        created = moscow_ts(2026, 8, 14, 14, 16, 26)
+        client = FakeClient(
+            make_card(created, status_id=12),
+            status_name="Контакты на декабрь 26",
+        )
+        lead = make_lead(created)
+
+        apply_crm_feedback_tracking(
+            [lead],
+            client,
+            now_ts=moscow_ts(2026, 8, 24, 12, 0, 0),
+        )
+
+        self.assertEqual(lead["crm_feedback"]["state"], "EXCLUDED")
+        self.assertTrue(lead["crm_feedback"]["excluded"])
+        self.assertEqual(client.task_calls, 0)
+
     def test_no_feedback_starts_on_fifth_moscow_calendar_day(self):
         created = moscow_ts(2026, 8, 22, 23, 50, 0)
         client = FakeClient(make_card(created), note_pages=[[]])
@@ -229,13 +286,14 @@ class CRMFeedbackTests(unittest.TestCase):
         )
         self.assertEqual(lead["crm_feedback"]["state"], "NO_FEEDBACK")
 
-    def test_all_four_excluded_statuses_are_excluded(self):
+    def test_all_excluded_statuses_are_excluded(self):
         created = moscow_ts(2026, 8, 14, 14, 16, 26)
         cases = [
             (143, "Закрыто и не реализовано"),
             (142, "Успешно реализовано"),
             (10, "Согласование договора"),
             (11, "Внесена п/о идет текущая работа"),
+            (12, "Контакты на декабрь 26"),
         ]
         for status_id, status_name in cases:
             with self.subTest(status_name=status_name):
