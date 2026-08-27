@@ -169,9 +169,10 @@ def apply_crm_feedback_tracking(
     comment exists on day 5, the internal feedback state is NO_FEEDBACK. As soon
     as a qualifying later-date manager comment appears, the state is CLEAR again.
 
-    Fast refreshes may reuse a previously stable CLEAR or EXCLUDED feedback
-    result for the same amoCRM deal. WAITING, NO_FEEDBACK and UNKNOWN rows are
-    always queried again so newly added follow-up activity is detected.
+    Fast refreshes always reload the current amoCRM deal card before deciding
+    feedback status, so manager/status changes are not hidden by stale CLEAR or
+    EXCLUDED state. A previously confirmed qualifying manager comment may still
+    be reused only after the current responsible manager is verified.
     """
     current_ts = int(now_ts if now_ts is not None else time.time())
     previous_by_id = {
@@ -195,17 +196,6 @@ def apply_crm_feedback_tracking(
             crm_responsible_user_id = int(crm.get("responsible_user_id") or 0)
         except (TypeError, ValueError):
             crm_responsible_user_id = 0
-        if (
-            reuse_stable
-            and int(previous_crm.get("entity_id") or 0) == crm_lead_id
-            and previous_feedback.get("state") in {"CLEAR", "EXCLUDED"}
-            and crm_responsible_user_id
-            and int(previous_feedback.get("rule_version") or 0) == FEEDBACK_RULE_VERSION
-            and int(previous_feedback.get("responsible_user_id") or 0) == crm_responsible_user_id
-        ):
-            lead["crm_feedback"] = dict(previous_feedback)
-            continue
-
         full_lead = client._get_entity("leads", crm_lead_id) or {}
         try:
             created_at = int(full_lead.get("created_at") or crm.get("created_at") or 0)
