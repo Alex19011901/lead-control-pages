@@ -1,0 +1,33 @@
+name: Price Control Recovery Inspect
+on:
+  push:
+    paths:
+      - ".github/workflows/price-control-recovery-inspect.yml"
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Decode old payload
+        run: |
+          cat price-control/price_bz2_part_01a.txt               price-control/price_bz2_part_01b.txt               price-control/price_bz2_part_02.txt               price-control/price_bz2_part_03.txt             | base64 -d | bzip2 -dc > /tmp/recovered.json
+          python - <<'PY'
+          import json, os
+          p='/tmp/recovered.json'
+          print('SIZE', os.path.getsize(p))
+          with open(p,encoding='utf-8') as f:
+              d=json.load(f)
+          print('TYPE', type(d).__name__)
+          if isinstance(d, dict):
+              print('KEYS', list(d.keys()))
+              for k,v in d.items():
+                  if isinstance(v,list): print('LIST',k,len(v))
+                  elif isinstance(v,dict): print('DICT',k,list(v.keys())[:20])
+                  else: print('VAL',k,repr(v)[:300])
+          elif isinstance(d,list):
+              print('LEN',len(d))
+              print('FIRST',repr(d[:2])[:3000])
+          PY
