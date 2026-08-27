@@ -1,0 +1,203 @@
+const { chromium } = require('playwright');
+const fs = require('fs');
+const path = require('path');
+
+const ROOT = __dirname;
+const AUTH = process.env.DOCSINBOX_STORAGE_STATE || path.join(ROOT, 'dxbx-storage-state.json');
+const OUT = process.argv[2] || path.join(ROOT, 'current.json');
+const PRICE_FILE = path.join(ROOT, 'price_20260826.json');
+const SUPPLIER = 'парадис экзотика';
+const WEEK_KEY = '2026-08-26';
+const START_ISO = '2026-08-26';
+const END_ISO = '2026-09-01';
+const START_RU = '26.08.2026';
+const END_RU = '01.09.2026';
+
+function round2(v) {
+  if (!Number.isFinite(v)) return null;
+  return Math.round((v + Number.EPSILON) * 100) / 100;
+}
+function norm(v) {
+  return String(v ?? '')
+    .replace(/\u00a0/g, ' ')
+    .replace(/ё/g, 'е')
+    .toLowerCase()
+    .replace(/^[!/*+\s]+/, '')
+    .replace(/\s+([,.;:])/g, '$1')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+function coreName(displayName, unit) {
+  let s = String(displayName ?? '').replace(/\u00a0/g, ' ').replace(/\s+/g, ' ').trim();
+  const eu = String(unit ?? '').replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  if (eu) {
+    s = s.replace(new RegExp(',\\s*' + eu + '\\s*\\([^)]*\\)\\s*$', 'i'), '');
+    s = s.replace(new RegExp(',\\s*' + eu + '\\s*$', 'i'), '');
+  }
+  return s.trim();
+}
+function ruToIso(s) {
+  const m = String(s || '').match(/^(\d{2})\.(\d{2})\.(\d{4})$/);
+  return m ? `${m[3]}-${m[2]}-${m[1]}` : '';
+}
+function buildPriceMap(priceDoc) {
+  const buckets = new Map();
+  for (const r of priceDoc.rows || []) {
+    const key = norm(r.name) + '\u0000' + norm(r.unit);
+    if (!buckets.has(key)) buckets.set(key, []);
+    buckets.get(key).push(Number(r.price));
+  }
+  const map = new Map();
+  for (const [key, vals] of buckets) {
+    const uniq = [...new Set(vals.filter(Number.isFinite).map(v => round2(v)))];
+    if (uniq.length === 1) map.set(key, uniq[0]);
+    else map.set(key, null);
+  }
+  return map;
+}
+
+(async () => {
+  if (!fs.existsSync(AUTH)) throw new Error('DOCSINBOX_AUTH_MISSING');
+  const priceDoc = JSON.parse(fs.readFileSync(PRICE_FILE, 'utf8'));
+  const priceMap = buildPriceMap(priceDoc);
+
+  const browser = await chromium.launch({ headless: true });
+  const context = await browser.newContext({ storageState: AUTH });
+  const page = await context.newPage();
+  await page.goto('https://dxbx.ru/fe/supplies?offset=0', { waitUntil: 'domcontentloaded', timeout: 60000 });
+
+  const docs = await page.evaluate(async ({supplierNeedle, startIso, endIso}) => {
+    const ruToIso = s => {
+      const m = String(s || '').match(/^(\d{2})\.(\d{2})\.(\d{4})$/);
+      return m ? `${m[3]}-${m[2]}-${m[1]}` : '';
+    };
+    const all = [];
+    let offset = 0;
+    for (let pageNo = 0; pageNo < 50; pageNo++) {
+      const r = await fetch('/api/front/supplies?offset=' + offset, { credentials: 'include' });
+      if (!r.ok) throw new Error('supplies HTTP ' + r.status);
+      const j = await r.json();
+      const rows = j.data || [];
+      all.push(...rows);
+      if (!rows.length) break;
+      const isos = rows.map(x => ruToIso(x.date)).filter(Boolean);
+      if (isos.length && isos.every(x => x < startIso)) break;
+      offset += rows.length;
+      if (rows.length < 10) break;
+    }
+
+    const selected = all.filter(s => {
+      const iso = ruToIso(s.date);
+      return iso >= startIso && iso <= endIso &&
+        String(s.supplier?.name || '').toLowerCase().includes(supplierNeedle);
+    });
+
+    const out = [];
+    const num = s => {
+      const z = Number(String(s ?? '').replace(/\s/g, '').replace(',', '.').replace(/[^\d.-]/g, ''));
+      return Number.isFinite(z) ? z : null;
+    };
+
+    for (const supply of selected) {
+      for (const inv of (supply.invoices || [])) {
+        const u = new URL(inv.link || '', location.origin);
+        const resp = await fetch(u.pathname + u.search, {
+          credentials: 'include',
+          headers: { 'X-Requested-With': 'XMLHttpRequest' }
+        });
+        if (!resp.ok) throw new Error(`invoice ${inv.publicId} HTTP ${resp.status}`);
+        const html = await resp.text();
+        const doc = new DOMParser().parseFromString(html, 'text/html');
+        const title = (doc.title || doc.querySelector('h1')?.textContent || '').replace(/\s+/g, ' ').trim();
+        const vm = title.match(/\(вер\.(\d+)\)/i);
+        const rows = [...doc.querySelectorAll('tr.nomenclature-row')];
+        const items = rows.map((tr, i) => {
+          const td = [...tr.querySelectorAll(':scope > td')];
+          const hidden = suf => [...tr.querySelectorAll('input')].find(x => (x.name || '').endsWith(suf))?.value ?? null;
+          let name = '';
+          if (td[4]) {
+            const c = td[4].cloneNode(true);
+            c.querySelectorAll('input,select,button,.nomenclature-block').forEach(x => x.remove());
+            name = (c.textContent || '').replace(/\s+/g, ' ').trim();
+          }
+          const count = num(hidden('.supplierCount')) ?? num(td[2]?.textContent);
+          const sum = num(hidden('.sum')) ?? num(td[1]?.textContent);
+          const unit = hidden('.supplierMeasure') || (td[3]?.textContent || '').replace(/\s+/g, ' ').trim();
+          return { line: num(hidden('.line')) ?? i + 1, name, count, unit, sum, itemId: hidden('.id') };
+        });
+        out.push({
+          date: supply.date,
+          number: inv.number || supply.number,
+          publicId: inv.publicId,
+          version: vm ? vm[1] : null,
+          title,
+          items
+        });
+      }
+    }
+    return out;
+  }, {supplierNeedle: SUPPLIER, startIso: START_ISO, endIso: END_ISO});
+
+  await browser.close();
+
+  const numberCounts = new Map();
+  for (const d of docs) numberCounts.set(d.number, (numberCounts.get(d.number) || 0) + 1);
+  const rowsData = [];
+
+  for (const d of docs.sort((a,b) => ruToIso(b.date).localeCompare(ruToIso(a.date)))) {
+    const count = numberCounts.get(d.number) || 1;
+    let invoiceLabel = d.number;
+    if (count > 1) {
+      if (d.version) invoiceLabel += ` (вер.${d.version})`;
+      else invoiceLabel += ` · ${String(d.publicId || '').slice(0,8)}`;
+    }
+    for (const it of (d.items || []).sort((a,b) => (a.line || 0) - (b.line || 0))) {
+      const qty = Number(it.count);
+      const fact = qty && Number.isFinite(Number(it.sum)) ? round2(Number(it.sum) / qty) : null;
+      const core = coreName(it.name, it.unit);
+      const key = norm(core) + '\u0000' + norm(it.unit);
+      const price = priceMap.has(key) ? priceMap.get(key) : undefined;
+      let status = 'UNMATCHED', delta = null, impact = 0;
+      if (price !== undefined && price !== null && fact !== null) {
+        delta = round2(fact - price);
+        impact = round2(delta * qty);
+        if (delta > 0) status = 'ABOVE';
+        else if (delta < 0) status = 'BELOW';
+        else status = 'EQUAL';
+      }
+      rowsData.push([
+        it.name || core, d.date, invoiceLabel, qty, it.unit,
+        price === undefined || price === null ? null : price,
+        fact, delta, status === 'UNMATCHED' ? 0 : impact, status
+      ]);
+    }
+  }
+
+  const above = rowsData.filter(r => r[9] === 'ABOVE').length;
+  const below = rowsData.filter(r => r[9] === 'BELOW').length;
+  const equal = rowsData.filter(r => r[9] === 'EQUAL').length;
+  const unmatched = rowsData.filter(r => r[9] === 'UNMATCHED').length;
+  const overpay = round2(rowsData.filter(r => r[9] === 'ABOVE').reduce((s,r) => s + Number(r[8] || 0), 0));
+
+  const payload = {
+    generatedAt: new Date().toISOString(),
+    week: {
+      key: WEEK_KEY,
+      label: 'Прайс 26.08 → 01.09',
+      supplier: 'Парадис Экзотика',
+      start: START_RU,
+      end: END_RU,
+      docs: docs.length,
+      rows: rowsData.length,
+      above, below, equal, unmatched, overpay,
+      priceDocumentDate: '26.08.2026',
+      indexGroup: 'paradis',
+      rowsData
+    }
+  };
+  fs.writeFileSync(OUT, JSON.stringify(payload, null, 2), 'utf8');
+  console.log(JSON.stringify({docs:docs.length,rows:rowsData.length,above,below,equal,unmatched,overpay,generatedAt:payload.generatedAt}));
+})().catch(err => {
+  console.error(err && (err.stack || err.message) || err);
+  process.exit(1);
+});
