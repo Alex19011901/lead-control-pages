@@ -993,25 +993,51 @@ def _extract_event_type(text: str) -> str:
 
 
 def _extract_probable_name(text: str, phone_raw: str) -> str:
-    compact = _normalize_space(text)
     if not phone_raw:
         return ""
+
+    stop_words = {
+        "заявка",
+        "свадьба",
+        "корпоратив",
+        "юбилей",
+        "дата",
+        "игра",
+        "мафия",
+        "выпускной",
+        "выпускные",
+        "банкет",
+        "фуршет",
+        "мероприятие",
+        "или",
+        "до",
+        "весь",
+        "малый",
+        "основной",
+    }
+
+    # Highest priority: a human name written on the same line as the phone.
+    # This preserves free-form host requests such as:
+    # "Ксения 8916...", "Ангелина 8983...", "04.09 Валерия 8917...".
+    for line in _nonempty_lines(text):
+        if phone_raw not in line:
+            continue
+        same_line = line.replace(phone_raw, " ")
+        same_line = re.sub(r"\b\d{1,2}[./-]\d{1,2}(?:[./-]\d{2,4})?\b", " ", same_line)
+        words = re.findall(r"[А-ЯЁ][а-яё]+(?:\s+[А-ЯЁ][а-яё]+)?", same_line)
+        for word in words:
+            tokens = [token.casefold() for token in word.split()]
+            if tokens and all(token not in stop_words for token in tokens):
+                return word.strip()
+
+    # Fallback for older host formats where the name is not on the phone line.
+    compact = _normalize_space(text)
     before, _, after = compact.partition(phone_raw)
     for candidate in (after, before):
         words = re.findall(r"[А-ЯЁ][а-яё]+(?:\s+[А-ЯЁ][а-яё]+)?", candidate)
         for word in words:
-            if word.lower() not in {
-                "заявка",
-                "свадьба",
-                "корпоратив",
-                "юбилей",
-                "дата",
-                "или",
-                "до",
-                "весь",
-                "малый",
-                "основной",
-            }:
+            tokens = [token.casefold() for token in word.split()]
+            if tokens and all(token not in stop_words for token in tokens):
                 return word.strip()
     return ""
 
