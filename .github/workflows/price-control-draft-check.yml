@@ -1,4 +1,4 @@
-name: Price Control Draft End-to-End Check
+name: Price Control Production End-to-End Check
 
 on:
   push:
@@ -33,7 +33,7 @@ jobs:
           cat > .price-control-check.mjs <<'JS'
           import { chromium } from 'playwright';
 
-          const URL='https://alex19011901.github.io/lead-control-pages/price-control-draft.html?e2e='+Date.now();
+          const URL='https://deep-pebble-4286.hosted.pageshare.ai/?e2e='+Date.now();
           const browser=await chromium.launch({headless:true});
           const page=await browser.newPage({viewport:{width:1536,height:1000}});
           page.on('console',m=>console.log('PAGE',m.type(),m.text()));
