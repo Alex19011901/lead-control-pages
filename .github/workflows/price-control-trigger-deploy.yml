@@ -38,6 +38,11 @@ jobs:
           import os
           from pathlib import Path
 
+          Path("public-site/price-control-draft.html").write_text(
+              Path("price-control/draft.html").read_text(encoding="utf-8"),
+              encoding="utf-8",
+          )
+
           token = os.environ.get("PUBLIC_REFRESH_TOKEN", "").strip()
           if not token:
               raise SystemExit("PUBLIC_REFRESH_TOKEN is not configured")
