@@ -1,7 +1,7 @@
 {
   "alarm_no_crm": 42,
   "by_manager": {
-    "no_manager_reaction": 345,
+    "no_manager_reaction": 347,
     "Максим": 27,
     "Олеся": 21
   },
@@ -11,14 +11,14 @@
     "WedWed": 6,
     "ЗАЯВКА ПОЧТА": 5,
     "Заявка с ТГ": 16,
-    "Заявки хост": 204,
+    "Заявки хост": 205,
     "С улицы": 2,
     "САЙТ ТИЛЬДА": 98,
-    "Тильда Веранда": 38
+    "Тильда Веранда": 39
   },
   "event_types": {
     "-летие": 1,
-    "unknown": 107,
+    "unknown": 109,
     "Бизнес мероприятие": 9,
     "ДР": 1,
     "Деловое мероприятие": 1,
@@ -32,15 +32,51 @@
     "Юбилей": 72
   },
   "guest_ranges": {
-    "1-20": 132,
+    "1-20": 133,
     "101-150": 25,
     "151+": 14,
-    "21-50": 119,
+    "21-50": 120,
     "51-100": 44,
     "unknown": 59
   },
   "late_crm": 68,
   "latest_leads": [
+    {
+      "created_at": "2026-08-27T10:43:44+03:00",
+      "crm_entity_id": null,
+      "crm_entity_type": null,
+      "crm_found": false,
+      "event_date": "2026-08-27",
+      "event_type": "",
+      "guests_count": 2,
+      "identifier": "7********80",
+      "identifier_type": "phone",
+      "lead_id": "e80ff3228b91cc70",
+      "manager": "",
+      "manager_username": "",
+      "name": "Александр",
+      "source": "Тильда Веранда",
+      "status": "-",
+      "violations": []
+    },
+    {
+      "created_at": "2026-08-27T10:13:06+03:00",
+      "crm_entity_id": null,
+      "crm_entity_type": null,
+      "crm_found": false,
+      "event_date": "",
+      "event_type": "",
+      "guests_count": 50,
+      "identifier": "7********05",
+      "identifier_type": "phone",
+      "lead_id": "936605494dde8b28",
+      "manager": "",
+      "manager_username": "",
+      "name": "Софья",
+      "source": "Заявки хост",
+      "status": "PENDING",
+      "violations": []
+    },
     {
       "created_at": "2026-08-26T16:07:55+03:00",
       "crm_entity_id": 47967255,
@@ -374,49 +410,11 @@
       "violations": [
         "ALARM_NO_CRM"
       ]
-    },
-    {
-      "created_at": "2026-08-24T21:21:30+03:00",
-      "crm_entity_id": null,
-      "crm_entity_type": null,
-      "crm_found": false,
-      "event_date": "",
-      "event_type": "Корпоратив",
-      "guests_count": 150,
-      "identifier": "7********58",
-      "identifier_type": "phone",
-      "lead_id": "d54cfd9ad3de85bc",
-      "manager": "",
-      "manager_username": "",
-      "name": "Галина Мелешкина",
-      "source": "ЗАЯВКА ПОЧТА",
-      "status": "ALARM_NO_CRM",
-      "violations": [
-        "ALARM_NO_CRM"
-      ]
-    },
-    {
-      "created_at": "2026-08-24T17:32:29+03:00",
-      "crm_entity_id": 38611473,
-      "crm_entity_type": "lead",
-      "crm_found": true,
-      "event_date": "",
-      "event_type": "Бизнес мероприятие",
-      "guests_count": 150,
-      "identifier": "7********19",
-      "identifier_type": "phone",
-      "lead_id": "187098147dbf178d",
-      "manager": "",
-      "manager_username": "",
-      "name": "Алена Тимофеева",
-      "source": "ЗАЯВКА ПОЧТА",
-      "status": "OK",
-      "violations": []
     }
   ],
-  "needs_review": 32,
+  "needs_review": 33,
   "no_reaction": 0,
   "ok": 244,
-  "total_leads": 393,
-  "updated_at": "2026-08-27T09:49:32+03:00"
+  "total_leads": 395,
+  "updated_at": "2026-08-27T11:05:57+03:00"
 }

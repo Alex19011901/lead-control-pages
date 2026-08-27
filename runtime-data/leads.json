@@ -30854,6 +30854,138 @@
       "status": "OK",
       "username": "",
       "violations": []
+    },
+    {
+      "category": "HOST",
+      "channel": "MAX",
+      "crm": {
+        "ambiguity_count": 0,
+        "created_at": null,
+        "entity_id": null,
+        "entity_type": null,
+        "event_type": null,
+        "found": false,
+        "responsible_user_id": null,
+        "responsible_user_name": null,
+        "updated_at": null
+      },
+      "crm_created_at": null,
+      "crm_found": false,
+      "crm_required": true,
+      "crm_responsible": null,
+      "deadline_msk_ts": 1787864399,
+      "event_date": "",
+      "fields": {
+        "category": "HOST",
+        "event_date": "",
+        "event_date_raw": "5.09",
+        "event_type": "",
+        "guests_count": 50,
+        "guests_max": null,
+        "guests_min": null,
+        "guests_raw": "",
+        "name": "Софья",
+        "phone_digits": "79858419905",
+        "phone_raw": "89858419905",
+        "source": "Заявки хост",
+        "telegram_username": ""
+      },
+      "first_seen_at": "2026-08-27T10:13:06+03:00",
+      "first_seen_ts": 1787814786,
+      "guests": 50,
+      "guests_max": null,
+      "guests_min": null,
+      "guests_raw": "",
+      "id": "936605494dde8b28",
+      "identifier": {
+        "type": "phone",
+        "value": "79858419905"
+      },
+      "last_seen_at": "2026-08-27T10:13:06+03:00",
+      "last_seen_ts": 1787814786,
+      "manager_reaction": null,
+      "max": {
+        "chat_id": -71704692523093,
+        "message_ids": [
+          "mid.ffffbec8f345ffab01a04210b576135d"
+        ],
+        "sender_name": "SV",
+        "sender_user_id": 205529129,
+        "sender_username": null
+      },
+      "message_id": "mid.ffffbec8f345ffab01a04210b576135d",
+      "name": "Софья",
+      "phone": "89858419905",
+      "received_at": "2026-08-27T10:13:06+03:00",
+      "sender_name": "SV",
+      "sender_user_id": 205529129,
+      "source": "Заявки хост",
+      "status": "PENDING",
+      "username": "",
+      "violations": []
+    },
+    {
+      "category": "TILDA_VERANDA",
+      "channel": "MAX",
+      "crm": {
+        "found": false,
+        "required": false
+      },
+      "crm_check_status": "NOT_REQUIRED",
+      "crm_created_at": null,
+      "crm_found": false,
+      "crm_required": false,
+      "crm_responsible": null,
+      "deadline_msk_ts": 1787864399,
+      "event_date": "2026-08-27",
+      "fields": {
+        "category": "TILDA_VERANDA",
+        "event_date": "2026-08-27",
+        "event_date_raw": "27-08-2026",
+        "event_type": "",
+        "guests_count": 2,
+        "guests_max": null,
+        "guests_min": null,
+        "guests_raw": "",
+        "name": "Александр",
+        "phone_digits": "79151110980",
+        "phone_raw": "+79151110980",
+        "source": "Тильда Веранда",
+        "telegram_username": ""
+      },
+      "first_seen_at": "2026-08-27T10:43:44+03:00",
+      "first_seen_ts": 1787816624,
+      "guests": 2,
+      "guests_max": null,
+      "guests_min": null,
+      "guests_raw": "",
+      "id": "e80ff3228b91cc70",
+      "identifier": {
+        "type": "phone",
+        "value": "79151110980"
+      },
+      "last_seen_at": "2026-08-27T10:43:44+03:00",
+      "last_seen_ts": 1787816624,
+      "manager_reaction": null,
+      "max": {
+        "chat_id": -71704692523093,
+        "message_ids": [
+          "mid.ffffbec8f345ffab01a0422cc1591117"
+        ],
+        "sender_name": "TildaForms",
+        "sender_user_id": 162410798,
+        "sender_username": "tildaforms_bot"
+      },
+      "message_id": "mid.ffffbec8f345ffab01a0422cc1591117",
+      "name": "Александр",
+      "phone": "+79151110980",
+      "received_at": "2026-08-27T10:43:44+03:00",
+      "sender_name": "TildaForms",
+      "sender_user_id": 162410798,
+      "source": "Тильда Веранда",
+      "status": "-",
+      "username": "",
+      "violations": []
     }
   ],
   "schema_version": 1
