@@ -54,6 +54,7 @@ def _is_feedback_excluded_status(status_id: object, status_name: object) -> bool
         "согласование договора",
         "внесена п/о идет текущая работа",
         "успешно реализовано",
+        "контакты на декабрь 26",
     }
 
 
@@ -204,7 +205,8 @@ def apply_crm_feedback_tracking(
 
     Only CRM-confirmed deals participate. Deals in terminal/working statuses
     "Закрыто и не реализовано", "Согласование договора",
-    "Внесена п/о идет текущая работа" and "Успешно реализовано" are excluded.
+    "Внесена п/о идет текущая работа", "Успешно реализовано" and
+    "Контакты на декабрь 26" are excluded.
     Feedback is counted only from a normal text note (note_type "common") or an
     amoCRM internal chat message (event type "entity_direct_message") authored by
     the lead's current responsible manager. Comments from any other user and all
