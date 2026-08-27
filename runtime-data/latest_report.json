@@ -1,7 +1,7 @@
 {
   "alarm_no_crm": 37,
   "by_manager": {
-    "no_manager_reaction": 352,
+    "no_manager_reaction": 353,
     "Максим": 31,
     "Олеся": 21
   },
@@ -11,7 +11,7 @@
     "WedWed": 6,
     "ЗАЯВКА ПОЧТА": 5,
     "Заявка с ТГ": 18,
-    "Заявки хост": 208,
+    "Заявки хост": 209,
     "С улицы": 2,
     "САЙТ ТИЛЬДА": 101,
     "Тильда Веранда": 39
@@ -23,7 +23,7 @@
     "ДР": 1,
     "Деловое мероприятие": 1,
     "Детский праздник": 3,
-    "Корпоратив": 88,
+    "Корпоратив": 89,
     "Поминки": 1,
     "Презентация": 1,
     "Свадьба": 117,
@@ -36,11 +36,29 @@
     "101-150": 26,
     "151+": 15,
     "21-50": 121,
-    "51-100": 50,
+    "51-100": 51,
     "unknown": 59
   },
   "late_crm": 70,
   "latest_leads": [
+    {
+      "created_at": "2026-08-27T15:27:33+03:00",
+      "crm_entity_id": null,
+      "crm_entity_type": null,
+      "crm_found": false,
+      "event_date": "",
+      "event_type": "Корпоратив",
+      "guests_count": 100,
+      "identifier": "7********60",
+      "identifier_type": "phone",
+      "lead_id": "30ff607f0c2b029d",
+      "manager": "",
+      "manager_username": "",
+      "name": "Татьяна",
+      "source": "Заявки хост",
+      "status": "PENDING",
+      "violations": []
+    },
     {
       "created_at": "2026-08-27T14:15:29+03:00",
       "crm_entity_id": 34488241,
@@ -61,9 +79,9 @@
     },
     {
       "created_at": "2026-08-27T13:57:38+03:00",
-      "crm_entity_id": null,
-      "crm_entity_type": null,
-      "crm_found": false,
+      "crm_entity_id": 47996049,
+      "crm_entity_type": "lead",
+      "crm_found": true,
       "event_date": "",
       "event_type": "Корпоратив",
       "guests_count": 100,
@@ -74,7 +92,7 @@
       "manager_username": "",
       "name": "Дарья",
       "source": "Заявки хост",
-      "status": "PENDING",
+      "status": "OK",
       "violations": []
     },
     {
@@ -384,29 +402,11 @@
       "source": "САЙТ ТИЛЬДА",
       "status": "OK",
       "violations": []
-    },
-    {
-      "created_at": "2026-08-26T12:08:57+03:00",
-      "crm_entity_id": 47957019,
-      "crm_entity_type": "lead",
-      "crm_found": true,
-      "event_date": "",
-      "event_type": "Корпоратив",
-      "guests_count": null,
-      "identifier": "7********95",
-      "identifier_type": "phone",
-      "lead_id": "4cffb67a04d7dc1d",
-      "manager": "",
-      "manager_username": "",
-      "name": "Анастасия",
-      "source": "Заявки хост",
-      "status": "OK",
-      "violations": []
     }
   ],
   "needs_review": 39,
   "no_reaction": 0,
-  "ok": 255,
-  "total_leads": 404,
-  "updated_at": "2026-08-27T14:46:52+03:00"
+  "ok": 256,
+  "total_leads": 405,
+  "updated_at": "2026-08-27T15:42:12+03:00"
 }
