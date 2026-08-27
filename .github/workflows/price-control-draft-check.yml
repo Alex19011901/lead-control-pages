@@ -1,6 +1,7 @@
 name: Price Control Production End-to-End Check
 # production-v37-check
 # production-v38-frame-check
+# production-v39-popup-check
 
 on:
   push:
@@ -40,31 +41,21 @@ jobs:
           const page=await browser.newPage({viewport:{width:1536,height:1000}});
           page.on('console',m=>console.log('PAGE',m.type(),m.text()));
 
-          await page.goto(URL,{waitUntil:'domcontentloaded',timeout:60000});
-          await page.waitForSelector('iframe[title="Price Control"]',{timeout:30000});
+          await page.goto(URL,{waitUntil:'networkidle',timeout:60000});
+          await page.waitForFunction(()=>document.querySelectorAll('#weekFilter option').length===5,null,{timeout:30000});
 
-          let frame=null;
-          for(let i=0;i<60;i++){
-            frame=page.frames().find(f=>f.url().includes('price-control-draft.html'));
-            if(frame) break;
-            await page.waitForTimeout(500);
-          }
-          if(!frame) throw new Error('Price Control iframe not loaded');
-
-          await frame.waitForFunction(()=>document.querySelectorAll('#weekFilter option').length===5,null,{timeout:30000});
-
-          async function txt(sel){return (await frame.locator(sel).innerText()).trim()}
+          async function txt(sel){return (await page.locator(sel).innerText()).trim()}
           async function expectText(sel,expected){
             const got=await txt(sel);
             if(got!==expected) throw new Error(sel+' expected '+JSON.stringify(expected)+' got '+JSON.stringify(got));
           }
           async function selectPeriod(key, expectedDocs, expectedRows){
-            await frame.selectOption('#weekFilter',key);
+            await page.selectOption('#weekFilter',key);
             await expectText('#docsKpi',String(expectedDocs));
             await expectText('#rowsKpi',String(expectedRows));
           }
 
-          const options=await frame.locator('#weekFilter option').allTextContents();
+          const options=await page.locator('#weekFilter option').allTextContents();
           console.log('PERIOD_OPTIONS',JSON.stringify(options));
           if(options.length!==5) throw new Error('Expected 5 periods, got '+options.length);
 
@@ -81,13 +72,17 @@ jobs:
           await selectPeriod('2026-06-26',13,216);
           await selectPeriod('2026-05-20',13,305);
 
-          await frame.selectOption('#weekFilter','2026-08-26');
+          await page.selectOption('#weekFilter','2026-08-26');
           await expectText('#rowsKpi','32');
           await page.screenshot({path:'/tmp/price-control-before.png',fullPage:true});
 
           console.log('CLICK_REFRESH');
-          await frame.click('#refreshBtn');
-          await frame.waitForFunction(()=>{
+          const popupPromise=page.waitForEvent('popup',{timeout:10000});
+          await page.click('#refreshBtn');
+          const popup=await popupPromise;
+          console.log('POPUP_URL',popup.url());
+
+          await page.waitForFunction(()=>{
             const btn=document.getElementById('refreshBtn');
             const st=document.getElementById('refreshState');
             return btn && !btn.disabled && btn.textContent.trim()==='Обновить данные' &&
@@ -95,7 +90,7 @@ jobs:
           },null,{timeout:20*60*1000});
 
           const state=await txt('#refreshState');
-          const applied=await frame.evaluate(()=>document.body.dataset.lastAppliedGeneratedAt||'');
+          const applied=await page.evaluate(()=>document.body.dataset.lastAppliedGeneratedAt||'');
           console.log('REFRESH_STATE',state);
           console.log('APPLIED_GENERATED_AT',applied);
           if(!applied) throw new Error('No refreshed generatedAt applied to DOM');
@@ -107,7 +102,7 @@ jobs:
           await expectText('#unmatchedKpi','0');
           await expectText('#overpayKpi','731,68 ₽');
 
-          const optionsAfter=await frame.locator('#weekFilter option').count();
+          const optionsAfter=await page.locator('#weekFilter option').count();
           if(optionsAfter!==5) throw new Error('History lost after refresh; options='+optionsAfter);
 
           await page.screenshot({path:'/tmp/price-control-after.png',fullPage:true});
