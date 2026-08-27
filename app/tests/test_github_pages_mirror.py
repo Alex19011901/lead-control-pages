@@ -23,24 +23,15 @@ class GitHubPagesMirrorTests(unittest.TestCase):
         ):
             self.assertIn(marker, self.mirror)
 
-    def test_public_build_has_no_github_token_or_api(self):
+    def test_public_build_has_no_private_github_token_or_api(self):
         for marker in (
             "__GITHUB_TOKEN__",
             "GITHUB_TOKEN",
             "github_pat_",
             "ghp_",
             "gho_",
-            "Bearer",
-            "Authorization",
-            "api.github.com",
-            "actions/workflows",
-            "dispatchWorkflow",
-            "findRun",
+            "lead-control.yml",
             "GH_ACCESS_STORAGE",
-            "GH_OWNER",
-            "GH_REPO",
-            "GH_WORKFLOW",
-            "GH_REF",
             "GH_DATA_REF",
         ):
             self.assertNotIn(marker, self.mirror)
@@ -53,11 +44,21 @@ class GitHubPagesMirrorTests(unittest.TestCase):
     def test_pages_refresh_waits_for_new_public_snapshot(self):
         self.assertIn("function snapshotValue(payload)", self.mirror)
         self.assertIn("function snapshotIsNewer(snap,previous)", self.mirror)
-        self.assertIn("async function waitForPublicRefresh(previous,serial)", self.mirror)
+        self.assertIn("async function waitForPublicRefresh(created,previous,serial)", self.mirror)
         self.assertIn("progress(1,'Ожидание обновления системы…')", self.mirror)
         self.assertIn("progress(2,'Сбор Telegram/MAX + amoCRM…')", self.mirror)
-        self.assertIn("var payload=await waitForPublicRefresh(previous,serial)", self.mirror)
+        self.assertIn("var payload=await waitForPublicRefresh(created,previous,serial)", self.mirror)
         self.assertIn("btn.textContent='Обновить данные'", self.mirror)
+
+    def test_pages_refresh_dispatches_public_workflow(self):
+        self.assertIn("PUBLIC_REFRESH_TOKEN='__PUBLIC_REFRESH_TOKEN__'", self.mirror)
+        self.assertIn("GH_REPO='lead-control-pages'", self.mirror)
+        self.assertIn("GH_WORKFLOW='lead-control-public.yml'", self.mirror)
+        self.assertIn("https://api.github.com/repos/", self.mirror)
+        self.assertIn("Authorization:'Bearer '+PUBLIC_REFRESH_TOKEN", self.mirror)
+        self.assertIn("async function dispatchPublicWorkflow()", self.mirror)
+        self.assertIn("async function findPublicRun(created,runId)", self.mirror)
+        self.assertIn("created=await dispatchPublicWorkflow()", self.mirror)
 
     def test_publish_token_placeholder_is_not_exposed(self):
         self.assertNotIn("__GITHUB_TOKEN__", self.mirror)
