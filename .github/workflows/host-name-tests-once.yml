@@ -1,0 +1,23 @@
+name: Host Name Tests Once
+
+on:
+  push:
+    paths:
+      - ".github/workflows/host-name-tests-once.yml"
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Run three host-name tests
+        working-directory: app
+        run: |
+          PYTHONPATH=src python -m unittest             tests.test_max_leads_parser.MaxLeadClassifierTests.test_host_real_kсenia_name_beside_phone             tests.test_max_leads_parser.MaxLeadClassifierTests.test_host_real_angelina_name_beside_phone             tests.test_max_leads_parser.MaxLeadClassifierTests.test_host_real_valeria_name_beside_phone_with_date
