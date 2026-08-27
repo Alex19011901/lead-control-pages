@@ -191,6 +191,7 @@ function buildPriceMap(priceDoc) {
   const numberCounts = new Map();
   for (const d of docs) numberCounts.set(d.number, (numberCounts.get(d.number) || 0) + 1);
   const rowsData = [];
+  let overpayRaw = 0;
 
   for (const d of docs.sort((a,b) => ruToIso(b.date).localeCompare(ruToIso(a.date)))) {
     const count = numberCounts.get(d.number) || 1;
@@ -208,9 +209,12 @@ function buildPriceMap(priceDoc) {
       let status = 'UNMATCHED', delta = null, impact = 0;
       if (price !== undefined && price !== null && fact !== null) {
         delta = round2(fact - price);
-        impact = round2(delta * qty);
-        if (delta > 0) status = 'ABOVE';
-        else if (delta < 0) status = 'BELOW';
+        const rawImpact = Number(it.sum) - price * qty;
+        impact = round2(rawImpact);
+        if (delta > 0) {
+          status = 'ABOVE';
+          overpayRaw += rawImpact;
+        } else if (delta < 0) status = 'BELOW';
         else status = 'EQUAL';
       }
       rowsData.push([
@@ -225,7 +229,7 @@ function buildPriceMap(priceDoc) {
   const below = rowsData.filter(r => r[9] === 'BELOW').length;
   const equal = rowsData.filter(r => r[9] === 'EQUAL').length;
   const unmatched = rowsData.filter(r => r[9] === 'UNMATCHED').length;
-  const overpay = round2(rowsData.filter(r => r[9] === 'ABOVE').reduce((s,r) => s + Number(r[8] || 0), 0));
+  const overpay = round2(overpayRaw);
   if (docs.length && rowsData.length === 0) throw new Error('NO_INVOICE_ROWS');
 
   const payload = {
