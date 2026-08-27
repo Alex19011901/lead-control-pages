@@ -125,6 +125,9 @@ function buildPriceMap(priceDoc) {
         const title = (doc.title || doc.querySelector('h1')?.textContent || '').replace(/\s+/g, ' ').trim();
         const vm = title.match(/\(вер\.(\d+)\)/i);
         const rows = [...doc.querySelectorAll('tr.nomenclature-row')];
+        if (!rows.length) {
+          console.log('DXBX_DIAG', JSON.stringify({number: inv.number || supply.number, publicId: inv.publicId, link: inv.link, title, htmlLength: html.length, trCount: doc.querySelectorAll('tr').length, rowClasses: [...doc.querySelectorAll('tr')].slice(0,20).map(x => x.className), inputNames: [...doc.querySelectorAll('input')].slice(0,30).map(x => x.name), snippet: (doc.body?.innerText || '').replace(/\\s+/g,' ').slice(0,1200)}));
+        }
         const items = rows.map((tr, i) => {
           const td = [...tr.querySelectorAll(':scope > td')];
           const hidden = suf => [...tr.querySelectorAll('input')].find(x => (x.name || '').endsWith(suf))?.value ?? null;
