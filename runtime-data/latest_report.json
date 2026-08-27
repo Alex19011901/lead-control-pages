@@ -1,7 +1,7 @@
 {
   "alarm_no_crm": 42,
   "by_manager": {
-    "no_manager_reaction": 347,
+    "no_manager_reaction": 348,
     "Максим": 27,
     "Олеся": 21
   },
@@ -10,7 +10,7 @@
     "Restoran.Cafe": 1,
     "WedWed": 6,
     "ЗАЯВКА ПОЧТА": 5,
-    "Заявка с ТГ": 16,
+    "Заявка с ТГ": 17,
     "Заявки хост": 205,
     "С улицы": 2,
     "САЙТ ТИЛЬДА": 98,
@@ -23,7 +23,7 @@
     "ДР": 1,
     "Деловое мероприятие": 1,
     "Детский праздник": 3,
-    "Корпоратив": 79,
+    "Корпоратив": 80,
     "Поминки": 1,
     "Презентация": 1,
     "Свадьба": 116,
@@ -33,7 +33,7 @@
   },
   "guest_ranges": {
     "1-20": 133,
-    "101-150": 25,
+    "101-150": 26,
     "151+": 14,
     "21-50": 120,
     "51-100": 44,
@@ -41,6 +41,24 @@
   },
   "late_crm": 68,
   "latest_leads": [
+    {
+      "created_at": "2026-08-27T11:15:22+03:00",
+      "crm_entity_id": null,
+      "crm_entity_type": null,
+      "crm_found": false,
+      "event_date": "",
+      "event_type": "Корпоратив",
+      "guests_count": 120,
+      "identifier": "@simakina_an",
+      "identifier_type": "telegram_username",
+      "lead_id": "20eefe8f4aff16db",
+      "manager": "",
+      "manager_username": "",
+      "name": "",
+      "source": "Заявка с ТГ",
+      "status": "PENDING",
+      "violations": []
+    },
     {
       "created_at": "2026-08-27T10:43:44+03:00",
       "crm_entity_id": null,
@@ -390,31 +408,11 @@
       "source": "Заявки хост",
       "status": "OK",
       "violations": []
-    },
-    {
-      "created_at": "2026-08-24T21:22:38+03:00",
-      "crm_entity_id": null,
-      "crm_entity_type": null,
-      "crm_found": false,
-      "event_date": "",
-      "event_type": "Корпоратив",
-      "guests_count": 46,
-      "identifier": "7********00",
-      "identifier_type": "phone",
-      "lead_id": "86c9e9ffcd59c9d5",
-      "manager": "",
-      "manager_username": "",
-      "name": "Диана Николаева",
-      "source": "ЗАЯВКА ПОЧТА",
-      "status": "ALARM_NO_CRM",
-      "violations": [
-        "ALARM_NO_CRM"
-      ]
     }
   ],
-  "needs_review": 33,
+  "needs_review": 34,
   "no_reaction": 0,
   "ok": 244,
-  "total_leads": 395,
-  "updated_at": "2026-08-27T11:05:57+03:00"
+  "total_leads": 396,
+  "updated_at": "2026-08-27T11:23:08+03:00"
 }

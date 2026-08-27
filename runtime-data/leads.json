@@ -30986,6 +30986,77 @@
       "status": "-",
       "username": "",
       "violations": []
+    },
+    {
+      "category": "TG_LEAD",
+      "channel": "MAX",
+      "crm": {
+        "ambiguity_count": 0,
+        "created_at": null,
+        "entity_id": null,
+        "entity_type": null,
+        "event_type": null,
+        "found": false,
+        "responsible_user_id": null,
+        "responsible_user_name": null,
+        "updated_at": null
+      },
+      "crm_created_at": null,
+      "crm_found": false,
+      "crm_required": true,
+      "crm_responsible": null,
+      "deadline_msk_ts": 1787864399,
+      "event_date": "",
+      "event_type": "Корпоратив",
+      "event_type_source": "MESSAGE",
+      "fields": {
+        "category": "TG_LEAD",
+        "event_date": "",
+        "event_date_raw": "25 декабря",
+        "event_type": "Корпоратив",
+        "guests_count": 120,
+        "guests_max": null,
+        "guests_min": null,
+        "guests_raw": "120 персон",
+        "name": "",
+        "phone_digits": "",
+        "phone_raw": "",
+        "source": "Заявка с ТГ",
+        "telegram_username": "simakina_an"
+      },
+      "first_seen_at": "2026-08-27T11:15:22+03:00",
+      "first_seen_ts": 1787818522,
+      "guests": 120,
+      "guests_max": null,
+      "guests_min": null,
+      "guests_raw": "120 персон",
+      "id": "20eefe8f4aff16db",
+      "identifier": {
+        "type": "telegram_username",
+        "value": "simakina_an"
+      },
+      "last_seen_at": "2026-08-27T11:15:22+03:00",
+      "last_seen_ts": 1787818522,
+      "manager_reaction": null,
+      "max": {
+        "chat_id": -71704692523093,
+        "message_ids": [
+          "mid.ffffbec8f345ffab01a04249b86c6643"
+        ],
+        "sender_name": "Олеся",
+        "sender_user_id": 48906491,
+        "sender_username": null
+      },
+      "message_id": "mid.ffffbec8f345ffab01a04249b86c6643",
+      "name": "",
+      "phone": "",
+      "received_at": "2026-08-27T11:15:22+03:00",
+      "sender_name": "Олеся",
+      "sender_user_id": 48906491,
+      "source": "Заявка с ТГ",
+      "status": "PENDING",
+      "username": "simakina_an",
+      "violations": []
     }
   ],
   "schema_version": 1
