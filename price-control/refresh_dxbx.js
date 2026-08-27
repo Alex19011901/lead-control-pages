@@ -82,7 +82,7 @@ function buildPriceMap(priceDoc) {
 
   const selection = await page.evaluate(async ({supplierNeedle, startIso, endIso}) => {
     const ruToIso = s => {
-      const m = String(s || '').match(/^(\\d{2})\\.(\\d{2})\\.(\\d{4})$/);
+      const m = String(s || '').match(/^(\d{2})\.(\d{2})\.(\d{4})$/);
       return m ? `${m[3]}-${m[2]}-${m[1]}` : '';
     };
     const all = [];
@@ -123,7 +123,7 @@ function buildPriceMap(priceDoc) {
   console.log('SELECTED_COUNT', selected.length, 'INVOICE_COUNT', selected.reduce((n,s) => n + (s.invoices || []).length, 0), 'DATES', selected.map(s => s.date).join('|'));
   const docs = [];
   const parseNum = v => {
-    const z = Number(String(v ?? '').replace(/\\s/g, '').replace(',', '.').replace(/[^\\d.-]/g, ''));
+    const z = Number(String(v ?? '').replace(/\s/g, '').replace(',', '.').replace(/[^\d.-]/g, ''));
     return Number.isFinite(z) ? z : null;
   };
 
@@ -132,9 +132,9 @@ function buildPriceMap(priceDoc) {
       await page.goto(inv.link, { waitUntil: 'domcontentloaded', timeout: 60000 });
       await page.waitForFunction(() => {
         const heading = [...document.querySelectorAll('h1,h2,h3,h4')]
-          .find(x => /Накладная №/i.test((x.textContent || '').replace(/\\s+/g, ' ')));
+          .find(x => /Накладная №/i.test((x.textContent || '').replace(/\s+/g, ' ')));
         const table = [...document.querySelectorAll('table')].find(t => {
-          const h = [...t.querySelectorAll('th')].map(x => (x.textContent || '').replace(/\\s+/g, ' ').trim());
+          const h = [...t.querySelectorAll('th')].map(x => (x.textContent || '').replace(/\s+/g, ' ').trim());
           return h.includes('Номер') && h.includes('Сумма') && h.includes('Кол.') &&
             h.some(x => /Номенклатура/i.test(x));
         });
@@ -143,9 +143,9 @@ function buildPriceMap(priceDoc) {
       }, undefined, { timeout: 30000 });
 
       const detail = await page.evaluate(() => {
-        const clean = v => String(v ?? '').replace(/\\u00a0/g, ' ').replace(/\\s+/g, ' ').trim();
+        const clean = v => String(v ?? '').replace(/\u00a0/g, ' ').replace(/\s+/g, ' ').trim();
         const num = v => {
-          const z = Number(clean(v).replace(/\\s/g, '').replace(',', '.').replace(/[^\\d.-]/g, ''));
+          const z = Number(clean(v).replace(/\s/g, '').replace(',', '.').replace(/[^\d.-]/g, ''));
           return Number.isFinite(z) ? z : null;
         };
         const heading = [...document.querySelectorAll('h1,h2,h3,h4')]
@@ -175,7 +175,7 @@ function buildPriceMap(priceDoc) {
       if (!detail.items.length) {
         throw new Error(`INVOICE_ROWS_NOT_FOUND:${inv.number || supply.number}:${inv.publicId || ''}`);
       }
-      const vm = detail.title.match(/\\(вер\\.(\\d+)\\)/i);
+      const vm = detail.title.match(/\(вер\.(\d+)\)/i);
       docs.push({
         date: supply.date,
         number: inv.number || supply.number,
