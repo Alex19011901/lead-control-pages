@@ -1,9 +1,6 @@
 name: Price Control Manual Refresh
 
 on:
-  push:
-    paths:
-      - ".github/workflows/price-control-public.yml"
   workflow_dispatch:
 
 permissions:
@@ -37,7 +34,16 @@ jobs:
         run: |
           test -n "$DXBX_STORAGE_STATE" || { echo "DXBX_STORAGE_STATE is not configured"; exit 1; }
           printf '%s' "$DXBX_STORAGE_STATE" > price-control/dxbx-storage-state.json
-          base64 --decode price-control/price_20260826.json.gz.b64 | gzip -dc > price-control/price_20260826.json
+          cat price-control/price_20260826.parts/* > /tmp/price_20260826.json.gz.b64
+          base64 --decode /tmp/price_20260826.json.gz.b64 | gzip -dc > price-control/price_20260826.json
+          python - <<'PY'
+          import json
+          p='price-control/price_20260826.json'
+          d=json.load(open(p,encoding='utf-8'))
+          assert d.get('valid_on') == '2026-08-26'
+          assert len(d.get('rows',[])) == 2170
+          print('Price payload OK:', len(d['rows']), 'rows')
+          PY
 
       - name: Refresh DocsInBox data
         env:
