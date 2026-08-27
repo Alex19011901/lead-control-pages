@@ -26,14 +26,16 @@ function report(status, detail, payload){
     error:'Ошибка обновления'
   };
   document.getElementById('status').textContent=labels[status]||status;
+  const message={
+    source:'price-control-refresh',
+    status:status,
+    detail:detail||'',
+    payload:payload||null,
+    at:new Date().toISOString()
+  };
+  try{ parent.postMessage(message,'*'); }catch(e){}
   try{
-    parent.postMessage({
-      source:'price-control-refresh',
-      status:status,
-      detail:detail||'',
-      payload:payload||null,
-      at:new Date().toISOString()
-    },'*');
+    if(window.opener && !window.opener.closed) window.opener.postMessage(message,'*');
   }catch(e){}
 }
 async function gh(path, options){
