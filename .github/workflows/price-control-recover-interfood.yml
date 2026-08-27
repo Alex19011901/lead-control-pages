@@ -1,0 +1,39 @@
+name: Price Control Recover Interfood 20-26 May
+on:
+  push:
+    paths:
+      - ".github/workflows/price-control-recover-interfood.yml"
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  recover:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - name: Install Playwright
+        run: |
+          npm init -y >/dev/null 2>&1
+          npm install playwright@1.55.0 >/dev/null 2>&1
+          npx playwright install --with-deps chromium
+      - name: Restore DocsInBox session
+        env:
+          DXBX_STORAGE_STATE: ${{ secrets.DXBX_STORAGE_STATE }}
+        run: |
+          test -n "$DXBX_STORAGE_STATE" || { echo "DXBX_STORAGE_STATE is not configured"; exit 1; }
+          printf '%s' "$DXBX_STORAGE_STATE" > price-control/dxbx-storage-state.json
+      - name: Recover Interfood period
+        env:
+          DOCSINBOX_STORAGE_STATE: price-control/dxbx-storage-state.json
+        run: node price-control/recover_interfood_20260520.js price-control/history/interfood_20260520_raw.json
+      - name: Save recovery source
+        run: |
+          rm -f price-control/dxbx-storage-state.json
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add price-control/history/interfood_20260520_raw.json
+          git commit -m "Recover Interfood Price Control history" || exit 0
+          git push origin main
