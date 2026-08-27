@@ -88,6 +88,11 @@ def _guest_from_text(text: object) -> str:
 
 
 def exact_guest_display(lead: dict) -> str:
+    crm = lead.get("crm") or {}
+    crm_value = _normalize_guest_display(crm.get("guests"))
+    if crm.get("found") and crm_value:
+        return crm_value
+
     fields = lead.get("fields") or {}
 
     for text in (
