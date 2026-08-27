@@ -78,12 +78,11 @@ function buildPriceMap(priceDoc) {
   const browser = await chromium.launch({ headless: true });
   const context = await browser.newContext({ storageState: AUTH });
   const page = await context.newPage();
-  page.on('console', msg => console.log('BROWSER_CONSOLE', msg.text()));
   await page.goto('https://dxbx.ru/fe/supplies?offset=0', { waitUntil: 'domcontentloaded', timeout: 60000 });
 
-  const docs = await page.evaluate(async ({supplierNeedle, startIso, endIso}) => {
+  const selected = await page.evaluate(async ({supplierNeedle, startIso, endIso}) => {
     const ruToIso = s => {
-      const m = String(s || '').match(/^(\d{2})\.(\d{2})\.(\d{4})$/);
+      const m = String(s || '').match(/^(\\d{2})\\.(\\d{2})\\.(\\d{4})$/);
       return m ? `${m[3]}-${m[2]}-${m[1]}` : '';
     };
     const all = [];
@@ -101,60 +100,85 @@ function buildPriceMap(priceDoc) {
       if (rows.length < 10) break;
     }
 
-    const selected = all.filter(s => {
-      const iso = ruToIso(s.date);
-      return iso >= startIso && iso <= endIso &&
-        String(s.supplier?.name || '').toLowerCase().includes(supplierNeedle);
-    });
-
-    const out = [];
-    const num = s => {
-      const z = Number(String(s ?? '').replace(/\s/g, '').replace(',', '.').replace(/[^\d.-]/g, ''));
-      return Number.isFinite(z) ? z : null;
-    };
-
-    for (const supply of selected) {
-      for (const inv of (supply.invoices || [])) {
-        const u = new URL(inv.link || '', location.origin);
-        const resp = await fetch(u.pathname + u.search, {
-          credentials: 'include',
-          headers: { 'X-Requested-With': 'XMLHttpRequest' }
-        });
-        if (!resp.ok) throw new Error(`invoice ${inv.publicId} HTTP ${resp.status}`);
-        const html = await resp.text();
-        const doc = new DOMParser().parseFromString(html, 'text/html');
-        const title = (doc.title || doc.querySelector('h1')?.textContent || '').replace(/\s+/g, ' ').trim();
-        const vm = title.match(/\(вер\.(\d+)\)/i);
-        const rows = [...doc.querySelectorAll('tr.nomenclature-row')];
-        if (!rows.length) {
-          console.log('DXBX_DIAG', JSON.stringify({number: inv.number || supply.number, publicId: inv.publicId, link: inv.link, title, htmlLength: html.length, trCount: doc.querySelectorAll('tr').length, rowClasses: [...doc.querySelectorAll('tr')].slice(0,20).map(x => x.className), inputNames: [...doc.querySelectorAll('input')].slice(0,30).map(x => x.name), snippet: (doc.body?.innerText || '').replace(/\\s+/g,' ').slice(0,1200)}));
-        }
-        const items = rows.map((tr, i) => {
-          const td = [...tr.querySelectorAll(':scope > td')];
-          const hidden = suf => [...tr.querySelectorAll('input')].find(x => (x.name || '').endsWith(suf))?.value ?? null;
-          let name = '';
-          if (td[4]) {
-            const c = td[4].cloneNode(true);
-            c.querySelectorAll('input,select,button,.nomenclature-block').forEach(x => x.remove());
-            name = (c.textContent || '').replace(/\s+/g, ' ').trim();
-          }
-          const count = num(hidden('.supplierCount')) ?? num(td[2]?.textContent);
-          const sum = num(hidden('.sum')) ?? num(td[1]?.textContent);
-          const unit = hidden('.supplierMeasure') || (td[3]?.textContent || '').replace(/\s+/g, ' ').trim();
-          return { line: num(hidden('.line')) ?? i + 1, name, count, unit, sum, itemId: hidden('.id') };
-        });
-        out.push({
-          date: supply.date,
-          number: inv.number || supply.number,
-          publicId: inv.publicId,
-          version: vm ? vm[1] : null,
-          title,
-          items
-        });
-      }
-    }
-    return out;
+    return all
+      .filter(s => {
+        const iso = ruToIso(s.date);
+        return iso >= startIso && iso <= endIso &&
+          String(s.supplier?.name || '').toLowerCase().includes(supplierNeedle);
+      })
+      .map(s => ({
+        date: s.date,
+        number: s.number,
+        invoices: s.invoices || []
+      }));
   }, {supplierNeedle: SUPPLIER, startIso: START_ISO, endIso: END_ISO});
+
+  const docs = [];
+  const parseNum = v => {
+    const z = Number(String(v ?? '').replace(/\\s/g, '').replace(',', '.').replace(/[^\\d.-]/g, ''));
+    return Number.isFinite(z) ? z : null;
+  };
+
+  for (const supply of selected) {
+    for (const inv of (supply.invoices || [])) {
+      await page.goto(inv.link, { waitUntil: 'domcontentloaded', timeout: 60000 });
+      await page.waitForFunction(() => {
+        const heading = [...document.querySelectorAll('h1,h2,h3,h4')]
+          .find(x => /Накладная №/i.test((x.textContent || '').replace(/\\s+/g, ' ')));
+        const table = [...document.querySelectorAll('table')].find(t => {
+          const h = [...t.querySelectorAll('th')].map(x => (x.textContent || '').replace(/\\s+/g, ' ').trim());
+          return h.includes('Номер') && h.includes('Сумма') && h.includes('Кол.') &&
+            h.some(x => /Номенклатура/i.test(x));
+        });
+        return Boolean(heading && table && [...table.querySelectorAll('tr')]
+          .some(tr => tr.querySelectorAll(':scope > td').length >= 5));
+      }, undefined, { timeout: 30000 });
+
+      const detail = await page.evaluate(() => {
+        const clean = v => String(v ?? '').replace(/\\u00a0/g, ' ').replace(/\\s+/g, ' ').trim();
+        const num = v => {
+          const z = Number(clean(v).replace(/\\s/g, '').replace(',', '.').replace(/[^\\d.-]/g, ''));
+          return Number.isFinite(z) ? z : null;
+        };
+        const heading = [...document.querySelectorAll('h1,h2,h3,h4')]
+          .find(x => /Накладная №/i.test(clean(x.textContent)));
+        const table = [...document.querySelectorAll('table')].find(t => {
+          const h = [...t.querySelectorAll('th')].map(x => clean(x.textContent));
+          return h.includes('Номер') && h.includes('Сумма') && h.includes('Кол.') &&
+            h.some(x => /Номенклатура/i.test(x));
+        });
+        if (!table) return { title: clean(heading?.textContent), items: [] };
+
+        const items = [];
+        for (const tr of table.querySelectorAll('tr')) {
+          const td = [...tr.querySelectorAll(':scope > td')];
+          if (td.length < 5) continue;
+          const line = num(td[0]?.textContent);
+          const sum = num(td[1]?.textContent);
+          const count = num(td[2]?.textContent);
+          const unit = clean(td[3]?.textContent);
+          const name = clean(td[4]?.textContent);
+          if (line === null || sum === null || count === null || !unit || !name) continue;
+          items.push({ line, name, count, unit, sum });
+        }
+        return { title: clean(heading?.textContent), items };
+      });
+
+      if (!detail.items.length) {
+        throw new Error(`INVOICE_ROWS_NOT_FOUND:${inv.number || supply.number}:${inv.publicId || ''}`);
+      }
+      const vm = detail.title.match(/\\(вер\\.(\\d+)\\)/i);
+      docs.push({
+        date: supply.date,
+        number: inv.number || supply.number,
+        publicId: inv.publicId,
+        version: vm ? vm[1] : null,
+        title: detail.title,
+        items: detail.items
+      });
+      console.log('Invoice rows OK:', inv.number || supply.number, detail.items.length);
+    }
+  }
 
   await browser.close();
 
