@@ -2,11 +2,8 @@ name: Lead Control Public Runner
 
 on:
   schedule:
-    - cron: "*/5 * * * *"
+    - cron: "50 6 * * *"
   workflow_dispatch:
-  push:
-    paths:
-      - ".github/workflows/lead-control-public.yml"
 
 permissions:
   contents: write
