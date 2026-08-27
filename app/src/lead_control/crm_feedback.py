@@ -12,7 +12,7 @@ from .amocrm_client import AmoCRMClient
 LOG = logging.getLogger(__name__)
 
 FEEDBACK_RED_DAY = 5
-FEEDBACK_RULE_VERSION = 3
+FEEDBACK_RULE_VERSION = 4
 CLOSED_NOT_REALIZED_STATUS_ID = 143
 MOSCOW_TZ = ZoneInfo("Europe/Moscow")
 
@@ -112,8 +112,10 @@ def _first_manager_comment_after_creation(
     page = 1
     while True:
         payload = client._request_json(
-            f"/api/v4/leads/{crm_lead_id}/notes",
+            "/api/v4/leads/notes",
             {
+                "filter[entity_id][0]": crm_lead_id,
+                "filter[note_type]": "common",
                 "limit": 250,
                 "page": page,
             },
