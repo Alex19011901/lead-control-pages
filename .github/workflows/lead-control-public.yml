@@ -3,9 +3,6 @@ name: Lead Control Public Runner
 on:
   schedule:
     - cron: "50 6 * * *"
-  push:
-    paths:
-      - "price-control/trigger-deploy.flag"
   workflow_dispatch:
 
 permissions:
@@ -74,13 +71,6 @@ jobs:
           if placeholder not in html:
               raise SystemExit("PUBLIC_REFRESH_TOKEN placeholder was not found")
           output.write_text(html.replace(placeholder, token), encoding="utf-8")
-
-          trigger_source = Path("price-control/trigger.html")
-          trigger_output = Path("public-site/price-control-trigger.html")
-          trigger_html = trigger_source.read_text(encoding="utf-8")
-          if placeholder not in trigger_html:
-              raise SystemExit("Price Control trigger token placeholder was not found")
-          trigger_output.write_text(trigger_html.replace(placeholder, token), encoding="utf-8")
           PY
           cp runtime-data/dashboard_view.json dashboard_view.json
           cp dashboard_view.json public-site/dashboard_view.json
