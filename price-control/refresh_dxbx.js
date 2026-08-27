@@ -1,6 +1,7 @@
 const { chromium } = require('playwright');
 const fs = require('fs');
 const path = require('path');
+const { execFileSync } = require('child_process');
 
 const ROOT = __dirname;
 const AUTH = process.env.DOCSINBOX_STORAGE_STATE || path.join(ROOT, 'dxbx-storage-state.json');
@@ -58,7 +59,20 @@ function buildPriceMap(priceDoc) {
 
 (async () => {
   if (!fs.existsSync(AUTH)) throw new Error('DOCSINBOX_AUTH_MISSING');
-  const priceDoc = JSON.parse(fs.readFileSync(PRICE_FILE, 'utf8'));
+  let priceDoc = JSON.parse(fs.readFileSync(PRICE_FILE, 'utf8'));
+  if (!Array.isArray(priceDoc.rows) || !priceDoc.rows.length) {
+    const partFiles = [
+      'price_bz2_part_01a.txt',
+      'price_bz2_part_01b.txt',
+      'price_bz2_part_02.txt',
+      'price_bz2_part_03.txt'
+    ];
+    const encoded = partFiles.map(name => fs.readFileSync(path.join(ROOT, name), 'utf8').trim()).join('');
+    const compressed = Buffer.from(encoded, 'base64');
+    const raw = execFileSync('bzip2', ['-dc'], { input: compressed, maxBuffer: 10 * 1024 * 1024 });
+    priceDoc = JSON.parse(raw.toString('utf8'));
+  }
+  if (!Array.isArray(priceDoc.rows) || !priceDoc.rows.length) throw new Error('PRICE_PAYLOAD_EMPTY');
   const priceMap = buildPriceMap(priceDoc);
 
   const browser = await chromium.launch({ headless: true });
