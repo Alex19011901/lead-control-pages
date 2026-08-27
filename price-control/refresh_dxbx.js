@@ -38,7 +38,7 @@ function coreName(displayName, unit) {
   return s.trim();
 }
 function ruToIso(s) {
-  const m = String(s || '').match(/^(\d{2})\.(\d{2})\.(\d{4})$/);
+  const m = String(s || '').match(/(\\d{2})\\.(\\d{2})\\.(\\d{4})/);
   return m ? `${m[3]}-${m[2]}-${m[1]}` : '';
 }
 function buildPriceMap(priceDoc) {
