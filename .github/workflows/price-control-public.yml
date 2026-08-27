@@ -1,6 +1,9 @@
 name: Price Control Manual Refresh
 
 on:
+  push:
+    paths:
+      - ".github/workflows/price-control-public.yml"
   workflow_dispatch:
 
 permissions:
@@ -48,7 +51,24 @@ jobs:
       - name: Refresh DocsInBox data
         env:
           DOCSINBOX_STORAGE_STATE: price-control/dxbx-storage-state.json
-        run: node price-control/refresh_dxbx.js price-control/current.json
+        run: |
+          node price-control/refresh_dxbx.js /tmp/price-control-formula-test.json
+          node - <<'NODE'
+          const fs = require('fs');
+          const d = JSON.parse(fs.readFileSync('/tmp/price-control-formula-test.json','utf8'));
+          const rows = d.week.rowsData || [];
+          const inv31153 = rows.filter(r => r[2] === 'ПЭ-31153' && r[9] === 'ABOVE')
+            .reduce((s,r) => s + Number(r[8] || 0), 0);
+          console.log('FORMULA_TEST', JSON.stringify({
+            docs:d.week.docs,
+            rows:d.week.rows,
+            above:d.week.above,
+            below:d.week.below,
+            unmatched:d.week.unmatched,
+            overpay:d.week.overpay,
+            pe31153Overpay:Math.round((inv31153 + Number.EPSILON)*100)/100
+          }));
+          NODE
 
       - name: Save refreshed data
         run: |
