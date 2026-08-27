@@ -1,0 +1,50 @@
+name: Price Control Build Full Data
+
+on:
+  push:
+    paths:
+      - ".github/workflows/price-control-build-full.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Build full Price Control dataset
+        run: python price-control/build_full_history.py
+
+      - name: Validate full dataset
+        run: |
+          python - <<'PY'
+          import json
+          p='price-control/full.json'
+          d=json.load(open(p,encoding='utf-8'))
+          assert d['currentKey']=='2026-08-26'
+          assert len(d['periods'])==5
+          assert [x['key'] for x in d['periods']] == [
+              '2026-08-26','2026-07-30','2026-07-24','2026-06-26','2026-05-20'
+          ]
+          assert [x['value'] for x in d['indexGroups']['paradis']['points']] == [100.0,98.5,101.2,108.9]
+          assert d['indexGroups']['paradis']['current']==108.9
+          assert d['indexGroups']['paradis']['prevChange']==7.6
+          assert d['indexGroups']['paradis']['periodChange']==8.9
+          print('VALIDATION_OK')
+          PY
+
+      - name: Save full dataset
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add             price-control/history/paradis_20260626.json             price-control/history/paradis_20260724.json             price-control/history/paradis_20260730.json             price-control/full.json
+          if git diff --cached --quiet; then
+            echo "No data changes"
+          else
+            git commit -m "Build full Price Control dataset"
+            git push origin main
+          fi
