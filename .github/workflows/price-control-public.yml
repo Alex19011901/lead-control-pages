@@ -1,6 +1,9 @@
 name: Price Control Manual Refresh
 
 on:
+  push:
+    paths:
+      - ".github/workflows/price-control-public.yml"
   workflow_dispatch:
 
 permissions:
