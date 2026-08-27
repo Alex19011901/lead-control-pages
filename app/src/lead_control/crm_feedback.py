@@ -42,15 +42,18 @@ def _is_later_calendar_date(event_ts: int, created_at: int) -> bool:
     return _moscow_date(event_ts) > _moscow_date(created_at)
 
 
-def _is_closed_not_realized(status_id: object, status_name: object) -> bool:
+def _is_feedback_excluded_status(status_id: object, status_name: object) -> bool:
     try:
-        if int(status_id or 0) == CLOSED_NOT_REALIZED_STATUS_ID:
+        if int(status_id or 0) in {142, CLOSED_NOT_REALIZED_STATUS_ID}:
             return True
     except (TypeError, ValueError):
         pass
     return _status_key(status_name) in {
         "закрыто и не реализовано",
         "закрыто и не реализованно",
+        "согласование договора",
+        "внесена п/о идет текущая работа",
+        "успешно реализовано",
     }
 
 
@@ -159,8 +162,10 @@ def apply_crm_feedback_tracking(
 ) -> None:
     """Attach feedback tracking without changing the existing lead status logic.
 
-    Only CRM-confirmed deals participate. Deals currently in the system status
-    "Закрыто и не реализовано" are excluded. Feedback is counted only from a
+    Only CRM-confirmed deals participate. Deals in terminal/working statuses
+    "Закрыто и не реализовано", "Согласование договора",
+    "Внесена п/о идет текущая работа" and "Успешно реализовано" are excluded.
+    Feedback is counted only from a
     normal text comment (common_note_added) authored by the lead's current
     responsible manager. Comments from any other user and all field/status/system
     events are ignored. Same-day comments are ignored. Calendar days are counted
@@ -222,7 +227,7 @@ def apply_crm_feedback_tracking(
             responsible_user_id = 0
         status_name = _status_name(client, pipeline_id, status_id, status_cache)
 
-        if _is_closed_not_realized(status_id, status_name):
+        if _is_feedback_excluded_status(status_id, status_name):
             lead["crm_feedback"] = {
                 "state": "EXCLUDED",
                 "crm_lead_id": crm_lead_id,
