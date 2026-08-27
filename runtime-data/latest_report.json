@@ -1,7 +1,7 @@
 {
   "alarm_no_crm": 37,
   "by_manager": {
-    "no_manager_reaction": 353,
+    "no_manager_reaction": 354,
     "Максим": 31,
     "Олеся": 21
   },
@@ -11,7 +11,7 @@
     "WedWed": 6,
     "ЗАЯВКА ПОЧТА": 5,
     "Заявка с ТГ": 18,
-    "Заявки хост": 209,
+    "Заявки хост": 210,
     "С улицы": 2,
     "САЙТ ТИЛЬДА": 101,
     "Тильда Веранда": 39
@@ -23,7 +23,7 @@
     "ДР": 1,
     "Деловое мероприятие": 1,
     "Детский праздник": 3,
-    "Корпоратив": 89,
+    "Корпоратив": 90,
     "Поминки": 1,
     "Презентация": 1,
     "Свадьба": 117,
@@ -36,16 +36,34 @@
     "101-150": 26,
     "151+": 15,
     "21-50": 121,
-    "51-100": 51,
+    "51-100": 52,
     "unknown": 59
   },
   "late_crm": 70,
   "latest_leads": [
     {
+      "created_at": "2026-08-27T15:53:58+03:00",
+      "crm_entity_id": 34229157,
+      "crm_entity_type": "lead",
+      "crm_found": true,
+      "event_date": "",
+      "event_type": "Корпоратив",
+      "guests_count": 65,
+      "identifier": "7********20",
+      "identifier_type": "phone",
+      "lead_id": "ebe8c99539a4e155",
+      "manager": "",
+      "manager_username": "",
+      "name": "Фуршет Яна",
+      "source": "Заявки хост",
+      "status": "OK",
+      "violations": []
+    },
+    {
       "created_at": "2026-08-27T15:27:33+03:00",
-      "crm_entity_id": null,
-      "crm_entity_type": null,
-      "crm_found": false,
+      "crm_entity_id": 47996963,
+      "crm_entity_type": "lead",
+      "crm_found": true,
       "event_date": "",
       "event_type": "Корпоратив",
       "guests_count": 100,
@@ -56,7 +74,7 @@
       "manager_username": "",
       "name": "Татьяна",
       "source": "Заявки хост",
-      "status": "PENDING",
+      "status": "OK",
       "violations": []
     },
     {
@@ -384,29 +402,11 @@
       "source": "MARQUIZ",
       "status": "OK",
       "violations": []
-    },
-    {
-      "created_at": "2026-08-26T12:30:58+03:00",
-      "crm_entity_id": 47958293,
-      "crm_entity_type": "lead",
-      "crm_found": true,
-      "event_date": "2026-12-11",
-      "event_type": "Корпоратив",
-      "guests_count": 150,
-      "identifier": "7********76",
-      "identifier_type": "phone",
-      "lead_id": "4639657d896c9a59",
-      "manager": "Максим",
-      "manager_username": "empairbey",
-      "name": "Vasilisa",
-      "source": "САЙТ ТИЛЬДА",
-      "status": "OK",
-      "violations": []
     }
   ],
   "needs_review": 39,
   "no_reaction": 0,
-  "ok": 256,
-  "total_leads": 405,
-  "updated_at": "2026-08-27T15:42:12+03:00"
+  "ok": 258,
+  "total_leads": 406,
+  "updated_at": "2026-08-27T16:08:41+03:00"
 }
