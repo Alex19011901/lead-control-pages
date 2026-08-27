@@ -38,7 +38,7 @@ function coreName(displayName, unit) {
   return s.trim();
 }
 function ruToIso(s) {
-  const m = String(s || '').match(/(\\d{2})\\.(\\d{2})\\.(\\d{4})/);
+  const m = String(s || '').match(/(\d{2})\.(\d{2})\.(\d{4})/);
   return m ? `${m[3]}-${m[2]}-${m[1]}` : '';
 }
 function buildPriceMap(priceDoc) {
@@ -119,8 +119,6 @@ function buildPriceMap(priceDoc) {
   }, {supplierNeedle: SUPPLIER, startIso: START_ISO, endIso: END_ISO});
 
   const selected = selection.selected || [];
-  console.log('ALL_COUNT', selection.allCount, 'SAMPLE', (selection.sample || []).map(x => String(x.date) + '~' + String(x.supplier) + '~' + String(x.invoices)).join('|'));
-  console.log('SELECTED_COUNT', selected.length, 'INVOICE_COUNT', selected.reduce((n,s) => n + (s.invoices || []).length, 0), 'DATES', selected.map(s => s.date).join('|'));
   const docs = [];
   const parseNum = v => {
     const z = Number(String(v ?? '').replace(/\s/g, '').replace(',', '.').replace(/[^\d.-]/g, ''));
