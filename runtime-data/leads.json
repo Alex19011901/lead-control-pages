@@ -30122,16 +30122,15 @@
       "crm_created_at": 1787397510,
       "crm_feedback": {
         "crm_lead_id": 47836297,
-        "deadline_at": 1787691600,
-        "excluded": false,
-        "first_activity_at": 1787498725,
+        "excluded": true,
+        "first_activity_at": null,
         "lead_created_at": 1787397510,
         "pipeline_id": 10081590,
         "responsible_user_id": 12982830,
         "rule_version": 6,
-        "state": "CLEAR",
-        "status_id": 79927042,
-        "status_name": "Принимают решение"
+        "state": "EXCLUDED",
+        "status_id": 79927046,
+        "status_name": "Согласование договора"
       },
       "crm_found": true,
       "crm_required": true,
@@ -32992,8 +32991,8 @@
         "responsible_user_id": 12982830,
         "rule_version": 6,
         "state": "WAITING",
-        "status_id": 79927034,
-        "status_name": "Первичный контакт"
+        "status_id": 79927038,
+        "status_name": "Выслано предложение"
       },
       "crm_found": true,
       "crm_required": true,
