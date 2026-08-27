@@ -26,11 +26,13 @@ def moscow_ts(year, month, day, hour=0, minute=0, second=0):
 
 
 class FakeClient:
-    def __init__(self, lead_card, note_pages=None, status_name="Первичный контакт"):
+    def __init__(self, lead_card, note_pages=None, event_pages=None, status_name="Первичный контакт"):
         self.lead_card = dict(lead_card)
         self.note_pages = note_pages or []
+        self.event_pages = event_pages or []
         self.status_name = status_name
         self.note_calls = 0
+        self.event_calls = 0
         self.lead_reads = 0
 
     def _get_entity(self, entity_type, entity_id, params=None):
@@ -47,6 +49,12 @@ class FakeClient:
             notes = self.note_pages[page - 1] if page <= len(self.note_pages) else []
             links = {"next": {"href": "next"}} if page < len(self.note_pages) else {}
             return {"_embedded": {"notes": notes}, "_links": links}
+        if path == "/api/v4/events":
+            self.event_calls += 1
+            page = int(params.get("page") or 1)
+            events = self.event_pages[page - 1] if page <= len(self.event_pages) else []
+            links = {"next": {"href": "next"}} if page < len(self.event_pages) else {}
+            return {"_embedded": {"events": events}, "_links": links}
         if "/statuses/" in path:
             return {"name": self.status_name}
         raise AssertionError(path)
@@ -89,6 +97,15 @@ def common_note(ts, created_by, entity_id=111):
     }
 
 
+def direct_message(ts, created_by, entity_id=111):
+    return {
+        "entity_id": entity_id,
+        "created_at": ts,
+        "created_by": created_by,
+        "type": "entity_direct_message",
+    }
+
+
 class CRMFeedbackTests(unittest.TestCase):
     def test_only_later_comment_from_responsible_manager_counts(self):
         created = moscow_ts(2026, 8, 14, 14, 16, 26)
@@ -113,6 +130,45 @@ class CRMFeedbackTests(unittest.TestCase):
 
         self.assertEqual(found, later_manager)
         self.assertEqual(client.note_calls, 1)
+
+    def test_responsible_manager_direct_message_clears_feedback(self):
+        created = moscow_ts(2026, 8, 14, 14, 16, 26)
+        manager_comment = moscow_ts(2026, 8, 17, 12, 30, 14)
+        client = FakeClient(
+            make_card(created),
+            note_pages=[[]],
+            event_pages=[[direct_message(manager_comment, MANAGER_ID)]],
+        )
+        lead = make_lead(created)
+
+        apply_crm_feedback_tracking(
+            [lead],
+            client,
+            now_ts=moscow_ts(2026, 8, 20, 12, 0, 0),
+        )
+
+        self.assertEqual(lead["crm_feedback"]["state"], "CLEAR")
+        self.assertEqual(lead["crm_feedback"]["first_activity_at"], manager_comment)
+        self.assertGreater(client.event_calls, 0)
+
+    def test_other_users_direct_message_does_not_clear_feedback(self):
+        created = moscow_ts(2026, 8, 14, 14, 16, 26)
+        other_comment = moscow_ts(2026, 8, 17, 12, 30, 14)
+        client = FakeClient(
+            make_card(created),
+            note_pages=[[]],
+            event_pages=[[direct_message(other_comment, OTHER_USER_ID)]],
+        )
+        lead = make_lead(created)
+
+        apply_crm_feedback_tracking(
+            [lead],
+            client,
+            now_ts=moscow_ts(2026, 8, 20, 12, 0, 0),
+        )
+
+        self.assertEqual(lead["crm_feedback"]["state"], "NO_FEEDBACK")
+        self.assertIsNone(lead["crm_feedback"]["first_activity_at"])
 
     def test_comment_from_other_user_does_not_clear_feedback(self):
         created = moscow_ts(2026, 8, 14, 14, 16, 26)
