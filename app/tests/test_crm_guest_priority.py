@@ -12,6 +12,7 @@ sys.path.insert(0, str(ROOT / "scripts"))
 
 from lead_control.crm_guests import extract_crm_guest_value
 from apply_dashboard_crm_guest_priority import apply_priority, effective_guest_value
+from build_dashboard_snapshot import build
 
 
 class CRMGuestPriorityTests(unittest.TestCase):
@@ -37,6 +38,43 @@ class CRMGuestPriorityTests(unittest.TestCase):
             "fields": {"description": "Заявка на 25 гостей", "guests_count": 25},
         }
         self.assertEqual(effective_guest_value(lead), "25")
+
+    def test_dashboard_row_uses_crm_guest_value_when_source_is_empty(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            leads_path = root / "leads.json"
+            snapshot_path = root / "dashboard_daily.json"
+            leads_path.write_text(
+                json.dumps(
+                    {
+                        "leads": [
+                            {
+                                "received_at": "2026-08-26T12:59:35+03:00",
+                                "status": "OK",
+                                "source": "САЙТ ТИЛЬДА",
+                                "channel": "TELEGRAM",
+                                "identifier": {"type": "phone", "value": "79251546047"},
+                                "fields": {"name": "Наталия"},
+                                "crm": {
+                                    "found": True,
+                                    "guests": "60",
+                                    "responsible_user_name": "Максим",
+                                    "event_type": "Детский праздник",
+                                },
+                                "event_type": "Детский праздник",
+                            }
+                        ]
+                    },
+                    ensure_ascii=False,
+                ),
+                encoding="utf-8",
+            )
+
+            build(leads_path, snapshot_path)
+            result = json.loads(snapshot_path.read_text(encoding="utf-8"))
+
+            self.assertEqual(result["latest"][0]["guests"], "60")
+            self.assertEqual(result["latest"][0]["guest_range"], "60")
 
     def test_only_guest_analytics_are_recomputed_with_crm_priority(self):
         with tempfile.TemporaryDirectory() as tmp:
