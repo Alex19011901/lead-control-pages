@@ -1,0 +1,23 @@
+name: CRM Guest Row Test Once
+
+on:
+  push:
+    paths:
+      - ".github/workflows/crm-guest-row-test-once.yml"
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Run CRM guest row test
+        working-directory: app
+        run: |
+          PYTHONPATH=src:scripts python -m unittest             tests.test_crm_guest_priority.CRMGuestPriorityTests.test_dashboard_row_uses_crm_guest_value_when_source_is_empty
