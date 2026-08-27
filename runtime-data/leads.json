@@ -31214,21 +31214,38 @@
       "channel": "MAX",
       "crm": {
         "ambiguity_count": 0,
-        "created_at": null,
-        "entity_id": null,
-        "entity_type": null,
-        "event_type": null,
-        "found": false,
-        "responsible_user_id": null,
-        "responsible_user_name": null,
-        "updated_at": null
+        "created_at": 1787668447,
+        "entity_id": 47932967,
+        "entity_type": "lead",
+        "event_type": "Корпоратив",
+        "found": true,
+        "guests": "80",
+        "guests_source": "CRM",
+        "responsible_user_id": 13009530,
+        "responsible_user_name": "Олеся",
+        "updated_at": 1787825919
       },
-      "crm_created_at": null,
-      "crm_found": false,
+      "crm_created_at": 1787668447,
+      "crm_feedback": {
+        "crm_lead_id": 47932967,
+        "deadline_at": 1787950800,
+        "excluded": false,
+        "first_activity_at": null,
+        "lead_created_at": 1787668447,
+        "pipeline_id": 10081590,
+        "responsible_user_id": 13009530,
+        "rule_version": 2,
+        "state": "WAITING",
+        "status_id": 79927038,
+        "status_name": "Выслано предложение"
+      },
+      "crm_found": true,
       "crm_required": true,
-      "crm_responsible": null,
+      "crm_responsible": 13009530,
       "deadline_msk_ts": 1787691599,
       "event_date": "2026-12-18",
+      "event_type": "Корпоратив",
+      "event_type_source": "CRM",
       "fields": {
         "attachment_message_id": "mid.ffffbec8f345ffab01a03909a0d3097d",
         "attachment_ocr_text": "ПОДТВЕРЖДЕНО ПО ДОКУМЕНТУ 25.08.2026\nИмя: Оксана Леденева\nТелефон: +7 916 672 78 10\nE-mail: info.mos@tobol-omsk.ru\nКомпания: ООО Тобол\nДата мероприятия: 18.12.2026\nВремя: 14:00–22:00\nКоличество гостей: 80 человек\nФормат мероприятия: Корпоратив, классический новогодний корпоратив с банкетом и развлекательной программой.\n\n16:08 40$ % © U2 18 85% в\n< nN Nv\nЗапрос на проведение\nмероприятия. ООО Тобол\n‘ло Леденева Оксана ху\n25 авг. 2026, 15:28 ® 1 as\n‘POF\nЗапрос на НГ\nООО Тобол\n181 КиБ\n@ Сохранить Ha fuck 1 файл, 181 КиБ\nУважаемые господа!\nНаправляю Вам официальный\nзапрос (письмо-заявку) на\nорганизацию и проведение\nпраздничного мероприятия.\nВо вложении к данному письму вы\nнайдете все необходимые детали:\nпредварительную дату, количество\nгостей, формат мероприятия и наши\nпожелания по меню и техническому\nоснащению.\nПрошу Вас ознакомиться с\nинформацией и сообщить о\nвозможности бронирования, а также\nнаправить коммерческое\nпредложение (смету) на наш\nэлектронный адрес.\nС уважением / Best regards,\nОксана Леденева / Oxana Ledeneva\nОфис-менеджер / Office manager\nFae — 000 \"Тобол\" / LLC\n= “Торо!”\nЗ\\Говояй Mobile: +7 (916) 672 78\nEmail: info.mos@tobol-\nomsk.ru\nWeb: www.tobol-omsk.ru\nРФ, 127273, г.Москва, ул.Отрадная, 26, cTp.6,\nофисы 7-15.\nOtradnaya str. 2B bld.9, floor 7, room 15, 127273\nMoscow, Russian Federation\nцю A wo --\nОтветить Переслать Важное — Удалить Ещё",
@@ -31279,11 +31296,9 @@
       "sender_name": "Al",
       "sender_user_id": 74336871,
       "source": "ЗАЯВКА ПОЧТА",
-      "status": "ALARM_NO_CRM",
+      "status": "OK",
       "username": "",
-      "violations": [
-        "ALARM_NO_CRM"
-      ]
+      "violations": []
     },
     {
       "category": "HOST",
@@ -32115,6 +32130,75 @@
       "source": "Заявка с ТГ",
       "status": "OK",
       "username": "kristina_bogachkova",
+      "violations": []
+    },
+    {
+      "category": "HOST",
+      "channel": "MAX",
+      "crm": {
+        "ambiguity_count": 0,
+        "created_at": null,
+        "entity_id": null,
+        "entity_type": null,
+        "event_type": null,
+        "found": false,
+        "responsible_user_id": null,
+        "responsible_user_name": null,
+        "updated_at": null
+      },
+      "crm_created_at": null,
+      "crm_found": false,
+      "crm_required": true,
+      "crm_responsible": null,
+      "deadline_msk_ts": 1787864399,
+      "event_date": "",
+      "fields": {
+        "category": "HOST",
+        "event_date": "",
+        "event_date_raw": "04.12",
+        "event_type": "",
+        "guests_count": 200,
+        "guests_max": null,
+        "guests_min": null,
+        "guests_raw": "200 персон",
+        "name": "Ольга",
+        "phone_digits": "79267088872",
+        "phone_raw": "89267088872",
+        "source": "Заявки хост",
+        "telegram_username": ""
+      },
+      "first_seen_at": "2026-08-27T13:25:31+03:00",
+      "first_seen_ts": 1787826331,
+      "guests": 200,
+      "guests_max": null,
+      "guests_min": null,
+      "guests_raw": "200 персон",
+      "id": "a116f03d001a3cc3",
+      "identifier": {
+        "type": "phone",
+        "value": "79267088872"
+      },
+      "last_seen_at": "2026-08-27T13:25:31+03:00",
+      "last_seen_ts": 1787826331,
+      "manager_reaction": null,
+      "max": {
+        "chat_id": -71704692523093,
+        "message_ids": [
+          "mid.ffffbec8f345ffab01a042c0ddb2179f"
+        ],
+        "sender_name": "Аня",
+        "sender_user_id": 193173819,
+        "sender_username": null
+      },
+      "message_id": "mid.ffffbec8f345ffab01a042c0ddb2179f",
+      "name": "Ольга",
+      "phone": "89267088872",
+      "received_at": "2026-08-27T13:25:31+03:00",
+      "sender_name": "Аня",
+      "sender_user_id": 193173819,
+      "source": "Заявки хост",
+      "status": "PENDING",
+      "username": "",
       "violations": []
     }
   ],
