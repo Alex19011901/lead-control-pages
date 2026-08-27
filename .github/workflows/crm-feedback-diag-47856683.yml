@@ -1,0 +1,45 @@
+name: CRM Feedback Diagnostic 47856683
+
+on:
+  push:
+    paths:
+      - ".github/workflows/crm-feedback-diag-47856683.yml"
+
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Inspect amoCRM feedback events
+        env:
+          AMOCRM_TOKEN: ${{ secrets.AMOCRM_TOKEN }}
+          AMOCRM_DOMAIN: https://alex1901yaru.amocrm.ru
+        run: |
+          python - <<'PY'
+          import json, os, urllib.parse, urllib.request
+          base=os.environ["AMOCRM_DOMAIN"].rstrip("/")
+          token=os.environ["AMOCRM_TOKEN"]
+          def get(path, params):
+              q=urllib.parse.urlencode(params)
+              req=urllib.request.Request(base+path+"?"+q,headers={"Authorization":"Bearer "+token,"Accept":"application/json"})
+              with urllib.request.urlopen(req,timeout=30) as r:
+                  return json.loads(r.read().decode())
+          p=get("/api/v4/events",{
+              "filter[entity]":"lead",
+              "filter[entity_id]":47856683,
+              "limit":100,
+              "page":1,
+          })
+          rows=[]
+          for e in ((p.get("_embedded") or {}).get("events") or []):
+              rows.append({
+                  "id":e.get("id"),
+                  "type":e.get("type"),
+                  "created_by":e.get("created_by"),
+                  "created_at":e.get("created_at"),
+                  "value_after_type":type(e.get("value_after")).__name__,
+                  "value_after_keys": list(e.get("value_after",{}).keys()) if isinstance(e.get("value_after"),dict) else None,
+                  "value_before_type":type(e.get("value_before")).__name__,
+                  "value_before_keys": list(e.get("value_before",{}).keys()) if isinstance(e.get("value_before"),dict) else None,
+              })
+          print("EVENT_ROWS="+json.dumps(rows,ensure_ascii=False))
+          PY
