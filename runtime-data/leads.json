@@ -29354,7 +29354,7 @@
         "first_activity_at": null,
         "lead_created_at": 1787471722,
         "pipeline_id": 10081590,
-        "state": "WAITING",
+        "state": "NO_FEEDBACK",
         "status_id": 86372998,
         "status_name": "ЖДУНЫ"
       },
@@ -30682,9 +30682,11 @@
       "sender_name": "Дмитрий Жуков",
       "sender_user_id": 201560258,
       "source": "Заявки хост",
-      "status": "PENDING",
+      "status": "ALARM_NO_CRM",
       "username": "",
-      "violations": []
+      "violations": [
+        "ALARM_NO_CRM"
+      ]
     },
     {
       "category": "HOST",

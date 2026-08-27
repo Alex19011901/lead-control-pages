@@ -1,5 +1,5 @@
 {
-  "alarm_no_crm": 41,
+  "alarm_no_crm": 42,
   "by_manager": {
     "no_manager_reaction": 345,
     "Максим": 27,
@@ -110,8 +110,10 @@
       "manager_username": "",
       "name": "Виктория",
       "source": "Заявки хост",
-      "status": "PENDING",
-      "violations": []
+      "status": "ALARM_NO_CRM",
+      "violations": [
+        "ALARM_NO_CRM"
+      ]
     },
     {
       "created_at": "2026-08-26T12:59:35+03:00",
@@ -412,9 +414,9 @@
       "violations": []
     }
   ],
-  "needs_review": 22,
+  "needs_review": 32,
   "no_reaction": 0,
   "ok": 244,
   "total_leads": 393,
-  "updated_at": "2026-08-26T17:54:39+03:00"
+  "updated_at": "2026-08-27T09:49:32+03:00"
 }
