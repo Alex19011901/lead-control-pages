@@ -113,6 +113,7 @@ function buildPriceMap(priceDoc) {
       }));
   }, {supplierNeedle: SUPPLIER, startIso: START_ISO, endIso: END_ISO});
 
+  console.log('Selected supplies:', JSON.stringify(selected.map(s => ({date:s.date, number:s.number, invoices:(s.invoices || []).length}))));
   const docs = [];
   const parseNum = v => {
     const z = Number(String(v ?? '').replace(/\\s/g, '').replace(',', '.').replace(/[^\\d.-]/g, ''));
