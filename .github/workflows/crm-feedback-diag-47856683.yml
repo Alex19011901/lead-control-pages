@@ -1,69 +1,99 @@
-name: CRM Feedback Diagnostic 47856683
+name: CRM Feedback Refresh 47856683
 
 on:
   push:
     paths:
       - ".github/workflows/crm-feedback-diag-47856683.yml"
 
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: lead-control-production
+  cancel-in-progress: false
+
 jobs:
-  inspect:
+  refresh:
     runs-on: ubuntu-latest
     steps:
-      - name: Inspect amoCRM feedback events
+      - name: Checkout public repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install OCR
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq tesseract-ocr tesseract-ocr-rus
+
+      - name: Collect Telegram MAX and amoCRM
+        working-directory: app
         env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          MAX_BOT_TOKEN: ${{ secrets.MAX_BOT_TOKEN }}
           AMOCRM_TOKEN: ${{ secrets.AMOCRM_TOKEN }}
           AMOCRM_DOMAIN: https://alex1901yaru.amocrm.ru
+          TELEGRAM_CHAT_ID: "-1001645768111"
+          MAX_CHAT_ID: "-71704692523093"
+          LEAD_CONTROL_USE_DATA_BRANCH: "0"
+          LEAD_CONTROL_DATA_DIR: ../runtime-data
+          LEAD_CONTROL_FAST_REFRESH: "1"
+        run: PYTHONPATH=src python -m lead_control.main
+
+      - name: Rebuild dashboard
+        env:
+          PUBLIC_REFRESH_TOKEN: ${{ secrets.PUBLIC_REFRESH_TOKEN }}
         run: |
+          python app/scripts/build_dashboard_snapshot.py --input runtime-data/leads.json --output runtime-data/dashboard_daily.json
+          python app/scripts/build_dashboard_view.py --input runtime-data/dashboard_daily.json --output runtime-data/dashboard_view.json
+          python app/scripts/apply_dashboard_crm_guest_priority.py --leads runtime-data/leads.json --view runtime-data/dashboard_view.json
+          python app/scripts/apply_dashboard_mail_source.py --view runtime-data/dashboard_view.json
+          python app/scripts/augment_dashboard_feedback.py --leads runtime-data/leads.json --view runtime-data/dashboard_view.json
+          mkdir -p public-site
+          python app/scripts/build_github_pages_mirror.py --input app/dashboard/pageshare/index.html --output public-site/index.html
           python - <<'PY'
-          import json, os, urllib.parse, urllib.request
-          base=os.environ["AMOCRM_DOMAIN"].rstrip("/")
-          token=os.environ["AMOCRM_TOKEN"]
-          def get(path, params):
-              q=urllib.parse.urlencode(params)
-              req=urllib.request.Request(base+path+"?"+q,headers={"Authorization":"Bearer "+token,"Accept":"application/json"})
-              with urllib.request.urlopen(req,timeout=30) as r:
-                  return json.loads(r.read().decode())
-          p=get("/api/v4/events",{
-              "filter[entity]":"lead",
-              "filter[entity_id]":47856683,
-              "limit":100,
-              "page":1,
-          })
-          rows=[]
-          for e in ((p.get("_embedded") or {}).get("events") or []):
-              rows.append({
-                  "id":e.get("id"),
-                  "type":e.get("type"),
-                  "created_by":e.get("created_by"),
-                  "created_at":e.get("created_at"),
-                  "value_after_type":type(e.get("value_after")).__name__,
-                  "value_after_keys": list(e.get("value_after",{}).keys()) if isinstance(e.get("value_after"),dict) else None,
-                  "value_before_type":type(e.get("value_before")).__name__,
-                  "value_before_keys": list(e.get("value_before",{}).keys()) if isinstance(e.get("value_before"),dict) else None,
-              })
-          print("EVENT_ROWS="+json.dumps(rows,ensure_ascii=False))
-          t=get("/api/v4/tasks",{
-              "filter[entity_type]":"leads",
-              "filter[entity_id]":47856683,
-              "limit":250,
-              "page":1,
-          })
-          tasks=[]
-          for row in ((t.get("_embedded") or {}).get("tasks") or []):
-              result=row.get("result")
-              tasks.append({
-                  "id":row.get("id"),
-                  "entity_id":row.get("entity_id"),
-                  "entity_type":row.get("entity_type"),
-                  "created_by":row.get("created_by"),
-                  "responsible_user_id":row.get("responsible_user_id"),
-                  "created_at":row.get("created_at"),
-                  "updated_at":row.get("updated_at"),
-                  "complete_till":row.get("complete_till"),
-                  "is_completed":row.get("is_completed"),
-                  "task_type_id":row.get("task_type_id"),
-                  "result_present": bool(result),
-                  "result_keys": list(result.keys()) if isinstance(result,dict) else None,
-              })
-          print("TASK_ROWS="+json.dumps(tasks,ensure_ascii=False))
+          import os
+          from pathlib import Path
+          output = Path("public-site/index.html")
+          token = os.environ.get("PUBLIC_REFRESH_TOKEN", "").strip()
+          if not token:
+              raise SystemExit("PUBLIC_REFRESH_TOKEN is not configured")
+          html = output.read_text(encoding="utf-8")
+          placeholder = "__PUBLIC_REFRESH_TOKEN__"
+          if placeholder not in html:
+              raise SystemExit("PUBLIC_REFRESH_TOKEN placeholder was not found")
+          output.write_text(html.replace(placeholder, token), encoding="utf-8")
           PY
+          cp runtime-data/dashboard_view.json dashboard_view.json
+          cp dashboard_view.json public-site/dashboard_view.json
+
+      - name: Save refreshed data
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add runtime-data dashboard_view.json
+          if git diff --cached --quiet; then
+            echo "No changes"
+          else
+            git commit -m "Refresh Lead Control feedback data"
+            git pull --rebase --autostash origin main
+            git push origin main
+          fi
+
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: public-site
+
+      - name: Deploy Pages
+        uses: actions/deploy-pages@v4
