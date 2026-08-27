@@ -78,6 +78,7 @@ function buildPriceMap(priceDoc) {
   const browser = await chromium.launch({ headless: true });
   const context = await browser.newContext({ storageState: AUTH });
   const page = await context.newPage();
+  page.on('console', msg => console.log('BROWSER_CONSOLE', msg.text()));
   await page.goto('https://dxbx.ru/fe/supplies?offset=0', { waitUntil: 'domcontentloaded', timeout: 60000 });
 
   const docs = await page.evaluate(async ({supplierNeedle, startIso, endIso}) => {
@@ -195,6 +196,7 @@ function buildPriceMap(priceDoc) {
   const equal = rowsData.filter(r => r[9] === 'EQUAL').length;
   const unmatched = rowsData.filter(r => r[9] === 'UNMATCHED').length;
   const overpay = round2(rowsData.filter(r => r[9] === 'ABOVE').reduce((s,r) => s + Number(r[8] || 0), 0));
+  if (docs.length && rowsData.length === 0) throw new Error('NO_INVOICE_ROWS');
 
   const payload = {
     generatedAt: new Date().toISOString(),
