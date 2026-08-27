@@ -108,6 +108,58 @@ def _first_manager_comment_after_creation(
     from other users and all field/status/system timeline events are ignored.
     Same-day comments remain part of the creation-day block.
     """
+    if crm_lead_id == 47523505:
+        diagnostic_notes = client._request_json(
+            "/api/v4/leads/notes",
+            {
+                "filter[entity_id][0]": crm_lead_id,
+                "limit": 250,
+                "page": 1,
+            },
+        )
+        note_rows = list(((diagnostic_notes.get("_embedded") or {}).get("notes")) or [])
+        LOG.info(
+            "CRM feedback diagnostic notes lead_id=%s responsible_user_id=%s rows=%s",
+            crm_lead_id,
+            responsible_user_id,
+            [
+                {
+                    "id": row.get("id"),
+                    "entity_id": row.get("entity_id"),
+                    "created_by": row.get("created_by"),
+                    "created_at": row.get("created_at"),
+                    "note_type": row.get("note_type"),
+                    "responsible_user_id": row.get("responsible_user_id"),
+                }
+                for row in note_rows
+            ],
+        )
+        diagnostic_events = client._request_json(
+            "/api/v4/events",
+            {
+                "filter[entity]": "lead",
+                "filter[entity_id]": crm_lead_id,
+                "filter[created_at][from]": created_at + 1,
+                "limit": 100,
+                "page": 1,
+            },
+        )
+        event_rows = list(((diagnostic_events.get("_embedded") or {}).get("events")) or [])
+        LOG.info(
+            "CRM feedback diagnostic events lead_id=%s rows=%s",
+            crm_lead_id,
+            [
+                {
+                    "id": row.get("id"),
+                    "type": row.get("type"),
+                    "entity_id": row.get("entity_id"),
+                    "created_by": row.get("created_by"),
+                    "created_at": row.get("created_at"),
+                }
+                for row in event_rows
+            ],
+        )
+
     first: int | None = None
     page = 1
     while True:
