@@ -144,6 +144,43 @@ class MaxLeadClassifierTests(unittest.TestCase):
         self.assertEqual(result["fields"]["phone_digits"], "79267338786")
         self.assertEqual(result["fields"]["guests_count"], 25)
 
+    def test_host_real_kсenia_name_beside_phone(self) -> None:
+        result = classify_max_text(
+            "Заявка\n"
+            "Ксения 89168064122\n"
+            "Выпускные май/июнь 2027\n"
+            "От 150человек\n"
+            "(конкретных дат нет, хотят условия узнать)"
+        )
+
+        self.assertEqual(result["classification"], HOST)
+        self.assertEqual(result["fields"]["name"], "Ксения")
+        self.assertEqual(result["fields"]["phone_digits"], "79168064122")
+
+    def test_host_real_angelina_name_beside_phone(self) -> None:
+        result = classify_max_text(
+            "Заявка\n"
+            "Свадьба 10человек\n"
+            "(Вип/каминный)\n"
+            "Ангелина 89832659215"
+        )
+
+        self.assertEqual(result["classification"], HOST)
+        self.assertEqual(result["fields"]["name"], "Ангелина")
+        self.assertEqual(result["fields"]["phone_digits"], "79832659215")
+
+    def test_host_real_valeria_name_beside_phone_with_date(self) -> None:
+        result = classify_max_text(
+            "Заявка\n"
+            "Игра мафия\n"
+            "15человек\n"
+            "04.09 Валерия 89174404159"
+        )
+
+        self.assertEqual(result["classification"], HOST)
+        self.assertEqual(result["fields"]["name"], "Валерия")
+        self.assertEqual(result["fields"]["phone_digits"], "79174404159")
+
     def test_street_with_viewing_phrase_and_client_data(self) -> None:
         result = classify_max_text(
             "\n".join(
