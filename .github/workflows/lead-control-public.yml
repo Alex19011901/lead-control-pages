@@ -7,6 +7,8 @@ on:
 
 permissions:
   contents: write
+  pages: write
+  id-token: write
 
 concurrency:
   group: lead-control-production
@@ -54,12 +56,13 @@ jobs:
           python app/scripts/apply_dashboard_crm_guest_priority.py --leads runtime-data/leads.json --view runtime-data/dashboard_view.json
           python app/scripts/apply_dashboard_mail_source.py --view runtime-data/dashboard_view.json
           python app/scripts/augment_dashboard_feedback.py --leads runtime-data/leads.json --view runtime-data/dashboard_view.json
-          python app/scripts/build_github_pages_mirror.py --input app/dashboard/pageshare/index.html --output index.html
+          mkdir -p public-site
+          python app/scripts/build_github_pages_mirror.py --input app/dashboard/pageshare/index.html --output public-site/index.html
           python - <<'PY'
           import os
           from pathlib import Path
 
-          output = Path("index.html")
+          output = Path("public-site/index.html")
           token = os.environ.get("PUBLIC_REFRESH_TOKEN", "").strip()
           if not token:
               raise SystemExit("PUBLIC_REFRESH_TOKEN is not configured")
@@ -70,15 +73,28 @@ jobs:
           output.write_text(html.replace(placeholder, token), encoding="utf-8")
           PY
           cp runtime-data/dashboard_view.json dashboard_view.json
+          cp dashboard_view.json public-site/dashboard_view.json
 
       - name: Save refreshed data
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add runtime-data index.html dashboard_view.json
+          git add runtime-data dashboard_view.json
           if git diff --cached --quiet; then
             echo "No changes"
           else
             git commit -m "Refresh Lead Control data"
             git push origin main
           fi
+
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: public-site
+
+      - name: Deploy Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
