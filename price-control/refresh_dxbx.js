@@ -109,11 +109,11 @@ function buildPriceMap(priceDoc) {
       .map(s => ({
         date: s.date,
         number: s.number,
-        invoices: s.invoices || []
+        invoices: (s.invoices || []).map(i => ({ number: i.number, publicId: i.publicId, link: i.link }))
       }));
   }, {supplierNeedle: SUPPLIER, startIso: START_ISO, endIso: END_ISO});
 
-  console.log('Selected supplies:', JSON.stringify(selected.map(s => ({date:s.date, number:s.number, invoices:(s.invoices || []).length}))));
+  console.log('SELECTED_COUNT', selected.length, 'INVOICE_COUNT', selected.reduce((n,s) => n + (s.invoices || []).length, 0), 'DATES', selected.map(s => s.date).join('|'));
   const docs = [];
   const parseNum = v => {
     const z = Number(String(v ?? '').replace(/\\s/g, '').replace(',', '.').replace(/[^\\d.-]/g, ''));
