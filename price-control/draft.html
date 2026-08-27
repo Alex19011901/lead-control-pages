@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Price Control Draft</title>
+<style>
+:root{--bg:#f4f6f8;--card:#fff;--line:#e5e7eb;--text:#101828;--muted:#667085;--red:#b42318;--green:#067647;--amber:#b54708}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif}
+.wrap{max-width:1440px;margin:0 auto;padding:28px}header{display:flex;justify-content:space-between;align-items:flex-start;gap:18px;margin-bottom:20px}
+h1{margin:0 0 6px;font-size:32px}.subtitle{color:var(--muted)}
+.actions{display:flex;align-items:center;gap:10px}.actions button,.filters select,.filters input{background:#fff;border:1px solid #d0d5dd;border-radius:10px;padding:10px 12px;font:inherit}
+.actions button{font-weight:700;cursor:pointer}.actions button:disabled{opacity:.6;cursor:default}.state{font-size:12px;color:var(--muted);white-space:nowrap}
+.filters{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px}.filters input{min-width:220px}
+.kpis{display:grid;grid-template-columns:repeat(6,1fr);gap:12px;margin-bottom:16px}.card{background:#fff;border:1px solid var(--line);border-radius:14px}
+.kpi{padding:16px}.label{font-size:12px;color:var(--muted);margin-bottom:8px}.value{font-size:28px;font-weight:800}.red{color:var(--red)}.green{color:var(--green)}.amber{color:var(--amber)}
+.table-card{overflow:hidden}.panel-head{padding:16px 18px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;gap:12px}.table-wrap{overflow:auto;max-height:calc(100vh - 310px)}
+table{width:100%;border-collapse:collapse;font-size:13px;background:#fff}th,td{padding:11px 12px;border-bottom:1px solid #eef0f2;text-align:right;white-space:nowrap}th:first-child,td:first-child{text-align:left}th{position:sticky;top:0;background:#fafafa;color:var(--muted);z-index:1}
+.badge{display:inline-block;padding:5px 8px;border-radius:999px;font-size:11px;font-weight:800}.b-above{background:#fee4e2;color:var(--red)}.b-below{background:#d1fadf;color:var(--green)}.b-equal{background:#f2f4f7;color:#475467}.b-unmatched{background:#fef0c7;color:var(--amber)}
+@media(max-width:960px){.wrap{padding:16px}.kpis{grid-template-columns:repeat(2,1fr)}header{flex-direction:column}.actions{width:100%;justify-content:space-between}.table-wrap{max-height:calc(100vh - 410px)}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <div><h1>Price Control</h1><div class="subtitle">Парадис Экзотика · накопительная проверка закупочных цен</div></div>
+  <div class="actions"><button id="refreshBtn">Обновить данные</button><span id="refreshState" class="state"></span></div>
+</header>
+
+<div class="filters">
+  <select id="weekFilter"><option value="current">Прайс 26.08 → 01.09</option></select>
+  <select id="invoiceFilter"><option value="">Все накладные</option></select>
+  <select id="statusFilter">
+    <option value="">Все статусы</option><option value="ABOVE">Выше прайса</option><option value="BELOW">Ниже прайса</option><option value="EQUAL">Равно</option><option value="UNMATCHED">Не сопоставлено</option>
+  </select>
+  <input id="searchFilter" type="text" placeholder="Поиск товара">
+</div>
+
+<div class="kpis">
+  <div class="card kpi"><div class="label">Документов</div><div class="value" id="docsKpi">0</div></div>
+  <div class="card kpi"><div class="label">Товарных строк</div><div class="value" id="rowsKpi">0</div></div>
+  <div class="card kpi"><div class="label">Выше прайса</div><div class="value red" id="aboveKpi">0</div></div>
+  <div class="card kpi"><div class="label">Ниже прайса</div><div class="value green" id="belowKpi">0</div></div>
+  <div class="card kpi"><div class="label">Не сопоставлено</div><div class="value amber" id="unmatchedKpi">0</div></div>
+  <div class="card kpi"><div class="label">Переплата по красным</div><div class="value red" id="overpayKpi">0 ₽</div></div>
+</div>
+
+<section class="card table-card">
+  <div class="panel-head"><strong id="periodTitle">Проверка</strong><span id="shownCount">Показано: 0</span></div>
+  <div class="table-wrap">
+    <table><thead><tr><th>Товар</th><th>Дата</th><th>Накладная</th><th>Кол-во</th><th>Ед.</th><th>Прайс</th><th>Факт</th><th>Δ/ед.</th><th>Влияние ₽</th><th>Статус</th></tr></thead><tbody id="rowsBody"></tbody></table>
+  </div>
+</section>
+</div>
+
+<script>
+(function(){
+  const RAW='https://raw.githubusercontent.com/Alex19011901/lead-control-pages/main/price-control/current.json';
+  const TRIGGER='https://alex19011901.github.io/lead-control-pages/price-control-trigger.html';
+  let payload=null, inFlight=false, triggerFrame=null;
+
+  function id(x){return document.getElementById(x)}
+  function esc(v){return String(v==null?'':v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+  function num(v){return Number(v).toLocaleString('ru-RU',{minimumFractionDigits:0,maximumFractionDigits:2})}
+  function money(v){return Number(v).toLocaleString('ru-RU',{minimumFractionDigits:2,maximumFractionDigits:2})+' ₽'}
+  function signed(v){const n=Number(v);return (n>0?'+':'')+num(n)}
+  function badge(s){return s==='ABOVE'?'<span class="badge b-above">ВЫШЕ ПРАЙСА</span>':s==='BELOW'?'<span class="badge b-below">НИЖЕ ПРАЙСА</span>':s==='EQUAL'?'<span class="badge b-equal">РАВНО</span>':'<span class="badge b-unmatched">НЕ СОПОСТАВЛЕНО</span>'}
+
+  function renderRows(){
+    if(!payload||!payload.week)return;
+    const inv=id('invoiceFilter').value, st=id('statusFilter').value, q=id('searchFilter').value.trim().toLowerCase();
+    const rows=(payload.week.rowsData||[]).filter(r=>(!inv||r[2]===inv)&&(!st||r[9]===st)&&(!q||String(r[0]).toLowerCase().includes(q)));
+    id('rowsBody').innerHTML=rows.map(r=>'<tr><td>'+esc(r[0])+'</td><td>'+esc(r[1])+'</td><td>'+esc(r[2])+'</td><td>'+num(r[3])+'</td><td>'+esc(r[4])+'</td><td>'+num(r[5])+'</td><td>'+num(r[6])+'</td><td>'+signed(r[7])+'</td><td>'+signed(r[8])+'</td><td>'+badge(r[9])+'</td></tr>').join('');
+    id('shownCount').textContent='Показано: '+rows.length;
+  }
+
+  function render(p){
+    payload=p;
+    const w=p.week;
+    id('weekFilter').options[0].textContent=w.label||'Текущий прайс';
+    id('periodTitle').textContent=(w.label||'Проверка')+' · '+(w.supplier||'');
+    id('docsKpi').textContent=w.docs||0;
+    id('rowsKpi').textContent=w.rows||0;
+    id('aboveKpi').textContent=w.above||0;
+    id('belowKpi').textContent=w.below||0;
+    id('unmatchedKpi').textContent=w.unmatched||0;
+    id('overpayKpi').textContent=money(w.overpay||0);
+
+    const sel=id('invoiceFilter'), current=sel.value, vals=[...new Set((w.rowsData||[]).map(r=>r[2]))];
+    sel.innerHTML='<option value="">Все накладные</option>'+vals.map(v=>'<option value="'+esc(v)+'">'+esc(v)+'</option>').join('');
+    if(vals.includes(current))sel.value=current;
+    renderRows();
+  }
+
+  async function load(){
+    const r=await fetch(RAW+'?cb='+Date.now(),{cache:'no-store'});
+    if(!r.ok)throw new Error('load_'+r.status);
+    render(await r.json());
+  }
+
+  function setState(s,error){id('refreshState').textContent=s||'';id('refreshState').style.color=error?'#b42318':'#667085'}
+  function finish(s,error){inFlight=false;id('refreshBtn').disabled=false;id('refreshBtn').textContent='Обновить данные';setState(s,error);if(triggerFrame){triggerFrame.remove();triggerFrame=null}}
+
+  function refresh(){
+    if(inFlight)return;
+    inFlight=true;id('refreshBtn').disabled=true;id('refreshBtn').textContent='Обновление…';setState('Подготовка…');
+    triggerFrame=document.createElement('iframe');triggerFrame.style.display='none';triggerFrame.src=TRIGGER+'?cb='+Date.now();document.body.appendChild(triggerFrame);
+  }
+
+  window.addEventListener('message',e=>{
+    const d=e.data||{};if(d.source!=='price-control-refresh')return;
+    if(d.status==='dispatched'){setState('Workflow запущен…');return}
+    if(d.status==='running'){setState('Workflow выполняется…');return}
+    if(d.status==='saving'){setState('Загрузка новых данных…');return}
+    if(d.status==='completed'){
+      if(!d.payload||!d.payload.week){finish('Ошибка данных',true);return}
+      render(d.payload);
+      const ts=new Date(d.payload.generatedAt||Date.now()).toLocaleTimeString('ru-RU',{timeZone:'Europe/Moscow',hour:'2-digit',minute:'2-digit'});
+      finish('Обновлено '+ts,false);
+      document.body.dataset.lastAppliedGeneratedAt=String(d.payload.generatedAt||'');
+      return;
+    }
+    if(d.status==='error')finish('Ошибка обновления',true);
+  });
+
+  id('refreshBtn').onclick=refresh;
+  id('invoiceFilter').onchange=renderRows;
+  id('statusFilter').onchange=renderRows;
+  id('searchFilter').oninput=renderRows;
+
+  load().then(()=>{
+    if(new URLSearchParams(location.search).get('autotest')==='1')setTimeout(refresh,800);
+  }).catch(()=>setState('Ошибка загрузки',true));
+})();
+</script>
+</body>
+</html>
