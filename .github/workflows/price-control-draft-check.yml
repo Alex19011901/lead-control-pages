@@ -1,0 +1,116 @@
+name: Price Control Draft End-to-End Check
+
+on:
+  push:
+    paths:
+      - ".github/workflows/price-control-draft-check.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install Playwright
+        run: |
+          npm init -y >/dev/null 2>&1
+          npm install playwright@1.55.0 >/dev/null 2>&1
+          npx playwright install --with-deps chromium
+
+      - name: Check full draft and refresh button
+        run: |
+          cat > /tmp/check.mjs <<'JS'
+          import { chromium } from 'playwright';
+
+          const URL='https://alex19011901.github.io/lead-control-pages/price-control-draft.html?e2e='+Date.now();
+          const browser=await chromium.launch({headless:true});
+          const page=await browser.newPage({viewport:{width:1536,height:1000}});
+          page.on('console',m=>console.log('PAGE',m.type(),m.text()));
+
+          await page.goto(URL,{waitUntil:'networkidle',timeout:60000});
+          await page.waitForSelector('#weekFilter option',{timeout:30000});
+
+          async function txt(sel){return (await page.locator(sel).innerText()).trim()}
+          async function expectText(sel,expected){
+            const got=await txt(sel);
+            if(got!==expected) throw new Error(sel+' expected '+JSON.stringify(expected)+' got '+JSON.stringify(got));
+          }
+          async function selectPeriod(key, expectedDocs, expectedRows){
+            await page.selectOption('#weekFilter',key);
+            await expectText('#docsKpi',String(expectedDocs));
+            await expectText('#rowsKpi',String(expectedRows));
+          }
+
+          const options=await page.locator('#weekFilter option').allTextContents();
+          console.log('PERIOD_OPTIONS',JSON.stringify(options));
+          if(options.length!==5) throw new Error('Expected 5 periods, got '+options.length);
+
+          await expectText('#docsKpi','2');
+          await expectText('#rowsKpi','32');
+          await expectText('#aboveKpi','25');
+          await expectText('#belowKpi','7');
+          await expectText('#unmatchedKpi','0');
+          await expectText('#overpayKpi','731,68 ₽');
+          await expectText('#currentIndex','108,9');
+
+          await selectPeriod('2026-07-30',7,189);
+          await selectPeriod('2026-07-24',7,199);
+          await selectPeriod('2026-06-26',13,216);
+          await selectPeriod('2026-05-20',13,305);
+
+          await page.selectOption('#weekFilter','2026-08-26');
+          await expectText('#rowsKpi','32');
+
+          await page.screenshot({path:'/tmp/price-control-before.png',fullPage:true});
+
+          console.log('CLICK_REFRESH');
+          await page.click('#refreshBtn');
+          await page.waitForFunction(()=>{
+            const btn=document.getElementById('refreshBtn');
+            const st=document.getElementById('refreshState');
+            return btn && !btn.disabled && btn.textContent.trim()==='Обновить данные' &&
+                   st && /^Обновлено\s+\d{2}:\d{2}$/.test(st.textContent.trim());
+          },{timeout:20*60*1000});
+
+          const state=await txt('#refreshState');
+          const applied=await page.evaluate(()=>document.body.dataset.lastAppliedGeneratedAt||'');
+          console.log('REFRESH_STATE',state);
+          console.log('APPLIED_GENERATED_AT',applied);
+          if(!applied) throw new Error('No refreshed generatedAt applied to DOM');
+
+          await expectText('#docsKpi','2');
+          await expectText('#rowsKpi','32');
+          await expectText('#aboveKpi','25');
+          await expectText('#belowKpi','7');
+          await expectText('#unmatchedKpi','0');
+          await expectText('#overpayKpi','731,68 ₽');
+
+          const optionsAfter=await page.locator('#weekFilter option').count();
+          if(optionsAfter!==5) throw new Error('History lost after refresh; options='+optionsAfter);
+
+          await page.screenshot({path:'/tmp/price-control-after.png',fullPage:true});
+          console.log('E2E_OK');
+          await browser.close();
+          JS
+          node /tmp/check.mjs
+
+      - name: Upload screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: price-control-draft-check
+          path: |
+            /tmp/price-control-before.png
+            /tmp/price-control-after.png
+          if-no-files-found: ignore
