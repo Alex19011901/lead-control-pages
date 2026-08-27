@@ -1,0 +1,65 @@
+name: Price Control Trigger Deploy
+
+on:
+  push:
+    paths:
+      - "price-control/trigger-deploy.flag"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: price-control-trigger-pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Build Pages artifact
+        env:
+          PUBLIC_REFRESH_TOKEN: ${{ secrets.PUBLIC_REFRESH_TOKEN }}
+        run: |
+          mkdir -p public-site
+          python app/scripts/build_github_pages_mirror.py --input app/dashboard/pageshare/index.html --output public-site/index.html
+          cp dashboard_view.json public-site/dashboard_view.json
+          python - <<'PY'
+          import os
+          from pathlib import Path
+
+          token = os.environ.get("PUBLIC_REFRESH_TOKEN", "").strip()
+          if not token:
+              raise SystemExit("PUBLIC_REFRESH_TOKEN is not configured")
+          placeholder = "__PUBLIC_REFRESH_TOKEN__"
+
+          for source, output in [
+              (Path("public-site/index.html"), Path("public-site/index.html")),
+              (Path("price-control/trigger.html"), Path("public-site/price-control-trigger.html")),
+          ]:
+              html = source.read_text(encoding="utf-8")
+              if placeholder not in html:
+                  raise SystemExit(f"Token placeholder was not found in {source}")
+              output.write_text(html.replace(placeholder, token), encoding="utf-8")
+          PY
+
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: public-site
+
+      - name: Deploy Pages
+        uses: actions/deploy-pages@v4
