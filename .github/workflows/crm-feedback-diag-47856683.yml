@@ -42,4 +42,28 @@ jobs:
                   "value_before_keys": list(e.get("value_before",{}).keys()) if isinstance(e.get("value_before"),dict) else None,
               })
           print("EVENT_ROWS="+json.dumps(rows,ensure_ascii=False))
+          t=get("/api/v4/tasks",{
+              "filter[entity_type]":"leads",
+              "filter[entity_id]":47856683,
+              "limit":250,
+              "page":1,
+          })
+          tasks=[]
+          for row in ((t.get("_embedded") or {}).get("tasks") or []):
+              result=row.get("result")
+              tasks.append({
+                  "id":row.get("id"),
+                  "entity_id":row.get("entity_id"),
+                  "entity_type":row.get("entity_type"),
+                  "created_by":row.get("created_by"),
+                  "responsible_user_id":row.get("responsible_user_id"),
+                  "created_at":row.get("created_at"),
+                  "updated_at":row.get("updated_at"),
+                  "complete_till":row.get("complete_till"),
+                  "is_completed":row.get("is_completed"),
+                  "task_type_id":row.get("task_type_id"),
+                  "result_present": bool(result),
+                  "result_keys": list(result.keys()) if isinstance(result,dict) else None,
+              })
+          print("TASK_ROWS="+json.dumps(tasks,ensure_ascii=False))
           PY
