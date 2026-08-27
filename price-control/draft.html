@@ -127,7 +127,7 @@ th{position:sticky;top:0;background:#fafafa;color:var(--muted);z-index:1}
 (function(){
   const FULL_RAW='https://raw.githubusercontent.com/Alex19011901/lead-control-pages/main/price-control/full.json';
   const TRIGGER='https://alex19011901.github.io/lead-control-pages/price-control-trigger.html';
-  let model=null,currentKey='',inFlight=false,triggerFrame=null;
+  let model=null,currentKey='',inFlight=false,triggerWindow=null;
 
   function id(x){return document.getElementById(x)}
   function esc(v){return String(v==null?'':v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
@@ -221,13 +221,20 @@ th{position:sticky;top:0;background:#fafafa;color:var(--muted);z-index:1}
   function setState(s,error){id('refreshState').textContent=s||'';id('refreshState').style.color=error?'#b42318':'#667085'}
   function finish(s,error){
     inFlight=false;id('refreshBtn').disabled=false;id('refreshBtn').textContent='Обновить данные';setState(s,error);
-    if(triggerFrame){triggerFrame.remove();triggerFrame=null}
+    if(triggerWindow && !triggerWindow.closed){try{triggerWindow.close()}catch(e){}}triggerWindow=null
   }
   function refresh(){
     if(inFlight)return;
     inFlight=true;id('refreshBtn').disabled=true;id('refreshBtn').textContent='Обновление…';setState('Подготовка…');
-    triggerFrame=document.createElement('iframe');triggerFrame.style.display='none';
-    triggerFrame.src=TRIGGER+'?cb='+Date.now();document.body.appendChild(triggerFrame);
+    triggerWindow=window.open(
+      TRIGGER+'?popup=1&cb='+Date.now(),
+      'priceControlRefresh',
+      'popup=yes,width=420,height=260'
+    );
+    if(!triggerWindow){
+      finish('Разрешите всплывающее окно',true);
+      return;
+    }
   }
 
   window.addEventListener('message',e=>{
