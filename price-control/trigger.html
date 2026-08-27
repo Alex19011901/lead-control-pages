@@ -67,9 +67,6 @@ async function listRuns(){
   try{
     const beforePayload=await readCurrent();
     const beforeGeneratedAt=String(beforePayload.generatedAt||'');
-    const beforeRuns=await listRuns();
-    const oldIds=new Set(beforeRuns.map(r=>String(r.id)));
-    const startedAt=Date.now();
 
     await gh('/actions/workflows/'+encodeURIComponent(WORKFLOW)+'/dispatches',{
       method:'POST',
@@ -78,38 +75,24 @@ async function listRuns(){
     });
     report('dispatched');
 
-    let run=null;
-    while(Date.now()<deadline && !run){
-      const runs=await listRuns();
-      run=runs.find(r=>!oldIds.has(String(r.id)) && Date.parse(r.created_at||0)>=startedAt-60000) || null;
-      if(!run)await sleep(3000);
-    }
-    if(!run)throw new Error('workflow_run_not_found');
-
-    while(Date.now()<deadline){
-      const runs=await listRuns();
-      const fresh=runs.find(r=>String(r.id)===String(run.id));
-      if(fresh)run=fresh;
-      if(run.status==='completed'){
-        if(run.conclusion!=='success')throw new Error('workflow_'+String(run.conclusion||'failed'));
-        break;
-      }
-      report('running',String(run.id));
-      await sleep(4000);
-    }
-    if(run.status!=='completed')throw new Error('workflow_timeout');
-
-    report('saving',String(run.id));
     let payload=null;
+    let announcedRunning=false;
     while(Date.now()<deadline){
+      if(!announcedRunning){
+        report('running');
+        announcedRunning=true;
+      }
       payload=await readCurrent();
       const nowGeneratedAt=String(payload.generatedAt||'');
-      if(nowGeneratedAt && nowGeneratedAt!==beforeGeneratedAt)break;
+      if(nowGeneratedAt && nowGeneratedAt!==beforeGeneratedAt){
+        report('saving');
+        await sleep(1500);
+        report('completed','',payload);
+        return;
+      }
       await sleep(3000);
     }
-    if(!payload || String(payload.generatedAt||'')===beforeGeneratedAt)throw new Error('data_not_updated');
-
-    report('completed',String(run.id),payload);
+    throw new Error('data_not_updated');
   }catch(e){
     report('error',String(e&&e.message||e||'unknown'));
   }
