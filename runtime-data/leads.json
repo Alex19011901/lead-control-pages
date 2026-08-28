@@ -551,25 +551,42 @@
       "channel": "TELEGRAM",
       "crm": {
         "ambiguity_count": 0,
-        "created_at": null,
-        "entity_id": null,
-        "entity_type": null,
-        "event_type": null,
-        "found": false,
-        "responsible_user_id": null,
-        "responsible_user_name": null,
-        "updated_at": null
+        "created_at": 1786719560,
+        "entity_id": 47531429,
+        "entity_type": "lead",
+        "event_type": "Детский праздник",
+        "found": true,
+        "guests": "50",
+        "guests_source": "CRM",
+        "responsible_user_id": 12982830,
+        "responsible_user_name": "Максим",
+        "updated_at": 1787909614
       },
-      "crm_created_at": null,
-      "crm_found": false,
+      "crm_created_at": 1786719560,
+      "crm_feedback": {
+        "crm_lead_id": 47531429,
+        "deadline_at": 1787000400,
+        "excluded": false,
+        "first_activity_at": 1787909613,
+        "lead_created_at": 1786719560,
+        "pipeline_id": 10081590,
+        "responsible_user_id": 12982830,
+        "rule_version": 6,
+        "state": "CLEAR",
+        "status_id": 79927038,
+        "status_name": "Выслано предложение"
+      },
+      "crm_found": true,
       "crm_required": true,
-      "crm_responsible": null,
+      "crm_responsible": 12982830,
       "deadline_msk_ts": 1786741199,
+      "event_type": "Детский праздник",
+      "event_type_source": "CRM",
       "fields": {
         "category": "TG_LEAD",
         "event_date": "2026-12-19",
         "event_date_raw": "19 декабря",
-        "event_type": "Юбилей",
+        "event_type": "Детский праздник",
         "guests_count": 40,
         "guests_raw": "40-50",
         "name": "Стася Семенова",
@@ -593,7 +610,7 @@
       "sender_user_id": null,
       "sender_username": "",
       "source": "Заявка с ТГ",
-      "status": "ALARM_NO_CRM",
+      "status": "OK",
       "telegram": {
         "chat_id": -1001645768111,
         "message_ids": [
@@ -603,9 +620,7 @@
           -10056201
         ]
       },
-      "violations": [
-        "ALARM_NO_CRM"
-      ]
+      "violations": []
     },
     {
       "category": "MARQUIZ",
