@@ -193,6 +193,22 @@ class MaxLeadClassifierTests(unittest.TestCase):
         self.assertEqual(result["classification"], HOST)
         self.assertEqual(result["fields"]["phone_digits"], "79162821953")
 
+    def test_host_phone_does_not_append_event_age(self) -> None:
+        result = classify_max_text(
+            "ЗАЯВКА.  28.08.   До 20п.  28.08.  Наталья.  89163333536.  18-летие"
+        )
+
+        self.assertEqual(result["classification"], HOST)
+        self.assertEqual(result["fields"]["phone_digits"], "79163333536")
+
+    def test_host_phone_does_not_use_date_and_guest_range(self) -> None:
+        result = classify_max_text(
+            "ЗАЯВКА.  5 или 12.09.    120-130п.  Елизавета.  89260589797. корпоратив."
+        )
+
+        self.assertEqual(result["classification"], HOST)
+        self.assertEqual(result["fields"]["phone_digits"], "79260589797")
+
     def test_street_with_viewing_phrase_and_client_data(self) -> None:
         result = classify_max_text(
             "\n".join(
