@@ -195,5 +195,101 @@ class DashboardFeedbackTests(unittest.TestCase):
         self.assertEqual(day_four["feedback_summary"]["waiting_blue"], 1)
 
 
+    def test_waiting_stage_rows_keep_manager_and_crm_id(self):
+        created = moscow_ts(2026, 8, 28, 10, 0, 0)
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            leads_path = root / "leads.json"
+            view_path = root / "dashboard_view.json"
+            leads_path.write_text(
+                json.dumps(
+                    {
+                        "leads": [
+                            {
+                                "id": "max",
+                                "source": "Заявки хост",
+                                "name": "Клиент Максима",
+                                "identifier": {"type": "phone", "value": "79000000011"},
+                                "crm": {
+                                    "found": True,
+                                    "entity_type": "lead",
+                                    "entity_id": 6001,
+                                    "responsible_user_name": "Максим",
+                                    "created_at": created,
+                                },
+                                "crm_feedback": {
+                                    "state": "EXCLUDED",
+                                    "crm_lead_id": 6001,
+                                    "lead_created_at": created,
+                                    "status_name": "ЖДУНЫ",
+                                },
+                            },
+                            {
+                                "id": "olesya",
+                                "source": "САЙТ ТИЛЬДА",
+                                "name": "Клиент Олеси",
+                                "identifier": {"type": "phone", "value": "79000000012"},
+                                "crm": {
+                                    "found": True,
+                                    "entity_type": "lead",
+                                    "entity_id": 6002,
+                                    "responsible_user_name": "Олеся",
+                                    "created_at": created,
+                                },
+                                "crm_feedback": {
+                                    "state": "EXCLUDED",
+                                    "crm_lead_id": 6002,
+                                    "lead_created_at": created,
+                                    "status_name": "ЖДУНЫ",
+                                },
+                            },
+                            {
+                                "id": "other",
+                                "source": "Заявки хост",
+                                "name": "Не ждун",
+                                "identifier": {"type": "phone", "value": "79000000013"},
+                                "crm": {
+                                    "found": True,
+                                    "entity_type": "lead",
+                                    "entity_id": 6003,
+                                    "responsible_user_name": "Максим",
+                                    "created_at": created,
+                                },
+                                "crm_feedback": {
+                                    "state": "WAITING",
+                                    "crm_lead_id": 6003,
+                                    "lead_created_at": created,
+                                    "status_name": "Первичный контакт",
+                                },
+                            },
+                        ]
+                    },
+                    ensure_ascii=False,
+                ),
+                encoding="utf-8",
+            )
+            view_path.write_text(
+                json.dumps({"ranges": {}, "latest": [], "not_entered": []}),
+                encoding="utf-8",
+            )
+
+            augment(leads_path, view_path, now_ts=created)
+            result = json.loads(view_path.read_text(encoding="utf-8"))
+
+            self.assertEqual(len(result["waiting_stage"]), 2)
+            by_manager = {row["manager"]: row for row in result["waiting_stage"]}
+            self.assertEqual(by_manager["Максим"]["crm_lead_id"], 6001)
+            self.assertEqual(by_manager["Максим"]["crm_status"], "ЖДУНЫ")
+            self.assertEqual(by_manager["Олеся"]["crm_lead_id"], 6002)
+            self.assertEqual(by_manager["Олеся"]["crm_status"], "ЖДУНЫ")
+
+    def test_waiting_stage_widget_filters_manager_and_uses_crm_link(self):
+        html = (ROOT / "dashboard" / "pageshare" / "index.html").read_text(encoding="utf-8")
+        self.assertIn("if(currentManager==='all'){card.style.display='none';return}", html)
+        self.assertIn("if(norm(x.manager)!==currentManager)continue", html)
+        self.assertIn("var href=crmHref(x)", html)
+        self.assertIn(">Открыть лид</a>", html)
+
+
 if __name__ == "__main__":
     unittest.main()
