@@ -16003,33 +16003,49 @@
       "channel": "MAX",
       "crm": {
         "ambiguity_count": 0,
-        "created_at": null,
-        "entity_id": null,
-        "entity_type": null,
-        "event_type": null,
-        "found": false,
-        "responsible_user_id": null,
-        "responsible_user_name": null,
-        "updated_at": null
+        "created_at": 1784089019,
+        "entity_id": 46410367,
+        "entity_type": "lead",
+        "event_type": "Корпоратив",
+        "found": true,
+        "guests": "150",
+        "guests_source": "CRM",
+        "responsible_user_id": 12982830,
+        "responsible_user_name": "Максим",
+        "updated_at": 1784089028
       },
-      "crm_created_at": null,
-      "crm_found": false,
+      "crm_created_at": 1784089019,
+      "crm_feedback": {
+        "crm_lead_id": 46410367,
+        "excluded": true,
+        "first_activity_at": null,
+        "lead_created_at": 1784089019,
+        "pipeline_id": 10081590,
+        "responsible_user_id": 12982830,
+        "rule_version": 6,
+        "state": "EXCLUDED",
+        "status_id": 143,
+        "status_name": "Закрыто и не реализовано"
+      },
+      "crm_found": true,
       "crm_required": true,
-      "crm_responsible": null,
+      "crm_responsible": 12982830,
       "deadline_msk_ts": 1784062799,
       "event_date": "",
+      "event_type": "Корпоратив",
+      "event_type_source": "CRM",
       "fields": {
         "category": "HOST",
         "event_date": "",
         "event_date_raw": "03.10",
-        "event_type": "",
+        "event_type": "Корпоратив",
         "guests_count": 150,
         "guests_max": null,
         "guests_min": null,
         "guests_raw": "150 персон",
-        "name": "Алексей",
-        "phone_digits": "031089162821953150",
-        "phone_raw": "03.10 \n8-916-282-19-53\n150",
+        "name": "Спортсмены",
+        "phone_digits": "79162821953",
+        "phone_raw": "8-916-282-19-53",
         "source": "Заявки хост",
         "telegram_username": ""
       },
@@ -16039,10 +16055,10 @@
       "guests_max": null,
       "guests_min": null,
       "guests_raw": "150 персон",
-      "id": "825e595690dbfa2f",
+      "id": "a83281067a01d2c2",
       "identifier": {
         "type": "phone",
-        "value": "031089162821953150"
+        "value": "79162821953"
       },
       "last_seen_at": "2026-07-14T19:18:45+03:00",
       "last_seen_ts": 1784045925,
@@ -16057,16 +16073,16 @@
         "sender_username": null
       },
       "message_id": "mid.ffffbec8f345ffab019f616c74424cc3",
-      "name": "Алексей",
-      "phone": "03.10 \n8-916-282-19-53\n150",
+      "name": "Спортсмены",
+      "phone": "8-916-282-19-53",
       "received_at": "2026-07-14T19:18:45+03:00",
       "sender_name": "Алёна",
       "sender_user_id": 154877013,
       "source": "Заявки хост",
-      "status": "ALARM_NO_CRM",
+      "status": "LATE_CRM",
       "username": "",
       "violations": [
-        "ALARM_NO_CRM"
+        "LATE_CRM"
       ]
     },
     {
@@ -24316,9 +24332,9 @@
         "guests_max": 120,
         "guests_min": 100,
         "guests_raw": "100-120п.",
-        "name": "Татьяна",
-        "phone_digits": "2512100120",
-        "phone_raw": "25.12\n100-120",
+        "name": "Не",
+        "phone_digits": "79032970329",
+        "phone_raw": "8903-297-03-29",
         "source": "Заявки хост",
         "telegram_username": ""
       },
@@ -24328,10 +24344,10 @@
       "guests_max": 120,
       "guests_min": 100,
       "guests_raw": "100-120п.",
-      "id": "f998f101d8af7629",
+      "id": "5523fa36d556ccec",
       "identifier": {
         "type": "phone",
-        "value": "2512100120"
+        "value": "79032970329"
       },
       "last_seen_at": "2026-08-06T18:36:23+03:00",
       "last_seen_ts": 1786030583,
@@ -24346,8 +24362,8 @@
         "sender_username": null
       },
       "message_id": "mid.ffffbec8f345ffab019fd7b7eeca7c70",
-      "name": "Татьяна",
-      "phone": "25.12\n100-120",
+      "name": "Не",
+      "phone": "8903-297-03-29",
       "received_at": "2026-08-06T18:36:23+03:00",
       "sender_name": "Алёна",
       "sender_user_id": 154877013,
