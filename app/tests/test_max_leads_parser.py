@@ -181,6 +181,18 @@ class MaxLeadClassifierTests(unittest.TestCase):
         self.assertEqual(result["fields"]["name"], "Валерия")
         self.assertEqual(result["fields"]["phone_digits"], "79174404159")
 
+    def test_host_phone_does_not_merge_date_or_guest_lines(self) -> None:
+        result = classify_max_text(
+            "Алексей\n"
+            "03.10\n"
+            "8-916-282-19-53\n"
+            "150 персон\n\n"
+            "Спортсмены - ветераны. Без бюджета. Склоняют к благотворительности"
+        )
+
+        self.assertEqual(result["classification"], HOST)
+        self.assertEqual(result["fields"]["phone_digits"], "79162821953")
+
     def test_street_with_viewing_phrase_and_client_data(self) -> None:
         result = classify_max_text(
             "\n".join(
