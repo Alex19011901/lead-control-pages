@@ -1,0 +1,23 @@
+name: Waiting Stage Widget Tests Once
+
+on:
+  push:
+    paths:
+      - ".github/workflows/waiting-stage-widget-tests-once.yml"
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Run waiting-stage widget tests
+        working-directory: app
+        run: |
+          PYTHONPATH=src:scripts python -m unittest             tests.test_dashboard_feedback.DashboardFeedbackTests.test_waiting_stage_rows_keep_manager_and_crm_id             tests.test_dashboard_feedback.DashboardFeedbackTests.test_waiting_stage_widget_filters_manager_and_uses_crm_link
