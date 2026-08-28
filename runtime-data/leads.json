@@ -1152,25 +1152,41 @@
       "channel": "TELEGRAM",
       "crm": {
         "ambiguity_count": 0,
-        "created_at": null,
-        "entity_id": null,
-        "entity_type": null,
-        "event_type": null,
-        "found": false,
-        "responsible_user_id": null,
-        "responsible_user_name": null,
-        "updated_at": null
+        "created_at": 1787910762,
+        "entity_id": 48024077,
+        "entity_type": "lead",
+        "event_type": "Юбилей",
+        "found": true,
+        "guests": "25",
+        "guests_source": "CRM",
+        "responsible_user_id": 12982830,
+        "responsible_user_name": "Максим",
+        "updated_at": 1787910775
       },
-      "crm_created_at": null,
-      "crm_found": false,
+      "crm_created_at": 1787910762,
+      "crm_feedback": {
+        "crm_lead_id": 48024077,
+        "excluded": true,
+        "first_activity_at": null,
+        "lead_created_at": 1787910762,
+        "pipeline_id": 10081590,
+        "responsible_user_id": 12982830,
+        "rule_version": 6,
+        "state": "EXCLUDED",
+        "status_id": 143,
+        "status_name": "Закрыто и не реализовано"
+      },
+      "crm_found": true,
       "crm_required": true,
-      "crm_responsible": null,
+      "crm_responsible": 12982830,
       "deadline_msk_ts": 1786539600,
+      "event_type": "Юбилей",
+      "event_type_source": "CRM",
       "fields": {
         "category": "САЙТ ТИЛЬДА",
         "event_date": "2026-10-10",
         "event_date_raw": "10/10/2026",
-        "event_type": "",
+        "event_type": "Юбилей",
         "guests_count": 25,
         "guests_raw": "25",
         "name": "Илья",
@@ -1194,7 +1210,7 @@
       "sender_user_id": null,
       "sender_username": "",
       "source": "САЙТ ТИЛЬДА",
-      "status": "ALARM_NO_CRM",
+      "status": "LATE_CRM",
       "telegram": {
         "chat_id": -1001645768111,
         "message_ids": [
@@ -1205,7 +1221,7 @@
         ]
       },
       "violations": [
-        "ALARM_NO_CRM"
+        "LATE_CRM"
       ]
     },
     {
@@ -29226,8 +29242,8 @@
         "responsible_user_id": 12982830,
         "rule_version": 6,
         "state": "CLEAR",
-        "status_id": 79927038,
-        "status_name": "Выслано предложение"
+        "status_id": 79927042,
+        "status_name": "Принимают решение"
       },
       "crm_found": true,
       "crm_required": true,
