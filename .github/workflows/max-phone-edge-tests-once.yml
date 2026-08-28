@@ -1,0 +1,23 @@
+name: MAX Phone Edge Tests Once
+
+on:
+  push:
+    paths:
+      - ".github/workflows/max-phone-edge-tests-once.yml"
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Run MAX phone edge regression tests
+        working-directory: app
+        run: |
+          PYTHONPATH=src python -m unittest             tests.test_max_leads_parser.MaxLeadClassifierTests.test_host_phone_does_not_append_event_age             tests.test_max_leads_parser.MaxLeadClassifierTests.test_host_phone_does_not_use_date_and_guest_range
