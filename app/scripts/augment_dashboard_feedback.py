@@ -94,6 +94,35 @@ def compact_feedback_lead(lead: dict, now_ts: int) -> dict | None:
     }
 
 
+
+def compact_waiting_stage_lead(lead: dict) -> dict | None:
+    crm = lead.get("crm") or {}
+    feedback = lead.get("crm_feedback") or {}
+    status_name = str(feedback.get("status_name") or "").strip()
+    status_key = status_name.casefold().replace("ё", "е")
+    if not crm.get("found") or crm.get("entity_type") != "lead" or status_key != "ждуны":
+        return None
+
+    try:
+        created_at = int(feedback.get("lead_created_at") or crm.get("created_at") or 0)
+    except (TypeError, ValueError):
+        created_at = 0
+
+    fields = lead.get("fields") or {}
+    return {
+        "crm_lead_id": int(crm.get("entity_id") or 0),
+        "created_at": iso_moscow(created_at),
+        "created_ts": created_at,
+        "source": source_for_lead(lead),
+        "name": lead.get("name") or fields.get("name") or "",
+        "identifier": identifier_value(lead),
+        "guests": exact_guest_display(lead),
+        "event_type": event_type_for_lead(lead),
+        "manager": crm_manager_name(lead),
+        "crm_status": status_name,
+    }
+
+
 def augment(leads_path: Path, view_path: Path, now_ts: int | None = None) -> None:
     leads_payload = json.loads(leads_path.read_text(encoding="utf-8"))
     view = json.loads(view_path.read_text(encoding="utf-8"))
@@ -101,6 +130,7 @@ def augment(leads_path: Path, view_path: Path, now_ts: int | None = None) -> Non
     current_ts = int(now_ts if now_ts is not None else time.time())
 
     rows = []
+    waiting_stage_rows = []
     tracked_counts = {state: 0 for state in TRACKED_STATES}
     display_counts = {"WAITING_YELLOW": 0, "WAITING_BLUE": 0}
     for lead in leads:
@@ -109,6 +139,10 @@ def augment(leads_path: Path, view_path: Path, now_ts: int | None = None) -> Non
         state = str(feedback.get("state") or "").strip().upper()
         if crm.get("found") and crm.get("entity_type") == "lead" and state in TRACKED_STATES:
             tracked_counts[state] += 1
+
+        waiting_stage_row = compact_waiting_stage_lead(lead)
+        if waiting_stage_row is not None:
+            waiting_stage_rows.append(waiting_stage_row)
 
         row = compact_feedback_lead(lead, current_ts)
         if row is not None:
@@ -132,7 +166,9 @@ def augment(leads_path: Path, view_path: Path, now_ts: int | None = None) -> Non
         "waiting_yellow": display_counts["WAITING_YELLOW"],
         "clear": tracked_counts["CLEAR"],
     }
+    waiting_stage_rows.sort(key=lambda row: -int(row.get("created_ts") or 0))
     view["feedback"] = rows
+    view["waiting_stage"] = waiting_stage_rows
     view_path.write_text(json.dumps(view, ensure_ascii=False, indent=2), encoding="utf-8")
 
 
