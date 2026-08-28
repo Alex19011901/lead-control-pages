@@ -108,16 +108,15 @@
       "crm_created_at": 1787056618,
       "crm_feedback": {
         "crm_lead_id": 47653793,
-        "deadline_at": 1787346000,
-        "excluded": false,
-        "first_activity_at": 1787913858,
+        "excluded": true,
+        "first_activity_at": null,
         "lead_created_at": 1787056618,
         "pipeline_id": 10081590,
         "responsible_user_id": 12982830,
         "rule_version": 6,
-        "state": "CLEAR",
-        "status_id": 79927038,
-        "status_name": "Выслано предложение"
+        "state": "EXCLUDED",
+        "status_id": 143,
+        "status_name": "Закрыто и не реализовано"
       },
       "crm_found": true,
       "crm_required": true,
@@ -489,16 +488,15 @@
       "crm_created_at": 1786792334,
       "crm_feedback": {
         "crm_lead_id": 47554371,
-        "deadline_at": 1787086800,
-        "excluded": false,
-        "first_activity_at": 1787913972,
+        "excluded": true,
+        "first_activity_at": null,
         "lead_created_at": 1786792334,
         "pipeline_id": 10081590,
         "responsible_user_id": 12982830,
         "rule_version": 6,
-        "state": "CLEAR",
-        "status_id": 79927038,
-        "status_name": "Выслано предложение"
+        "state": "EXCLUDED",
+        "status_id": 143,
+        "status_name": "Закрыто и не реализовано"
       },
       "crm_found": true,
       "crm_required": true,
@@ -10309,7 +10307,20 @@
       },
       "last_seen_at": "2026-08-28T13:56:27+03:00",
       "last_seen_ts": 1787914587,
-      "manager_reaction": null,
+      "manager_reaction": {
+        "name": "Олеся",
+        "reacted_at": "2026-08-28T14:10:49+03:00",
+        "reacted_ts": 1787915449,
+        "reaction": [
+          {
+            "emoji": "❤",
+            "type": "emoji"
+          }
+        ],
+        "update_id": 185608077,
+        "user_id": 328611361,
+        "username": "Olesyagozhina"
+      },
       "received_at": "2026-08-28T13:56:27+03:00",
       "sender_name": "TildaForms",
       "sender_user_id": 265299531,
@@ -28738,16 +28749,15 @@
       "crm_created_at": 1787058343,
       "crm_feedback": {
         "crm_lead_id": 47654893,
-        "deadline_at": 1787346000,
-        "excluded": false,
-        "first_activity_at": 1787913802,
+        "excluded": true,
+        "first_activity_at": null,
         "lead_created_at": 1787058343,
         "pipeline_id": 10081590,
         "responsible_user_id": 12982830,
         "rule_version": 6,
-        "state": "CLEAR",
-        "status_id": 79927038,
-        "status_name": "Выслано предложение"
+        "state": "EXCLUDED",
+        "status_id": 143,
+        "status_name": "Закрыто и не реализовано"
       },
       "crm_found": true,
       "crm_required": true,
