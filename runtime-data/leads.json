@@ -33905,6 +33905,75 @@
       "status": "PENDING",
       "username": "",
       "violations": []
+    },
+    {
+      "category": "HOST",
+      "channel": "MAX",
+      "crm": {
+        "ambiguity_count": 0,
+        "created_at": null,
+        "entity_id": null,
+        "entity_type": null,
+        "event_type": null,
+        "found": false,
+        "responsible_user_id": null,
+        "responsible_user_name": null,
+        "updated_at": null
+      },
+      "crm_created_at": null,
+      "crm_found": false,
+      "crm_required": true,
+      "crm_responsible": null,
+      "deadline_msk_ts": 1787950799,
+      "event_date": "",
+      "fields": {
+        "category": "HOST",
+        "event_date": "",
+        "event_date_raw": "13 сентября",
+        "event_type": "",
+        "guests_count": 25,
+        "guests_max": null,
+        "guests_min": null,
+        "guests_raw": "25п.",
+        "name": "Артемий",
+        "phone_digits": "79112422880",
+        "phone_raw": "89112422880",
+        "source": "Заявки хост",
+        "telegram_username": ""
+      },
+      "first_seen_at": "2026-08-28T19:45:15+03:00",
+      "first_seen_ts": 1787935515,
+      "guests": 25,
+      "guests_max": null,
+      "guests_min": null,
+      "guests_raw": "25п.",
+      "id": "d3ecdbeb4ea3ed69",
+      "identifier": {
+        "type": "phone",
+        "value": "79112422880"
+      },
+      "last_seen_at": "2026-08-28T19:45:15+03:00",
+      "last_seen_ts": 1787935515,
+      "manager_reaction": null,
+      "max": {
+        "chat_id": -71704692523093,
+        "message_ids": [
+          "mid.ffffbec8f345ffab01a04942e550091f"
+        ],
+        "sender_name": "David Romanov",
+        "sender_user_id": 297178198,
+        "sender_username": null
+      },
+      "message_id": "mid.ffffbec8f345ffab01a04942e550091f",
+      "name": "Артемий",
+      "phone": "89112422880",
+      "received_at": "2026-08-28T19:45:15+03:00",
+      "sender_name": "David Romanov",
+      "sender_user_id": 297178198,
+      "source": "Заявки хост",
+      "status": "PENDING",
+      "username": "",
+      "violations": []
     }
   ],
   "schema_version": 1
