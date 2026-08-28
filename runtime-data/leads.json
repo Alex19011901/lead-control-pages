@@ -837,25 +837,41 @@
       "channel": "TELEGRAM",
       "crm": {
         "ambiguity_count": 0,
-        "created_at": null,
-        "entity_id": null,
-        "entity_type": null,
-        "event_type": null,
-        "found": false,
-        "responsible_user_id": null,
-        "responsible_user_name": null,
-        "updated_at": null
+        "created_at": 1787895585,
+        "entity_id": 48014773,
+        "entity_type": "lead",
+        "event_type": "Юбилей",
+        "found": true,
+        "guests": "50",
+        "guests_source": "CRM",
+        "responsible_user_id": 13009530,
+        "responsible_user_name": "Олеся",
+        "updated_at": 1787895592
       },
-      "crm_created_at": null,
-      "crm_found": false,
+      "crm_created_at": 1787895585,
+      "crm_feedback": {
+        "crm_lead_id": 48014773,
+        "excluded": true,
+        "first_activity_at": null,
+        "lead_created_at": 1787895585,
+        "pipeline_id": 10081590,
+        "responsible_user_id": 13009530,
+        "rule_version": 6,
+        "state": "EXCLUDED",
+        "status_id": 143,
+        "status_name": "Закрыто и не реализовано"
+      },
+      "crm_found": true,
       "crm_required": true,
-      "crm_responsible": null,
+      "crm_responsible": 13009530,
       "deadline_msk_ts": 1786654799,
+      "event_type": "Юбилей",
+      "event_type_source": "CRM",
       "fields": {
         "category": "САЙТ ТИЛЬДА",
         "event_date": "2026-10-16",
         "event_date_raw": "16-10-2026",
-        "event_type": "Свадьба",
+        "event_type": "Юбилей",
         "guests_count": 50,
         "guests_raw": "50",
         "name": "Софья",
@@ -879,7 +895,7 @@
       "sender_user_id": null,
       "sender_username": "",
       "source": "САЙТ ТИЛЬДА",
-      "status": "ALARM_NO_CRM",
+      "status": "LATE_CRM",
       "telegram": {
         "chat_id": -1001645768111,
         "message_ids": [
@@ -890,7 +906,7 @@
         ]
       },
       "violations": [
-        "ALARM_NO_CRM"
+        "LATE_CRM"
       ]
     },
     {
@@ -1270,16 +1286,15 @@
       "crm_created_at": 1786461911,
       "crm_feedback": {
         "crm_lead_id": 47415045,
-        "deadline_at": 1786741200,
-        "excluded": false,
-        "first_activity_at": 1787583573,
+        "excluded": true,
+        "first_activity_at": null,
         "lead_created_at": 1786461911,
         "pipeline_id": 10081590,
         "responsible_user_id": 12982830,
         "rule_version": 6,
-        "state": "CLEAR",
-        "status_id": 79927038,
-        "status_name": "Выслано предложение"
+        "state": "EXCLUDED",
+        "status_id": 143,
+        "status_name": "Закрыто и не реализовано"
       },
       "crm_found": true,
       "crm_required": true,
@@ -1882,12 +1897,12 @@
         "crm_lead_id": 47351833,
         "deadline_at": 1786654800,
         "excluded": false,
-        "first_activity_at": null,
+        "first_activity_at": 1787899197,
         "lead_created_at": 1786348230,
         "pipeline_id": 10081590,
         "responsible_user_id": 13009530,
         "rule_version": 6,
-        "state": "NO_FEEDBACK",
+        "state": "CLEAR",
         "status_id": 86372998,
         "status_name": "ЖДУНЫ"
       },
@@ -2183,12 +2198,12 @@
         "crm_lead_id": 47203267,
         "deadline_at": 1786222800,
         "excluded": false,
-        "first_activity_at": null,
+        "first_activity_at": 1787899430,
         "lead_created_at": 1785946445,
         "pipeline_id": 10081590,
         "responsible_user_id": 13009530,
         "rule_version": 6,
-        "state": "NO_FEEDBACK",
+        "state": "CLEAR",
         "status_id": 86372998,
         "status_name": "ЖДУНЫ"
       },
@@ -2988,25 +3003,41 @@
       "channel": "TELEGRAM",
       "crm": {
         "ambiguity_count": 0,
-        "created_at": null,
-        "entity_id": null,
-        "entity_type": null,
-        "event_type": null,
-        "found": false,
-        "responsible_user_id": null,
-        "responsible_user_name": null,
-        "updated_at": null
+        "created_at": 1787896253,
+        "entity_id": 48015035,
+        "entity_type": "lead",
+        "event_type": "Свадьба",
+        "found": true,
+        "guests": "20",
+        "guests_source": "CRM",
+        "responsible_user_id": 13009530,
+        "responsible_user_name": "Олеся",
+        "updated_at": 1787896265
       },
-      "crm_created_at": null,
-      "crm_found": false,
+      "crm_created_at": 1787896253,
+      "crm_feedback": {
+        "crm_lead_id": 48015035,
+        "excluded": true,
+        "first_activity_at": null,
+        "lead_created_at": 1787896253,
+        "pipeline_id": 10081590,
+        "responsible_user_id": 13009530,
+        "rule_version": 6,
+        "state": "EXCLUDED",
+        "status_id": 143,
+        "status_name": "Закрыто и не реализовано"
+      },
+      "crm_found": true,
       "crm_required": true,
-      "crm_responsible": null,
+      "crm_responsible": 13009530,
       "deadline_msk_ts": 1785617999,
+      "event_type": "Свадьба",
+      "event_type_source": "CRM",
       "fields": {
         "category": "САЙТ ТИЛЬДА",
         "event_date": "2027-07-27",
         "event_date_raw": "27-07-2027",
-        "event_type": "",
+        "event_type": "Свадьба",
         "guests_count": 36,
         "guests_raw": "36",
         "name": "Мария",
@@ -3030,7 +3061,7 @@
       "sender_user_id": null,
       "sender_username": "",
       "source": "САЙТ ТИЛЬДА",
-      "status": "ALARM_NO_CRM",
+      "status": "LATE_CRM",
       "telegram": {
         "chat_id": -1001645768111,
         "message_ids": [
@@ -3041,7 +3072,7 @@
         ]
       },
       "violations": [
-        "ALARM_NO_CRM"
+        "LATE_CRM"
       ]
     },
     {
@@ -3271,26 +3302,42 @@
       "channel": "TELEGRAM",
       "crm": {
         "ambiguity_count": 0,
-        "created_at": null,
-        "entity_id": null,
-        "entity_type": null,
-        "event_type": null,
-        "found": false,
-        "responsible_user_id": null,
-        "responsible_user_name": null,
-        "updated_at": null
+        "created_at": 1787896397,
+        "entity_id": 48015101,
+        "entity_type": "lead",
+        "event_type": "Свадьба",
+        "found": true,
+        "guests": "12",
+        "guests_source": "CRM",
+        "responsible_user_id": 13009530,
+        "responsible_user_name": "Олеся",
+        "updated_at": 1787896404
       },
-      "crm_created_at": null,
-      "crm_found": false,
+      "crm_created_at": 1787896397,
+      "crm_feedback": {
+        "crm_lead_id": 48015101,
+        "excluded": true,
+        "first_activity_at": null,
+        "lead_created_at": 1787896397,
+        "pipeline_id": 10081590,
+        "responsible_user_id": 13009530,
+        "rule_version": 6,
+        "state": "EXCLUDED",
+        "status_id": 143,
+        "status_name": "Закрыто и не реализовано"
+      },
+      "crm_found": true,
       "crm_required": true,
-      "crm_responsible": null,
+      "crm_responsible": 13009530,
       "deadline_msk_ts": 1785531599,
+      "event_type": "Свадьба",
+      "event_type_source": "CRM",
       "fields": {
         "category": "MARQUIZ",
         "event_date": "2026-10-02",
         "event_date_raw": "02.10.2026",
         "event_format": "Банкет",
-        "event_type": "Юбилей",
+        "event_type": "Свадьба",
         "guests_count": 12,
         "guests_raw": "12-30",
         "name": "яна",
@@ -3314,7 +3361,7 @@
       "sender_user_id": null,
       "sender_username": "",
       "source": "MARQUIZ",
-      "status": "ALARM_NO_CRM",
+      "status": "LATE_CRM",
       "telegram": {
         "chat_id": -1001645768111,
         "message_ids": [
@@ -3325,7 +3372,7 @@
         ]
       },
       "violations": [
-        "ALARM_NO_CRM"
+        "LATE_CRM"
       ]
     },
     {
@@ -3408,25 +3455,41 @@
       "channel": "TELEGRAM",
       "crm": {
         "ambiguity_count": 0,
-        "created_at": null,
-        "entity_id": null,
-        "entity_type": null,
-        "event_type": null,
-        "found": false,
-        "responsible_user_id": null,
-        "responsible_user_name": null,
-        "updated_at": null
+        "created_at": 1787896576,
+        "entity_id": 48015159,
+        "entity_type": "lead",
+        "event_type": "Свадьба",
+        "found": true,
+        "guests": "16",
+        "guests_source": "CRM",
+        "responsible_user_id": 13009530,
+        "responsible_user_name": "Олеся",
+        "updated_at": 1787896582
       },
-      "crm_created_at": null,
-      "crm_found": false,
+      "crm_created_at": 1787896576,
+      "crm_feedback": {
+        "crm_lead_id": 48015159,
+        "excluded": true,
+        "first_activity_at": null,
+        "lead_created_at": 1787896576,
+        "pipeline_id": 10081590,
+        "responsible_user_id": 13009530,
+        "rule_version": 6,
+        "state": "EXCLUDED",
+        "status_id": 143,
+        "status_name": "Закрыто и не реализовано"
+      },
+      "crm_found": true,
       "crm_required": true,
-      "crm_responsible": null,
+      "crm_responsible": 13009530,
       "deadline_msk_ts": 1785445199,
+      "event_type": "Свадьба",
+      "event_type_source": "CRM",
       "fields": {
         "category": "САЙТ ТИЛЬДА",
         "event_date": "2026-09-04",
         "event_date_raw": "04-09-2026",
-        "event_type": "",
+        "event_type": "Свадьба",
         "guests_count": 16,
         "guests_raw": "16",
         "name": "Софья",
@@ -3450,7 +3513,7 @@
       "sender_user_id": null,
       "sender_username": "",
       "source": "САЙТ ТИЛЬДА",
-      "status": "ALARM_NO_CRM",
+      "status": "LATE_CRM",
       "telegram": {
         "chat_id": -1001645768111,
         "message_ids": [
@@ -3461,7 +3524,7 @@
         ]
       },
       "violations": [
-        "ALARM_NO_CRM"
+        "LATE_CRM"
       ]
     },
     {
@@ -3469,20 +3532,36 @@
       "channel": "TELEGRAM",
       "crm": {
         "ambiguity_count": 0,
-        "created_at": null,
-        "entity_id": null,
-        "entity_type": null,
-        "event_type": null,
-        "found": false,
-        "responsible_user_id": null,
-        "responsible_user_name": null,
-        "updated_at": null
+        "created_at": 1787896637,
+        "entity_id": 48015189,
+        "entity_type": "lead",
+        "event_type": "Свадьба",
+        "found": true,
+        "guests": "27",
+        "guests_source": "CRM",
+        "responsible_user_id": 13009530,
+        "responsible_user_name": "Олеся",
+        "updated_at": 1787896642
       },
-      "crm_created_at": null,
-      "crm_found": false,
+      "crm_created_at": 1787896637,
+      "crm_feedback": {
+        "crm_lead_id": 48015189,
+        "excluded": true,
+        "first_activity_at": null,
+        "lead_created_at": 1787896637,
+        "pipeline_id": 10081590,
+        "responsible_user_id": 13009530,
+        "rule_version": 6,
+        "state": "EXCLUDED",
+        "status_id": 143,
+        "status_name": "Закрыто и не реализовано"
+      },
+      "crm_found": true,
       "crm_required": true,
-      "crm_responsible": null,
+      "crm_responsible": 13009530,
       "deadline_msk_ts": 1785445199,
+      "event_type": "Свадьба",
+      "event_type_source": "CRM",
       "fields": {
         "category": "САЙТ ТИЛЬДА",
         "event_date": "2026-09-23",
@@ -3511,7 +3590,7 @@
       "sender_user_id": null,
       "sender_username": "",
       "source": "САЙТ ТИЛЬДА",
-      "status": "ALARM_NO_CRM",
+      "status": "LATE_CRM",
       "telegram": {
         "chat_id": -1001645768111,
         "message_ids": [
@@ -3522,7 +3601,7 @@
         ]
       },
       "violations": [
-        "ALARM_NO_CRM"
+        "LATE_CRM"
       ]
     },
     {
@@ -3530,20 +3609,37 @@
       "channel": "TELEGRAM",
       "crm": {
         "ambiguity_count": 0,
-        "created_at": null,
-        "entity_id": null,
-        "entity_type": null,
-        "event_type": null,
-        "found": false,
-        "responsible_user_id": null,
-        "responsible_user_name": null,
-        "updated_at": null
+        "created_at": 1787896791,
+        "entity_id": 48015231,
+        "entity_type": "lead",
+        "event_type": "Свадьба",
+        "found": true,
+        "guests": "60",
+        "guests_source": "CRM",
+        "responsible_user_id": 13009530,
+        "responsible_user_name": "Олеся",
+        "updated_at": 1787896798
       },
-      "crm_created_at": null,
-      "crm_found": false,
+      "crm_created_at": 1787896791,
+      "crm_feedback": {
+        "crm_lead_id": 48015231,
+        "deadline_at": 1788210000,
+        "excluded": false,
+        "first_activity_at": null,
+        "lead_created_at": 1787896791,
+        "pipeline_id": 10081590,
+        "responsible_user_id": 13009530,
+        "rule_version": 6,
+        "state": "WAITING",
+        "status_id": 79927038,
+        "status_name": "Выслано предложение"
+      },
+      "crm_found": true,
       "crm_required": true,
-      "crm_responsible": null,
+      "crm_responsible": 13009530,
       "deadline_msk_ts": 1785445199,
+      "event_type": "Свадьба",
+      "event_type_source": "CRM",
       "fields": {
         "category": "MARQUIZ",
         "event_date": "2027-07-16",
@@ -3573,7 +3669,7 @@
       "sender_user_id": null,
       "sender_username": "",
       "source": "MARQUIZ",
-      "status": "ALARM_NO_CRM",
+      "status": "LATE_CRM",
       "telegram": {
         "chat_id": -1001645768111,
         "message_ids": [
@@ -3584,7 +3680,7 @@
         ]
       },
       "violations": [
-        "ALARM_NO_CRM"
+        "LATE_CRM"
       ]
     },
     {
@@ -4400,20 +4496,36 @@
       "channel": "TELEGRAM",
       "crm": {
         "ambiguity_count": 0,
-        "created_at": null,
-        "entity_id": null,
-        "entity_type": null,
-        "event_type": null,
-        "found": false,
-        "responsible_user_id": null,
-        "responsible_user_name": null,
-        "updated_at": null
+        "created_at": 1787897183,
+        "entity_id": 48015421,
+        "entity_type": "lead",
+        "event_type": "Свадьба",
+        "found": true,
+        "guests": "30",
+        "guests_source": "CRM",
+        "responsible_user_id": 13009530,
+        "responsible_user_name": "Олеся",
+        "updated_at": 1787897193
       },
-      "crm_created_at": null,
-      "crm_found": false,
+      "crm_created_at": 1787897183,
+      "crm_feedback": {
+        "crm_lead_id": 48015421,
+        "excluded": true,
+        "first_activity_at": null,
+        "lead_created_at": 1787897183,
+        "pipeline_id": 10081590,
+        "responsible_user_id": 13009530,
+        "rule_version": 6,
+        "state": "EXCLUDED",
+        "status_id": 143,
+        "status_name": "Закрыто и не реализовано"
+      },
+      "crm_found": true,
       "crm_required": true,
-      "crm_responsible": null,
+      "crm_responsible": 13009530,
       "deadline_msk_ts": 1785185999,
+      "event_type": "Свадьба",
+      "event_type_source": "CRM",
       "fields": {
         "category": "MARQUIZ",
         "event_date": "2026-09-26",
@@ -4443,7 +4555,7 @@
       "sender_user_id": null,
       "sender_username": "",
       "source": "MARQUIZ",
-      "status": "ALARM_NO_CRM",
+      "status": "LATE_CRM",
       "telegram": {
         "chat_id": -1001645768111,
         "message_ids": [
@@ -4454,7 +4566,7 @@
         ]
       },
       "violations": [
-        "ALARM_NO_CRM"
+        "LATE_CRM"
       ]
     },
     {
@@ -6078,25 +6190,41 @@
       "channel": "TELEGRAM",
       "crm": {
         "ambiguity_count": 0,
-        "created_at": null,
-        "entity_id": null,
-        "entity_type": null,
-        "event_type": null,
-        "found": false,
-        "responsible_user_id": null,
-        "responsible_user_name": null,
-        "updated_at": null
+        "created_at": 1787897555,
+        "entity_id": 48015665,
+        "entity_type": "lead",
+        "event_type": "Корпоратив",
+        "found": true,
+        "guests": "90",
+        "guests_source": "CRM",
+        "responsible_user_id": 13009530,
+        "responsible_user_name": "Олеся",
+        "updated_at": 1787897561
       },
-      "crm_created_at": null,
-      "crm_found": false,
+      "crm_created_at": 1787897555,
+      "crm_feedback": {
+        "crm_lead_id": 48015665,
+        "excluded": true,
+        "first_activity_at": null,
+        "lead_created_at": 1787897555,
+        "pipeline_id": 10081590,
+        "responsible_user_id": 13009530,
+        "rule_version": 6,
+        "state": "EXCLUDED",
+        "status_id": 143,
+        "status_name": "Закрыто и не реализовано"
+      },
+      "crm_found": true,
       "crm_required": true,
-      "crm_responsible": null,
+      "crm_responsible": 13009530,
       "deadline_msk_ts": 1784235599,
+      "event_type": "Корпоратив",
+      "event_type_source": "CRM",
       "fields": {
         "category": "САЙТ ТИЛЬДА",
         "event_date": "2026-12-18",
         "event_date_raw": "18-12-2026",
-        "event_type": "",
+        "event_type": "Корпоратив",
         "guests_count": 90,
         "name": "Татьяна",
         "phone_digits": "79166501028",
@@ -6132,7 +6260,7 @@
       "sender_user_id": null,
       "sender_username": "",
       "source": "САЙТ ТИЛЬДА",
-      "status": "ALARM_NO_CRM",
+      "status": "LATE_CRM",
       "telegram": {
         "chat_id": -1001645768111,
         "message_ids": [
@@ -6143,7 +6271,7 @@
         ]
       },
       "violations": [
-        "ALARM_NO_CRM"
+        "LATE_CRM"
       ]
     },
     {
@@ -6848,25 +6976,41 @@
       "channel": "TELEGRAM",
       "crm": {
         "ambiguity_count": 0,
-        "created_at": null,
-        "entity_id": null,
-        "entity_type": null,
-        "event_type": null,
-        "found": false,
-        "responsible_user_id": null,
-        "responsible_user_name": null,
-        "updated_at": null
+        "created_at": 1787897808,
+        "entity_id": 48015815,
+        "entity_type": "lead",
+        "event_type": "Свадьба",
+        "found": true,
+        "guests": "30",
+        "guests_source": "CRM",
+        "responsible_user_id": 13009530,
+        "responsible_user_name": "Олеся",
+        "updated_at": 1787897814
       },
-      "crm_created_at": null,
-      "crm_found": false,
+      "crm_created_at": 1787897808,
+      "crm_feedback": {
+        "crm_lead_id": 48015815,
+        "excluded": true,
+        "first_activity_at": null,
+        "lead_created_at": 1787897808,
+        "pipeline_id": 10081590,
+        "responsible_user_id": 13009530,
+        "rule_version": 6,
+        "state": "EXCLUDED",
+        "status_id": 143,
+        "status_name": "Закрыто и не реализовано"
+      },
+      "crm_found": true,
       "crm_required": true,
-      "crm_responsible": null,
+      "crm_responsible": 13009530,
       "deadline_msk_ts": 1783861200,
+      "event_type": "Свадьба",
+      "event_type_source": "CRM",
       "fields": {
         "category": "САЙТ ТИЛЬДА",
         "event_date": "2026-08-01",
         "event_date_raw": "01-08-2026",
-        "event_type": "",
+        "event_type": "Свадьба",
         "guests_count": 30,
         "name": "София",
         "phone_digits": "79164184757",
@@ -6902,7 +7046,7 @@
       "sender_user_id": null,
       "sender_username": "",
       "source": "САЙТ ТИЛЬДА",
-      "status": "ALARM_NO_CRM",
+      "status": "LATE_CRM",
       "telegram": {
         "chat_id": -1001645768111,
         "message_ids": [
@@ -6913,7 +7057,7 @@
         ]
       },
       "violations": [
-        "ALARM_NO_CRM"
+        "LATE_CRM"
       ]
     },
     {
@@ -7269,25 +7413,41 @@
       "channel": "TELEGRAM",
       "crm": {
         "ambiguity_count": 0,
-        "created_at": null,
-        "entity_id": null,
-        "entity_type": null,
-        "event_type": null,
-        "found": false,
-        "responsible_user_id": null,
-        "responsible_user_name": null,
-        "updated_at": null
+        "created_at": 1787898722,
+        "entity_id": 48016249,
+        "entity_type": "lead",
+        "event_type": "Свадьба",
+        "found": true,
+        "guests": "13",
+        "guests_source": "CRM",
+        "responsible_user_id": 13009530,
+        "responsible_user_name": "Олеся",
+        "updated_at": 1787898736
       },
-      "crm_created_at": null,
-      "crm_found": false,
+      "crm_created_at": 1787898722,
+      "crm_feedback": {
+        "crm_lead_id": 48016249,
+        "excluded": true,
+        "first_activity_at": null,
+        "lead_created_at": 1787898722,
+        "pipeline_id": 10081590,
+        "responsible_user_id": 13009530,
+        "rule_version": 6,
+        "state": "EXCLUDED",
+        "status_id": 143,
+        "status_name": "Закрыто и не реализовано"
+      },
+      "crm_found": true,
       "crm_required": true,
-      "crm_responsible": null,
+      "crm_responsible": 13009530,
       "deadline_msk_ts": 1783515600,
+      "event_type": "Свадьба",
+      "event_type_source": "CRM",
       "fields": {
         "category": "САЙТ ТИЛЬДА",
         "event_date": "2027-06-01",
         "event_date_raw": "01-06-2027",
-        "event_type": "",
+        "event_type": "Свадьба",
         "guests_count": 13,
         "name": "Анна",
         "phone_digits": "79060638462",
@@ -7323,7 +7483,7 @@
       "sender_user_id": null,
       "sender_username": "",
       "source": "САЙТ ТИЛЬДА",
-      "status": "ALARM_NO_CRM",
+      "status": "LATE_CRM",
       "telegram": {
         "chat_id": -1001645768111,
         "message_ids": [
@@ -7334,7 +7494,7 @@
         ]
       },
       "violations": [
-        "ALARM_NO_CRM"
+        "LATE_CRM"
       ]
     },
     {
@@ -7867,25 +8027,41 @@
       "channel": "TELEGRAM",
       "crm": {
         "ambiguity_count": 0,
-        "created_at": null,
-        "entity_id": null,
-        "entity_type": null,
-        "event_type": null,
-        "found": false,
-        "responsible_user_id": null,
-        "responsible_user_name": null,
-        "updated_at": null
+        "created_at": 1787899053,
+        "entity_id": 48016443,
+        "entity_type": "lead",
+        "event_type": "Свадьба",
+        "found": true,
+        "guests": "30",
+        "guests_source": "CRM",
+        "responsible_user_id": 13009530,
+        "responsible_user_name": "Олеся",
+        "updated_at": 1787899058
       },
-      "crm_created_at": null,
-      "crm_found": false,
+      "crm_created_at": 1787899053,
+      "crm_feedback": {
+        "crm_lead_id": 48016443,
+        "excluded": true,
+        "first_activity_at": null,
+        "lead_created_at": 1787899053,
+        "pipeline_id": 10081590,
+        "responsible_user_id": 13009530,
+        "rule_version": 6,
+        "state": "EXCLUDED",
+        "status_id": 143,
+        "status_name": "Закрыто и не реализовано"
+      },
+      "crm_found": true,
       "crm_required": true,
-      "crm_responsible": null,
+      "crm_responsible": 13009530,
       "deadline_msk_ts": 1783198799,
+      "event_type": "Свадьба",
+      "event_type_source": "CRM",
       "fields": {
         "category": "САЙТ ТИЛЬДА",
         "event_date": "2026-10-02",
         "event_date_raw": "02-10-2026",
-        "event_type": "",
+        "event_type": "Свадьба",
         "guests_count": 30,
         "name": "Даниил",
         "phone_digits": "79606310713",
@@ -7921,7 +8097,7 @@
       "sender_user_id": null,
       "sender_username": "",
       "source": "САЙТ ТИЛЬДА",
-      "status": "ALARM_NO_CRM",
+      "status": "LATE_CRM",
       "telegram": {
         "chat_id": -1001645768111,
         "message_ids": [
@@ -7932,7 +8108,7 @@
         ]
       },
       "violations": [
-        "ALARM_NO_CRM"
+        "LATE_CRM"
       ]
     },
     {
@@ -8656,19 +8832,33 @@
       "channel": "TELEGRAM",
       "crm": {
         "ambiguity_count": 0,
-        "created_at": null,
-        "entity_id": null,
-        "entity_type": null,
+        "created_at": 1787895436,
+        "entity_id": 48014709,
+        "entity_type": "lead",
         "event_type": null,
-        "found": false,
-        "responsible_user_id": null,
-        "responsible_user_name": null,
-        "updated_at": null
+        "found": true,
+        "guests": "2",
+        "guests_source": "CRM",
+        "responsible_user_id": 13009530,
+        "responsible_user_name": "Олеся",
+        "updated_at": 1787895447
       },
-      "crm_created_at": null,
-      "crm_found": false,
+      "crm_created_at": 1787895436,
+      "crm_feedback": {
+        "crm_lead_id": 48014709,
+        "excluded": true,
+        "first_activity_at": null,
+        "lead_created_at": 1787895436,
+        "pipeline_id": 10081590,
+        "responsible_user_id": 13009530,
+        "rule_version": 6,
+        "state": "EXCLUDED",
+        "status_id": 143,
+        "status_name": "Закрыто и не реализовано"
+      },
+      "crm_found": true,
       "crm_required": true,
-      "crm_responsible": null,
+      "crm_responsible": 13009530,
       "deadline_msk_ts": 1787345999,
       "fields": {
         "category": "САЙТ ТИЛЬДА",
@@ -8710,7 +8900,7 @@
       "sender_user_id": 265299531,
       "sender_username": "TildaFormsBot",
       "source": "САЙТ ТИЛЬДА",
-      "status": "ALARM_NO_CRM",
+      "status": "LATE_CRM",
       "telegram": {
         "chat_id": -1001645768111,
         "message_ids": [
@@ -8721,7 +8911,7 @@
         ]
       },
       "violations": [
-        "ALARM_NO_CRM"
+        "LATE_CRM"
       ]
     },
     {
@@ -11717,26 +11907,42 @@
       "channel": "MAX",
       "crm": {
         "ambiguity_count": 0,
-        "created_at": null,
-        "entity_id": null,
-        "entity_type": null,
-        "event_type": null,
-        "found": false,
-        "responsible_user_id": null,
-        "responsible_user_name": null,
-        "updated_at": null
+        "created_at": 1787898860,
+        "entity_id": 48016339,
+        "entity_type": "lead",
+        "event_type": "Бизнес мероприятие",
+        "found": true,
+        "guests": "15",
+        "guests_source": "CRM",
+        "responsible_user_id": 13009530,
+        "responsible_user_name": "Олеся",
+        "updated_at": 1787898868
       },
-      "crm_created_at": null,
-      "crm_found": false,
+      "crm_created_at": 1787898860,
+      "crm_feedback": {
+        "crm_lead_id": 48016339,
+        "excluded": true,
+        "first_activity_at": null,
+        "lead_created_at": 1787898860,
+        "pipeline_id": 10081590,
+        "responsible_user_id": 13009530,
+        "rule_version": 6,
+        "state": "EXCLUDED",
+        "status_id": 143,
+        "status_name": "Закрыто и не реализовано"
+      },
+      "crm_found": true,
       "crm_required": true,
-      "crm_responsible": null,
+      "crm_responsible": 13009530,
       "deadline_msk_ts": 1783429200,
       "event_date": "",
+      "event_type": "Бизнес мероприятие",
+      "event_type_source": "CRM",
       "fields": {
         "category": "HOST",
         "event_date": "",
         "event_date_raw": "8 июля",
-        "event_type": "",
+        "event_type": "Бизнес мероприятие",
         "guests_count": 15,
         "guests_max": null,
         "guests_min": null,
@@ -11777,10 +11983,10 @@
       "sender_name": "David Romanov",
       "sender_user_id": 297178198,
       "source": "Заявки хост",
-      "status": "ALARM_NO_CRM",
+      "status": "LATE_CRM",
       "username": "",
       "violations": [
-        "ALARM_NO_CRM"
+        "LATE_CRM"
       ]
     },
     {
@@ -12359,23 +12565,37 @@
       "channel": "MAX",
       "crm": {
         "ambiguity_count": 0,
-        "created_at": null,
-        "entity_id": null,
-        "entity_type": null,
-        "event_type": null,
-        "found": false,
-        "responsible_user_id": null,
-        "responsible_user_name": null,
-        "updated_at": null
+        "created_at": 1787898118,
+        "entity_id": 48015963,
+        "entity_type": "lead",
+        "event_type": "Свадьба",
+        "found": true,
+        "guests": "20",
+        "guests_source": "CRM",
+        "responsible_user_id": 13009530,
+        "responsible_user_name": "Олеся",
+        "updated_at": 1787898124
       },
-      "crm_created_at": null,
-      "crm_found": false,
+      "crm_created_at": 1787898118,
+      "crm_feedback": {
+        "crm_lead_id": 48015963,
+        "excluded": true,
+        "first_activity_at": null,
+        "lead_created_at": 1787898118,
+        "pipeline_id": 10081590,
+        "responsible_user_id": 13009530,
+        "rule_version": 6,
+        "state": "EXCLUDED",
+        "status_id": 84995274,
+        "status_name": "Внесена п/о идет текущая работа"
+      },
+      "crm_found": true,
       "crm_required": true,
-      "crm_responsible": null,
+      "crm_responsible": 13009530,
       "deadline_msk_ts": 1783544399,
       "event_date": "",
       "event_type": "Свадьба",
-      "event_type_source": "MESSAGE",
+      "event_type_source": "CRM",
       "fields": {
         "category": "STREET",
         "event_date": "",
@@ -12422,10 +12642,10 @@
       "sender_name": "SV",
       "sender_user_id": 205529129,
       "source": "С улицы",
-      "status": "ALARM_NO_CRM",
+      "status": "LATE_CRM",
       "username": "",
       "violations": [
-        "ALARM_NO_CRM"
+        "LATE_CRM"
       ]
     },
     {
@@ -14084,21 +14304,37 @@
       "channel": "MAX",
       "crm": {
         "ambiguity_count": 0,
-        "created_at": null,
-        "entity_id": null,
-        "entity_type": null,
-        "event_type": null,
-        "found": false,
-        "responsible_user_id": null,
-        "responsible_user_name": null,
-        "updated_at": null
+        "created_at": 1787897997,
+        "entity_id": 48015895,
+        "entity_type": "lead",
+        "event_type": "Свадьба",
+        "found": true,
+        "guests": "11",
+        "guests_source": "CRM",
+        "responsible_user_id": 13009530,
+        "responsible_user_name": "Олеся",
+        "updated_at": 1787898005
       },
-      "crm_created_at": null,
-      "crm_found": false,
+      "crm_created_at": 1787897997,
+      "crm_feedback": {
+        "crm_lead_id": 48015895,
+        "excluded": true,
+        "first_activity_at": null,
+        "lead_created_at": 1787897997,
+        "pipeline_id": 10081590,
+        "responsible_user_id": 13009530,
+        "rule_version": 6,
+        "state": "EXCLUDED",
+        "status_id": 143,
+        "status_name": "Закрыто и не реализовано"
+      },
+      "crm_found": true,
       "crm_required": true,
-      "crm_responsible": null,
+      "crm_responsible": 13009530,
       "deadline_msk_ts": 1783803599,
       "event_date": "",
+      "event_type": "Свадьба",
+      "event_type_source": "CRM",
       "fields": {
         "category": "HOST",
         "event_date": "",
@@ -14144,10 +14380,10 @@
       "sender_name": "David Romanov",
       "sender_user_id": 297178198,
       "source": "Заявки хост",
-      "status": "ALARM_NO_CRM",
+      "status": "LATE_CRM",
       "username": "",
       "violations": [
-        "ALARM_NO_CRM"
+        "LATE_CRM"
       ]
     },
     {
@@ -14155,21 +14391,37 @@
       "channel": "MAX",
       "crm": {
         "ambiguity_count": 0,
-        "created_at": null,
-        "entity_id": null,
-        "entity_type": null,
-        "event_type": null,
-        "found": false,
-        "responsible_user_id": null,
-        "responsible_user_name": null,
-        "updated_at": null
+        "created_at": 1787897886,
+        "entity_id": 48015841,
+        "entity_type": "lead",
+        "event_type": "Свадьба",
+        "found": true,
+        "guests": "25",
+        "guests_source": "CRM",
+        "responsible_user_id": 13009530,
+        "responsible_user_name": "Олеся",
+        "updated_at": 1787897891
       },
-      "crm_created_at": null,
-      "crm_found": false,
+      "crm_created_at": 1787897886,
+      "crm_feedback": {
+        "crm_lead_id": 48015841,
+        "excluded": true,
+        "first_activity_at": null,
+        "lead_created_at": 1787897886,
+        "pipeline_id": 10081590,
+        "responsible_user_id": 13009530,
+        "rule_version": 6,
+        "state": "EXCLUDED",
+        "status_id": 143,
+        "status_name": "Закрыто и не реализовано"
+      },
+      "crm_found": true,
       "crm_required": true,
-      "crm_responsible": null,
+      "crm_responsible": 13009530,
       "deadline_msk_ts": 1783861200,
       "event_date": "",
+      "event_type": "Свадьба",
+      "event_type_source": "CRM",
       "fields": {
         "category": "HOST",
         "event_date": "",
@@ -14215,10 +14467,10 @@
       "sender_name": "David Romanov",
       "sender_user_id": 297178198,
       "source": "Заявки хост",
-      "status": "ALARM_NO_CRM",
+      "status": "LATE_CRM",
       "username": "",
       "violations": [
-        "ALARM_NO_CRM"
+        "LATE_CRM"
       ]
     },
     {
@@ -14226,21 +14478,37 @@
       "channel": "MAX",
       "crm": {
         "ambiguity_count": 0,
-        "created_at": null,
-        "entity_id": null,
-        "entity_type": null,
-        "event_type": null,
-        "found": false,
-        "responsible_user_id": null,
-        "responsible_user_name": null,
-        "updated_at": null
+        "created_at": 1787897657,
+        "entity_id": 48015723,
+        "entity_type": "lead",
+        "event_type": "Свадьба",
+        "found": true,
+        "guests": "16",
+        "guests_source": "CRM",
+        "responsible_user_id": 13009530,
+        "responsible_user_name": "Олеся",
+        "updated_at": 1787897707
       },
-      "crm_created_at": null,
-      "crm_found": false,
+      "crm_created_at": 1787897657,
+      "crm_feedback": {
+        "crm_lead_id": 48015723,
+        "excluded": true,
+        "first_activity_at": null,
+        "lead_created_at": 1787897657,
+        "pipeline_id": 10081590,
+        "responsible_user_id": 13009530,
+        "rule_version": 6,
+        "state": "EXCLUDED",
+        "status_id": 143,
+        "status_name": "Закрыто и не реализовано"
+      },
+      "crm_found": true,
       "crm_required": true,
-      "crm_responsible": null,
+      "crm_responsible": 13009530,
       "deadline_msk_ts": 1783889999,
       "event_date": "",
+      "event_type": "Свадьба",
+      "event_type_source": "CRM",
       "fields": {
         "category": "HOST",
         "event_date": "",
@@ -14286,10 +14554,10 @@
       "sender_name": "David Romanov",
       "sender_user_id": 297178198,
       "source": "Заявки хост",
-      "status": "ALARM_NO_CRM",
+      "status": "LATE_CRM",
       "username": "",
       "violations": [
-        "ALARM_NO_CRM"
+        "LATE_CRM"
       ]
     },
     {
@@ -20145,26 +20413,42 @@
       "channel": "MAX",
       "crm": {
         "ambiguity_count": 0,
-        "created_at": null,
-        "entity_id": null,
-        "entity_type": null,
-        "event_type": null,
-        "found": false,
-        "responsible_user_id": null,
-        "responsible_user_name": null,
-        "updated_at": null
+        "created_at": 1787896900,
+        "entity_id": 48015281,
+        "entity_type": "lead",
+        "event_type": "Бизнес мероприятие",
+        "found": true,
+        "guests": "10",
+        "guests_source": "CRM",
+        "responsible_user_id": 13009530,
+        "responsible_user_name": "Олеся",
+        "updated_at": 1787896906
       },
-      "crm_created_at": null,
-      "crm_found": false,
+      "crm_created_at": 1787896900,
+      "crm_feedback": {
+        "crm_lead_id": 48015281,
+        "excluded": true,
+        "first_activity_at": null,
+        "lead_created_at": 1787896900,
+        "pipeline_id": 10081590,
+        "responsible_user_id": 13009530,
+        "rule_version": 6,
+        "state": "EXCLUDED",
+        "status_id": 143,
+        "status_name": "Закрыто и не реализовано"
+      },
+      "crm_found": true,
       "crm_required": true,
-      "crm_responsible": null,
+      "crm_responsible": 13009530,
       "deadline_msk_ts": 1785185999,
       "event_date": "",
+      "event_type": "Бизнес мероприятие",
+      "event_type_source": "CRM",
       "fields": {
         "category": "HOST",
         "event_date": "",
         "event_date_raw": "31 июля",
-        "event_type": "",
+        "event_type": "Бизнес мероприятие",
         "guests_count": 10,
         "guests_max": null,
         "guests_min": null,
@@ -20205,10 +20489,10 @@
       "sender_name": "David Romanov",
       "sender_user_id": 297178198,
       "source": "Заявки хост",
-      "status": "ALARM_NO_CRM",
+      "status": "LATE_CRM",
       "username": "",
       "violations": [
-        "ALARM_NO_CRM"
+        "LATE_CRM"
       ]
     },
     {
@@ -21848,21 +22132,37 @@
       "channel": "MAX",
       "crm": {
         "ambiguity_count": 0,
-        "created_at": null,
-        "entity_id": null,
-        "entity_type": null,
-        "event_type": null,
-        "found": false,
-        "responsible_user_id": null,
-        "responsible_user_name": null,
-        "updated_at": null
+        "created_at": 1787896048,
+        "entity_id": 48014947,
+        "entity_type": "lead",
+        "event_type": "Свадьба",
+        "found": true,
+        "guests": "90",
+        "guests_source": "CRM",
+        "responsible_user_id": 13009530,
+        "responsible_user_name": "Олеся",
+        "updated_at": 1787896054
       },
-      "crm_created_at": null,
-      "crm_found": false,
+      "crm_created_at": 1787896048,
+      "crm_feedback": {
+        "crm_lead_id": 48014947,
+        "excluded": true,
+        "first_activity_at": null,
+        "lead_created_at": 1787896048,
+        "pipeline_id": 10081590,
+        "responsible_user_id": 13009530,
+        "rule_version": 6,
+        "state": "EXCLUDED",
+        "status_id": 143,
+        "status_name": "Закрыто и не реализовано"
+      },
+      "crm_found": true,
       "crm_required": true,
-      "crm_responsible": null,
+      "crm_responsible": 13009530,
       "deadline_msk_ts": 1785675600,
       "event_date": "",
+      "event_type": "Свадьба",
+      "event_type_source": "CRM",
       "fields": {
         "category": "HOST",
         "event_date": "",
@@ -21908,10 +22208,10 @@
       "sender_name": "David Romanov",
       "sender_user_id": 297178198,
       "source": "Заявки хост",
-      "status": "ALARM_NO_CRM",
+      "status": "LATE_CRM",
       "username": "",
       "violations": [
-        "ALARM_NO_CRM"
+        "LATE_CRM"
       ]
     },
     {
@@ -22744,26 +23044,43 @@
       "channel": "MAX",
       "crm": {
         "ambiguity_count": 0,
-        "created_at": null,
-        "entity_id": null,
-        "entity_type": null,
-        "event_type": null,
-        "found": false,
-        "responsible_user_id": null,
-        "responsible_user_name": null,
-        "updated_at": null
+        "created_at": 1787895965,
+        "entity_id": 48014909,
+        "entity_type": "lead",
+        "event_type": "Бизнес мероприятие",
+        "found": true,
+        "guests": "80",
+        "guests_source": "CRM",
+        "responsible_user_id": 13009530,
+        "responsible_user_name": "Олеся",
+        "updated_at": 1787895970
       },
-      "crm_created_at": null,
-      "crm_found": false,
+      "crm_created_at": 1787895965,
+      "crm_feedback": {
+        "crm_lead_id": 48014909,
+        "deadline_at": 1788210000,
+        "excluded": false,
+        "first_activity_at": null,
+        "lead_created_at": 1787895965,
+        "pipeline_id": 10081590,
+        "responsible_user_id": 13009530,
+        "rule_version": 6,
+        "state": "WAITING",
+        "status_id": 79927038,
+        "status_name": "Выслано предложение"
+      },
+      "crm_found": true,
       "crm_required": true,
-      "crm_responsible": null,
+      "crm_responsible": 13009530,
       "deadline_msk_ts": 1785877199,
       "event_date": "",
+      "event_type": "Бизнес мероприятие",
+      "event_type_source": "CRM",
       "fields": {
         "category": "HOST",
         "event_date": "",
         "event_date_raw": "30 октября",
-        "event_type": "",
+        "event_type": "Бизнес мероприятие",
         "guests_count": null,
         "guests_max": null,
         "guests_min": null,
@@ -22804,10 +23121,10 @@
       "sender_name": "Дмитрий Жуков",
       "sender_user_id": 201560258,
       "source": "Заявки хост",
-      "status": "ALARM_NO_CRM",
+      "status": "LATE_CRM",
       "username": "",
       "violations": [
-        "ALARM_NO_CRM"
+        "LATE_CRM"
       ]
     },
     {
@@ -23026,26 +23343,42 @@
       "channel": "MAX",
       "crm": {
         "ambiguity_count": 0,
-        "created_at": null,
-        "entity_id": null,
-        "entity_type": null,
-        "event_type": null,
-        "found": false,
-        "responsible_user_id": null,
-        "responsible_user_name": null,
-        "updated_at": null
+        "created_at": 1787895876,
+        "entity_id": 48014875,
+        "entity_type": "lead",
+        "event_type": "Юбилей",
+        "found": true,
+        "guests": "30",
+        "guests_source": "CRM",
+        "responsible_user_id": 13009530,
+        "responsible_user_name": "Олеся",
+        "updated_at": 1787895886
       },
-      "crm_created_at": null,
-      "crm_found": false,
+      "crm_created_at": 1787895876,
+      "crm_feedback": {
+        "crm_lead_id": 48014875,
+        "excluded": true,
+        "first_activity_at": null,
+        "lead_created_at": 1787895876,
+        "pipeline_id": 10081590,
+        "responsible_user_id": 13009530,
+        "rule_version": 6,
+        "state": "EXCLUDED",
+        "status_id": 143,
+        "status_name": "Закрыто и не реализовано"
+      },
+      "crm_found": true,
       "crm_required": true,
-      "crm_responsible": null,
+      "crm_responsible": 13009530,
       "deadline_msk_ts": 1785963599,
       "event_date": "",
+      "event_type": "Юбилей",
+      "event_type_source": "CRM",
       "fields": {
         "category": "HOST",
         "event_date": "",
         "event_date_raw": "28.08",
-        "event_type": "",
+        "event_type": "Юбилей",
         "guests_count": 30,
         "guests_max": null,
         "guests_min": null,
@@ -23086,10 +23419,10 @@
       "sender_name": "Елена",
       "sender_user_id": 121513620,
       "source": "Заявки хост",
-      "status": "ALARM_NO_CRM",
+      "status": "LATE_CRM",
       "username": "",
       "violations": [
-        "ALARM_NO_CRM"
+        "LATE_CRM"
       ]
     },
     {
@@ -23194,16 +23527,15 @@
       "crm_created_at": 1785938332,
       "crm_feedback": {
         "crm_lead_id": 47199317,
-        "deadline_at": 1786222800,
-        "excluded": false,
+        "excluded": true,
         "first_activity_at": null,
         "lead_created_at": 1785938332,
         "pipeline_id": 10081590,
         "responsible_user_id": 13009530,
         "rule_version": 6,
-        "state": "NO_FEEDBACK",
-        "status_id": 79927034,
-        "status_name": "Первичный контакт"
+        "state": "EXCLUDED",
+        "status_id": 143,
+        "status_name": "Закрыто и не реализовано"
       },
       "crm_found": true,
       "crm_required": true,
@@ -23414,21 +23746,37 @@
       "channel": "MAX",
       "crm": {
         "ambiguity_count": 0,
-        "created_at": null,
-        "entity_id": null,
-        "entity_type": null,
-        "event_type": null,
-        "found": false,
-        "responsible_user_id": null,
-        "responsible_user_name": null,
-        "updated_at": null
+        "created_at": 1787895778,
+        "entity_id": 48014839,
+        "entity_type": "lead",
+        "event_type": "Свадьба",
+        "found": true,
+        "guests": "18",
+        "guests_source": "CRM",
+        "responsible_user_id": 13009530,
+        "responsible_user_name": "Олеся",
+        "updated_at": 1787895780
       },
-      "crm_created_at": null,
-      "crm_found": false,
+      "crm_created_at": 1787895778,
+      "crm_feedback": {
+        "crm_lead_id": 48014839,
+        "excluded": true,
+        "first_activity_at": null,
+        "lead_created_at": 1787895778,
+        "pipeline_id": 10081590,
+        "responsible_user_id": 13009530,
+        "rule_version": 6,
+        "state": "EXCLUDED",
+        "status_id": 142,
+        "status_name": "Успешно реализовано"
+      },
+      "crm_found": true,
       "crm_required": true,
-      "crm_responsible": null,
+      "crm_responsible": 13009530,
       "deadline_msk_ts": 1786021200,
       "event_date": "",
+      "event_type": "Свадьба",
+      "event_type_source": "CRM",
       "fields": {
         "category": "HOST",
         "event_date": "",
@@ -23474,10 +23822,10 @@
       "sender_name": "Дмитрий Жуков",
       "sender_user_id": 201560258,
       "source": "Заявки хост",
-      "status": "ALARM_NO_CRM",
+      "status": "LATE_CRM",
       "username": "",
       "violations": [
-        "ALARM_NO_CRM"
+        "LATE_CRM"
       ]
     },
     {
@@ -24553,26 +24901,42 @@
       "channel": "MAX",
       "crm": {
         "ambiguity_count": 0,
-        "created_at": null,
-        "entity_id": null,
-        "entity_type": null,
-        "event_type": null,
-        "found": false,
-        "responsible_user_id": null,
-        "responsible_user_name": null,
-        "updated_at": null
+        "created_at": 1787895707,
+        "entity_id": 48014813,
+        "entity_type": "lead",
+        "event_type": "Юбилей",
+        "found": true,
+        "guests": "12",
+        "guests_source": "CRM",
+        "responsible_user_id": 13009530,
+        "responsible_user_name": "Олеся",
+        "updated_at": 1787895711
       },
-      "crm_created_at": null,
-      "crm_found": false,
+      "crm_created_at": 1787895707,
+      "crm_feedback": {
+        "crm_lead_id": 48014813,
+        "excluded": true,
+        "first_activity_at": null,
+        "lead_created_at": 1787895707,
+        "pipeline_id": 10081590,
+        "responsible_user_id": 13009530,
+        "rule_version": 6,
+        "state": "EXCLUDED",
+        "status_id": 142,
+        "status_name": "Успешно реализовано"
+      },
+      "crm_found": true,
       "crm_required": true,
-      "crm_responsible": null,
+      "crm_responsible": 13009530,
       "deadline_msk_ts": 1786309199,
       "event_date": "",
+      "event_type": "Юбилей",
+      "event_type_source": "CRM",
       "fields": {
         "category": "HOST",
         "event_date": "",
         "event_date_raw": "15 августа",
-        "event_type": "",
+        "event_type": "Юбилей",
         "guests_count": 12,
         "guests_max": null,
         "guests_min": null,
@@ -24613,10 +24977,10 @@
       "sender_name": "David Romanov",
       "sender_user_id": 297178198,
       "source": "Заявки хост",
-      "status": "ALARM_NO_CRM",
+      "status": "LATE_CRM",
       "username": "",
       "violations": [
-        "ALARM_NO_CRM"
+        "LATE_CRM"
       ]
     },
     {
@@ -25331,16 +25695,15 @@
       "crm_created_at": 1786459350,
       "crm_feedback": {
         "crm_lead_id": 47413759,
-        "deadline_at": 1786741200,
-        "excluded": false,
-        "first_activity_at": 1787583479,
+        "excluded": true,
+        "first_activity_at": null,
         "lead_created_at": 1786459350,
         "pipeline_id": 10081590,
         "responsible_user_id": 12982830,
         "rule_version": 6,
-        "state": "CLEAR",
-        "status_id": 79927038,
-        "status_name": "Выслано предложение"
+        "state": "EXCLUDED",
+        "status_id": 143,
+        "status_name": "Закрыто и не реализовано"
       },
       "crm_found": true,
       "crm_required": true,
@@ -26352,7 +26715,7 @@
         "pipeline_id": 10081590,
         "responsible_user_id": 13009530,
         "rule_version": 6,
-        "state": "WAITING",
+        "state": "NO_FEEDBACK",
         "status_id": 80331318,
         "status_name": "Предбронь"
       },
@@ -30382,16 +30745,15 @@
       "crm_created_at": 1787485264,
       "crm_feedback": {
         "crm_lead_id": 47862755,
-        "deadline_at": 1787778000,
-        "excluded": false,
-        "first_activity_at": 1787582449,
+        "excluded": true,
+        "first_activity_at": null,
         "lead_created_at": 1787485264,
         "pipeline_id": 10081590,
         "responsible_user_id": 12982830,
         "rule_version": 6,
-        "state": "CLEAR",
-        "status_id": 79927042,
-        "status_name": "Принимают решение"
+        "state": "EXCLUDED",
+        "status_id": 143,
+        "status_name": "Закрыто и не реализовано"
       },
       "crm_found": true,
       "crm_required": true,
@@ -30560,7 +30922,7 @@
         "pipeline_id": 10081590,
         "responsible_user_id": 13009530,
         "rule_version": 6,
-        "state": "WAITING",
+        "state": "NO_FEEDBACK",
         "status_id": 79927038,
         "status_name": "Выслано предложение"
       },
@@ -30646,7 +31008,7 @@
         "pipeline_id": 10081590,
         "responsible_user_id": 13009530,
         "rule_version": 6,
-        "state": "WAITING",
+        "state": "NO_FEEDBACK",
         "status_id": 79927038,
         "status_name": "Выслано предложение"
       },
@@ -30893,21 +31255,38 @@
       "channel": "MAX",
       "crm": {
         "ambiguity_count": 0,
-        "created_at": null,
-        "entity_id": null,
-        "entity_type": null,
-        "event_type": null,
-        "found": false,
-        "responsible_user_id": null,
-        "responsible_user_name": null,
-        "updated_at": null
+        "created_at": 1787668690,
+        "entity_id": 47933071,
+        "entity_type": "lead",
+        "event_type": "Корпоратив",
+        "found": true,
+        "guests": "46",
+        "guests_source": "CRM",
+        "responsible_user_id": 13009530,
+        "responsible_user_name": "Олеся",
+        "updated_at": 1787895222
       },
-      "crm_created_at": null,
-      "crm_found": false,
+      "crm_created_at": 1787668690,
+      "crm_feedback": {
+        "crm_lead_id": 47933071,
+        "deadline_at": 1787950800,
+        "excluded": false,
+        "first_activity_at": null,
+        "lead_created_at": 1787668690,
+        "pipeline_id": 10081590,
+        "responsible_user_id": 13009530,
+        "rule_version": 6,
+        "state": "WAITING",
+        "status_id": 79927038,
+        "status_name": "Выслано предложение"
+      },
+      "crm_found": true,
       "crm_required": true,
-      "crm_responsible": null,
+      "crm_responsible": 13009530,
       "deadline_msk_ts": 1787662800,
       "event_date": "",
+      "event_type": "Корпоратив",
+      "event_type_source": "CRM",
       "fields": {
         "attachment_message_id": "mid.ffffbec8f345ffab01a03502a6320bc7",
         "attachment_ocr_text": "212223 8hm00 © Co Fel | 64% @\n< “N Vv\nзапрос/банкет/17 декабря\n/46 чел.\nDiana Nikolaeva Ко.\n24 авг. 2026, 20:45 ® 1 in!\nУважаемые коллеги, здравствуйте!\nХотим обратиться к Вам с запросом.\nДата 17 декабря, группа 46 человек,\nвремя: с 19.00 до 24.00.\nУ нашего заказчика планируется\nпроведение новогоднего\nкорпоратива.\nФормат мероприятия:\n-вэлком, шампанское и закуски\n- фан-казино 2 или 3 зоны\n(организуем сами)\n-работа ведущего и диджея ( с нашей\nстороны)\n-экран ( плазма большая или ЛЭД) что\nможно предложить в зал.\n-дискотека, хороший звук на\nплощадке.\nКоллеги, буду очень благодарна за\nответ и предложение.\nБольшое спасибо.\nДиана Николаева\nМенеджер М!СЕ Департамента\nРоссия и страны СНГ\n+7 495 129 2100\n+7 495 252 00 32 (доб. 138)\n+7 925 188 31 98\nnikolaeva.diana@demlinkatlas.ru\n=p) ПЕМЛИНК\nАТЛАС\nРасширяем границы вашего бизнеса\n1-й Смоленский переулок, дом 24А\nМосква, 121099, Россия\nУВЕДОМЛЕНИЕ О КОНФИДЕНЦИАЛЬНОСТИ: Это\nэлектронное сообщение и любые документы,\nприложенные к нему, содержат\nконфиденциальную информацию. Настоящим\nуведомляем Вас о том, что если это сообщение\na A Q @ --\nОтветить Переслать Важное Удалить Ещё",
@@ -30958,10 +31337,10 @@
       "sender_name": "Al",
       "sender_user_id": 74336871,
       "source": "ЗАЯВКА ПОЧТА",
-      "status": "ALARM_NO_CRM",
+      "status": "LATE_CRM",
       "username": "",
       "violations": [
-        "ALARM_NO_CRM"
+        "LATE_CRM"
       ]
     },
     {
@@ -32366,9 +32745,11 @@
       "sender_name": "Аня",
       "sender_user_id": 193173819,
       "source": "Заявки хост",
-      "status": "PENDING",
+      "status": "ALARM_NO_CRM",
       "username": "",
-      "violations": []
+      "violations": [
+        "ALARM_NO_CRM"
+      ]
     },
     {
       "category": "HOST",
@@ -32387,16 +32768,15 @@
       "crm_created_at": 1787833443,
       "crm_feedback": {
         "crm_lead_id": 47996049,
-        "deadline_at": 1788123600,
-        "excluded": false,
+        "excluded": true,
         "first_activity_at": null,
         "lead_created_at": 1787833443,
         "pipeline_id": 10081590,
         "responsible_user_id": 12982830,
         "rule_version": 6,
-        "state": "WAITING",
-        "status_id": 79927038,
-        "status_name": "Выслано предложение"
+        "state": "EXCLUDED",
+        "status_id": 143,
+        "status_name": "Закрыто и не реализовано"
       },
       "crm_found": true,
       "crm_required": true,
