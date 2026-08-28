@@ -55,6 +55,7 @@ def _is_feedback_excluded_status(status_id: object, status_name: object) -> bool
         "внесена п/о идет текущая работа",
         "успешно реализовано",
         "контакты на декабрь 26",
+        "ждуны",
     }
 
 
