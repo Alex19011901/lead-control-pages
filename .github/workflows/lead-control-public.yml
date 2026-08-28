@@ -74,6 +74,23 @@ jobs:
           PY
           cp runtime-data/dashboard_view.json dashboard_view.json
           cp dashboard_view.json public-site/dashboard_view.json
+          cp price-control/draft.html public-site/price-control-draft.html
+          python - <<'PY'
+          import os
+          from pathlib import Path
+
+          token = os.environ.get("PUBLIC_REFRESH_TOKEN", "").strip()
+          if not token:
+              raise SystemExit("PUBLIC_REFRESH_TOKEN is not configured")
+
+          source = Path("price-control/trigger.html")
+          output = Path("public-site/price-control-trigger.html")
+          html = source.read_text(encoding="utf-8")
+          placeholder = "__PUBLIC_REFRESH_TOKEN__"
+          if placeholder not in html:
+              raise SystemExit("PUBLIC_REFRESH_TOKEN placeholder was not found in Price Control trigger")
+          output.write_text(html.replace(placeholder, token), encoding="utf-8")
+          PY
 
       - name: Save refreshed data
         run: |
