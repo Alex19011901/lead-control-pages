@@ -769,10 +769,11 @@ def _parse_key_value_fields(text: str) -> dict[str, str]:
 
 
 def _extract_phone_raw(text: str) -> str:
-    for match in re.finditer(r"(\+?\d[\d\s().-]{3,}\d)", text):
-        candidate = match.group(1).strip()
-        if len(normalize_phone(candidate)) >= 10:
-            return candidate
+    for line in text.splitlines():
+        for match in re.finditer(r"(\+?\d[\d \t\u00a0().-]{3,}\d)", line):
+            candidate = match.group(1).strip()
+            if len(normalize_phone(candidate)) >= 10:
+                return candidate
     return ""
 
 
