@@ -33974,6 +33974,75 @@
       "status": "PENDING",
       "username": "",
       "violations": []
+    },
+    {
+      "category": "HOST",
+      "channel": "MAX",
+      "crm": {
+        "ambiguity_count": 0,
+        "created_at": null,
+        "entity_id": null,
+        "entity_type": null,
+        "event_type": null,
+        "found": false,
+        "responsible_user_id": null,
+        "responsible_user_name": null,
+        "updated_at": null
+      },
+      "crm_created_at": null,
+      "crm_found": false,
+      "crm_required": true,
+      "crm_responsible": null,
+      "deadline_msk_ts": 1788008400,
+      "event_date": "2027-06-26",
+      "fields": {
+        "category": "HOST",
+        "event_date": "2027-06-26",
+        "event_date_raw": "26.06.2027",
+        "event_type": "Виктория",
+        "guests_count": 25,
+        "guests_max": null,
+        "guests_min": null,
+        "guests_raw": "25п.",
+        "name": "Свадьба",
+        "phone_digits": "79057316512",
+        "phone_raw": "89057316512",
+        "source": "Заявки хост",
+        "telegram_username": ""
+      },
+      "first_seen_at": "2026-08-28T20:22:46+03:00",
+      "first_seen_ts": 1787937766,
+      "guests": 25,
+      "guests_max": null,
+      "guests_min": null,
+      "guests_raw": "25п.",
+      "id": "5d5b2d2676b15851",
+      "identifier": {
+        "type": "phone",
+        "value": "79057316512"
+      },
+      "last_seen_at": "2026-08-28T20:22:46+03:00",
+      "last_seen_ts": 1787937766,
+      "manager_reaction": null,
+      "max": {
+        "chat_id": -71704692523093,
+        "message_ids": [
+          "mid.ffffbec8f345ffab01a049653af345e8"
+        ],
+        "sender_name": "David Romanov",
+        "sender_user_id": 297178198,
+        "sender_username": null
+      },
+      "message_id": "mid.ffffbec8f345ffab01a049653af345e8",
+      "name": "Свадьба",
+      "phone": "89057316512",
+      "received_at": "2026-08-28T20:22:46+03:00",
+      "sender_name": "David Romanov",
+      "sender_user_id": 297178198,
+      "source": "Заявки хост",
+      "status": "PENDING",
+      "username": "",
+      "violations": []
     }
   ],
   "schema_version": 1
