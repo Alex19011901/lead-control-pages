@@ -34430,6 +34430,101 @@
       "violations": [
         "LATE_CRM"
       ]
+    },
+    {
+      "category": "HOST",
+      "channel": "MAX",
+      "crm": {
+        "ambiguity_count": 0,
+        "created_at": 1788067050,
+        "entity_id": 48070697,
+        "entity_type": "lead",
+        "event_type": "Свадьба",
+        "found": true,
+        "guests": "20",
+        "guests_source": "CRM",
+        "responsible_user_id": 13009530,
+        "responsible_user_name": "Олеся",
+        "updated_at": 1788071560
+      },
+      "crm_check_status": "PENDING",
+      "crm_created_at": 1788067050,
+      "crm_feedback": {
+        "crm_lead_id": 48070697,
+        "deadline_at": 1788382800,
+        "excluded": false,
+        "first_activity_at": null,
+        "lead_created_at": 1788067050,
+        "pipeline_id": 10081590,
+        "responsible_user_id": 13009530,
+        "rule_version": 6,
+        "state": "WAITING",
+        "status_id": 79927038,
+        "status_name": "Выслано предложение"
+      },
+      "crm_found": true,
+      "crm_required": true,
+      "crm_responsible": 13009530,
+      "deadline_msk_ts": 1788037199,
+      "event_date": "",
+      "event_type": "Свадьба",
+      "event_type_source": "CRM",
+      "fields": {
+        "category": "HOST",
+        "event_date": "",
+        "event_date_raw": "6.10",
+        "event_type": "Свадьба",
+        "guests_count": null,
+        "guests_max": 20,
+        "guests_min": 15,
+        "guests_raw": "15-20п.",
+        "name": "",
+        "phone_digits": "79271764323",
+        "phone_raw": "+79271764323",
+        "source": "Заявки хост",
+        "telegram_username": ""
+      },
+      "first_seen_at": "2026-08-29T16:07:56+03:00",
+      "first_seen_ts": 1788008876,
+      "guests": null,
+      "guests_max": 20,
+      "guests_min": 15,
+      "guests_raw": "15-20п.",
+      "id": "c65ddf238a9481be",
+      "identifier": {
+        "type": "phone",
+        "value": "79271764323"
+      },
+      "last_seen_at": "2026-08-29T16:07:56+03:00",
+      "last_seen_ts": 1788008876,
+      "manager_reaction": null,
+      "manual_review": {
+        "decided_at": "2026-08-30T12:55:00+03:00",
+        "decision": "HOST",
+        "key": "MAX:-71704692523093:mid.ffffbec8f345ffab01a04da24bc6290f"
+      },
+      "max": {
+        "chat_id": -71704692523093,
+        "message_ids": [
+          "mid.ffffbec8f345ffab01a04da24bc6290f"
+        ],
+        "sender_name": "Дмитрий Жуков",
+        "sender_user_id": 201560258,
+        "sender_username": null
+      },
+      "message_id": "mid.ffffbec8f345ffab01a04da24bc6290f",
+      "name": "",
+      "phone": "+79271764323",
+      "received_at": "2026-08-29T16:07:56+03:00",
+      "sender_name": "Дмитрий Жуков",
+      "sender_user_id": 201560258,
+      "sender_username": null,
+      "source": "Заявки хост",
+      "status": "LATE_CRM",
+      "username": "",
+      "violations": [
+        "LATE_CRM"
+      ]
     }
   ],
   "schema_version": 1
