@@ -156,6 +156,8 @@ def classify_max_text(text: str) -> dict[str, Any]:
 
     ignore_reason = _ignore_reason(text, lowered)
     if ignore_reason:
+        if re.match(r"^\s*заявка\b", text, flags=re.IGNORECASE) and _has_review_protected_lead_signal(text):
+            return _needs_review(text, f"service_conflict:{ignore_reason}")
         return _result(IGNORE, text, is_lead=False, crm_check_required=False, review_reason=ignore_reason)
 
     tilda = _classify_tilda_veranda(text, lowered)
@@ -480,6 +482,35 @@ def _ignore_reason(text: str, lowered: str) -> str:
         return "internal_work_message"
 
     return ""
+
+
+def _has_review_protected_lead_signal(text: str) -> bool:
+    if _extract_phone_raw(text) or _extract_date_raw(text) or _extract_period_raw(text):
+        return True
+
+    compact = _normalize_space(text)
+    compact = re.sub(r"^\s*заявка[.!:]?\s*", "", compact, flags=re.IGNORECASE)
+    stop_words = {
+        "заявка",
+        "почта",
+        "проверь",
+        "проверьте",
+        "отправил",
+        "отправила",
+        "кому",
+        "переслать",
+        "дошло",
+        "напоминание",
+        "бронь",
+        "предбронь",
+        "просмотр",
+        "коллеги",
+        "привет",
+    }
+    for candidate in re.findall(r"\b[А-ЯЁ][а-яё]{2,}\b", compact):
+        if candidate.casefold() not in stop_words:
+            return True
+    return False
 
 
 def _looks_like_short_service_reply(stripped: str, lowered: str) -> bool:
