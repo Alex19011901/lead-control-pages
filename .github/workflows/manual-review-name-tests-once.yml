@@ -1,0 +1,23 @@
+name: Manual Review Name Tests Once
+
+on:
+  push:
+    paths:
+      - ".github/workflows/manual-review-name-tests-once.yml"
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Run manual review name tests
+        working-directory: app
+        run: |
+          PYTHONPATH=src python -m unittest             tests.test_review_decision_persistence.ReviewDecisionPersistenceTests.test_manual_max_name_after_phone_is_extracted             tests.test_review_decision_persistence.ReviewDecisionPersistenceTests.test_manual_telegram_name_near_username_is_extracted
