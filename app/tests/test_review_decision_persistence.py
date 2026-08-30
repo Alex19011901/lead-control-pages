@@ -3,6 +3,7 @@ from __future__ import annotations
 import unittest
 
 from lead_control.manual_history import REVIEWED_TG_MESSAGE_ID, missing_manual_history_events
+from lead_control.processor import _manual_fields
 from lead_control.review_overrides import build_override, upsert_override
 
 
@@ -13,6 +14,24 @@ class ReviewDecisionPersistenceTests(unittest.TestCase):
         self.assertEqual(event["type"], "telegram_needs_review")
         self.assertEqual(event["message_id"], 5666)
         self.assertIn("150 человек", event["text"])
+
+    def test_manual_max_name_after_phone_is_extracted(self) -> None:
+        fields = _manual_fields(
+            "Заявка 6.10 15-20 перс свадьба мз +79271764323 Александр, ждут меню",
+            "HOST",
+        )
+
+        self.assertEqual(fields["phone_digits"], "79271764323")
+        self.assertEqual(fields["name"], "Александр")
+
+    def test_manual_telegram_name_near_username_is_extracted(self) -> None:
+        fields = _manual_fields(
+            "Марина @marina_chudaeva",
+            "TG_LEAD",
+        )
+
+        self.assertEqual(fields["telegram_username"], "marina_chudaeva")
+        self.assertEqual(fields["name"], "Марина")
 
     def test_first_decision_cannot_be_silently_replaced(self) -> None:
         item = {
