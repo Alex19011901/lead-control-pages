@@ -607,7 +607,7 @@ def _manual_fields(text: str, decision: str) -> dict[str, Any]:
     return {
         "source": _manual_source(decision),
         "category": decision,
-        "name": parsed.get("name") or _extract_manual_name(text, phone_raw),
+        "name": parsed.get("name") or _extract_manual_name(text, phone_raw, username),
         "phone_raw": phone_raw,
         "phone_digits": normalize_phone(phone_raw),
         "telegram_username": normalize_username(username),
@@ -771,13 +771,51 @@ def _normalize_manual_guest_raw(value: str) -> str:
     return raw
 
 
-def _extract_manual_name(text: str, phone_raw: str) -> str:
+def _extract_manual_name(text: str, phone_raw: str, username: str = "") -> str:
+    contacts: list[str] = []
     if phone_raw:
-        prefix = text.partition(phone_raw)[0]
-        chunks = [chunk.strip(" .") for chunk in re.split(r"[.\n]", prefix) if chunk.strip(" .")]
-        for candidate in reversed(chunks):
-            if re.search(r"[A-Za-zА-Яа-яЁё]", candidate) and not re.search(r"\d", candidate):
-                return candidate
+        contacts.append(phone_raw)
+    if username:
+        clean_username = username.strip().lstrip("@")
+        if clean_username:
+            contacts.extend([f"@{clean_username}", clean_username])
+
+    stop_words = {
+        "заявка",
+        "свадьба",
+        "корпоратив",
+        "юбилей",
+        "банкет",
+        "фуршет",
+        "мероприятие",
+        "дата",
+        "зал",
+        "вип",
+        "просмотр",
+        "бронь",
+        "предбронь",
+        "телефон",
+        "telegram",
+        "username",
+    }
+
+    for contact in contacts:
+        if contact not in text:
+            continue
+
+        before, _, after = text.partition(contact)
+        sides = (
+            (after[:120], False),
+            (before[-120:], True),
+        )
+        for side, reverse in sides:
+            words = re.findall(r"[А-ЯЁ][а-яё]+|[A-Z][a-z]+", side)
+            if reverse:
+                words = list(reversed(words))
+            for word in words:
+                if word.casefold() not in stop_words:
+                    return word
+
     return ""
 
 
