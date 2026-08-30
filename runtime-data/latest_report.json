@@ -17,8 +17,8 @@
     "Тильда Веранда": 39
   },
   "event_types": {
-    "unknown": 95,
-    "Бизнес мероприятие": 14,
+    "unknown": 94,
+    "Бизнес мероприятие": 15,
     "Выпускной": 1,
     "ДР": 1,
     "Деловое мероприятие": 1,
@@ -38,13 +38,13 @@
     "51-100": 53,
     "unknown": 60
   },
-  "late_crm": 100,
+  "late_crm": 103,
   "latest_leads": [
     {
       "created_at": "2026-08-29T13:07:25+03:00",
-      "crm_entity_id": null,
-      "crm_entity_type": null,
-      "crm_found": false,
+      "crm_entity_id": 48070751,
+      "crm_entity_type": "lead",
+      "crm_found": true,
       "event_date": "2027-06-25",
       "event_type": "Свадьба",
       "guests_count": 50,
@@ -55,16 +55,18 @@
       "manager_username": "Olesyagozhina",
       "name": "Асия",
       "source": "MARQUIZ",
-      "status": "PENDING",
-      "violations": []
+      "status": "LATE_CRM",
+      "violations": [
+        "LATE_CRM"
+      ]
     },
     {
       "created_at": "2026-08-29T12:20:50+03:00",
-      "crm_entity_id": null,
-      "crm_entity_type": null,
-      "crm_found": false,
+      "crm_entity_id": 48070679,
+      "crm_entity_type": "lead",
+      "crm_found": true,
       "event_date": "",
-      "event_type": "",
+      "event_type": "Бизнес мероприятие",
       "guests_count": 5,
       "identifier": "7********09",
       "identifier_type": "phone",
@@ -73,14 +75,16 @@
       "manager_username": "",
       "name": "Оксана",
       "source": "Заявки хост",
-      "status": "PENDING",
-      "violations": []
+      "status": "LATE_CRM",
+      "violations": [
+        "LATE_CRM"
+      ]
     },
     {
       "created_at": "2026-08-29T11:52:04+03:00",
-      "crm_entity_id": null,
-      "crm_entity_type": null,
-      "crm_found": false,
+      "crm_entity_id": 48070727,
+      "crm_entity_type": "lead",
+      "crm_found": true,
       "event_date": "2026-10-16",
       "event_type": "Свадьба",
       "guests_count": 20,
@@ -91,8 +95,10 @@
       "manager_username": "Olesyagozhina",
       "name": "варя",
       "source": "САЙТ ТИЛЬДА",
-      "status": "PENDING",
-      "violations": []
+      "status": "LATE_CRM",
+      "violations": [
+        "LATE_CRM"
+      ]
     },
     {
       "created_at": "2026-08-28T20:22:46+03:00",
@@ -407,5 +413,5 @@
   "no_reaction": 0,
   "ok": 273,
   "total_leads": 421,
-  "updated_at": "2026-08-29T21:10:54+03:00"
+  "updated_at": "2026-08-30T10:28:31+03:00"
 }

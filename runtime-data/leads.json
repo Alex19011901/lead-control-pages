@@ -9519,7 +9519,7 @@
         "pipeline_id": 10081590,
         "responsible_user_id": 12982830,
         "rule_version": 6,
-        "state": "WAITING",
+        "state": "NO_FEEDBACK",
         "status_id": 79927034,
         "status_name": "Первичный контакт"
       },
@@ -9698,7 +9698,7 @@
         "pipeline_id": 10081590,
         "responsible_user_id": 12982830,
         "rule_version": 6,
-        "state": "WAITING",
+        "state": "NO_FEEDBACK",
         "status_id": 80182874,
         "status_name": "ЖДЕМ НА ДЕГУСТАЦИЮ"
       },
@@ -9787,7 +9787,7 @@
         "pipeline_id": 10081590,
         "responsible_user_id": 12982830,
         "rule_version": 6,
-        "state": "WAITING",
+        "state": "NO_FEEDBACK",
         "status_id": 79927038,
         "status_name": "Выслано предложение"
       },
@@ -10389,20 +10389,37 @@
       "channel": "TELEGRAM",
       "crm": {
         "ambiguity_count": 0,
-        "created_at": null,
-        "entity_id": null,
-        "entity_type": null,
-        "event_type": null,
-        "found": false,
-        "responsible_user_id": null,
-        "responsible_user_name": null,
-        "updated_at": null
+        "created_at": 1788067184,
+        "entity_id": 48070727,
+        "entity_type": "lead",
+        "event_type": "Свадьба",
+        "found": true,
+        "guests": "20",
+        "guests_source": "CRM",
+        "responsible_user_id": 13009530,
+        "responsible_user_name": "Олеся",
+        "updated_at": 1788071694
       },
-      "crm_created_at": null,
-      "crm_found": false,
+      "crm_created_at": 1788067184,
+      "crm_feedback": {
+        "crm_lead_id": 48070727,
+        "deadline_at": 1788382800,
+        "excluded": false,
+        "first_activity_at": null,
+        "lead_created_at": 1788067184,
+        "pipeline_id": 10081590,
+        "responsible_user_id": 13009530,
+        "rule_version": 6,
+        "state": "WAITING",
+        "status_id": 79927038,
+        "status_name": "Выслано предложение"
+      },
+      "crm_found": true,
       "crm_required": true,
-      "crm_responsible": null,
+      "crm_responsible": 13009530,
       "deadline_msk_ts": 1788037199,
+      "event_type": "Свадьба",
+      "event_type_source": "CRM",
       "fields": {
         "category": "САЙТ ТИЛЬДА",
         "description": "Содержание заявки:\nname: варя\nphone: +79036614966\nDate: 16-10-2026\nInput: 20\nCheckbox: yes\n\nДополнительная информация:\nКод заявки: 2925975:8636357503\nКод блока: rec917331922\nhttps://moscowbanket.ru/weddings/#rec917331922\nUTM source: yandex_direct\nUTM medium: cpc\nUTM campaign: Svadba_RSYA\nUTM term: свадьба в москве\n-----",
@@ -10444,7 +10461,7 @@
       "sender_user_id": 265299531,
       "sender_username": "TildaFormsBot",
       "source": "САЙТ ТИЛЬДА",
-      "status": "PENDING",
+      "status": "LATE_CRM",
       "telegram": {
         "chat_id": -1001645768111,
         "message_ids": [
@@ -10454,27 +10471,46 @@
           185608078
         ]
       },
-      "violations": []
+      "violations": [
+        "LATE_CRM"
+      ]
     },
     {
       "category": "MARQUIZ",
       "channel": "TELEGRAM",
       "crm": {
         "ambiguity_count": 0,
-        "created_at": null,
-        "entity_id": null,
-        "entity_type": null,
-        "event_type": null,
-        "found": false,
-        "responsible_user_id": null,
-        "responsible_user_name": null,
-        "updated_at": null
+        "created_at": 1788067253,
+        "entity_id": 48070751,
+        "entity_type": "lead",
+        "event_type": "Свадьба",
+        "found": true,
+        "guests": "50",
+        "guests_source": "CRM",
+        "responsible_user_id": 13009530,
+        "responsible_user_name": "Олеся",
+        "updated_at": 1788071761
       },
-      "crm_created_at": null,
-      "crm_found": false,
+      "crm_created_at": 1788067253,
+      "crm_feedback": {
+        "crm_lead_id": 48070751,
+        "deadline_at": 1788382800,
+        "excluded": false,
+        "first_activity_at": null,
+        "lead_created_at": 1788067253,
+        "pipeline_id": 10081590,
+        "responsible_user_id": 13009530,
+        "rule_version": 6,
+        "state": "WAITING",
+        "status_id": 79927038,
+        "status_name": "Выслано предложение"
+      },
+      "crm_found": true,
       "crm_required": true,
-      "crm_responsible": null,
+      "crm_responsible": 13009530,
       "deadline_msk_ts": 1788037199,
+      "event_type": "Свадьба",
+      "event_type_source": "CRM",
       "fields": {
         "category": "MARQUIZ",
         "description": "🎯 Заявка на квиз \"Организуйте идеальное мероприятие в ресторане «Светлый».\"\n\nИмя: Асия\nТелефон: +79915667345\n\nКакое мероприятие вы планируете?\nСвадьба\n\nСколько гостей ожидается?\n50\n\nУточните дату Вашего мероприятия?\n25.06.2027\n\nКакой формат мероприятия интересует?\nБанкет\n\nТовары:\n\nТовары не выбраны\n\n\nБонусы: Бесплатная дегустация, Без арендной платы\n\nМестоположение: Россия, Москва\nUTM-метки:\ncampaign: Bankety_poisk_quiz\nmedium: cpc\nsource: yandex_direct\n\nСтраница: https://mrqz.me/moscowbanket?callibri=yd_c:712849433_gb:5773918656_ad:1915822986185365497_ph:57675183252_st:search_s:none_dt:mobile&utm_source=yandex_direct&utm_medium=cpc&utm_campaign=Bankety_poisk_quiz&type=search&source=none&added=no&block=premium&position=1&keyword=%D1%80%D0%B5%D1%81%D1%82%D0%BE%D1%80%D0%B0%D0%BD%D1%8B%20%D0%BC%D0%BE%D1%81%D0%BA%D0%B2%D1%8B%20%D0%B4%D0%BB%D1%8F%20%D0%B1%D0%B0%D0%BD%D0%BA%D0%B5%D1%82%D0%B0&etext=2202.brpvg0uhy7aR6pud4LdewtLsvYZrZcrd_iS1i64QsiFhxJgMrVTzMarr8B7VnNnVBmdanaiRP8hoHRPqRPzKnXVsd2llbWVta211bHFpZW4.d3e13c1320eacf1dbeba153b67207ffd9c24c580&yclid=4525114862858403839&ybaip=1\n\nСогласия:\nЯ согласен на обработку персональных данных: Да",
@@ -10518,7 +10554,7 @@
       "sender_user_id": 446491725,
       "sender_username": "MarquizBot",
       "source": "MARQUIZ",
-      "status": "PENDING",
+      "status": "LATE_CRM",
       "telegram": {
         "chat_id": -1001645768111,
         "message_ids": [
@@ -10528,7 +10564,9 @@
           185608079
         ]
       },
-      "violations": []
+      "violations": [
+        "LATE_CRM"
+      ]
     },
     {
       "category": "TG_LEAD",
@@ -32303,7 +32341,7 @@
         "pipeline_id": 10081590,
         "responsible_user_id": 12982830,
         "rule_version": 6,
-        "state": "WAITING",
+        "state": "NO_FEEDBACK",
         "status_id": 79927038,
         "status_name": "Выслано предложение"
       },
@@ -32389,7 +32427,7 @@
         "pipeline_id": 10081590,
         "responsible_user_id": 12982830,
         "rule_version": 6,
-        "state": "WAITING",
+        "state": "NO_FEEDBACK",
         "status_id": 79927038,
         "status_name": "Выслано предложение"
       },
@@ -32643,7 +32681,7 @@
         "pipeline_id": 10081590,
         "responsible_user_id": 12982830,
         "rule_version": 6,
-        "state": "WAITING",
+        "state": "NO_FEEDBACK",
         "status_id": 79927038,
         "status_name": "Выслано предложение"
       },
@@ -33981,16 +34019,15 @@
       "crm_created_at": 1787945617,
       "crm_feedback": {
         "crm_lead_id": 48040543,
-        "deadline_at": 1788210000,
-        "excluded": false,
+        "excluded": true,
         "first_activity_at": null,
         "lead_created_at": 1787945617,
         "pipeline_id": 10081590,
         "responsible_user_id": 13009530,
         "rule_version": 6,
-        "state": "WAITING",
-        "status_id": 79927038,
-        "status_name": "Выслано предложение"
+        "state": "EXCLUDED",
+        "status_id": 143,
+        "status_name": "Закрыто и не реализовано"
       },
       "crm_found": true,
       "crm_required": true,
@@ -34311,26 +34348,43 @@
       "channel": "MAX",
       "crm": {
         "ambiguity_count": 0,
-        "created_at": null,
-        "entity_id": null,
-        "entity_type": null,
-        "event_type": null,
-        "found": false,
-        "responsible_user_id": null,
-        "responsible_user_name": null,
-        "updated_at": null
+        "created_at": 1788066982,
+        "entity_id": 48070679,
+        "entity_type": "lead",
+        "event_type": "Бизнес мероприятие",
+        "found": true,
+        "guests": "5",
+        "guests_source": "CRM",
+        "responsible_user_id": 13009530,
+        "responsible_user_name": "Олеся",
+        "updated_at": 1788066987
       },
-      "crm_created_at": null,
-      "crm_found": false,
+      "crm_created_at": 1788066982,
+      "crm_feedback": {
+        "crm_lead_id": 48070679,
+        "deadline_at": 1788382800,
+        "excluded": false,
+        "first_activity_at": null,
+        "lead_created_at": 1788066982,
+        "pipeline_id": 10081590,
+        "responsible_user_id": 13009530,
+        "rule_version": 6,
+        "state": "WAITING",
+        "status_id": 80331318,
+        "status_name": "Предбронь"
+      },
+      "crm_found": true,
       "crm_required": true,
-      "crm_responsible": null,
+      "crm_responsible": 13009530,
       "deadline_msk_ts": 1788037199,
       "event_date": "",
+      "event_type": "Бизнес мероприятие",
+      "event_type_source": "CRM",
       "fields": {
         "category": "HOST",
         "event_date": "",
         "event_date_raw": "17 сентября",
-        "event_type": "",
+        "event_type": "Бизнес мероприятие",
         "guests_count": 5,
         "guests_max": null,
         "guests_min": null,
@@ -34371,9 +34425,11 @@
       "sender_name": "David Romanov",
       "sender_user_id": 297178198,
       "source": "Заявки хост",
-      "status": "PENDING",
+      "status": "LATE_CRM",
       "username": "",
-      "violations": []
+      "violations": [
+        "LATE_CRM"
+      ]
     }
   ],
   "schema_version": 1
