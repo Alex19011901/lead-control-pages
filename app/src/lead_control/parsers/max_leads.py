@@ -132,7 +132,7 @@ def _classify_site_lead_event(
     if not has_attachments:
         return None
     combined_text = _normalize_space("\n".join([event_text, attachment_text])).lower()
-    if "заявка сайт" not in combined_text:
+    if "заявка сайт" not in combined_text and "заявка почта" not in combined_text:
         return None
 
     return _result(
