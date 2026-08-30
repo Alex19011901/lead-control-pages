@@ -7,7 +7,7 @@ from .event_type import infer_event_type
 from .normalize import normalize_phone, normalize_username
 
 MAIL_LEAD = "ЗАЯВКА ПОЧТА"
-HEADER_RE = re.compile(r"^\s*заявка\s+сайт\s*:\s*$", re.IGNORECASE)
+HEADER_RE = re.compile(r"^\s*заявка\s+(?:сайт|почта)\s*:\s*$", re.IGNORECASE)
 
 _RUSSIAN_MONTHS = (
     "январ(?:ь|я|е)",
