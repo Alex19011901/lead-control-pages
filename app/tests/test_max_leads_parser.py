@@ -245,6 +245,18 @@ class MaxLeadClassifierTests(unittest.TestCase):
         self.assertEqual(result["business_source"], "Заявка с ТГ")
         self.assertEqual(result["fields"]["telegram_username"], "urban_meow")
 
+    def test_lead_with_service_phrase_goes_to_review_not_ignore(self) -> None:
+        text = (
+            "Заявка 6.10 15-20 перс свадьба мз +79271764323 Александр , "
+            "зал видели депозит 100 + сервис + диджей , от 8 тыс на чел, "
+            "ждут меню, про алко 20% от депозита сказал"
+        )
+        result = classify_max_text(text)
+
+        self.assertEqual(result["classification"], NEEDS_REVIEW)
+        self.assertNotEqual(result["classification"], IGNORE)
+        self.assertTrue(result["review_reason"].startswith("service_conflict:"))
+
     def test_ignore_confirmed_examples(self) -> None:
         examples = [
             "16.08 веранда п/о\n16.08 вип п/о\n18.08 фуршет 2 эт п/о",
