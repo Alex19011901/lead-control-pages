@@ -34525,6 +34525,160 @@
       "violations": [
         "LATE_CRM"
       ]
+    },
+    {
+      "category": "HOST",
+      "channel": "MAX",
+      "crm": {
+        "ambiguity_count": 0,
+        "created_at": 1788106895,
+        "entity_id": 48086325,
+        "entity_type": "lead",
+        "event_type": "Свадьба",
+        "found": true,
+        "guests": "10",
+        "guests_source": "CRM",
+        "responsible_user_id": 12982830,
+        "responsible_user_name": "Максим",
+        "updated_at": 1788110084
+      },
+      "crm_created_at": 1788106895,
+      "crm_feedback": {
+        "crm_lead_id": 48086325,
+        "excluded": true,
+        "first_activity_at": null,
+        "lead_created_at": 1788106895,
+        "pipeline_id": 10081590,
+        "responsible_user_id": 12982830,
+        "rule_version": 6,
+        "state": "EXCLUDED",
+        "status_id": 86372998,
+        "status_name": "ЖДУНЫ"
+      },
+      "crm_found": true,
+      "crm_required": true,
+      "crm_responsible": 12982830,
+      "deadline_msk_ts": 1788123599,
+      "event_date": "",
+      "event_type": "Свадьба",
+      "event_type_source": "CRM",
+      "fields": {
+        "category": "HOST",
+        "event_date": "",
+        "event_date_raw": "17.10",
+        "event_type": "Свадьба",
+        "guests_count": 10,
+        "guests_max": null,
+        "guests_min": null,
+        "guests_raw": "10п.",
+        "name": "Свадьба",
+        "phone_digits": "79250926893",
+        "phone_raw": "89250926893",
+        "source": "Заявки хост",
+        "telegram_username": ""
+      },
+      "first_seen_at": "2026-08-30T19:06:24+03:00",
+      "first_seen_ts": 1788105984,
+      "guests": 10,
+      "guests_max": null,
+      "guests_min": null,
+      "guests_raw": "10п.",
+      "id": "c511eb1c4cce2d6d",
+      "identifier": {
+        "type": "phone",
+        "value": "79250926893"
+      },
+      "last_seen_at": "2026-08-30T19:06:24+03:00",
+      "last_seen_ts": 1788105984,
+      "manager_reaction": null,
+      "max": {
+        "chat_id": -71704692523093,
+        "message_ids": [
+          "mid.ffffbec8f345ffab01a0536c0aca1943"
+        ],
+        "sender_name": "David Romanov",
+        "sender_user_id": 297178198,
+        "sender_username": null
+      },
+      "message_id": "mid.ffffbec8f345ffab01a0536c0aca1943",
+      "name": "Свадьба",
+      "phone": "89250926893",
+      "received_at": "2026-08-30T19:06:24+03:00",
+      "sender_name": "David Romanov",
+      "sender_user_id": 297178198,
+      "source": "Заявки хост",
+      "status": "OK",
+      "username": "",
+      "violations": []
+    },
+    {
+      "category": "HOST",
+      "channel": "MAX",
+      "crm": {
+        "ambiguity_count": 0,
+        "created_at": null,
+        "entity_id": null,
+        "entity_type": null,
+        "event_type": null,
+        "found": false,
+        "responsible_user_id": null,
+        "responsible_user_name": null,
+        "updated_at": null
+      },
+      "crm_created_at": null,
+      "crm_found": false,
+      "crm_required": true,
+      "crm_responsible": null,
+      "deadline_msk_ts": 1788123599,
+      "event_date": "",
+      "fields": {
+        "category": "HOST",
+        "event_date": "",
+        "event_date_raw": "11 октября",
+        "event_type": "Свадьба",
+        "guests_count": 100,
+        "guests_max": null,
+        "guests_min": null,
+        "guests_raw": "100п.",
+        "name": "Аруз",
+        "phone_digits": "79261782093",
+        "phone_raw": "89261782093",
+        "source": "Заявки хост",
+        "telegram_username": ""
+      },
+      "first_seen_at": "2026-08-30T19:39:11+03:00",
+      "first_seen_ts": 1788107951,
+      "guests": 100,
+      "guests_max": null,
+      "guests_min": null,
+      "guests_raw": "100п.",
+      "id": "0e54610e5e26f468",
+      "identifier": {
+        "type": "phone",
+        "value": "79261782093"
+      },
+      "last_seen_at": "2026-08-30T19:39:11+03:00",
+      "last_seen_ts": 1788107951,
+      "manager_reaction": null,
+      "max": {
+        "chat_id": -71704692523093,
+        "message_ids": [
+          "mid.ffffbec8f345ffab01a0538a0c110f0a"
+        ],
+        "sender_name": "David Romanov",
+        "sender_user_id": 297178198,
+        "sender_username": null
+      },
+      "message_id": "mid.ffffbec8f345ffab01a0538a0c110f0a",
+      "name": "Аруз",
+      "phone": "89261782093",
+      "received_at": "2026-08-30T19:39:11+03:00",
+      "sender_name": "David Romanov",
+      "sender_user_id": 297178198,
+      "source": "Заявки хост",
+      "status": "PENDING",
+      "username": "",
+      "violations": []
     }
   ],
   "schema_version": 1
