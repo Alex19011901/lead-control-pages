@@ -12214,26 +12214,43 @@
       "channel": "MAX",
       "crm": {
         "ambiguity_count": 0,
-        "created_at": null,
-        "entity_id": null,
-        "entity_type": null,
-        "event_type": null,
-        "found": false,
-        "responsible_user_id": null,
-        "responsible_user_name": null,
-        "updated_at": null
+        "created_at": 1788198788,
+        "entity_id": 48121271,
+        "entity_type": "lead",
+        "event_type": "Корпоратив",
+        "found": true,
+        "guests": "130",
+        "guests_source": "CRM",
+        "responsible_user_id": 12982830,
+        "responsible_user_name": "Максим",
+        "updated_at": 1788198793
       },
-      "crm_created_at": null,
-      "crm_found": false,
+      "crm_created_at": 1788198788,
+      "crm_feedback": {
+        "crm_lead_id": 48121271,
+        "deadline_at": 1788469200,
+        "excluded": false,
+        "first_activity_at": null,
+        "lead_created_at": 1788198788,
+        "pipeline_id": 10081590,
+        "responsible_user_id": 12982830,
+        "rule_version": 6,
+        "state": "WAITING",
+        "status_id": 79927038,
+        "status_name": "Выслано предложение"
+      },
+      "crm_found": true,
       "crm_required": true,
-      "crm_responsible": null,
+      "crm_responsible": 12982830,
       "deadline_msk_ts": 1783371599,
       "event_date": "",
+      "event_type": "Корпоратив",
+      "event_type_source": "CRM",
       "fields": {
         "category": "HOST",
         "event_date": "",
         "event_date_raw": "22 января",
-        "event_type": "",
+        "event_type": "Корпоратив",
         "guests_count": 130,
         "guests_max": null,
         "guests_min": null,
@@ -12274,10 +12291,10 @@
       "sender_name": "David Romanov",
       "sender_user_id": 297178198,
       "source": "Заявки хост",
-      "status": "ALARM_NO_CRM",
+      "status": "LATE_CRM",
       "username": "",
       "violations": [
-        "ALARM_NO_CRM"
+        "LATE_CRM"
       ]
     },
     {
@@ -14689,23 +14706,38 @@
       "channel": "MAX",
       "crm": {
         "ambiguity_count": 0,
-        "created_at": null,
-        "entity_id": null,
-        "entity_type": null,
-        "event_type": null,
-        "found": false,
-        "responsible_user_id": null,
-        "responsible_user_name": null,
-        "updated_at": null
+        "created_at": 1788197860,
+        "entity_id": 48120965,
+        "entity_type": "lead",
+        "event_type": "Свадьба",
+        "found": true,
+        "guests": "60",
+        "guests_source": "CRM",
+        "responsible_user_id": 12982830,
+        "responsible_user_name": "Максим",
+        "updated_at": 1788197867
       },
-      "crm_created_at": null,
-      "crm_found": false,
+      "crm_created_at": 1788197860,
+      "crm_feedback": {
+        "crm_lead_id": 48120965,
+        "deadline_at": 1788469200,
+        "excluded": false,
+        "first_activity_at": null,
+        "lead_created_at": 1788197860,
+        "pipeline_id": 10081590,
+        "responsible_user_id": 12982830,
+        "rule_version": 6,
+        "state": "WAITING",
+        "status_id": 79927038,
+        "status_name": "Выслано предложение"
+      },
+      "crm_found": true,
       "crm_required": true,
-      "crm_responsible": null,
+      "crm_responsible": 12982830,
       "deadline_msk_ts": 1783774800,
       "event_date": "2027-03-12",
       "event_type": "Свадьба",
-      "event_type_source": "MESSAGE",
+      "event_type_source": "CRM",
       "fields": {
         "category": "TG_LEAD",
         "event_date": "2027-03-12",
@@ -14751,10 +14783,10 @@
       "sender_name": "Олеся",
       "sender_user_id": 48906491,
       "source": "Заявка с ТГ",
-      "status": "ALARM_NO_CRM",
+      "status": "LATE_CRM",
       "username": "evdokimova_pro_event",
       "violations": [
-        "ALARM_NO_CRM"
+        "LATE_CRM"
       ]
     },
     {
