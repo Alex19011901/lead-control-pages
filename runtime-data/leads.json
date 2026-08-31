@@ -4997,25 +4997,41 @@
       "channel": "TELEGRAM",
       "crm": {
         "ambiguity_count": 0,
-        "created_at": null,
-        "entity_id": null,
-        "entity_type": null,
-        "event_type": null,
-        "found": false,
-        "responsible_user_id": null,
-        "responsible_user_name": null,
-        "updated_at": null
+        "created_at": 1788185325,
+        "entity_id": 48115785,
+        "entity_type": "lead",
+        "event_type": "Юбилей",
+        "found": true,
+        "guests": "3",
+        "guests_source": "CRM",
+        "responsible_user_id": 12982830,
+        "responsible_user_name": "Максим",
+        "updated_at": 1788185326
       },
-      "crm_created_at": null,
-      "crm_found": false,
+      "crm_created_at": 1788185325,
+      "crm_feedback": {
+        "crm_lead_id": 48115785,
+        "excluded": true,
+        "first_activity_at": null,
+        "lead_created_at": 1788185325,
+        "pipeline_id": 10081590,
+        "responsible_user_id": 12982830,
+        "rule_version": 6,
+        "state": "EXCLUDED",
+        "status_id": 142,
+        "status_name": "Успешно реализовано"
+      },
+      "crm_found": true,
       "crm_required": true,
-      "crm_responsible": null,
+      "crm_responsible": 12982830,
       "deadline_msk_ts": 1784811600,
+      "event_type": "Юбилей",
+      "event_type_source": "CRM",
       "fields": {
         "category": "САЙТ ТИЛЬДА",
         "event_date": "2026-07-24",
         "event_date_raw": "24/07/2026",
-        "event_type": "",
+        "event_type": "Юбилей",
         "guests_count": 3,
         "guests_raw": "3",
         "name": "Полина",
@@ -5039,7 +5055,7 @@
       "sender_user_id": null,
       "sender_username": "",
       "source": "САЙТ ТИЛЬДА",
-      "status": "ALARM_NO_CRM",
+      "status": "LATE_CRM",
       "telegram": {
         "chat_id": -1001645768111,
         "message_ids": [
@@ -5050,7 +5066,7 @@
         ]
       },
       "violations": [
-        "ALARM_NO_CRM"
+        "LATE_CRM"
       ]
     },
     {
@@ -10740,6 +10756,94 @@
         ],
         "update_ids": [
           185608090
+        ]
+      },
+      "violations": []
+    },
+    {
+      "category": "САЙТ ТИЛЬДА",
+      "channel": "TELEGRAM",
+      "crm": {
+        "ambiguity_count": 0,
+        "created_at": 1788184865,
+        "entity_id": 48115553,
+        "entity_type": "lead",
+        "event_type": "Свадьба",
+        "found": true,
+        "guests": "45",
+        "guests_source": "CRM",
+        "responsible_user_id": 12982830,
+        "responsible_user_name": "Максим",
+        "updated_at": 1788184928
+      },
+      "crm_created_at": 1788184865,
+      "crm_feedback": {
+        "crm_lead_id": 48115553,
+        "excluded": true,
+        "first_activity_at": null,
+        "lead_created_at": 1788184865,
+        "pipeline_id": 10081590,
+        "responsible_user_id": 12982830,
+        "rule_version": 6,
+        "state": "EXCLUDED",
+        "status_id": 143,
+        "status_name": "Закрыто и не реализовано"
+      },
+      "crm_found": true,
+      "crm_required": true,
+      "crm_responsible": 12982830,
+      "deadline_msk_ts": 1788209999,
+      "event_type": "Свадьба",
+      "event_type_source": "CRM",
+      "fields": {
+        "category": "САЙТ ТИЛЬДА",
+        "description": "Содержание заявки:\nname: Кети\nphone: +79034214888\nDate: 17-07-2027\nInput: 45\nCheckbox: yes\n\nДополнительная информация:\nКод заявки: 2925975:8640952473\nКод блока: rec917331922\nhttps://moscowbanket.ru/weddings#rec917331922\n-----",
+        "event_date": "2027-07-17",
+        "event_date_raw": "17-07-2027",
+        "event_type": "Свадьба",
+        "guests_count": 45,
+        "name": "Кети",
+        "phone_digits": "79034214888",
+        "phone_raw": "+79034214888",
+        "source": "САЙТ ТИЛЬДА",
+        "telegram_username": ""
+      },
+      "first_seen_at": "2026-08-31T16:52:36+03:00",
+      "first_seen_ts": 1788184356,
+      "id": "ecae53e6a6fe43fa",
+      "identifier": {
+        "type": "phone",
+        "value": "79034214888"
+      },
+      "last_seen_at": "2026-08-31T16:52:36+03:00",
+      "last_seen_ts": 1788184356,
+      "manager_reaction": {
+        "name": "Максим",
+        "reacted_at": "2026-08-31T16:54:26+03:00",
+        "reacted_ts": 1788184466,
+        "reaction": [
+          {
+            "emoji": "👍",
+            "type": "emoji"
+          }
+        ],
+        "update_id": 185608096,
+        "user_id": 392177002,
+        "username": "empairbey"
+      },
+      "received_at": "2026-08-31T16:52:36+03:00",
+      "sender_name": "TildaForms",
+      "sender_user_id": 265299531,
+      "sender_username": "TildaFormsBot",
+      "source": "САЙТ ТИЛЬДА",
+      "status": "OK",
+      "telegram": {
+        "chat_id": -1001645768111,
+        "message_ids": [
+          5722
+        ],
+        "update_ids": [
+          185608095
         ]
       },
       "violations": []
