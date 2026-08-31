@@ -63,6 +63,9 @@ def enrich_manual_review_fields(
                 lead["phone"] = value
             elif key == "telegram_username":
                 lead["username"] = value
+            elif key == "email":
+                lead["email"] = str(value).strip().lower()
+                fields["email"] = lead["email"]
             elif key == "event_date":
                 lead["event_date"] = value
             elif key == "guests_count":
@@ -70,6 +73,7 @@ def enrich_manual_review_fields(
 
         phone_digits = normalize_phone(str(fields.get("phone_raw") or ""))
         username = normalize_username(str(fields.get("telegram_username") or ""))
+        email = str(fields.get("email") or "").strip().lower()
 
         if phone_digits:
             fields["phone_digits"] = phone_digits
@@ -82,3 +86,9 @@ def enrich_manual_review_fields(
             lead["identifier"] = {"type": "telegram_username", "value": username}
             if lead.get("crm_required") is not False:
                 lead["crm_check_status"] = "PENDING"
+        elif email:
+            fields["email"] = email
+            lead["email"] = email
+            lead["identifier"] = {"type": "email", "value": email}
+            lead["crm_required"] = True
+            lead["crm_check_status"] = "PENDING"
