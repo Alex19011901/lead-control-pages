@@ -9693,12 +9693,12 @@
         "crm_lead_id": 47960823,
         "deadline_at": 1788037200,
         "excluded": false,
-        "first_activity_at": null,
+        "first_activity_at": 1788169696,
         "lead_created_at": 1787743336,
         "pipeline_id": 10081590,
         "responsible_user_id": 12982830,
         "rule_version": 6,
-        "state": "NO_FEEDBACK",
+        "state": "CLEAR",
         "status_id": 80182874,
         "status_name": "ЖДЕМ НА ДЕГУСТАЦИЮ"
       },
@@ -10589,12 +10589,12 @@
         "crm_lead_id": 48089307,
         "deadline_at": 1788382800,
         "excluded": false,
-        "first_activity_at": null,
+        "first_activity_at": 1788158052,
         "lead_created_at": 1788116565,
         "pipeline_id": 10081590,
         "responsible_user_id": 12982830,
         "rule_version": 6,
-        "state": "WAITING",
+        "state": "CLEAR",
         "status_id": 79927034,
         "status_name": "Первичный контакт"
       },
@@ -10653,6 +10653,65 @@
         ],
         "update_ids": [
           185608088
+        ]
+      },
+      "violations": []
+    },
+    {
+      "category": "САЙТ ТИЛЬДА",
+      "channel": "TELEGRAM",
+      "crm": {
+        "ambiguity_count": 0,
+        "created_at": null,
+        "entity_id": null,
+        "entity_type": null,
+        "event_type": null,
+        "found": false,
+        "responsible_user_id": null,
+        "responsible_user_name": null,
+        "updated_at": null
+      },
+      "crm_created_at": null,
+      "crm_found": false,
+      "crm_required": true,
+      "crm_responsible": null,
+      "deadline_msk_ts": 1788209999,
+      "fields": {
+        "category": "САЙТ ТИЛЬДА",
+        "description": "Содержание заявки:\nName: Ирина\nPhone: +79266285595\nколичество_гостей: 150-200\nDate: 25/11/2026\nCheckbox: yes\n\nДополнительная информация:\nКод заявки: 2925975:8640484942\nКод блока: rec1191803796\nhttps://moscowbanket.ru/#rec917519779\nUTM source: yandex_direct\nUTM medium: cpc\nUTM campaign: Bankety_konverii_RSYA\nUTM term: банкет 110\n-----",
+        "event_date": "2026-11-25",
+        "event_date_raw": "25/11/2026",
+        "event_type": "",
+        "guests_count": 150,
+        "name": "Ирина",
+        "phone_digits": "79266285595",
+        "phone_raw": "+79266285595",
+        "source": "САЙТ ТИЛЬДА",
+        "telegram_username": ""
+      },
+      "first_seen_at": "2026-08-31T13:56:55+03:00",
+      "first_seen_ts": 1788173815,
+      "id": "e069417124478864",
+      "identifier": {
+        "type": "phone",
+        "value": "79266285595"
+      },
+      "last_seen_at": "2026-08-31T13:56:55+03:00",
+      "last_seen_ts": 1788173815,
+      "manager_reaction": null,
+      "received_at": "2026-08-31T13:56:55+03:00",
+      "sender_name": "TildaForms",
+      "sender_user_id": 265299531,
+      "sender_username": "TildaFormsBot",
+      "source": "САЙТ ТИЛЬДА",
+      "status": "PENDING",
+      "telegram": {
+        "chat_id": -1001645768111,
+        "message_ids": [
+          5719
+        ],
+        "update_ids": [
+          185608090
         ]
       },
       "violations": []
@@ -29385,16 +29444,15 @@
       "crm_created_at": 1787059581,
       "crm_feedback": {
         "crm_lead_id": 47655637,
-        "deadline_at": 1787346000,
-        "excluded": false,
-        "first_activity_at": 1787157558,
+        "excluded": true,
+        "first_activity_at": null,
         "lead_created_at": 1787059581,
         "pipeline_id": 10081590,
         "responsible_user_id": 12982830,
         "rule_version": 6,
-        "state": "CLEAR",
-        "status_id": 79927042,
-        "status_name": "Принимают решение"
+        "state": "EXCLUDED",
+        "status_id": 79927046,
+        "status_name": "Согласование договора"
       },
       "crm_found": true,
       "crm_required": true,
@@ -35150,6 +35208,77 @@
       "source": "Заявки хост",
       "status": "OK",
       "username": "",
+      "violations": []
+    },
+    {
+      "category": "TG_LEAD",
+      "channel": "MAX",
+      "crm": {
+        "ambiguity_count": 0,
+        "created_at": null,
+        "entity_id": null,
+        "entity_type": null,
+        "event_type": null,
+        "found": false,
+        "responsible_user_id": null,
+        "responsible_user_name": null,
+        "updated_at": null
+      },
+      "crm_created_at": null,
+      "crm_found": false,
+      "crm_required": true,
+      "crm_responsible": null,
+      "deadline_msk_ts": 1788209999,
+      "event_date": "",
+      "event_type": "Свадьба",
+      "event_type_source": "MESSAGE",
+      "fields": {
+        "category": "TG_LEAD",
+        "event_date": "",
+        "event_date_raw": "10/11",
+        "event_type": "Свадьба",
+        "guests_count": 11,
+        "guests_max": null,
+        "guests_min": null,
+        "guests_raw": "11 человек",
+        "name": "",
+        "phone_digits": "",
+        "phone_raw": "",
+        "source": "Заявка с ТГ",
+        "telegram_username": "blondinochka90"
+      },
+      "first_seen_at": "2026-08-31T14:22:05+03:00",
+      "first_seen_ts": 1788175325,
+      "guests": 11,
+      "guests_max": null,
+      "guests_min": null,
+      "guests_raw": "11 человек",
+      "id": "6001a16503f970a6",
+      "identifier": {
+        "type": "telegram_username",
+        "value": "blondinochka90"
+      },
+      "last_seen_at": "2026-08-31T14:22:05+03:00",
+      "last_seen_ts": 1788175325,
+      "manager_reaction": null,
+      "max": {
+        "chat_id": -71704692523093,
+        "message_ids": [
+          "mid.ffffbec8f345ffab01a0578e19a4516f"
+        ],
+        "sender_name": "Олеся",
+        "sender_user_id": 48906491,
+        "sender_username": null
+      },
+      "message_id": "mid.ffffbec8f345ffab01a0578e19a4516f",
+      "name": "",
+      "phone": "",
+      "received_at": "2026-08-31T14:22:05+03:00",
+      "sender_name": "Олеся",
+      "sender_user_id": 48906491,
+      "source": "Заявка с ТГ",
+      "status": "PENDING",
+      "username": "blondinochka90",
       "violations": []
     }
   ],
