@@ -5225,25 +5225,41 @@
       "channel": "TELEGRAM",
       "crm": {
         "ambiguity_count": 0,
-        "created_at": null,
-        "entity_id": null,
-        "entity_type": null,
-        "event_type": null,
-        "found": false,
-        "responsible_user_id": null,
-        "responsible_user_name": null,
-        "updated_at": null
+        "created_at": 1788185828,
+        "entity_id": 48116047,
+        "entity_type": "lead",
+        "event_type": "Свадьба",
+        "found": true,
+        "guests": "25",
+        "guests_source": "CRM",
+        "responsible_user_id": 12982830,
+        "responsible_user_name": "Максим",
+        "updated_at": 1788185828
       },
-      "crm_created_at": null,
-      "crm_found": false,
+      "crm_created_at": 1788185828,
+      "crm_feedback": {
+        "crm_lead_id": 48116047,
+        "excluded": true,
+        "first_activity_at": null,
+        "lead_created_at": 1788185828,
+        "pipeline_id": 10081590,
+        "responsible_user_id": 12982830,
+        "rule_version": 6,
+        "state": "EXCLUDED",
+        "status_id": 143,
+        "status_name": "Закрыто и не реализовано"
+      },
+      "crm_found": true,
       "crm_required": true,
-      "crm_responsible": null,
+      "crm_responsible": 12982830,
       "deadline_msk_ts": 1784725200,
+      "event_type": "Свадьба",
+      "event_type_source": "CRM",
       "fields": {
         "category": "САЙТ ТИЛЬДА",
         "event_date": "2026-09-26",
         "event_date_raw": "26-09-2026",
-        "event_type": "",
+        "event_type": "Свадьба",
         "guests_count": 25,
         "guests_raw": "25",
         "name": "Андрей",
@@ -5267,7 +5283,7 @@
       "sender_user_id": null,
       "sender_username": "",
       "source": "САЙТ ТИЛЬДА",
-      "status": "ALARM_NO_CRM",
+      "status": "LATE_CRM",
       "telegram": {
         "chat_id": -1001645768111,
         "message_ids": [
@@ -5278,7 +5294,7 @@
         ]
       },
       "violations": [
-        "ALARM_NO_CRM"
+        "LATE_CRM"
       ]
     },
     {
