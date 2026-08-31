@@ -68,6 +68,34 @@ class ManualReviewFieldsTests(unittest.TestCase):
         )
         self.assertEqual(leads[0]["crm_check_status"], "PENDING")
 
+    def test_confirmed_email_becomes_crm_identifier(self) -> None:
+        leads = [{
+            "channel": "MAX",
+            "message_id": "mid.mail",
+            "max": {"chat_id": -71704692523093, "message_ids": ["mid.mail"]},
+            "fields": {},
+            "identifier": {"type": "review_message", "value": "mid.mail"},
+            "crm_required": False,
+            "crm_check_status": "NOT_REQUIRED",
+        }]
+        overrides = [{
+            "channel": "MAX",
+            "chat_id": -71704692523093,
+            "message_id": "mid.mail",
+            "lead_fields": {"email": "TroshinaCari@Yandex.ru"},
+        }]
+
+        enrich_manual_review_fields(leads, overrides)
+
+        self.assertEqual(leads[0]["email"], "troshinacari@yandex.ru")
+        self.assertEqual(leads[0]["fields"]["email"], "troshinacari@yandex.ru")
+        self.assertEqual(
+            leads[0]["identifier"],
+            {"type": "email", "value": "troshinacari@yandex.ru"},
+        )
+        self.assertTrue(leads[0]["crm_required"])
+        self.assertEqual(leads[0]["crm_check_status"], "PENDING")
+
     def test_other_messages_are_not_changed(self) -> None:
         leads = [{
             "channel": "TELEGRAM",
