@@ -18741,26 +18741,42 @@
       "channel": "MAX",
       "crm": {
         "ambiguity_count": 0,
-        "created_at": null,
-        "entity_id": null,
-        "entity_type": null,
-        "event_type": null,
-        "found": false,
-        "responsible_user_id": null,
-        "responsible_user_name": null,
-        "updated_at": null
+        "created_at": 1788196190,
+        "entity_id": 48120365,
+        "entity_type": "lead",
+        "event_type": "Бизнес мероприятие",
+        "found": true,
+        "guests": "20",
+        "guests_source": "CRM",
+        "responsible_user_id": 12982830,
+        "responsible_user_name": "Максим",
+        "updated_at": 1788196191
       },
-      "crm_created_at": null,
-      "crm_found": false,
+      "crm_created_at": 1788196190,
+      "crm_feedback": {
+        "crm_lead_id": 48120365,
+        "excluded": true,
+        "first_activity_at": null,
+        "lead_created_at": 1788196190,
+        "pipeline_id": 10081590,
+        "responsible_user_id": 12982830,
+        "rule_version": 6,
+        "state": "EXCLUDED",
+        "status_id": 143,
+        "status_name": "Закрыто и не реализовано"
+      },
+      "crm_found": true,
       "crm_required": true,
-      "crm_responsible": null,
+      "crm_responsible": 12982830,
       "deadline_msk_ts": 1784408399,
       "event_date": "",
+      "event_type": "Бизнес мероприятие",
+      "event_type_source": "CRM",
       "fields": {
         "category": "HOST",
         "event_date": "",
         "event_date_raw": "27.07",
-        "event_type": "",
+        "event_type": "Бизнес мероприятие",
         "guests_count": 20,
         "guests_max": null,
         "guests_min": null,
@@ -18801,10 +18817,10 @@
       "sender_name": "Елена",
       "sender_user_id": 121513620,
       "source": "Заявки хост",
-      "status": "ALARM_NO_CRM",
+      "status": "LATE_CRM",
       "username": "",
       "violations": [
-        "ALARM_NO_CRM"
+        "LATE_CRM"
       ]
     },
     {
