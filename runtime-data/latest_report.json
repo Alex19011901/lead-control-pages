@@ -3,7 +3,7 @@
   "by_manager": {
     "no_manager_reaction": 376,
     "Максим": 34,
-    "Олеся": 25
+    "Олеся": 26
   },
   "by_source": {
     "MARQUIZ": 25,
@@ -14,11 +14,11 @@
     "Заявка сайт": 3,
     "Заявки хост": 226,
     "С улицы": 2,
-    "САЙТ ТИЛЬДА": 107,
+    "САЙТ ТИЛЬДА": 108,
     "Тильда Веранда": 39
   },
   "event_types": {
-    "unknown": 94,
+    "unknown": 95,
     "Бизнес мероприятие": 16,
     "Выпускной": 1,
     "ДР": 1,
@@ -32,7 +32,7 @@
     "Юбилей": 78
   },
   "guest_ranges": {
-    "1-20": 139,
+    "1-20": 140,
     "101-150": 31,
     "151+": 15,
     "21-50": 131,
@@ -41,6 +41,24 @@
   },
   "late_crm": 109,
   "latest_leads": [
+    {
+      "created_at": "2026-09-01T09:21:25+03:00",
+      "crm_entity_id": null,
+      "crm_entity_type": null,
+      "crm_found": false,
+      "event_date": "2026-10-17",
+      "event_type": "",
+      "guests_count": 18,
+      "identifier": "7********42",
+      "identifier_type": "phone",
+      "lead_id": "74d410036a29577e",
+      "manager": "Олеся",
+      "manager_username": "Olesyagozhina",
+      "name": "Воробьева Анна",
+      "source": "САЙТ ТИЛЬДА",
+      "status": "PENDING",
+      "violations": []
+    },
     {
       "created_at": "2026-08-31T16:52:36+03:00",
       "crm_entity_id": 48115553,
@@ -390,29 +408,11 @@
       "source": "Заявки хост",
       "status": "OK",
       "violations": []
-    },
-    {
-      "created_at": "2026-08-28T11:44:26+03:00",
-      "crm_entity_id": 48040763,
-      "crm_entity_type": "lead",
-      "crm_found": true,
-      "event_date": "2027-06-05",
-      "event_type": "Свадьба",
-      "guests_count": 50,
-      "identifier": "7********69",
-      "identifier_type": "phone",
-      "lead_id": "5b640b9aad224649",
-      "manager": "Олеся",
-      "manager_username": "Olesyagozhina",
-      "name": "Анастасия",
-      "source": "САЙТ ТИЛЬДА",
-      "status": "OK",
-      "violations": []
     }
   ],
   "needs_review": 48,
   "no_reaction": 0,
   "ok": 283,
-  "total_leads": 435,
-  "updated_at": "2026-08-31T23:21:34+03:00"
+  "total_leads": 436,
+  "updated_at": "2026-09-01T10:46:43+03:00"
 }
