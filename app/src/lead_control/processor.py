@@ -460,6 +460,7 @@ def _max_fields(classification: dict[str, Any]) -> dict[str, Any]:
         "phone_raw": fields.get("phone_raw", ""),
         "phone_digits": fields.get("phone_digits", ""),
         "telegram_username": normalize_username(fields.get("telegram_username", "")),
+        "email": fields.get("email", ""),
         "event_date_raw": event_date_raw,
         "event_date": parse_event_date(event_date_raw),
         "guests_count": fields.get("guests_count"),
