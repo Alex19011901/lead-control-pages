@@ -1185,10 +1185,6 @@ def _extract_probable_name(text: str, phone_raw: str) -> str:
         "весь",
         "малый",
         "основной",
-        # In host handoff messages these names are manager routing labels,
-        # not client names (for example: "... 8905... Олеся").
-        "максим",
-        "олеся",
     }
 
     # Highest priority: a human name written on the same line as the phone.
