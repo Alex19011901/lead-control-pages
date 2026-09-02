@@ -12,6 +12,7 @@ from lead_control.parsers.max_leads import (  # noqa: E402
     IGNORE,
     NEEDS_REVIEW,
     RESTORAN_CAFE,
+    TO_MESTO,
     SITE_LEAD,
     STREET,
     TG_LEAD,
@@ -375,7 +376,78 @@ class MaxLeadClassifierTests(unittest.TestCase):
         self.assertEqual(result["display_name"], "Restoran.Cafe")
         self.assertEqual(result["business_source"], "Restoran.Cafe")
         self.assertTrue(result["is_lead"])
-        self.assertFalse(result["crm_check_required"])
+        self.assertTrue(result["crm_check_required"])
+        self.assertEqual(result["fields"]["name"], "Жасмин")
+        self.assertEqual(result["fields"]["phone_digits"], "79857657298")
+        self.assertEqual(result["fields"]["guests_count"], 50)
+        self.assertEqual(result["fields"]["event_date_raw"], "30.08.2026")
+
+    def test_restoran_cafe_explicit_header_uses_screenshot_fields(self) -> None:
+        result = classify_max_event(
+            {
+                "source": "MAX",
+                "chat_id": -71704692523093,
+                "message_id": "mid.restoran.new",
+                "text": "Заявка ресторан.кафе:",
+                "has_attachments": True,
+                "attachments": [{"type": "image"}],
+                "attachment_text": "\n".join(
+                    [
+                        "Гость ожидает звонка банкетного менеджера.",
+                        "Резерв пришел от службы бронирования Restoran.Cafe.",
+                        "Дата: 26.09.26",
+                        "Количество гостей: 30",
+                        "Имя клиента: Алла",
+                        "Тел.:+7 (985) 233 79 45",
+                        "Комментарий: 26 или 27 сентября, юбилей 80 лет",
+                    ]
+                ),
+            }
+        )
+
+        self.assertEqual(result["classification"], RESTORAN_CAFE)
+        self.assertEqual(result["business_source"], "Restoran.Cafe")
+        self.assertTrue(result["crm_check_required"])
+        self.assertEqual(result["fields"]["name"], "Алла")
+        self.assertEqual(result["fields"]["phone_digits"], "79852337945")
+        self.assertEqual(result["fields"]["guests_count"], 30)
+        self.assertEqual(result["fields"]["event_date_raw"], "26.09.2026")
+        self.assertEqual(result["fields"]["event_type"], "Юбилей")
+
+    def test_to_mesto_explicit_header_uses_screenshot_fields(self) -> None:
+        result = classify_max_event(
+            {
+                "source": "MAX",
+                "chat_id": -71704692523093,
+                "message_id": "mid.to-mesto",
+                "text": "Заявка то место:",
+                "has_attachments": True,
+                "attachments": [{"type": "image"}],
+                "attachment_text": "\n".join(
+                    [
+                        "Банкетная служба ТоМесто",
+                        "Заявка на банкет №49843",
+                        "» Дата: 25 сентября 2026 в 17:00",
+                        "e Имя: Илья Земсков",
+                        "» Телефон: +7 927 156-00-85",
+                        "e E-mail: zemzpmn@gmail.com",
+                        "» Число гостей: 60",
+                        "» Событие: день рождения",
+                    ]
+                ),
+            }
+        )
+
+        self.assertEqual(result["classification"], TO_MESTO)
+        self.assertEqual(result["display_name"], "ТоМесто")
+        self.assertEqual(result["business_source"], "ТоМесто")
+        self.assertTrue(result["crm_check_required"])
+        self.assertEqual(result["fields"]["name"], "Илья Земсков")
+        self.assertEqual(result["fields"]["phone_digits"], "79271560085")
+        self.assertEqual(result["fields"]["email"], "zemzpmn@gmail.com")
+        self.assertEqual(result["fields"]["guests_count"], 60)
+        self.assertEqual(result["fields"]["event_date_raw"], "25.09.2026")
+        self.assertEqual(result["fields"]["event_type"], "Юбилей")
 
     def test_site_lead_photo(self) -> None:
         result = classify_max_event(
