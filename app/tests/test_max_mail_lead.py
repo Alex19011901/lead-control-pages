@@ -169,6 +169,50 @@ class MaxMailLeadTests(unittest.TestCase):
         self.assertEqual(leads[0]["source"], "ЗАЯВКА ПОЧТА")
         self.assertEqual(leads[0]["identifier"], {"type": "phone", "value": "79636698819"})
 
+    def test_pairing_supports_restoran_cafe_and_to_mesto_headers(self):
+        for index, title in enumerate(("Заявка ресторан.кафе:", "Заявка то место:"), start=1):
+            with self.subTest(title=title):
+                header_mid = f"mid.new.header.{index}"
+                image_mid = f"mid.new.image.{index}"
+                header = {
+                    "type": "max_message_created",
+                    "source": "MAX",
+                    "update_type": "message_created",
+                    "chat_id": -71704692523093,
+                    "message_id": header_mid,
+                    "body_mid": header_mid,
+                    "text": title,
+                    "has_attachments": False,
+                    "sender_user_id": 74336871,
+                    "sender_name": "Al",
+                    "sender_username": None,
+                    "timestamp": 1788287752000 + index * 1000,
+                }
+                image = {
+                    "type": "max_message_created",
+                    "source": "MAX",
+                    "update_type": "message_created",
+                    "chat_id": -71704692523093,
+                    "message_id": image_mid,
+                    "body_mid": image_mid,
+                    "text": "",
+                    "has_attachments": True,
+                    "attachment_types": ["image"],
+                    "attachments": [{"type": "image", "payload": {"photo_id": 100 + index}}],
+                    "attachment_ocr_text": REAL_OCR,
+                    "attachment_text": REAL_OCR,
+                    "sender_user_id": 74336871,
+                    "sender_name": "Al",
+                    "sender_username": None,
+                    "timestamp": 1788287752500 + index * 1000,
+                }
+                events = [header, image]
+                self.assertTrue(enrich_max_mail_attachments(events, FakeMaxClient()))
+                self.assertEqual(header["attachment_message_id"], image_mid)
+                self.assertEqual(header["attachment_ocr_text"], REAL_OCR)
+                self.assertTrue(image["mail_attachment_only"])
+                self.assertNotIn("attachment_text", image)
+
     def test_missing_ocr_fields_still_stays_mail_lead(self):
         event = mail_event()
         event["attachment_ocr_text"] = "не удалось уверенно распознать поля"
