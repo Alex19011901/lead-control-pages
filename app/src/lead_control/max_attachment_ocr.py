@@ -11,7 +11,10 @@ from typing import Any
 from .max_client import MaxClient, message_attachments
 
 LOG = logging.getLogger(__name__)
-MAIL_HEADER_RE = re.compile(\n    r"^\\s*заявка\\s+(?:сайт|почта|ресторан[.]кафе|то\\s+место)\\s*:\\s*$",\n    re.IGNORECASE,\n)
+MAIL_HEADER_RE = re.compile(
+    r"^\s*заявка\s+(?:сайт|почта|ресторан[.]кафе|то\s+место)\s*:\s*$",
+    re.IGNORECASE,
+)
 PAIR_WINDOW_MS = 10_000
 
 
