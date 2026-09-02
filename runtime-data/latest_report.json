@@ -1,7 +1,7 @@
 {
   "alarm_no_crm": 2,
   "by_manager": {
-    "no_manager_reaction": 397,
+    "no_manager_reaction": 399,
     "Максим": 34,
     "Олеся": 33
   },
@@ -12,14 +12,14 @@
     "ЗАЯВКА ПОЧТА": 7,
     "Заявка с ТГ": 20,
     "Заявка сайт": 3,
-    "Заявки хост": 238,
+    "Заявки хост": 239,
     "С улицы": 2,
-    "САЙТ ТИЛЬДА": 116,
+    "САЙТ ТИЛЬДА": 117,
     "Тильда Веранда": 41,
     "ТоМесто": 1
   },
   "event_types": {
-    "unknown": 104,
+    "unknown": 105,
     "Бизнес мероприятие": 16,
     "Выпускной": 1,
     "ДР": 1,
@@ -30,18 +30,54 @@
     "Свадьба": 142,
     "Съемки": 1,
     "Съёмки": 1,
-    "Юбилей": 83
+    "Юбилей": 84
   },
   "guest_ranges": {
     "1-20": 150,
     "101-150": 32,
     "151+": 18,
-    "21-50": 137,
-    "51-100": 60,
+    "21-50": 138,
+    "51-100": 61,
     "unknown": 67
   },
   "late_crm": 110,
   "latest_leads": [
+    {
+      "created_at": "2026-09-02T18:30:30+03:00",
+      "crm_entity_id": null,
+      "crm_entity_type": null,
+      "crm_found": false,
+      "event_date": "2027-08-18",
+      "event_type": "",
+      "guests_count": 30,
+      "identifier": "7********03",
+      "identifier_type": "phone",
+      "lead_id": "01c527ef955b2954",
+      "manager": "",
+      "manager_username": "",
+      "name": "Валерия",
+      "source": "САЙТ ТИЛЬДА",
+      "status": "PENDING",
+      "violations": []
+    },
+    {
+      "created_at": "2026-09-02T17:32:03+03:00",
+      "crm_entity_id": null,
+      "crm_entity_type": null,
+      "crm_found": false,
+      "event_date": "",
+      "event_type": "",
+      "guests_count": 100,
+      "identifier": "7********44",
+      "identifier_type": "phone",
+      "lead_id": "f9251aac90a21e07",
+      "manager": "",
+      "manager_username": "",
+      "name": "Елизавета",
+      "source": "Заявки хост",
+      "status": "PENDING",
+      "violations": []
+    },
     {
       "created_at": "2026-09-02T17:00:26+03:00",
       "crm_entity_id": null,
@@ -116,11 +152,11 @@
     },
     {
       "created_at": "2026-09-02T15:12:59+03:00",
-      "crm_entity_id": null,
-      "crm_entity_type": null,
-      "crm_found": false,
+      "crm_entity_id": 48182563,
+      "crm_entity_type": "lead",
+      "crm_found": true,
       "event_date": "",
-      "event_type": "",
+      "event_type": "Юбилей",
       "guests_count": 20,
       "identifier": "7********93",
       "identifier_type": "phone",
@@ -129,7 +165,7 @@
       "manager_username": "",
       "name": "Елена",
       "source": "Заявки хост",
-      "status": "PENDING",
+      "status": "OK",
       "violations": []
     },
     {
@@ -371,47 +407,11 @@
       "source": "САЙТ ТИЛЬДА",
       "status": "OK",
       "violations": []
-    },
-    {
-      "created_at": "2026-09-01T14:05:39+03:00",
-      "crm_entity_id": 48145951,
-      "crm_entity_type": "lead",
-      "crm_found": true,
-      "event_date": "",
-      "event_type": "Корпоратив",
-      "guests_count": 100,
-      "identifier": "7********03",
-      "identifier_type": "phone",
-      "lead_id": "e283a0c31a58e692",
-      "manager": "",
-      "manager_username": "",
-      "name": "Светлана",
-      "source": "Заявки хост",
-      "status": "OK",
-      "violations": []
-    },
-    {
-      "created_at": "2026-09-01T13:44:27+03:00",
-      "crm_entity_id": 48145737,
-      "crm_entity_type": "lead",
-      "crm_found": true,
-      "event_date": "2026-12-25",
-      "event_type": "Корпоратив",
-      "guests_count": 50,
-      "identifier": "7********77",
-      "identifier_type": "phone",
-      "lead_id": "f7e6d5c0fac7d267",
-      "manager": "Олеся",
-      "manager_username": "Olesyagozhina",
-      "name": "Хестанова Татьяна григорьевна",
-      "source": "MARQUIZ",
-      "status": "OK",
-      "violations": []
     }
   ],
   "needs_review": 66,
   "no_reaction": 0,
-  "ok": 301,
-  "total_leads": 464,
-  "updated_at": "2026-09-02T17:08:40+03:00"
+  "ok": 302,
+  "total_leads": 466,
+  "updated_at": "2026-09-02T21:27:59+03:00"
 }
