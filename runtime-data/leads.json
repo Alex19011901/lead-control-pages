@@ -11569,6 +11569,65 @@
       "violations": []
     },
     {
+      "category": "САЙТ ТИЛЬДА",
+      "channel": "TELEGRAM",
+      "crm": {
+        "ambiguity_count": 0,
+        "created_at": null,
+        "entity_id": null,
+        "entity_type": null,
+        "event_type": null,
+        "found": false,
+        "responsible_user_id": null,
+        "responsible_user_name": null,
+        "updated_at": null
+      },
+      "crm_created_at": null,
+      "crm_found": false,
+      "crm_required": true,
+      "crm_responsible": null,
+      "deadline_msk_ts": 1788382799,
+      "fields": {
+        "category": "САЙТ ТИЛЬДА",
+        "description": "Содержание заявки:\nName: Александр\nPhone: +79105150795\nколичество_гостей: 16\nDate: 03/10/2026\nCheckbox: yes\n\nДополнительная информация:\nКод заявки: 2925975:8645587132\nКод блока: rec1191803796\nhttps://moscowbanket.ru/#menuu\n-----",
+        "event_date": "2026-10-03",
+        "event_date_raw": "03/10/2026",
+        "event_type": "",
+        "guests_count": 16,
+        "name": "Александр",
+        "phone_digits": "79105150795",
+        "phone_raw": "+79105150795",
+        "source": "САЙТ ТИЛЬДА",
+        "telegram_username": ""
+      },
+      "first_seen_at": "2026-09-02T15:45:18+03:00",
+      "first_seen_ts": 1788353118,
+      "id": "6168aaa6c95c42d7",
+      "identifier": {
+        "type": "phone",
+        "value": "79105150795"
+      },
+      "last_seen_at": "2026-09-02T15:45:18+03:00",
+      "last_seen_ts": 1788353118,
+      "manager_reaction": null,
+      "received_at": "2026-09-02T15:45:18+03:00",
+      "sender_name": "TildaForms",
+      "sender_user_id": 265299531,
+      "sender_username": "TildaFormsBot",
+      "source": "САЙТ ТИЛЬДА",
+      "status": "PENDING",
+      "telegram": {
+        "chat_id": -1001645768111,
+        "message_ids": [
+          5741
+        ],
+        "update_ids": [
+          185608127
+        ]
+      },
+      "violations": []
+    },
+    {
       "category": "TG_LEAD",
       "channel": "TELEGRAM",
       "crm": {
@@ -37634,9 +37693,11 @@
       "sender_name": "Al",
       "sender_user_id": 74336871,
       "source": "Restoran.Cafe",
-      "status": "PENDING",
+      "status": "ALARM_NO_CRM",
       "username": "",
-      "violations": []
+      "violations": [
+        "ALARM_NO_CRM"
+      ]
     },
     {
       "category": "RESTORAN_CAFE",
@@ -37790,9 +37851,11 @@
       "sender_name": "Al",
       "sender_user_id": 74336871,
       "source": "ТоМесто",
-      "status": "PENDING",
+      "status": "ALARM_NO_CRM",
       "username": "",
-      "violations": []
+      "violations": [
+        "ALARM_NO_CRM"
+      ]
     },
     {
       "category": "RESTORAN_CAFE",
@@ -37878,6 +37941,216 @@
       "sender_user_id": 74336871,
       "source": "Restoran.Cafe",
       "status": "OK",
+      "username": "",
+      "violations": []
+    },
+    {
+      "category": "HOST",
+      "channel": "MAX",
+      "crm": {
+        "ambiguity_count": 0,
+        "created_at": null,
+        "entity_id": null,
+        "entity_type": null,
+        "event_type": null,
+        "found": false,
+        "responsible_user_id": null,
+        "responsible_user_name": null,
+        "updated_at": null
+      },
+      "crm_created_at": null,
+      "crm_found": false,
+      "crm_required": true,
+      "crm_responsible": null,
+      "deadline_msk_ts": 1788382799,
+      "event_date": "",
+      "fields": {
+        "category": "HOST",
+        "email": "",
+        "event_date": "",
+        "event_date_raw": "24 сентября",
+        "event_type": "",
+        "guests_count": 12,
+        "guests_max": null,
+        "guests_min": null,
+        "guests_raw": "12п.",
+        "name": "Светлана",
+        "phone_digits": "79159800636",
+        "phone_raw": "89159800636",
+        "source": "Заявки хост",
+        "telegram_username": ""
+      },
+      "first_seen_at": "2026-09-02T14:51:03+03:00",
+      "first_seen_ts": 1788349863,
+      "guests": 12,
+      "guests_max": null,
+      "guests_min": null,
+      "guests_raw": "12п.",
+      "id": "cdc4f7fa1c493f36",
+      "identifier": {
+        "type": "phone",
+        "value": "79159800636"
+      },
+      "last_seen_at": "2026-09-02T14:51:03+03:00",
+      "last_seen_ts": 1788349863,
+      "manager_reaction": null,
+      "max": {
+        "chat_id": -71704692523093,
+        "message_ids": [
+          "mid.ffffbec8f345ffab01a061f55496641d"
+        ],
+        "sender_name": "David Romanov",
+        "sender_user_id": 297178198,
+        "sender_username": null
+      },
+      "message_id": "mid.ffffbec8f345ffab01a061f55496641d",
+      "name": "Светлана",
+      "phone": "89159800636",
+      "received_at": "2026-09-02T14:51:03+03:00",
+      "sender_name": "David Romanov",
+      "sender_user_id": 297178198,
+      "source": "Заявки хост",
+      "status": "PENDING",
+      "username": "",
+      "violations": []
+    },
+    {
+      "category": "HOST",
+      "channel": "MAX",
+      "crm": {
+        "ambiguity_count": 0,
+        "created_at": null,
+        "entity_id": null,
+        "entity_type": null,
+        "event_type": null,
+        "found": false,
+        "responsible_user_id": null,
+        "responsible_user_name": null,
+        "updated_at": null
+      },
+      "crm_created_at": null,
+      "crm_found": false,
+      "crm_required": true,
+      "crm_responsible": null,
+      "deadline_msk_ts": 1788382799,
+      "event_date": "",
+      "fields": {
+        "category": "HOST",
+        "email": "",
+        "event_date": "",
+        "event_date_raw": "13 сентября",
+        "event_type": "",
+        "guests_count": 20,
+        "guests_max": null,
+        "guests_min": null,
+        "guests_raw": "20п.",
+        "name": "Елена",
+        "phone_digits": "79858759193",
+        "phone_raw": "89858759193",
+        "source": "Заявки хост",
+        "telegram_username": ""
+      },
+      "first_seen_at": "2026-09-02T15:12:59+03:00",
+      "first_seen_ts": 1788351179,
+      "guests": 20,
+      "guests_max": null,
+      "guests_min": null,
+      "guests_raw": "20п.",
+      "id": "3fb97bf55e143128",
+      "identifier": {
+        "type": "phone",
+        "value": "79858759193"
+      },
+      "last_seen_at": "2026-09-02T15:12:59+03:00",
+      "last_seen_ts": 1788351179,
+      "manager_reaction": null,
+      "max": {
+        "chat_id": -71704692523093,
+        "message_ids": [
+          "mid.ffffbec8f345ffab01a062096c6e34da"
+        ],
+        "sender_name": "David Romanov",
+        "sender_user_id": 297178198,
+        "sender_username": null
+      },
+      "message_id": "mid.ffffbec8f345ffab01a062096c6e34da",
+      "name": "Елена",
+      "phone": "89858759193",
+      "received_at": "2026-09-02T15:12:59+03:00",
+      "sender_name": "David Romanov",
+      "sender_user_id": 297178198,
+      "source": "Заявки хост",
+      "status": "PENDING",
+      "username": "",
+      "violations": []
+    },
+    {
+      "category": "HOST",
+      "channel": "MAX",
+      "crm": {
+        "ambiguity_count": 0,
+        "created_at": null,
+        "entity_id": null,
+        "entity_type": null,
+        "event_type": null,
+        "found": false,
+        "responsible_user_id": null,
+        "responsible_user_name": null,
+        "updated_at": null
+      },
+      "crm_created_at": null,
+      "crm_found": false,
+      "crm_required": true,
+      "crm_responsible": null,
+      "deadline_msk_ts": 1788382799,
+      "event_date": "",
+      "fields": {
+        "category": "HOST",
+        "email": "",
+        "event_date": "",
+        "event_date_raw": "3 октября",
+        "event_type": "",
+        "guests_count": 16,
+        "guests_max": null,
+        "guests_min": null,
+        "guests_raw": "16п.",
+        "name": "Александр",
+        "phone_digits": "79105150795",
+        "phone_raw": "89105150795",
+        "source": "Заявки хост",
+        "telegram_username": ""
+      },
+      "first_seen_at": "2026-09-02T15:34:33+03:00",
+      "first_seen_ts": 1788352473,
+      "guests": 16,
+      "guests_max": null,
+      "guests_min": null,
+      "guests_raw": "16п.",
+      "id": "9c44b19ebc48036b",
+      "identifier": {
+        "type": "phone",
+        "value": "79105150795"
+      },
+      "last_seen_at": "2026-09-02T15:34:33+03:00",
+      "last_seen_ts": 1788352473,
+      "manager_reaction": null,
+      "max": {
+        "chat_id": -71704692523093,
+        "message_ids": [
+          "mid.ffffbec8f345ffab01a0621d2a621da0"
+        ],
+        "sender_name": "David Romanov",
+        "sender_user_id": 297178198,
+        "sender_username": null
+      },
+      "message_id": "mid.ffffbec8f345ffab01a0621d2a621da0",
+      "name": "Александр",
+      "phone": "89105150795",
+      "received_at": "2026-09-02T15:34:33+03:00",
+      "sender_name": "David Romanov",
+      "sender_user_id": 297178198,
+      "source": "Заявки хост",
+      "status": "PENDING",
       "username": "",
       "violations": []
     }
