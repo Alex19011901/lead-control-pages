@@ -2,9 +2,13 @@ from __future__ import annotations
 
 from typing import Any
 
-from .amocrm_client import AmoCRMClient
+from .amocrm_client import AmoCRMClient, AmoCRMSearchResult
 from .crm_guests import extract_crm_guest_value
+from .parsers.max_leads import RESTORAN_CAFE, TO_MESTO
 from .processor import _update_status
+
+
+AGGREGATOR_PRE_EVENT_GRACE_SECONDS = 30 * 60
 
 
 def apply_crm(
@@ -50,6 +54,7 @@ def apply_crm(
                 and previous_crm.get("found")
                 and previous_crm.get("entity_type") == "lead"
                 and previous_crm.get("entity_id")
+                and _crm_match_is_current_for_lead(lead, previous_crm)
             ):
                 lead["crm"] = dict(previous_crm)
                 _update_status(lead)
@@ -69,6 +74,14 @@ def apply_crm(
             target_created_at=target_created_at,
         )
         crm_payload = result.as_dict()
+        if result.found and not _crm_match_is_current_for_lead(lead, crm_payload):
+            crm_payload = AmoCRMSearchResult(
+                found=False,
+                ambiguity_count=result.ambiguity_count,
+            ).as_dict()
+            lead["crm"] = crm_payload
+            _update_status(lead)
+            continue
         if result.found and result.entity_type == "lead" and result.entity_id:
             full_lead = client._get_entity("leads", int(result.entity_id)) or {}
             crm_guest_value = extract_crm_guest_value(full_lead)
@@ -77,3 +90,29 @@ def apply_crm(
                 crm_payload["guests_source"] = "CRM"
         lead["crm"] = crm_payload
         _update_status(lead)
+
+
+def _crm_match_is_current_for_lead(
+    lead: dict[str, Any],
+    crm_payload: dict[str, Any],
+) -> bool:
+    """Reject an old same-contact deal for a new aggregator request.
+
+    Restoran.Cafe and ToMesto messages are counted as distinct incoming
+    requests. A much older amoCRM deal for the same phone must not make the
+    new request look already entered. A short grace window is kept for cases
+    where the manager creates the deal shortly before the MAX forward arrives.
+    """
+    if lead.get("category") not in {RESTORAN_CAFE, TO_MESTO}:
+        return True
+
+    try:
+        source_ts = int(lead.get("first_seen_ts") or 0)
+        crm_created_at = int(crm_payload.get("created_at") or 0)
+    except (TypeError, ValueError):
+        return True
+
+    if source_ts <= 0 or crm_created_at <= 0:
+        return True
+
+    return crm_created_at >= source_ts - AGGREGATOR_PRE_EVENT_GRACE_SECONDS
