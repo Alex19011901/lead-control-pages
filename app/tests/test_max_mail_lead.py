@@ -300,7 +300,7 @@ class MaxMailLeadTests(unittest.TestCase):
         self.assertEqual(lead["event_date"], "2026-10-10")
         self.assertEqual(lead["fields"]["event_date_raw"], "10 октября")
         self.assertEqual(lead["guests_raw"], "35-40 перс")
-        self.assertEqual(lead["name"], "")
+        self.assertEqual(lead["name"], "Максим")
 
     def test_missing_ocr_fields_still_stays_mail_lead(self):
         event = mail_event()
