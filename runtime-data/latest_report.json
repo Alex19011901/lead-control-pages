@@ -19,7 +19,7 @@
     "ТоМесто": 1
   },
   "event_types": {
-    "unknown": 99,
+    "unknown": 98,
     "Бизнес мероприятие": 16,
     "Выпускной": 1,
     "ДР": 1,
@@ -30,7 +30,7 @@
     "Свадьба": 142,
     "Съемки": 1,
     "Съёмки": 1,
-    "Юбилей": 82
+    "Юбилей": 83
   },
   "guest_ranges": {
     "1-20": 145,
@@ -80,11 +80,11 @@
     },
     {
       "created_at": "2026-09-01T21:36:38+03:00",
-      "crm_entity_id": null,
-      "crm_entity_type": null,
-      "crm_found": false,
+      "crm_entity_id": 48163995,
+      "crm_entity_type": "lead",
+      "crm_found": true,
       "event_date": "2026-09-12",
-      "event_type": "",
+      "event_type": "Юбилей",
       "guests_count": 15,
       "identifier": "7********51",
       "identifier_type": "phone",
@@ -93,7 +93,7 @@
       "manager_username": "",
       "name": "Каролина",
       "source": "Restoran.Cafe",
-      "status": "PENDING",
+      "status": "OK",
       "violations": []
     },
     {
@@ -405,9 +405,9 @@
       "violations": []
     }
   ],
-  "needs_review": 60,
+  "needs_review": 61,
   "no_reaction": 0,
-  "ok": 299,
+  "ok": 300,
   "total_leads": 458,
-  "updated_at": "2026-09-02T10:34:45+03:00"
+  "updated_at": "2026-09-02T10:44:12+03:00"
 }

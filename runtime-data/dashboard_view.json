@@ -16,10 +16,10 @@
       "end": "2026-09-01",
       "total": 23,
       "status": {
-        "OK": 16,
+        "OK": 17,
         "-": 2,
         "LATE_CRM": 1,
-        "PENDING": 4
+        "PENDING": 3
       },
       "source": {
         "САЙТ ТИЛЬДА": 7,
@@ -44,8 +44,8 @@
       "event": {
         "Свадьба": 4,
         "Корпоратив": 10,
-        "Юбилей": 4,
-        "Не определено": 5
+        "Юбилей": 5,
+        "Не определено": 4
       },
       "days": [
         [
@@ -59,10 +59,10 @@
       "end": "2026-09-02",
       "total": 62,
       "status": {
-        "OK": 49,
+        "OK": 50,
         "-": 3,
         "LATE_CRM": 6,
-        "PENDING": 4
+        "PENDING": 3
       },
       "source": {
         "САЙТ ТИЛЬДА": 16,
@@ -90,8 +90,8 @@
         "Свадьба": 21,
         "Бизнес мероприятие": 2,
         "Выпускной": 1,
-        "Не определено": 8,
-        "Юбилей": 6
+        "Не определено": 7,
+        "Юбилей": 7
       },
       "days": [
         [
@@ -125,10 +125,10 @@
       "end": "2026-09-02",
       "total": 230,
       "status": {
-        "OK": 166,
+        "OK": 167,
         "LATE_CRM": 45,
         "-": 15,
-        "PENDING": 4
+        "PENDING": 3
       },
       "source": {
         "MARQUIZ": 18,
@@ -156,9 +156,9 @@
       },
       "event": {
         "Свадьба": 71,
-        "Юбилей": 34,
+        "Юбилей": 35,
         "Бизнес мероприятие": 8,
-        "Не определено": 36,
+        "Не определено": 35,
         "Съёмки": 1,
         "Корпоратив": 75,
         "Детский праздник": 4,
@@ -285,9 +285,9 @@
       "total": 458,
       "status": {
         "LATE_CRM": 110,
-        "OK": 299,
+        "OK": 300,
         "-": 45,
-        "PENDING": 4
+        "PENDING": 3
       },
       "source": {
         "САЙТ ТИЛЬДА": 114,
@@ -315,9 +315,9 @@
         "Не указано": 8
       },
       "event": {
-        "Юбилей": 83,
+        "Юбилей": 84,
         "Корпоратив": 108,
-        "Не определено": 99,
+        "Не определено": 98,
         "Свадьба": 142,
         "Бизнес мероприятие": 16,
         "Детский праздник": 5,
@@ -605,14 +605,14 @@
       "date": "2026-09-01",
       "ts": "2026-09-01T21:36:38+03:00",
       "source": "Restoran.Cafe",
-      "status": "PENDING",
+      "status": "OK",
       "channel": "MAX",
       "guest_range": "15",
       "guests": "15",
-      "event_type": "unknown",
+      "event_type": "Юбилей",
       "name": "Каролина",
       "identifier": "79661588651",
-      "manager": ""
+      "manager": "Олеся"
     },
     {
       "date": "2026-09-01",
@@ -1357,7 +1357,7 @@
     }
   ],
   "not_entered": [],
-  "snapshot_generated_at": "2026-09-02T07:34:45Z",
+  "snapshot_generated_at": "2026-09-02T07:44:13Z",
   "snapshot_at": "2026-09-01T21:37:41+03:00",
   "min_date": "2026-07-01",
   "max_date": "2026-09-01",
@@ -1383,7 +1383,7 @@
       "crm_status": "Выслано предложение",
       "first_activity_at": "",
       "first_activity_ts": null,
-      "age_seconds": 425458,
+      "age_seconds": 426026,
       "feedback_state": "NO_FEEDBACK"
     },
     {
@@ -1399,7 +1399,7 @@
       "crm_status": "Выслано предложение",
       "first_activity_at": "",
       "first_activity_ts": null,
-      "age_seconds": 224244,
+      "age_seconds": 224812,
       "feedback_state": "WAITING_BLUE"
     },
     {
@@ -1415,7 +1415,7 @@
       "crm_status": "Выслано предложение",
       "first_activity_at": "",
       "first_activity_ts": null,
-      "age_seconds": 135697,
+      "age_seconds": 136265,
       "feedback_state": "WAITING_YELLOW"
     },
     {
@@ -1431,7 +1431,7 @@
       "crm_status": "Выслано предложение",
       "first_activity_at": "",
       "first_activity_ts": null,
-      "age_seconds": 136625,
+      "age_seconds": 137193,
       "feedback_state": "WAITING_YELLOW"
     },
     {
@@ -1447,7 +1447,7 @@
       "crm_status": "Выслано предложение",
       "first_activity_at": "",
       "first_activity_ts": null,
-      "age_seconds": 153046,
+      "age_seconds": 153614,
       "feedback_state": "WAITING_YELLOW"
     },
     {
@@ -1463,7 +1463,7 @@
       "crm_status": "Первичный контакт",
       "first_activity_at": "",
       "first_activity_ts": null,
-      "age_seconds": 153889,
+      "age_seconds": 154457,
       "feedback_state": "WAITING_YELLOW"
     }
   ],
