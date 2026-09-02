@@ -16,10 +16,10 @@
       "end": "2026-09-01",
       "total": 23,
       "status": {
-        "OK": 17,
+        "OK": 18,
         "-": 2,
         "LATE_CRM": 1,
-        "PENDING": 3
+        "PENDING": 2
       },
       "source": {
         "САЙТ ТИЛЬДА": 7,
@@ -59,10 +59,10 @@
       "end": "2026-09-02",
       "total": 62,
       "status": {
-        "OK": 50,
+        "OK": 51,
         "-": 3,
         "LATE_CRM": 6,
-        "PENDING": 3
+        "PENDING": 2
       },
       "source": {
         "САЙТ ТИЛЬДА": 16,
@@ -125,10 +125,10 @@
       "end": "2026-09-02",
       "total": 230,
       "status": {
-        "OK": 167,
+        "OK": 168,
         "LATE_CRM": 45,
         "-": 15,
-        "PENDING": 3
+        "PENDING": 2
       },
       "source": {
         "MARQUIZ": 18,
@@ -285,9 +285,9 @@
       "total": 458,
       "status": {
         "LATE_CRM": 110,
-        "OK": 300,
+        "OK": 301,
         "-": 45,
-        "PENDING": 3
+        "PENDING": 2
       },
       "source": {
         "САЙТ ТИЛЬДА": 114,
@@ -579,14 +579,14 @@
       "date": "2026-09-01",
       "ts": "2026-09-01T21:37:41+03:00",
       "source": "Restoran.Cafe",
-      "status": "PENDING",
+      "status": "OK",
       "channel": "MAX",
       "guest_range": "70",
       "guests": "70",
       "event_type": "Корпоратив",
       "name": "Кристина",
       "identifier": "79028041547",
-      "manager": ""
+      "manager": "Олеся"
     },
     {
       "date": "2026-09-01",
@@ -1357,14 +1357,14 @@
     }
   ],
   "not_entered": [],
-  "snapshot_generated_at": "2026-09-02T07:44:13Z",
+  "snapshot_generated_at": "2026-09-02T10:36:45Z",
   "snapshot_at": "2026-09-01T21:37:41+03:00",
   "min_date": "2026-07-01",
   "max_date": "2026-09-01",
   "feedback_summary": {
     "total": 6,
     "no_feedback": 1,
-    "waiting": 17,
+    "waiting": 18,
     "waiting_blue": 1,
     "waiting_yellow": 4,
     "clear": 52
@@ -1383,7 +1383,7 @@
       "crm_status": "Выслано предложение",
       "first_activity_at": "",
       "first_activity_ts": null,
-      "age_seconds": 426026,
+      "age_seconds": 436378,
       "feedback_state": "NO_FEEDBACK"
     },
     {
@@ -1399,7 +1399,7 @@
       "crm_status": "Выслано предложение",
       "first_activity_at": "",
       "first_activity_ts": null,
-      "age_seconds": 224812,
+      "age_seconds": 235164,
       "feedback_state": "WAITING_BLUE"
     },
     {
@@ -1415,7 +1415,7 @@
       "crm_status": "Выслано предложение",
       "first_activity_at": "",
       "first_activity_ts": null,
-      "age_seconds": 136265,
+      "age_seconds": 146617,
       "feedback_state": "WAITING_YELLOW"
     },
     {
@@ -1431,7 +1431,7 @@
       "crm_status": "Выслано предложение",
       "first_activity_at": "",
       "first_activity_ts": null,
-      "age_seconds": 137193,
+      "age_seconds": 147545,
       "feedback_state": "WAITING_YELLOW"
     },
     {
@@ -1447,7 +1447,7 @@
       "crm_status": "Выслано предложение",
       "first_activity_at": "",
       "first_activity_ts": null,
-      "age_seconds": 153614,
+      "age_seconds": 163966,
       "feedback_state": "WAITING_YELLOW"
     },
     {
@@ -1463,7 +1463,7 @@
       "crm_status": "Первичный контакт",
       "first_activity_at": "",
       "first_activity_ts": null,
-      "age_seconds": 154457,
+      "age_seconds": 164809,
       "feedback_state": "WAITING_YELLOW"
     }
   ],
