@@ -275,6 +275,14 @@ def classify_max_text(text: str) -> dict[str, Any]:
     if street is not None:
         return street
 
+    # Explicit structured requests must win over generic internal-work phrases
+    # such as "ждут меню". Real forwarding/service messages are still rejected
+    # by the host parser itself via _looks_like_service_forward().
+    if re.match(r"^\s*заявка\b", text, flags=re.IGNORECASE):
+        explicit_host = _classify_host(text)
+        if explicit_host is not None:
+            return explicit_host
+
     ignore_reason = _ignore_reason(text, lowered)
     if ignore_reason:
         if re.match(r"^\s*заявка\b", text, flags=re.IGNORECASE) and _has_review_protected_lead_signal(text):
