@@ -1,4 +1,5 @@
 name: Lead Control Public Runner
+# validation-retry: public-refresh-dedup
 on:
   schedule:
     - cron: "50 6 * * *"
