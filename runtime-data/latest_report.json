@@ -1,13 +1,13 @@
 {
   "alarm_no_crm": 1,
   "by_manager": {
-    "no_manager_reaction": 390,
+    "no_manager_reaction": 391,
     "Максим": 34,
     "Олеся": 33
   },
   "by_source": {
     "MARQUIZ": 26,
-    "Restoran.Cafe": 3,
+    "Restoran.Cafe": 4,
     "WedWed": 6,
     "ЗАЯВКА ПОЧТА": 7,
     "Заявка с ТГ": 20,
@@ -30,13 +30,13 @@
     "Свадьба": 142,
     "Съемки": 1,
     "Съёмки": 1,
-    "Юбилей": 81
+    "Юбилей": 82
   },
   "guest_ranges": {
     "1-20": 145,
     "101-150": 32,
     "151+": 18,
-    "21-50": 135,
+    "21-50": 136,
     "51-100": 60,
     "unknown": 67
   },
@@ -94,6 +94,24 @@
       "name": "Каролина",
       "source": "Restoran.Cafe",
       "status": "PENDING",
+      "violations": []
+    },
+    {
+      "created_at": "2026-09-01T21:35:52+03:00",
+      "crm_entity_id": 48145609,
+      "crm_entity_type": "lead",
+      "crm_found": true,
+      "event_date": "2026-09-26",
+      "event_type": "Юбилей",
+      "guests_count": 30,
+      "identifier": "7********45",
+      "identifier_type": "phone",
+      "lead_id": "740e07b4cf9c8126",
+      "manager": "",
+      "manager_username": "",
+      "name": "Алла",
+      "source": "Restoran.Cafe",
+      "status": "OK",
       "violations": []
     },
     {
@@ -355,7 +373,7 @@
       "crm_entity_id": 48145609,
       "crm_entity_type": "lead",
       "crm_found": true,
-      "event_date": "2026-09-26",
+      "event_date": "",
       "event_type": "Юбилей",
       "guests_count": 30,
       "identifier": "7********45",
@@ -385,29 +403,11 @@
       "source": "Заявка с ТГ",
       "status": "OK",
       "violations": []
-    },
-    {
-      "created_at": "2026-09-01T11:28:33+03:00",
-      "crm_entity_id": 48137515,
-      "crm_entity_type": "lead",
-      "crm_found": true,
-      "event_date": "2026-09-02",
-      "event_type": "",
-      "guests_count": 2,
-      "identifier": "7********56",
-      "identifier_type": "phone",
-      "lead_id": "a0dfcae6b6f2ab6f",
-      "manager": "Олеся",
-      "manager_username": "Olesyagozhina",
-      "name": "Елена",
-      "source": "САЙТ ТИЛЬДА",
-      "status": "OK",
-      "violations": []
     }
   ],
   "needs_review": 59,
   "no_reaction": 0,
-  "ok": 299,
-  "total_leads": 457,
-  "updated_at": "2026-09-02T09:23:18+03:00"
+  "ok": 300,
+  "total_leads": 458,
+  "updated_at": "2026-09-02T09:38:29+03:00"
 }
