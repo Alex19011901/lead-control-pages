@@ -948,9 +948,14 @@ def _extract_username(text: str) -> str:
 
 
 def _extract_date_raw(text: str) -> str:
-    numeric = re.search(r"\b\d{1,2}[./-]\d{1,2}(?:[./-]\d{2,4})?\b", text)
-    if numeric:
-        return numeric.group(0)
+    for numeric in re.finditer(
+        r"\b(?P<day>\d{1,2})[./-](?P<month>\d{1,2})(?:[./-](?P<year>\d{2,4}))?\b",
+        text,
+    ):
+        day = int(numeric.group("day"))
+        month = int(numeric.group("month"))
+        if 1 <= day <= 31 and 1 <= month <= 12:
+            return numeric.group(0)
     month = re.search(rf"\b\d{{1,2}}\s+(?:{MONTHS_PATTERN})\b", text, flags=re.IGNORECASE)
     return month.group(0) if month else ""
 
@@ -1180,6 +1185,10 @@ def _extract_probable_name(text: str, phone_raw: str) -> str:
         "весь",
         "малый",
         "основной",
+        # In host handoff messages these names are manager routing labels,
+        # not client names (for example: "... 8905... Олеся").
+        "максим",
+        "олеся",
     }
 
     # Highest priority: a human name written on the same line as the phone.
