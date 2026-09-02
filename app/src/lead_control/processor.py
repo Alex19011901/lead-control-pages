@@ -18,6 +18,8 @@ from .parsers.max_leads import (
     BUSINESS_SOURCES,
     IGNORE,
     NEEDS_REVIEW,
+    RESTORAN_CAFE,
+    TO_MESTO,
     classify_max_event,
     classify_max_text,
 )
@@ -201,7 +203,11 @@ def rebuild_leads_and_needs_review(
 
         _remove_needs_review(needs_review_by_key, classification)
         created_at = _max_timestamp_seconds(event)
-        lead = _find_duplicate(leads, identifier_type, identifier_value, created_at, channel="MAX")
+        lead = (
+            None
+            if category in {RESTORAN_CAFE, TO_MESTO}
+            else _find_duplicate(leads, identifier_type, identifier_value, created_at, channel="MAX")
+        )
         source = classification.get("business_source") or classification.get("display_name") or category
         received_at = unix_to_moscow_iso(created_at)
 
