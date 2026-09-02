@@ -274,6 +274,9 @@ class MaxLeadClassifierTests(unittest.TestCase):
         self.assertEqual(result["business_source"], "Заявки хост")
         self.assertEqual(result["fields"]["phone_digits"], "79273766456")
         self.assertEqual(result["fields"]["event_type"], "Свадьба")
+        self.assertEqual(result["fields"]["event_date_raw"], "10 октября")
+        self.assertEqual(result["fields"]["guests_raw"], "35-40 перс")
+        self.assertEqual(result["fields"]["name"], "")
 
     def test_ignore_confirmed_examples(self) -> None:
         examples = [
