@@ -1,5 +1,5 @@
 {
-  "alarm_no_crm": 1,
+  "alarm_no_crm": 0,
   "by_manager": {
     "no_manager_reaction": 391,
     "Максим": 34,
@@ -19,13 +19,13 @@
     "ТоМесто": 1
   },
   "event_types": {
-    "unknown": 100,
+    "unknown": 99,
     "Бизнес мероприятие": 16,
     "Выпускной": 1,
     "ДР": 1,
     "Деловое мероприятие": 1,
     "Детский праздник": 5,
-    "Корпоратив": 107,
+    "Корпоратив": 108,
     "Поминки": 1,
     "Свадьба": 142,
     "Съемки": 1,
@@ -40,7 +40,7 @@
     "51-100": 60,
     "unknown": 67
   },
-  "late_crm": 109,
+  "late_crm": 110,
   "latest_leads": [
     {
       "created_at": "2026-09-01T21:37:41+03:00",
@@ -134,11 +134,11 @@
     },
     {
       "created_at": "2026-09-01T16:48:32+03:00",
-      "crm_entity_id": null,
-      "crm_entity_type": null,
-      "crm_found": false,
+      "crm_entity_id": 48162461,
+      "crm_entity_type": "lead",
+      "crm_found": true,
       "event_date": "",
-      "event_type": "",
+      "event_type": "Корпоратив",
       "guests_count": 200,
       "identifier": "7********31",
       "identifier_type": "phone",
@@ -147,9 +147,9 @@
       "manager_username": "",
       "name": "Анастасия",
       "source": "Заявки хост",
-      "status": "ALARM_NO_CRM",
+      "status": "LATE_CRM",
       "violations": [
-        "ALARM_NO_CRM"
+        "LATE_CRM"
       ]
     },
     {
@@ -409,5 +409,5 @@
   "no_reaction": 0,
   "ok": 299,
   "total_leads": 458,
-  "updated_at": "2026-09-02T09:49:03+03:00"
+  "updated_at": "2026-09-02T10:07:29+03:00"
 }
