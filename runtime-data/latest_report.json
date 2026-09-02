@@ -1,7 +1,7 @@
 {
   "alarm_no_crm": 2,
   "by_manager": {
-    "no_manager_reaction": 401,
+    "no_manager_reaction": 402,
     "Максим": 34,
     "Олеся": 33
   },
@@ -14,12 +14,12 @@
     "Заявка сайт": 3,
     "Заявки хост": 243,
     "С улицы": 2,
-    "САЙТ ТИЛЬДА": 117,
+    "САЙТ ТИЛЬДА": 118,
     "Тильда Веранда": 41,
     "ТоМесто": 1
   },
   "event_types": {
-    "unknown": 106,
+    "unknown": 107,
     "Бизнес мероприятие": 17,
     "Выпускной": 1,
     "ДР": 1,
@@ -36,12 +36,30 @@
     "1-20": 151,
     "101-150": 32,
     "151+": 18,
-    "21-50": 138,
+    "21-50": 139,
     "51-100": 61,
     "unknown": 68
   },
   "late_crm": 110,
   "latest_leads": [
+    {
+      "created_at": "2026-09-02T22:14:55+03:00",
+      "crm_entity_id": null,
+      "crm_entity_type": null,
+      "crm_found": false,
+      "event_date": "2026-10-01",
+      "event_type": "",
+      "guests_count": 40,
+      "identifier": "7********17",
+      "identifier_type": "phone",
+      "lead_id": "0fcecf9093c65670",
+      "manager": "",
+      "manager_username": "",
+      "name": "Анна",
+      "source": "САЙТ ТИЛЬДА",
+      "status": "PENDING",
+      "violations": []
+    },
     {
       "created_at": "2026-09-02T21:22:01+03:00",
       "crm_entity_id": null,
@@ -389,29 +407,11 @@
       "source": "Заявки хост",
       "status": "OK",
       "violations": []
-    },
-    {
-      "created_at": "2026-09-01T15:08:33+03:00",
-      "crm_entity_id": 48146791,
-      "crm_entity_type": "lead",
-      "crm_found": true,
-      "event_date": "2026-12-18",
-      "event_type": "Корпоратив",
-      "guests_count": 23,
-      "identifier": "7********27",
-      "identifier_type": "phone",
-      "lead_id": "fd5788ab64886299",
-      "manager": "",
-      "manager_username": "",
-      "name": "Елена",
-      "source": "Заявки хост",
-      "status": "OK",
-      "violations": []
     }
   ],
   "needs_review": 65,
   "no_reaction": 0,
   "ok": 302,
-  "total_leads": 468,
-  "updated_at": "2026-09-02T22:15:46+03:00"
+  "total_leads": 469,
+  "updated_at": "2026-09-02T22:27:26+03:00"
 }
