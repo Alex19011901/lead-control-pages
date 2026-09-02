@@ -1,5 +1,5 @@
 name: Lead Control Public Runner
-# trigger: retry-aggregator-dedup-test-fixture
+# trigger: validate-stale-crm-aggregator-match
 
 on:
   schedule:
@@ -37,6 +37,7 @@ jobs:
         run: |
           PYTHONPATH=src python -m unittest discover -s tests -p 'test_max_leads_parser.py' -v
           PYTHONPATH=src python -m unittest discover -s tests -p 'test_max_mail_lead.py' -v
+          PYTHONPATH=src python -m unittest discover -s tests -p 'test_amocrm_deal_matching.py' -v
 
       - name: Install OCR
         run: |
