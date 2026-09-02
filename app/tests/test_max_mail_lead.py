@@ -213,6 +213,57 @@ class MaxMailLeadTests(unittest.TestCase):
                 self.assertTrue(image["mail_attachment_only"])
                 self.assertNotIn("attachment_text", image)
 
+    def test_restoran_cafe_same_phone_is_separate_from_earlier_max_lead(self):
+        host = {
+            "type": "max_message_created",
+            "source": "MAX",
+            "update_type": "message_created",
+            "chat_id": -71704692523093,
+            "message_id": "mid.host.same-phone",
+            "text": "ЗАЯВКА. 26.09. 20п. Алла. 89852337945. Юбилей.",
+            "sender_user_id": 121513620,
+            "sender_name": "Елена",
+            "timestamp": 1788255277000,
+        }
+        restoran = {
+            "type": "max_message_created",
+            "source": "MAX",
+            "update_type": "message_created",
+            "chat_id": -71704692523093,
+            "message_id": "mid.restoran.same-phone",
+            "text": "Заявка ресторан.кафе:",
+            "has_attachments": True,
+            "attachment_types": ["image"],
+            "attachments": [{"type": "image", "payload": {"photo_id": 501}}],
+            "attachment_ocr_text": "\n".join(
+                [
+                    "Резерв пришел от службы бронирования Restoran.Cafe.",
+                    "Дата: 26.09.26",
+                    "Количество гостей: 30",
+                    "Имя клиента: Алла",
+                    "Тел.:+7 (985) 233 79 45",
+                    "Комментарий: 26 или 27 сентября, юбилей 80 лет",
+                ]
+            ),
+            "sender_user_id": 74336871,
+            "sender_name": "Al",
+            "timestamp": 1788287752259,
+        }
+
+        leads, needs_review = rebuild_leads_and_needs_review([host, restoran], existing_needs_review=[])
+
+        self.assertEqual(needs_review, [])
+        same_phone = [
+            lead for lead in leads
+            if (lead.get("identifier") or {}).get("value") == "79852337945"
+        ]
+        self.assertEqual(len(same_phone), 2)
+        self.assertEqual({lead["source"] for lead in same_phone}, {"Заявки хост", "Restoran.Cafe"})
+        restoran_lead = next(lead for lead in same_phone if lead["source"] == "Restoran.Cafe")
+        self.assertEqual(restoran_lead["message_id"], "mid.restoran.same-phone")
+        self.assertEqual(restoran_lead["guests"], 30)
+        self.assertEqual(restoran_lead["event_date"], "2026-09-26")
+
     def test_missing_ocr_fields_still_stays_mail_lead(self):
         event = mail_event()
         event["attachment_ocr_text"] = "не удалось уверенно распознать поля"
