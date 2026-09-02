@@ -274,6 +274,34 @@ class MaxMailLeadTests(unittest.TestCase):
         self.assertEqual(restoran_lead["guests"], 30)
         self.assertEqual(restoran_lead["event_date"], "2026-09-26")
 
+    def test_host_named_month_uses_request_year_and_guest_range_is_not_date(self):
+        event = {
+            "type": "max_message_created",
+            "source": "MAX",
+            "update_type": "message_created",
+            "chat_id": -71704692523093,
+            "message_id": "mid.host.named-month",
+            "text": (
+                "Заявка +79273766456 Максим 35-40 перс "
+                "свадьба 10 октября , мз 200+ сервис + диджей, "
+                "по алкашке 20% от депозита, ждут меню"
+            ),
+            "sender_user_id": 121513620,
+            "sender_name": "Дмитрий Жуков",
+            "timestamp": 1788337885440,
+        }
+
+        leads, needs_review = rebuild_leads_and_needs_review([event], existing_needs_review=[])
+
+        self.assertEqual(needs_review, [])
+        self.assertEqual(len(leads), 1)
+        lead = leads[0]
+        self.assertEqual(lead["identifier"], {"type": "phone", "value": "79273766456"})
+        self.assertEqual(lead["event_date"], "2026-10-10")
+        self.assertEqual(lead["fields"]["event_date_raw"], "10 октября")
+        self.assertEqual(lead["guests_raw"], "35-40 перс")
+        self.assertEqual(lead["name"], "")
+
     def test_missing_ocr_fields_still_stays_mail_lead(self):
         event = mail_event()
         event["attachment_ocr_text"] = "не удалось уверенно распознать поля"
