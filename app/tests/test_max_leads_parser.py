@@ -246,7 +246,7 @@ class MaxLeadClassifierTests(unittest.TestCase):
         self.assertEqual(result["business_source"], "Заявка с ТГ")
         self.assertEqual(result["fields"]["telegram_username"], "urban_meow")
 
-    def test_lead_with_service_phrase_goes_to_review_not_ignore(self) -> None:
+    def test_structured_lead_with_service_phrase_is_host(self) -> None:
         text = (
             "Заявка 6.10 15-20 перс свадьба мз +79271764323 Александр , "
             "зал видели депозит 100 + сервис + диджей , от 8 тыс на чел, "
@@ -254,9 +254,26 @@ class MaxLeadClassifierTests(unittest.TestCase):
         )
         result = classify_max_text(text)
 
-        self.assertEqual(result["classification"], NEEDS_REVIEW)
-        self.assertNotEqual(result["classification"], IGNORE)
-        self.assertTrue(result["review_reason"].startswith("service_conflict:"))
+        self.assertEqual(result["classification"], HOST)
+        self.assertTrue(result["include_in_stats"])
+        self.assertEqual(result["business_source"], "Заявки хост")
+        self.assertEqual(result["fields"]["phone_digits"], "79271764323")
+        self.assertEqual(result["fields"]["event_type"], "Свадьба")
+
+    def test_today_structured_lead_with_waiting_for_menu_is_host(self) -> None:
+        text = (
+            "Заявка +79273766456 Максим 35-40 перс "
+            "свадьба 10 октября , мз 200+ сервис + диджей, "
+            "по алкашке 20% от депозита, ждут меню"
+        )
+        result = classify_max_text(text)
+
+        self.assertEqual(result["classification"], HOST)
+        self.assertTrue(result["include_in_stats"])
+        self.assertTrue(result["crm_check_required"])
+        self.assertEqual(result["business_source"], "Заявки хост")
+        self.assertEqual(result["fields"]["phone_digits"], "79273766456")
+        self.assertEqual(result["fields"]["event_type"], "Свадьба")
 
     def test_ignore_confirmed_examples(self) -> None:
         examples = [
