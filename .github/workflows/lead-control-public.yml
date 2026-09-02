@@ -3,6 +3,9 @@ on:
   schedule:
     - cron: "50 6 * * *"
   workflow_dispatch:
+  push:
+    paths:
+      - ".github/workflows/lead-control-public.yml"
 
 permissions:
   contents: write
@@ -26,6 +29,12 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: "3.12"
+
+      - name: Test MAX host parsing fixes
+        working-directory: app
+        run: |
+          PYTHONPATH=src python -m unittest discover -s tests -p 'test_max_leads_parser.py' -v
+          PYTHONPATH=src python -m unittest discover -s tests -p 'test_max_mail_lead.py' -v
 
       - name: Install OCR
         run: |
