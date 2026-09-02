@@ -57,8 +57,21 @@ class GitHubPagesMirrorTests(unittest.TestCase):
         self.assertIn("https://api.github.com/repos/", self.mirror)
         self.assertIn("Authorization:'Bearer '+PUBLIC_REFRESH_TOKEN", self.mirror)
         self.assertIn("async function dispatchPublicWorkflow()", self.mirror)
+        self.assertIn("async function listPublicRuns()", self.mirror)
+        self.assertIn("async function findActivePublicRun()", self.mirror)
+        self.assertIn("async function ensurePublicWorkflow()", self.mirror)
         self.assertIn("async function findPublicRun(created,runId)", self.mirror)
-        self.assertIn("created=await dispatchPublicWorkflow()", self.mirror)
+        self.assertIn("var start=await ensurePublicWorkflow()", self.mirror)
+
+    def test_pages_refresh_reuses_active_workflow_instead_of_dispatching_duplicate(self):
+        self.assertIn("'queued':1", self.mirror)
+        self.assertIn("'pending':1", self.mirror)
+        self.assertIn("'in_progress':1", self.mirror)
+        self.assertIn("'waiting':1", self.mirror)
+        self.assertIn("'requested':1", self.mirror)
+        self.assertIn("if(active)return {created:active.created_at||new Date().toISOString(),runId:active.id,reused:true}", self.mirror)
+        self.assertIn("if(start.reused)progress(1,'Обновление уже запущено…')", self.mirror)
+        self.assertIn("waitForPublicRefresh(start.created,previous,serial,start.runId)", self.mirror)
 
     def test_publish_token_placeholder_is_not_exposed(self):
         self.assertNotIn("__GITHUB_TOKEN__", self.mirror)
