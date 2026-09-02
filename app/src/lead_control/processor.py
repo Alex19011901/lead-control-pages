@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from datetime import date
 import re
 from typing import Any
 
@@ -33,6 +34,21 @@ MANAGERS_BY_USERNAME = {
 
 TELEGRAM_TEST_PHRASES = {"TEST LEAD CONTROL", "ТЕСТ РЕАКЦИИ"}
 TELEGRAM_TEST_PHONES = {"79999999999"}
+
+_MAX_EVENT_MONTHS = {
+    "января": 1,
+    "февраля": 2,
+    "марта": 3,
+    "апреля": 4,
+    "мая": 5,
+    "июня": 6,
+    "июля": 7,
+    "августа": 8,
+    "сентября": 9,
+    "октября": 10,
+    "ноября": 11,
+    "декабря": 12,
+}
 
 
 def collect_known_manager_ids(events: list[dict[str, Any]]) -> dict[int, dict[str, str]]:
@@ -190,7 +206,8 @@ def rebuild_leads_and_needs_review(
             _add_needs_review(needs_review_by_key, classification)
             continue
 
-        fields = _max_fields(classification)
+        created_at = _max_timestamp_seconds(event)
+        fields = _max_fields(classification, created_at)
         crm_required = bool(classification.get("crm_check_required"))
         identifier_type, identifier_value = _max_identifier(fields, message_id, crm_required)
         if crm_required and not identifier_value:
@@ -202,7 +219,6 @@ def rebuild_leads_and_needs_review(
             continue
 
         _remove_needs_review(needs_review_by_key, classification)
-        created_at = _max_timestamp_seconds(event)
         lead = (
             None
             if category in {RESTORAN_CAFE, TO_MESTO}
@@ -456,7 +472,10 @@ def _max_identifier(fields: dict[str, Any], message_id: str, crm_required: bool)
     return "", ""
 
 
-def _max_fields(classification: dict[str, Any]) -> dict[str, Any]:
+def _max_fields(
+    classification: dict[str, Any],
+    source_timestamp: int | None = None,
+) -> dict[str, Any]:
     fields = dict(classification.get("fields") or {})
     event_date_raw = fields.get("event_date_raw", "")
     return {
@@ -468,13 +487,45 @@ def _max_fields(classification: dict[str, Any]) -> dict[str, Any]:
         "telegram_username": normalize_username(fields.get("telegram_username", "")),
         "email": fields.get("email", ""),
         "event_date_raw": event_date_raw,
-        "event_date": parse_event_date(event_date_raw),
+        "event_date": _parse_max_event_date(event_date_raw, source_timestamp),
         "guests_count": fields.get("guests_count"),
         "guests_raw": fields.get("guests_raw", ""),
         "guests_min": fields.get("guests_min"),
         "guests_max": fields.get("guests_max"),
         "event_type": fields.get("event_type", ""),
     }
+
+
+def _parse_max_event_date(value: str | None, source_timestamp: int | None) -> str:
+    parsed = parse_event_date(value)
+    if parsed or not value or not source_timestamp:
+        return parsed
+
+    try:
+        source_year = int(unix_to_moscow_iso(source_timestamp)[:4])
+    except (TypeError, ValueError):
+        return ""
+
+    text = str(value).strip().rstrip(".")
+    numeric = re.fullmatch(r"(?P<day>\d{1,2})[./-](?P<month>\d{1,2})", text)
+    if numeric:
+        day = int(numeric.group("day"))
+        month = int(numeric.group("month"))
+    else:
+        named = re.fullmatch(
+            r"(?P<day>\d{1,2})\s+(?P<month>[А-Яа-яЁё]+)",
+            text,
+            flags=re.IGNORECASE,
+        )
+        if not named:
+            return ""
+        day = int(named.group("day"))
+        month = _MAX_EVENT_MONTHS.get(named.group("month").casefold(), 0)
+
+    try:
+        return date(source_year, month, day).isoformat()
+    except ValueError:
+        return ""
 
 
 def _apply_review_override(
@@ -493,12 +544,12 @@ def _apply_review_override(
         return
 
     text = str(event.get("text") or override.get("original_text") or "")
-    fields = _manual_fields(text, decision)
+    created_at = _review_event_timestamp_seconds(event)
+    fields = _manual_fields(text, decision, created_at)
     crm_required = decision not in CRM_FREE_DECISIONS
     channel = _event_channel(event, override)
     chat_id = int(event.get("chat_id") or override.get("chat_id"))
     message_id = event.get("message_id") or override.get("message_id")
-    created_at = _review_event_timestamp_seconds(event)
     identifier_type, identifier_value, crm_check_status = _manual_identifier(
         fields,
         channel,
@@ -600,10 +651,14 @@ def _apply_review_override(
             telegram_payload["update_ids"].append(event["update_id"])
 
 
-def _manual_fields(text: str, decision: str) -> dict[str, Any]:
+def _manual_fields(
+    text: str,
+    decision: str,
+    source_timestamp: int | None = None,
+) -> dict[str, Any]:
     classification = classify_max_text(text)
     if classification.get("classification") == decision:
-        return _max_fields(classification)
+        return _max_fields(classification, source_timestamp)
 
     parsed = _parse_manual_key_value_fields(text)
     phone_raw = parsed.get("phone") or _extract_manual_phone_raw(text)
@@ -619,7 +674,7 @@ def _manual_fields(text: str, decision: str) -> dict[str, Any]:
         "phone_digits": normalize_phone(phone_raw),
         "telegram_username": normalize_username(username),
         "event_date_raw": event_date_raw,
-        "event_date": parse_event_date(event_date_raw),
+        "event_date": _parse_max_event_date(event_date_raw, source_timestamp),
         "guests_count": guests.get("guests_count"),
         "guests_raw": guests.get("guests_raw", ""),
         "guests_min": guests.get("guests_min"),
