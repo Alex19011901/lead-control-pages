@@ -3,6 +3,7 @@ from __future__ import annotations
 import re
 from typing import Any
 
+from ..max_mail_lead import parse_attachment_fields
 from ..normalize import normalize_phone, normalize_username
 
 
@@ -12,6 +13,7 @@ HOST = "HOST"
 STREET = "STREET"
 TG_LEAD = "TG_LEAD"
 RESTORAN_CAFE = "RESTORAN_CAFE"
+TO_MESTO = "TO_MESTO"
 SITE_LEAD = "SITE_LEAD"
 IGNORE = "IGNORE"
 NEEDS_REVIEW = "NEEDS_REVIEW"
@@ -23,6 +25,7 @@ DISPLAY_NAMES = {
     STREET: "С улицы",
     TG_LEAD: "Заявка с ТГ",
     RESTORAN_CAFE: "Restoran.Cafe",
+    TO_MESTO: "ТоМесто",
     SITE_LEAD: "Заявка сайт",
     IGNORE: "IGNORE",
     NEEDS_REVIEW: "NEEDS_REVIEW",
@@ -35,10 +38,11 @@ BUSINESS_SOURCES = {
     STREET: "С улицы",
     TG_LEAD: "Заявка с ТГ",
     RESTORAN_CAFE: "Restoran.Cafe",
+    TO_MESTO: "ТоМесто",
     SITE_LEAD: "Заявка сайт",
 }
 
-LEAD_CATEGORIES = {TILDA_VERANDA, WEDWED, HOST, STREET, TG_LEAD, RESTORAN_CAFE, SITE_LEAD}
+LEAD_CATEGORIES = {TILDA_VERANDA, WEDWED, HOST, STREET, TG_LEAD, RESTORAN_CAFE, TO_MESTO, SITE_LEAD}
 
 MONTHS_PATTERN = (
     "января|февраля|марта|апреля|мая|июня|июля|августа|сентября|"
@@ -53,6 +57,8 @@ def classify_max_event(event: dict[str, Any]) -> dict[str, Any]:
     has_attachments = _event_has_attachments(event)
 
     event_category = _classify_restoran_cafe_event(event_text, attachment_text, has_attachments)
+    if event_category is None:
+        event_category = _classify_to_mesto_event(event_text, attachment_text, has_attachments)
     if event_category is None:
         event_category = _classify_site_lead_event(event_text, attachment_text, has_attachments)
 
@@ -104,24 +110,139 @@ def _classify_restoran_cafe_event(
     if not has_attachments:
         return None
 
-    normalized_event = _normalize_space(event_text).lower()
+    normalized_event = _normalize_space(event_text).lower().rstrip(":")
     normalized_attachment = _normalize_space(attachment_text).lower()
-    if normalized_event != "заявка":
-        return None
-    if "restoran.cafe" not in normalized_attachment:
-        return None
-    if "заявка на банкет" not in normalized_attachment:
+    explicit_header = normalized_event in {"заявка ресторан.кафе", "заявка restoran.cafe"}
+    legacy_format = (
+        normalized_event == "заявка"
+        and "restoran.cafe" in normalized_attachment
+        and "заявка на банкет" in normalized_attachment
+    )
+    if not explicit_header and not legacy_format:
         return None
 
+    fields = _parse_external_screenshot_fields(attachment_text)
     return _result(
         RESTORAN_CAFE,
         event_text,
         is_lead=True,
-        crm_check_required=False,
+        crm_check_required=bool(fields.get("phone_digits") or fields.get("telegram_username")),
         fields={
+            **fields,
             "description": attachment_text.strip(),
         },
     )
+
+
+def _classify_to_mesto_event(
+    event_text: str,
+    attachment_text: str,
+    has_attachments: bool,
+) -> dict[str, Any] | None:
+    if not has_attachments:
+        return None
+
+    normalized_event = _normalize_space(event_text).lower().rstrip(":")
+    if normalized_event not in {"заявка то место", "заявка томесто"}:
+        return None
+
+    fields = _parse_external_screenshot_fields(attachment_text)
+    return _result(
+        TO_MESTO,
+        event_text,
+        is_lead=True,
+        crm_check_required=bool(fields.get("phone_digits") or fields.get("telegram_username")),
+        fields={
+            **fields,
+            "description": attachment_text.strip(),
+        },
+    )
+
+
+_EXTERNAL_MONTHS = {
+    "января": 1,
+    "февраля": 2,
+    "марта": 3,
+    "апреля": 4,
+    "мая": 5,
+    "июня": 6,
+    "июля": 7,
+    "августа": 8,
+    "сентября": 9,
+    "октября": 10,
+    "ноября": 11,
+    "декабря": 12,
+}
+
+
+def _parse_external_screenshot_fields(text: str) -> dict[str, Any]:
+    fields = dict(parse_attachment_fields(text))
+    name = _extract_external_labeled_text(text, ("имя клиента", "имя"))
+    if name:
+        fields["name"] = name
+
+    guests = _extract_external_guest_count(text)
+    if guests is not None:
+        fields["guests_count"] = guests
+        fields["guests_raw"] = str(guests)
+        fields["guests_min"] = None
+        fields["guests_max"] = None
+
+    fields["event_date_raw"] = _normalize_external_event_date(
+        str(fields.get("event_date_raw") or ""),
+        text,
+    )
+    return fields
+
+
+def _extract_external_labeled_text(text: str, labels: tuple[str, ...]) -> str:
+    label_pattern = "|".join(re.escape(label) for label in labels)
+    match = re.search(
+        rf"(?:^|\n)\s*(?:[»•]\s*|[eE]\s+)?(?:{label_pattern})\s*:\s*([^\n]+)",
+        text,
+        flags=re.IGNORECASE,
+    )
+    return match.group(1).strip(" .,:;") if match else ""
+
+
+def _extract_external_guest_count(text: str) -> int | None:
+    match = re.search(
+        r"(?:количество|число)\s+гостей\s*:\s*(\d{1,4})",
+        text,
+        flags=re.IGNORECASE,
+    )
+    return int(match.group(1)) if match else None
+
+
+def _normalize_external_event_date(raw: str, text: str) -> str:
+    numeric = re.search(r"\b(\d{1,2})[.\/-](\d{1,2})[.\/-](\d{2,4})\b", raw)
+    if not numeric:
+        numeric = re.search(
+            r"\bдата\s*:\s*(\d{1,2})[.\/-](\d{1,2})[.\/-](\d{2,4})\b",
+            text,
+            flags=re.IGNORECASE,
+        )
+    if numeric:
+        day = int(numeric.group(1))
+        month = int(numeric.group(2))
+        year = int(numeric.group(3))
+        if year < 100:
+            year += 2000
+        return f"{day:02d}.{month:02d}.{year:04d}"
+
+    month_pattern = "|".join(_EXTERNAL_MONTHS)
+    named = re.search(
+        rf"\b(?:дата\s*:\s*)?(\d{{1,2}})\s+({month_pattern})\s+(\d{{4}})\b",
+        text,
+        flags=re.IGNORECASE,
+    )
+    if named:
+        day = int(named.group(1))
+        month = _EXTERNAL_MONTHS[named.group(2).casefold()]
+        year = int(named.group(3))
+        return f"{day:02d}.{month:02d}.{year:04d}"
+
+    return raw
 
 
 def _classify_site_lead_event(
