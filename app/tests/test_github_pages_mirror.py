@@ -47,6 +47,11 @@ class GitHubPagesMirrorTests(unittest.TestCase):
         self.assertIn("async function waitForPublicRefresh(created,previous,serial,runId)", self.mirror)
         self.assertIn("progress(1,'Проверка системы…')", self.mirror)
         self.assertIn("progress(2,'Сбор Telegram/MAX + amoCRM…')", self.mirror)
+        self.assertIn("var baseline=snapshotValue(await loadDashboardPayload())", self.mirror)
+        self.assertIn("if(snapshotIsNewer(baseline,previous))previous=baseline", self.mirror)
+        self.assertIn("if(workflowDone&&snapshotIsNewer(snap,previous))", self.mirror)
+        self.assertNotIn("if(snapshotIsNewer(snap,previous)){progress(4", self.mirror)
+        self.assertNotIn("if(workflowDone&&payload){progress(4", self.mirror)
         self.assertIn("var payload=await waitForPublicRefresh(start.created,previous,serial,start.runId)", self.mirror)
         self.assertIn("btn.textContent='Обновить данные'", self.mirror)
 
