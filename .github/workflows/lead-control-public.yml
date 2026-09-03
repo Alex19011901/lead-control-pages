@@ -82,6 +82,13 @@ jobs:
           cp runtime-data/dashboard_view.json dashboard_view.json
           cp dashboard_view.json public-site/dashboard_view.json
 
+      - name: Metrika offline conversions disabled runner
+        timeout-minutes: 2
+        continue-on-error: true
+        env:
+          METRIKA_OFFLINE_ENABLED: "0"
+        run: python app/scripts/run_metrika_offline.py
+
       - name: Save refreshed data
         run: |
           git config user.name "github-actions[bot]"
