@@ -1,7 +1,7 @@
 {
-  "alarm_no_crm": 2,
+  "alarm_no_crm": 1,
   "by_manager": {
-    "no_manager_reaction": 399,
+    "no_manager_reaction": 400,
     "Максим": 34,
     "Олеся": 37
   },
@@ -10,7 +10,7 @@
     "Restoran.Cafe": 4,
     "WedWed": 6,
     "ЗАЯВКА ПОЧТА": 7,
-    "Заявка с ТГ": 18,
+    "Заявка с ТГ": 19,
     "Заявка сайт": 3,
     "Заявки хост": 243,
     "С улицы": 2,
@@ -27,21 +27,39 @@
     "Детский праздник": 5,
     "Корпоратив": 109,
     "Поминки": 1,
-    "Свадьба": 147,
+    "Свадьба": 148,
     "Съемки": 1,
     "Съёмки": 1,
     "Юбилей": 87
   },
   "guest_ranges": {
-    "1-20": 152,
+    "1-20": 153,
     "101-150": 32,
     "151+": 18,
     "21-50": 139,
     "51-100": 61,
     "unknown": 68
   },
-  "late_crm": 110,
+  "late_crm": 111,
   "latest_leads": [
+    {
+      "created_at": "2026-09-03T09:24:29+03:00",
+      "crm_entity_id": 48204531,
+      "crm_entity_type": "lead",
+      "crm_found": true,
+      "event_date": "2026-10-17",
+      "event_type": "Свадьба",
+      "guests_count": 18,
+      "identifier": "@annavsj",
+      "identifier_type": "telegram_username",
+      "lead_id": "f45ca82e19d9cbe7",
+      "manager": "",
+      "manager_username": "",
+      "name": "",
+      "source": "Заявка с ТГ",
+      "status": "OK",
+      "violations": []
+    },
     {
       "created_at": "2026-09-03T07:41:40+03:00",
       "crm_entity_id": null,
@@ -278,9 +296,9 @@
     },
     {
       "created_at": "2026-09-01T21:37:10+03:00",
-      "crm_entity_id": null,
-      "crm_entity_type": null,
-      "crm_found": false,
+      "crm_entity_id": 48204577,
+      "crm_entity_type": "lead",
+      "crm_found": true,
       "event_date": "2026-09-25",
       "event_type": "Юбилей",
       "guests_count": 60,
@@ -291,9 +309,9 @@
       "manager_username": "",
       "name": "Илья Земсков",
       "source": "ТоМесто",
-      "status": "ALARM_NO_CRM",
+      "status": "LATE_CRM",
       "violations": [
-        "ALARM_NO_CRM"
+        "LATE_CRM"
       ]
     },
     {
@@ -389,29 +407,11 @@
       "source": "Тильда Веранда",
       "status": "-",
       "violations": []
-    },
-    {
-      "created_at": "2026-09-01T15:13:50+03:00",
-      "crm_entity_id": 48154941,
-      "crm_entity_type": "lead",
-      "crm_found": true,
-      "event_date": "2026-10-10",
-      "event_type": "Корпоратив",
-      "guests_count": 150,
-      "identifier": "7********27",
-      "identifier_type": "phone",
-      "lead_id": "2fd602306eacc290",
-      "manager": "Олеся",
-      "manager_username": "Olesyagozhina",
-      "name": "Индира",
-      "source": "САЙТ ТИЛЬДА",
-      "status": "OK",
-      "violations": []
     }
   ],
   "needs_review": 65,
   "no_reaction": 0,
-  "ok": 312,
-  "total_leads": 470,
-  "updated_at": "2026-09-03T09:07:10+03:00"
+  "ok": 313,
+  "total_leads": 471,
+  "updated_at": "2026-09-03T09:56:09+03:00"
 }
