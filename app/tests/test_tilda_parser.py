@@ -80,5 +80,32 @@ class TildaParserTests(unittest.TestCase):
         self.assertIn("Svadba_poisk", lead["description"])
 
 
+    def test_tilda_yclid_is_parsed_from_telegram_message(self) -> None:
+        message = {
+            "from": {"username": "TildaFormsBot", "first_name": "TildaForms"},
+            "text": (
+                "Содержание заявки:\n"
+                "Name: Test\n"
+                "Phone: +79999999999\n"
+                "количество_гостей: 51\n"
+                "Date: 25/09/2026\n"
+                "Checkbox: yes\n"
+                "yclid: TEST_YCLID_20260903\n\n"
+                "Дополнительная информация:\n"
+                "Код заявки: 2925975:8647012982\n"
+                "Код блока: rec1191803796\n"
+                "https://moscowbanket.ru/\n"
+                "-----"
+            ),
+        }
+
+        lead = parse_tilda_message(message)
+
+        self.assertIsNotNone(lead)
+        assert lead is not None
+        self.assertEqual(lead["yclid"], "TEST_YCLID_20260903")
+        self.assertIn("yclid: TEST_YCLID_20260903", lead["description"])
+
+
 if __name__ == "__main__":
     unittest.main()
