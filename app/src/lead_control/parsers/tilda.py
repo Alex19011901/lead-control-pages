@@ -25,6 +25,7 @@ FIELD_ALIASES = {
         "input",
     },
     "event_type": {"тип мероприятия", "формат мероприятия", "event type"},
+    "yclid": {"yclid"},
 }
 
 WORD_NUMBERS = {
@@ -66,6 +67,7 @@ def parse_tilda_message(message: dict[str, Any]) -> dict[str, Any] | None:
         "event_date": parse_event_date(fields.get("event_date")),
         "guests_count": _parse_int(fields.get("guests_count")),
         "event_type": event_type,
+        "yclid": fields.get("yclid", ""),
         "description": str(text).strip(),
     }
     reason = test_lead_reason(lead, text)
