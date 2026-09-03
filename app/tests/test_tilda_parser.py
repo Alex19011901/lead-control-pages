@@ -86,9 +86,9 @@ class TildaParserTests(unittest.TestCase):
             "text": (
                 "Содержание заявки:\n"
                 "Name: Test\n"
-                "Phone: +79999999999\n"
-                "количество_гостей: 51\n"
-                "Date: 25/09/2026\n"
+                "Phone: +79265350168\n"
+                "количество_гостей: 44\n"
+                "Date: 26-09-2026\n"
                 "Checkbox: yes\n"
                 "yclid: TEST_YCLID_20260903\n\n"
                 "Дополнительная информация:\n"
@@ -103,7 +103,9 @@ class TildaParserTests(unittest.TestCase):
 
         self.assertIsNotNone(lead)
         assert lead is not None
+        self.assertEqual(lead["phone_digits"], "79265350168")
         self.assertEqual(lead["yclid"], "TEST_YCLID_20260903")
+        self.assertEqual(lead["ignored_reason"], "test_yclid")
         self.assertIn("yclid: TEST_YCLID_20260903", lead["description"])
 
 
