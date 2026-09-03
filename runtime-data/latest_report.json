@@ -19,7 +19,7 @@
     "ТоМесто": 1
   },
   "event_types": {
-    "unknown": 101,
+    "unknown": 100,
     "Бизнес мероприятие": 17,
     "Выпускной": 1,
     "ДР": 1,
@@ -30,7 +30,7 @@
     "Свадьба": 148,
     "Съемки": 1,
     "Съёмки": 1,
-    "Юбилей": 87
+    "Юбилей": 88
   },
   "guest_ranges": {
     "1-20": 154,
@@ -44,11 +44,11 @@
   "latest_leads": [
     {
       "created_at": "2026-09-03T16:49:31+03:00",
-      "crm_entity_id": null,
-      "crm_entity_type": null,
-      "crm_found": false,
+      "crm_entity_id": 48223023,
+      "crm_entity_type": "lead",
+      "crm_found": true,
       "event_date": "2026-09-13",
-      "event_type": "",
+      "event_type": "Юбилей",
       "guests_count": 12,
       "identifier": "7********19",
       "identifier_type": "phone",
@@ -57,7 +57,7 @@
       "manager_username": "empairbey",
       "name": "Фирстова Татьяна Валерьевна",
       "source": "САЙТ ТИЛЬДА",
-      "status": "PENDING",
+      "status": "OK",
       "violations": []
     },
     {
@@ -409,7 +409,7 @@
   ],
   "needs_review": 66,
   "no_reaction": 0,
-  "ok": 314,
+  "ok": 315,
   "total_leads": 474,
-  "updated_at": "2026-09-03T17:23:18+03:00"
+  "updated_at": "2026-09-03T17:34:59+03:00"
 }
