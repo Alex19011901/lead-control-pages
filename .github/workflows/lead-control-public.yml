@@ -86,6 +86,8 @@ jobs:
         timeout-minutes: 2
         continue-on-error: true
         env:
+          AMOCRM_TOKEN: ${{ secrets.AMOCRM_TOKEN }}
+          AMOCRM_DOMAIN: https://alex1901yaru.amocrm.ru
           METRIKA_OFFLINE_ENABLED: "1"
           METRIKA_OFFLINE_DRY_RUN: "1"
           YANDEX_METRIKA_OFFLINE_TOKEN: ${{ secrets.YANDEX_METRIKA_OFFLINE_TOKEN }}
