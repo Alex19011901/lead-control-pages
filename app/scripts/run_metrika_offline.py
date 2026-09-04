@@ -159,7 +159,19 @@ def _safe_candidate_details(lead: dict[str, Any]) -> dict[str, str]:
         "crm_lead_id": str(record.get("crm_lead_id") or ""),
         "status_name": str(feedback.get("status_name") or ""),
         "yclid": str(fields.get("yclid") or ""),
+        "name": _first_text(lead.get("name"), fields.get("name")),
+        "phone": _first_text(lead.get("phone"), fields.get("phone"), lead.get("identifier")),
+        "source": _first_text(lead.get("source"), fields.get("source")),
+        "lead_time": _first_text(lead.get("ts"), lead.get("created_at"), lead.get("first_seen_at"), fields.get("ts")),
     }
+
+
+def _first_text(*values: object) -> str:
+    for value in values:
+        text = str(value or "").strip()
+        if text:
+            return text
+    return ""
 
 
 def _summary(*, status: str, enabled: bool, dry_run: bool, total_leads: int = 0, candidates: int = 0, processed: int = 0, uploads_attempted: int = 0, errors: list[str] | None = None) -> dict[str, Any]:
