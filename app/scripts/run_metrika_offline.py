@@ -69,14 +69,23 @@ def run(
             _write_summary(stdout, summary)
             return 0
 
+        amocrm_token = str(env_map.get("AMOCRM_TOKEN") or "").strip()
+        timeout = _positive_int(env_map.get("METRIKA_OFFLINE_HTTP_TIMEOUT"), default=30)
+        amocrm_domain = str(env_map.get("AMOCRM_DOMAIN") or DEFAULT_AMOCRM_DOMAIN).strip()
+
         if dry_run:
             summary = _summary(status="dry_run", enabled=True, dry_run=True, total_leads=len(leads), candidates=len(candidates))
-            summary["candidate_details"] = [_safe_candidate_details(lead) for lead in candidates]
+            if not amocrm_token:
+                summary["qualification_check"] = "missing_amocrm_token"
+                summary["candidate_details"] = [_safe_candidate_details(lead) for lead in candidates]
+            else:
+                events_client = events_client_factory(amocrm_domain, amocrm_token, timeout) if events_client_factory is not None else metrika_offline.AmoCRMEventsReadOnlyClient(amocrm_domain, amocrm_token, timeout=timeout)
+                summary["qualification_check"] = "read_only_amocrm_events"
+                summary["candidate_details"] = [_dry_run_candidate_details(lead, events_client) for lead in candidates]
             _save_summary(state, state_path, summary)
             _write_summary(stdout, summary)
             return 0
 
-        amocrm_token = str(env_map.get("AMOCRM_TOKEN") or "").strip()
         if not amocrm_token:
             summary = _summary(status="missing_amocrm_token", enabled=True, dry_run=False, total_leads=len(leads), candidates=len(candidates))
             _save_summary(state, state_path, summary)
@@ -90,8 +99,6 @@ def run(
             _write_summary(stdout, summary)
             return 0
 
-        timeout = _positive_int(env_map.get("METRIKA_OFFLINE_HTTP_TIMEOUT"), default=30)
-        amocrm_domain = str(env_map.get("AMOCRM_DOMAIN") or DEFAULT_AMOCRM_DOMAIN).strip()
         events_client = events_client_factory(amocrm_domain, amocrm_token, timeout) if events_client_factory is not None else metrika_offline.AmoCRMEventsReadOnlyClient(amocrm_domain, amocrm_token, timeout=timeout)
         metrika_client = metrika_client_factory(metrika_token, timeout) if metrika_client_factory is not None else metrika_offline.YandexMetrikaOfflineClient(metrika_token, timeout=timeout)
 
@@ -150,7 +157,7 @@ def _candidate_leads(leads: list[dict[str, Any]], state: dict[str, Any]) -> list
     return result
 
 
-def _safe_candidate_details(lead: dict[str, Any]) -> dict[str, str]:
+def _safe_candidate_details(lead: dict[str, Any]) -> dict[str, Any]:
     record = metrika_offline.build_qualified_lead_detection(lead) or {}
     feedback = lead.get("crm_feedback") if isinstance(lead.get("crm_feedback"), dict) else {}
     fields = lead.get("fields") if isinstance(lead.get("fields"), dict) else {}
@@ -166,12 +173,45 @@ def _safe_candidate_details(lead: dict[str, Any]) -> dict[str, str]:
     }
 
 
+def _dry_run_candidate_details(lead: dict[str, Any], events_client: Any) -> dict[str, Any]:
+    details = _safe_candidate_details(lead)
+    crm_lead_id = _positive_int(details.get("crm_lead_id"), default=0)
+    if crm_lead_id <= 0:
+        details["qualification_datetime_state"] = "missing_crm_lead_id"
+        details["qualification_datetime"] = None
+        details["qualification_datetime_iso"] = ""
+        return details
+
+    result = metrika_offline.lookup_first_qualification_datetime(events_client, crm_lead_id)
+    details["qualification_datetime_state"] = result.datetime_state
+    details["qualification_datetime_source"] = result.datetime_source
+    details["qualification_datetime"] = result.qualification_datetime
+    details["qualification_datetime_iso"] = _unix_to_utc_iso(result.qualification_datetime)
+    if result.error_kind:
+        details["qualification_error_kind"] = result.error_kind
+    if result.error_status is not None:
+        details["qualification_error_status"] = result.error_status
+    if result.error_detail:
+        details["qualification_error_detail"] = str(result.error_detail)[:200]
+    return details
+
+
 def _first_text(*values: object) -> str:
     for value in values:
         text = str(value or "").strip()
         if text:
             return text
     return ""
+
+
+def _unix_to_utc_iso(value: object) -> str:
+    try:
+        timestamp = int(value)
+    except (TypeError, ValueError):
+        return ""
+    if timestamp <= 0:
+        return ""
+    return datetime.fromtimestamp(timestamp, tz=timezone.utc).replace(microsecond=0).isoformat().replace("+00:00", "Z")
 
 
 def _summary(*, status: str, enabled: bool, dry_run: bool, total_leads: int = 0, candidates: int = 0, processed: int = 0, uploads_attempted: int = 0, errors: list[str] | None = None) -> dict[str, Any]:
