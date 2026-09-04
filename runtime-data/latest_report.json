@@ -1,7 +1,7 @@
 {
   "alarm_no_crm": 1,
   "by_manager": {
-    "no_manager_reaction": 404,
+    "no_manager_reaction": 405,
     "Максим": 35,
     "Олеся": 37
   },
@@ -15,7 +15,7 @@
     "Заявки хост": 247,
     "С улицы": 2,
     "САЙТ ТИЛЬДА": 119,
-    "Тильда Веранда": 42,
+    "Тильда Веранда": 43,
     "ТоМесто": 1
   },
   "event_types": {
@@ -25,7 +25,7 @@
     "ДР": 1,
     "Деловое мероприятие": 1,
     "Детский праздник": 5,
-    "Корпоратив": 112,
+    "Корпоратив": 113,
     "Поминки": 1,
     "Свадьба": 148,
     "Съемки": 1,
@@ -33,7 +33,7 @@
     "Юбилей": 88
   },
   "guest_ranges": {
-    "1-20": 154,
+    "1-20": 155,
     "101-150": 32,
     "151+": 19,
     "21-50": 139,
@@ -43,12 +43,30 @@
   "late_crm": 111,
   "latest_leads": [
     {
-      "created_at": "2026-09-04T10:22:54+03:00",
+      "created_at": "2026-09-04T11:15:25+03:00",
       "crm_entity_id": null,
       "crm_entity_type": null,
       "crm_found": false,
-      "event_date": "2026-12-11",
+      "event_date": "2026-09-04",
       "event_type": "",
+      "guests_count": 4,
+      "identifier": "7********85",
+      "identifier_type": "phone",
+      "lead_id": "5fba3668b7c9988d",
+      "manager": "",
+      "manager_username": "",
+      "name": "Наталья",
+      "source": "Тильда Веранда",
+      "status": "-",
+      "violations": []
+    },
+    {
+      "created_at": "2026-09-04T10:22:54+03:00",
+      "crm_entity_id": 48242055,
+      "crm_entity_type": "lead",
+      "crm_found": true,
+      "event_date": "2026-12-11",
+      "event_type": "Корпоратив",
       "guests_count": 160,
       "identifier": "7********66",
       "identifier_type": "phone",
@@ -57,7 +75,7 @@
       "manager_username": "",
       "name": "Мария",
       "source": "Заявки хост",
-      "status": "PENDING",
+      "status": "OK",
       "violations": []
     },
     {
@@ -383,31 +401,11 @@
       "source": "Restoran.Cafe",
       "status": "OK",
       "violations": []
-    },
-    {
-      "created_at": "2026-09-01T21:37:10+03:00",
-      "crm_entity_id": 48204577,
-      "crm_entity_type": "lead",
-      "crm_found": true,
-      "event_date": "2026-09-25",
-      "event_type": "Юбилей",
-      "guests_count": 60,
-      "identifier": "7********85",
-      "identifier_type": "phone",
-      "lead_id": "1de3f21b2b888ddf",
-      "manager": "",
-      "manager_username": "",
-      "name": "Илья Земсков",
-      "source": "ТоМесто",
-      "status": "LATE_CRM",
-      "violations": [
-        "LATE_CRM"
-      ]
     }
   ],
   "needs_review": 66,
   "no_reaction": 0,
-  "ok": 317,
-  "total_leads": 476,
-  "updated_at": "2026-09-04T10:41:50+03:00"
+  "ok": 318,
+  "total_leads": 477,
+  "updated_at": "2026-09-04T11:46:56+03:00"
 }
