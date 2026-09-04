@@ -57,79 +57,43 @@ def run(
         enabled = env_map.get(METRIKA_OFFLINE_ENABLED_ENV) == "1"
         dry_run = env_map.get(METRIKA_OFFLINE_DRY_RUN_ENV, "1") != "0"
         if not enabled:
-            summary = _summary(
-                status="disabled",
-                enabled=False,
-                dry_run=True,
-                total_leads=len(leads),
-            )
+            summary = _summary(status="disabled", enabled=False, dry_run=True, total_leads=len(leads))
             _save_summary(state, state_path, summary)
             _write_summary(stdout, summary)
             return 0
 
         candidates = _candidate_leads(leads, state)
         if not candidates:
-            summary = _summary(
-                status="no_candidates",
-                enabled=True,
-                dry_run=dry_run,
-                total_leads=len(leads),
-                candidates=0,
-            )
+            summary = _summary(status="no_candidates", enabled=True, dry_run=dry_run, total_leads=len(leads), candidates=0)
             _save_summary(state, state_path, summary)
             _write_summary(stdout, summary)
             return 0
 
         if dry_run:
-            summary = _summary(
-                status="dry_run",
-                enabled=True,
-                dry_run=True,
-                total_leads=len(leads),
-                candidates=len(candidates),
-            )
+            summary = _summary(status="dry_run", enabled=True, dry_run=True, total_leads=len(leads), candidates=len(candidates))
+            summary["candidate_details"] = [_safe_candidate_details(lead) for lead in candidates]
             _save_summary(state, state_path, summary)
             _write_summary(stdout, summary)
             return 0
 
         amocrm_token = str(env_map.get("AMOCRM_TOKEN") or "").strip()
         if not amocrm_token:
-            summary = _summary(
-                status="missing_amocrm_token",
-                enabled=True,
-                dry_run=False,
-                total_leads=len(leads),
-                candidates=len(candidates),
-            )
+            summary = _summary(status="missing_amocrm_token", enabled=True, dry_run=False, total_leads=len(leads), candidates=len(candidates))
             _save_summary(state, state_path, summary)
             _write_summary(stdout, summary)
             return 0
 
         metrika_token = str(env_map.get(YANDEX_METRIKA_OFFLINE_TOKEN_ENV) or "").strip()
         if not metrika_token:
-            summary = _summary(
-                status="missing_metrika_token",
-                enabled=True,
-                dry_run=False,
-                total_leads=len(leads),
-                candidates=len(candidates),
-            )
+            summary = _summary(status="missing_metrika_token", enabled=True, dry_run=False, total_leads=len(leads), candidates=len(candidates))
             _save_summary(state, state_path, summary)
             _write_summary(stdout, summary)
             return 0
 
         timeout = _positive_int(env_map.get("METRIKA_OFFLINE_HTTP_TIMEOUT"), default=30)
         amocrm_domain = str(env_map.get("AMOCRM_DOMAIN") or DEFAULT_AMOCRM_DOMAIN).strip()
-        events_client = (
-            events_client_factory(amocrm_domain, amocrm_token, timeout)
-            if events_client_factory is not None
-            else metrika_offline.AmoCRMEventsReadOnlyClient(amocrm_domain, amocrm_token, timeout=timeout)
-        )
-        metrika_client = (
-            metrika_client_factory(metrika_token, timeout)
-            if metrika_client_factory is not None
-            else metrika_offline.YandexMetrikaOfflineClient(metrika_token, timeout=timeout)
-        )
+        events_client = events_client_factory(amocrm_domain, amocrm_token, timeout) if events_client_factory is not None else metrika_offline.AmoCRMEventsReadOnlyClient(amocrm_domain, amocrm_token, timeout=timeout)
+        metrika_client = metrika_client_factory(metrika_token, timeout) if metrika_client_factory is not None else metrika_offline.YandexMetrikaOfflineClient(metrika_token, timeout=timeout)
 
         processed = 0
         uploaded = 0
@@ -137,37 +101,18 @@ def run(
         detected_at = _now_utc_iso()
         for lead in candidates:
             try:
-                record, _duplicate = metrika_offline.record_qualified_lead_detection_with_datetime(
-                    state,
-                    lead,
-                    events_client,
-                    detected_at=detected_at,
-                )
+                record, _duplicate = metrika_offline.record_qualified_lead_detection_with_datetime(state, lead, events_client, detected_at=detected_at)
                 if record is None:
                     continue
                 processed += 1
-                result = metrika_offline.submit_metrika_offline_record(
-                    state,
-                    record,
-                    metrika_client,
-                    submitted_at=_now_utc_iso(),
-                )
+                result = metrika_offline.submit_metrika_offline_record(state, record, metrika_client, submitted_at=_now_utc_iso())
                 if result.attempted:
                     uploaded += 1
             except Exception as exc:
                 errors.append(_redact(str(exc), sensitive_values))
 
         status = "completed" if not errors else "completed_with_errors"
-        summary = _summary(
-            status=status,
-            enabled=True,
-            dry_run=False,
-            total_leads=len(leads),
-            candidates=len(candidates),
-            processed=processed,
-            uploads_attempted=uploaded,
-            errors=errors,
-        )
+        summary = _summary(status=status, enabled=True, dry_run=False, total_leads=len(leads), candidates=len(candidates), processed=processed, uploads_attempted=uploaded, errors=errors)
         _save_summary(state, state_path, summary)
         _write_summary(stdout, summary)
         return 0
@@ -196,42 +141,29 @@ def _candidate_leads(leads: list[dict[str, Any]], state: dict[str, Any]) -> list
     result: list[dict[str, Any]] = []
     for lead in leads:
         record = metrika_offline.build_qualified_lead_detection(lead)
-        if record is None:
-            continue
-        if not record.get("crm_lead_id"):
+        if record is None or not record.get("crm_lead_id"):
             continue
         existing = conversions.get(record["idempotency_key"])
-        if (
-            isinstance(existing, dict)
-            and str(existing.get("state") or "").strip() in metrika_offline.SUBMISSION_BLOCKING_STATES
-        ):
+        if isinstance(existing, dict) and str(existing.get("state") or "").strip() in metrika_offline.SUBMISSION_BLOCKING_STATES:
             continue
         result.append(lead)
     return result
 
 
-def _summary(
-    *,
-    status: str,
-    enabled: bool,
-    dry_run: bool,
-    total_leads: int = 0,
-    candidates: int = 0,
-    processed: int = 0,
-    uploads_attempted: int = 0,
-    errors: list[str] | None = None,
-) -> dict[str, Any]:
+def _safe_candidate_details(lead: dict[str, Any]) -> dict[str, str]:
+    record = metrika_offline.build_qualified_lead_detection(lead) or {}
+    feedback = lead.get("crm_feedback") if isinstance(lead.get("crm_feedback"), dict) else {}
+    fields = lead.get("fields") if isinstance(lead.get("fields"), dict) else {}
     return {
-        "updated_at": _now_utc_iso(),
-        "status": status,
-        "enabled": enabled,
-        "dry_run": dry_run,
-        "total_leads": total_leads,
-        "candidates": candidates,
-        "processed": processed,
-        "uploads_attempted": uploads_attempted,
-        "errors": errors or [],
+        "lead_id": str(lead.get("id") or ""),
+        "crm_lead_id": str(record.get("crm_lead_id") or ""),
+        "status_name": str(feedback.get("status_name") or ""),
+        "yclid": str(fields.get("yclid") or ""),
     }
+
+
+def _summary(*, status: str, enabled: bool, dry_run: bool, total_leads: int = 0, candidates: int = 0, processed: int = 0, uploads_attempted: int = 0, errors: list[str] | None = None) -> dict[str, Any]:
+    return {"updated_at": _now_utc_iso(), "status": status, "enabled": enabled, "dry_run": dry_run, "total_leads": total_leads, "candidates": candidates, "processed": processed, "uploads_attempted": uploads_attempted, "errors": errors or []}
 
 
 def _save_summary(state: dict[str, Any], state_path: Path, summary: dict[str, Any]) -> None:
@@ -239,12 +171,7 @@ def _save_summary(state: dict[str, Any], state_path: Path, summary: dict[str, An
     metrika_offline.save_metrika_offline_state(state, state_path)
 
 
-def _safe_save_summary(
-    state: dict[str, Any],
-    state_path: Path,
-    summary: dict[str, Any],
-    stdout: TextIO,
-) -> None:
+def _safe_save_summary(state: dict[str, Any], state_path: Path, summary: dict[str, Any], stdout: TextIO) -> None:
     try:
         _save_summary(state, state_path, summary)
     except Exception as exc:
