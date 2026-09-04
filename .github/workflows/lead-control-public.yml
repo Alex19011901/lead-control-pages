@@ -87,6 +87,7 @@ jobs:
         continue-on-error: true
         env:
           METRIKA_OFFLINE_ENABLED: "0"
+          YANDEX_METRIKA_OFFLINE_TOKEN: ${{ secrets.YANDEX_METRIKA_OFFLINE_TOKEN }}
         run: python app/scripts/run_metrika_offline.py
 
       - name: Save refreshed data

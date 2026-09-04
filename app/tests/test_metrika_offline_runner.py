@@ -61,9 +61,18 @@ class MetrikaOfflineRunnerTests(unittest.TestCase):
         self.assertIn("timeout-minutes: 2", step_body)
         self.assertIn("continue-on-error: true", step_body)
         self.assertIn('METRIKA_OFFLINE_ENABLED: "0"', step_body)
+        self.assertNotIn('METRIKA_OFFLINE_ENABLED: "1"', step_body)
+        self.assertIn(
+            "YANDEX_METRIKA_OFFLINE_TOKEN: ${{ secrets.YANDEX_METRIKA_OFFLINE_TOKEN }}",
+            step_body,
+        )
         self.assertIn("run: python app/scripts/run_metrika_offline.py", step_body)
-        self.assertNotIn("YANDEX_METRIKA_OFFLINE_TOKEN", step_body)
-        self.assertNotIn("secrets.YANDEX_METRIKA_OFFLINE_TOKEN", text)
+        other_steps = "\n".join(
+            body
+            for name, body in _workflow_step_bodies(text)
+            if name != "Metrika offline conversions disabled runner"
+        )
+        self.assertNotIn("YANDEX_METRIKA_OFFLINE_TOKEN", other_steps)
 
     def test_default_disabled_does_not_call_http(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
@@ -335,6 +344,28 @@ def _workflow_step_body(text: str, step_name: str) -> str:
     if next_start == -1:
         return text[start:]
     return text[start:next_start]
+
+
+def _workflow_step_bodies(text: str) -> list[tuple[str, str]]:
+    step_starts = [
+        (line.split("- name:", 1)[1].strip(), offset)
+        for offset, line in _line_offsets(text)
+        if line.startswith("      - name:")
+    ]
+    result: list[tuple[str, str]] = []
+    for index, (name, start) in enumerate(step_starts):
+        end = step_starts[index + 1][1] if index + 1 < len(step_starts) else len(text)
+        result.append((name, text[start:end]))
+    return result
+
+
+def _line_offsets(text: str) -> list[tuple[int, str]]:
+    offsets: list[tuple[int, str]] = []
+    offset = 0
+    for line in text.splitlines(keepends=True):
+        offsets.append((offset, line.rstrip("\n")))
+        offset += len(line)
+    return offsets
 
 
 def _lead(
