@@ -86,7 +86,8 @@ jobs:
         timeout-minutes: 2
         continue-on-error: true
         env:
-          METRIKA_OFFLINE_ENABLED: "0"
+          METRIKA_OFFLINE_ENABLED: "1"
+          METRIKA_OFFLINE_DRY_RUN: "1"
           YANDEX_METRIKA_OFFLINE_TOKEN: ${{ secrets.YANDEX_METRIKA_OFFLINE_TOKEN }}
         run: python app/scripts/run_metrika_offline.py
 
