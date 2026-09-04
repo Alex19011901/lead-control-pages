@@ -39597,6 +39597,78 @@
       "status": "OK",
       "username": "",
       "violations": []
+    },
+    {
+      "category": "TG_LEAD",
+      "channel": "MAX",
+      "crm": {
+        "ambiguity_count": 0,
+        "created_at": null,
+        "entity_id": null,
+        "entity_type": null,
+        "event_type": null,
+        "found": false,
+        "responsible_user_id": null,
+        "responsible_user_name": null,
+        "updated_at": null
+      },
+      "crm_created_at": null,
+      "crm_found": false,
+      "crm_required": true,
+      "crm_responsible": null,
+      "deadline_msk_ts": 1788555599,
+      "event_date": "",
+      "event_type": "Свадьба",
+      "event_type_source": "MESSAGE",
+      "fields": {
+        "category": "TG_LEAD",
+        "email": "",
+        "event_date": "",
+        "event_date_raw": "11.11.26",
+        "event_type": "Свадьба",
+        "guests_count": 10,
+        "guests_max": null,
+        "guests_min": null,
+        "guests_raw": "10 человек",
+        "name": "",
+        "phone_digits": "",
+        "phone_raw": "",
+        "source": "Заявка с ТГ",
+        "telegram_username": "sd_alekseevna"
+      },
+      "first_seen_at": "2026-09-04T16:30:04+03:00",
+      "first_seen_ts": 1788528604,
+      "guests": 10,
+      "guests_max": null,
+      "guests_min": null,
+      "guests_raw": "10 человек",
+      "id": "9322136ff4a2c616",
+      "identifier": {
+        "type": "telegram_username",
+        "value": "sd_alekseevna"
+      },
+      "last_seen_at": "2026-09-04T16:30:04+03:00",
+      "last_seen_ts": 1788528604,
+      "manager_reaction": null,
+      "max": {
+        "chat_id": -71704692523093,
+        "message_ids": [
+          "mid.ffffbec8f345ffab01a06c9cb67557cd"
+        ],
+        "sender_name": "Олеся",
+        "sender_user_id": 48906491,
+        "sender_username": null
+      },
+      "message_id": "mid.ffffbec8f345ffab01a06c9cb67557cd",
+      "name": "",
+      "phone": "",
+      "received_at": "2026-09-04T16:30:04+03:00",
+      "sender_name": "Олеся",
+      "sender_user_id": 48906491,
+      "source": "Заявка с ТГ",
+      "status": "PENDING",
+      "username": "sd_alekseevna",
+      "violations": []
     }
   ],
   "schema_version": 1

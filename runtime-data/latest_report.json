@@ -1,7 +1,7 @@
 {
   "alarm_no_crm": 1,
   "by_manager": {
-    "no_manager_reaction": 406,
+    "no_manager_reaction": 407,
     "Максим": 35,
     "Олеся": 37
   },
@@ -10,7 +10,7 @@
     "Restoran.Cafe": 4,
     "WedWed": 6,
     "ЗАЯВКА ПОЧТА": 7,
-    "Заявка с ТГ": 19,
+    "Заявка с ТГ": 20,
     "Заявка сайт": 3,
     "Заявки хост": 248,
     "С улицы": 2,
@@ -27,13 +27,13 @@
     "Детский праздник": 5,
     "Корпоратив": 113,
     "Поминки": 1,
-    "Свадьба": 148,
+    "Свадьба": 149,
     "Съемки": 1,
     "Съёмки": 1,
     "Юбилей": 88
   },
   "guest_ranges": {
-    "1-20": 155,
+    "1-20": 156,
     "101-150": 32,
     "151+": 19,
     "21-50": 139,
@@ -42,6 +42,24 @@
   },
   "late_crm": 111,
   "latest_leads": [
+    {
+      "created_at": "2026-09-04T16:30:04+03:00",
+      "crm_entity_id": null,
+      "crm_entity_type": null,
+      "crm_found": false,
+      "event_date": "",
+      "event_type": "Свадьба",
+      "guests_count": 10,
+      "identifier": "@sd_alekseevna",
+      "identifier_type": "telegram_username",
+      "lead_id": "9322136ff4a2c616",
+      "manager": "",
+      "manager_username": "",
+      "name": "",
+      "source": "Заявка с ТГ",
+      "status": "PENDING",
+      "violations": []
+    },
     {
       "created_at": "2026-09-04T13:46:00+03:00",
       "crm_entity_id": 48250245,
@@ -383,29 +401,11 @@
       "source": "Заявки хост",
       "status": "OK",
       "violations": []
-    },
-    {
-      "created_at": "2026-09-02T11:31:25+03:00",
-      "crm_entity_id": 48196407,
-      "crm_entity_type": "lead",
-      "crm_found": true,
-      "event_date": "2026-10-10",
-      "event_type": "Свадьба",
-      "guests_count": null,
-      "identifier": "7********56",
-      "identifier_type": "phone",
-      "lead_id": "0384380e84a0e85a",
-      "manager": "",
-      "manager_username": "",
-      "name": "Максим",
-      "source": "Заявки хост",
-      "status": "OK",
-      "violations": []
     }
   ],
-  "needs_review": 67,
+  "needs_review": 66,
   "no_reaction": 0,
   "ok": 319,
-  "total_leads": 478,
-  "updated_at": "2026-09-04T16:03:21+03:00"
+  "total_leads": 479,
+  "updated_at": "2026-09-04T16:45:46+03:00"
 }
