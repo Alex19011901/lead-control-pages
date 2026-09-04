@@ -8,6 +8,17 @@
         "all_status_events_count": 0,
         "all_status_events_has_next": false,
         "crm_lead_id": "48223023",
+        "lead_added_events": [
+          {
+            "created_at": 1788445384,
+            "created_at_iso": "2026-09-03T14:23:04Z",
+            "entity_id": 48223023,
+            "type": "lead_added"
+          }
+        ],
+        "lead_added_events_check": "read_only_lead_added",
+        "lead_added_events_count": 1,
+        "lead_added_events_has_next": false,
         "lead_id": "a6635a8d141408f3",
         "lead_time": "2026-09-03T16:49:31+03:00",
         "name": "Фирстова Татьяна Валерьевна",
@@ -29,7 +40,7 @@
     "qualification_check": "read_only_amocrm_events",
     "status": "dry_run",
     "total_leads": 481,
-    "updated_at": "2026-09-04T19:19:52Z",
+    "updated_at": "2026-09-04T19:37:20Z",
     "uploads_attempted": 0
   },
   "schema_version": 1,
