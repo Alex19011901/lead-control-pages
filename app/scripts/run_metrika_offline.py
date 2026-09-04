@@ -194,7 +194,10 @@ def _dry_run_candidate_details(lead: dict[str, Any], events_client: Any) -> dict
     if result.error_detail:
         details["qualification_error_detail"] = str(result.error_detail)[:200]
     if result.datetime_state == metrika_offline.DATETIME_STATE_MISSING_TRANSITION_TIMESTAMP:
-        details.update(_all_status_transition_diagnostics(events_client, crm_lead_id))
+        status_diag = _all_status_transition_diagnostics(events_client, crm_lead_id)
+        details.update(status_diag)
+        if status_diag.get("all_status_events_count") == 0:
+            details.update(_lead_added_diagnostics(events_client, crm_lead_id))
     return details
 
 
@@ -242,6 +245,54 @@ def _all_status_transition_diagnostics(events_client: Any, crm_lead_id: int) -> 
         "all_status_events_count": len(events),
         "all_status_events_has_next": bool((payload.get("_links") or {}).get("next")),
         "all_status_events": transitions,
+    }
+
+
+def _lead_added_diagnostics(events_client: Any, crm_lead_id: int) -> dict[str, Any]:
+    params = {
+        "filter[entity]": "lead",
+        "filter[entity_id][0]": int(crm_lead_id),
+        "filter[type]": "lead_added",
+        "limit": 100,
+        "page": 1,
+    }
+    try:
+        payload = events_client.get_events(params)
+    except metrika_offline.AmoCRMEventsLookupError as exc:
+        result: dict[str, Any] = {
+            "lead_added_events_check": "lookup_failed",
+            "lead_added_events_error_kind": exc.kind,
+        }
+        if exc.http_status is not None:
+            result["lead_added_events_error_status"] = exc.http_status
+        if exc.detail:
+            result["lead_added_events_error_detail"] = str(exc.detail)[:200]
+        return result
+
+    events = list(((payload.get("_embedded") or {}).get("events")) or [])
+    added_events: list[dict[str, Any]] = []
+    for event in events:
+        if not isinstance(event, dict):
+            continue
+        item: dict[str, Any] = {
+            "created_at": event.get("created_at"),
+            "created_at_iso": _unix_to_utc_iso(event.get("created_at")),
+            "entity_id": event.get("entity_id"),
+            "type": event.get("type"),
+        }
+        before_statuses = _event_lead_statuses(event.get("value_before"))
+        after_statuses = _event_lead_statuses(event.get("value_after"))
+        if before_statuses:
+            item["value_before"] = before_statuses
+        if after_statuses:
+            item["value_after"] = after_statuses
+        added_events.append(item)
+
+    return {
+        "lead_added_events_check": "read_only_lead_added",
+        "lead_added_events_count": len(events),
+        "lead_added_events_has_next": bool((payload.get("_links") or {}).get("next")),
+        "lead_added_events": added_events,
     }
 
 
