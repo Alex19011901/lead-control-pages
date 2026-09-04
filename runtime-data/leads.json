@@ -13401,7 +13401,7 @@
         "pipeline_id": 10081590,
         "responsible_user_id": 12982830,
         "rule_version": 6,
-        "state": "WAITING",
+        "state": "NO_FEEDBACK",
         "status_id": 79927038,
         "status_name": "Выслано предложение"
       },
@@ -15924,7 +15924,7 @@
         "pipeline_id": 10081590,
         "responsible_user_id": 12982830,
         "rule_version": 6,
-        "state": "WAITING",
+        "state": "NO_FEEDBACK",
         "status_id": 79927038,
         "status_name": "Выслано предложение"
       },
@@ -36947,7 +36947,7 @@
         "pipeline_id": 10081590,
         "responsible_user_id": 12982830,
         "rule_version": 6,
-        "state": "WAITING",
+        "state": "NO_FEEDBACK",
         "status_id": 79927038,
         "status_name": "Выслано предложение"
       },
@@ -39362,6 +39362,76 @@
       "sender_user_id": 297178198,
       "source": "Заявки хост",
       "status": "OK",
+      "username": "",
+      "violations": []
+    },
+    {
+      "category": "HOST",
+      "channel": "MAX",
+      "crm": {
+        "ambiguity_count": 0,
+        "created_at": null,
+        "entity_id": null,
+        "entity_type": null,
+        "event_type": null,
+        "found": false,
+        "responsible_user_id": null,
+        "responsible_user_name": null,
+        "updated_at": null
+      },
+      "crm_created_at": null,
+      "crm_found": false,
+      "crm_required": true,
+      "crm_responsible": null,
+      "deadline_msk_ts": 1788555599,
+      "event_date": "2026-12-11",
+      "fields": {
+        "category": "HOST",
+        "email": "",
+        "event_date": "2026-12-11",
+        "event_date_raw": "11.12",
+        "event_type": "",
+        "guests_count": 160,
+        "guests_max": null,
+        "guests_min": null,
+        "guests_raw": "160 перс",
+        "name": "Мария",
+        "phone_digits": "79269130666",
+        "phone_raw": "+79269130666",
+        "source": "Заявки хост",
+        "telegram_username": ""
+      },
+      "first_seen_at": "2026-09-04T10:22:54+03:00",
+      "first_seen_ts": 1788506574,
+      "guests": 160,
+      "guests_max": null,
+      "guests_min": null,
+      "guests_raw": "160 перс",
+      "id": "e65996303920ecab",
+      "identifier": {
+        "type": "phone",
+        "value": "79269130666"
+      },
+      "last_seen_at": "2026-09-04T10:22:54+03:00",
+      "last_seen_ts": 1788506574,
+      "manager_reaction": null,
+      "max": {
+        "chat_id": -71704692523093,
+        "message_ids": [
+          "mid.ffffbec8f345ffab01a06b4c8d256002"
+        ],
+        "sender_name": "Дмитрий Жуков",
+        "sender_user_id": 201560258,
+        "sender_username": null
+      },
+      "message_id": "mid.ffffbec8f345ffab01a06b4c8d256002",
+      "name": "Мария",
+      "phone": "+79269130666",
+      "received_at": "2026-09-04T10:22:54+03:00",
+      "sender_name": "Дмитрий Жуков",
+      "sender_user_id": 201560258,
+      "source": "Заявки хост",
+      "status": "PENDING",
       "username": "",
       "violations": []
     }
