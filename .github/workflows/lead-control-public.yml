@@ -31,9 +31,9 @@ jobs:
         with:
           python-version: "3.12"
 
-      - name: Test exact Tilda test exclusion
+      - name: Test Tilda parser and advertising export
         working-directory: app
-        run: PYTHONPATH=. python -m unittest tests.test_tilda_parser -v
+        run: PYTHONPATH=. python -m unittest tests.test_tilda_parser tests.test_build_advertising_export -v
 
       - name: Install OCR
         run: |
@@ -63,6 +63,7 @@ jobs:
           python app/scripts/apply_dashboard_crm_guest_priority.py --leads runtime-data/leads.json --view runtime-data/dashboard_view.json
           python app/scripts/apply_dashboard_mail_source.py --view runtime-data/dashboard_view.json
           python app/scripts/augment_dashboard_feedback.py --leads runtime-data/leads.json --view runtime-data/dashboard_view.json
+          python app/scripts/build_advertising_export.py --input runtime-data/leads.json --output runtime-data/advertising_leads.json --start-date 2026-09-05
           mkdir -p public-site
           python app/scripts/build_github_pages_mirror.py --input app/dashboard/pageshare/index.html --output public-site/index.html
           python - <<'PY'
@@ -81,6 +82,7 @@ jobs:
           PY
           cp runtime-data/dashboard_view.json dashboard_view.json
           cp dashboard_view.json public-site/dashboard_view.json
+          cp runtime-data/advertising_leads.json public-site/advertising_leads.json
 
       - name: Save refreshed data
         run: |
