@@ -36,12 +36,6 @@ UTM_FIELDS = (
     "ym:s:lastUTMTerm",
 )
 
-OPENSTAT_FIELDS = (
-    "ym:s:lastOpenstatCampaign",
-    "ym:s:lastOpenstatService",
-    "ym:s:lastOpenstatSource",
-)
-
 SOURCE_FIELDS = (
     "ym:s:lastTrafficSource",
     "ym:s:lastAdvEngine",
@@ -64,7 +58,6 @@ FIELDS = (
     *URL_FIELDS,
     *DIRECT_FIELDS,
     *UTM_FIELDS,
-    *OPENSTAT_FIELDS,
     *SOURCE_FIELDS,
 )
 
@@ -150,7 +143,6 @@ def collect_starturl_diagnostic(
         "url_fields_nonempty_counts": _nonempty_counts(rows, URL_FIELDS),
         "direct_fields_nonempty_counts": _nonempty_counts(rows, DIRECT_FIELDS),
         "utm_fields_nonempty_counts": _nonempty_counts(rows, UTM_FIELDS),
-        "openstat_fields_nonempty_counts": _nonempty_counts(rows, OPENSTAT_FIELDS),
         "source_fields_nonempty_counts": _nonempty_counts(rows, SOURCE_FIELDS),
     }
 
