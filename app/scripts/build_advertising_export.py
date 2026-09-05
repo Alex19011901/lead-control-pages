@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
 from datetime import date
 from pathlib import Path
 from typing import Any
@@ -38,10 +39,34 @@ def crm_status_name(lead: dict[str, Any]) -> str:
     return ""
 
 
+def text_value(text: str, label: str) -> str:
+    pattern = rf"(?im)^\s*{re.escape(label)}\s*:\s*(.*?)\s*$"
+    match = re.search(pattern, text)
+    return match.group(1).strip() if match else ""
+
+
+def attribution_fields(fields: dict[str, Any]) -> dict[str, str]:
+    description = str(fields.get("description") or "")
+    result = {
+        "utm_source": str(fields.get("utm_source") or text_value(description, "UTM source")),
+        "utm_medium": str(fields.get("utm_medium") or text_value(description, "UTM medium")),
+        "utm_campaign": str(fields.get("utm_campaign") or text_value(description, "UTM campaign")),
+        "utm_content": str(fields.get("utm_content") or text_value(description, "UTM content")),
+        "utm_term": str(fields.get("utm_term") or text_value(description, "UTM term")),
+    }
+    content = result["utm_content"]
+    for marker, key in (("cid", "campaign_id"), ("gid", "group_id"), ("aid", "ad_id")):
+        match = re.search(rf"(?:^|[|;,_-]){marker}(?:[|:=_-])([0-9]+)(?:$|[|;,_-])", content, flags=re.I)
+        if not match:
+            match = re.search(rf"(?:^|\|){marker}\|([0-9]+)(?:\||$)", content, flags=re.I)
+        result[key] = match.group(1) if match else ""
+    return result
+
+
 def safe_lead(lead: dict[str, Any]) -> dict[str, Any]:
     fields = lead.get("fields") or {}
     yclid = str(fields.get("yclid") or lead.get("yclid") or "").strip()
-    return {
+    item = {
         "lead_id": str(lead.get("id") or ""),
         "created_at": str(lead.get("first_seen_at") or lead.get("received_at") or ""),
         "created_ts": lead.get("first_seen_ts"),
@@ -53,6 +78,8 @@ def safe_lead(lead: dict[str, Any]) -> dict[str, Any]:
         "crm_found": bool(lead.get("crm_found") or (lead.get("crm") or {}).get("found")),
         "crm_status": crm_status_name(lead),
     }
+    item.update(attribution_fields(fields))
+    return item
 
 
 def main() -> int:
@@ -74,7 +101,7 @@ def main() -> int:
 
     exported.sort(key=lambda item: (item.get("created_ts") or 0, item.get("lead_id") or ""))
     output = {
-        "schema_version": 1,
+        "schema_version": 2,
         "start_date": args.start_date,
         "lead_count": len(exported),
         "leads": exported,
