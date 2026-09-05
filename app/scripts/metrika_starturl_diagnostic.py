@@ -37,7 +37,6 @@ UTM_FIELDS = (
 )
 
 OPENSTAT_FIELDS = (
-    "ym:s:lastOpenstatAd",
     "ym:s:lastOpenstatCampaign",
     "ym:s:lastOpenstatService",
     "ym:s:lastOpenstatSource",
