@@ -6,6 +6,7 @@ import io
 import json
 import os
 import time
+import urllib.error
 import urllib.parse
 import urllib.request
 from dataclasses import dataclass
@@ -130,6 +131,11 @@ class MetrikaLogsReadOnlyClient:
         try:
             with urllib.request.urlopen(request, timeout=self.timeout) as response:
                 return response.read().decode("utf-8")
+        except urllib.error.HTTPError as exc:
+            # Safe diagnostic only: HTTP code and standard reason phrase.
+            # Never include URL, headers, response body, or token.
+            reason = str(exc.reason or "HTTPError").replace("\n", " ").replace("\r", " ")[:120]
+            raise LogsApiError(f"http_{int(exc.code)}:{reason}") from None
         except Exception as exc:
             # Never include headers/token in diagnostics.
             raise LogsApiError(type(exc).__name__) from None
