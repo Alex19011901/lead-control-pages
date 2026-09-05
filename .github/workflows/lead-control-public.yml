@@ -1,5 +1,5 @@
 name: Lead Control Public Runner
-# validation-retry: exact-tilda-test-exclusion
+# validation-retry: exact-tilda-test-exclusion-phone-dedup
 on:
   schedule:
     - cron: "50 6 * * *"
