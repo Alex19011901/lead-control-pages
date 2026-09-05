@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import hashlib
 import json
 import subprocess
 import sys
@@ -13,6 +14,7 @@ SCRIPT = ROOT / "scripts" / "build_advertising_export.py"
 
 class AdvertisingExportTests(unittest.TestCase):
     def test_export_is_anonymized_and_starts_from_cutoff(self) -> None:
+        yclid = "TEST_YCLID_20260905_1434"
         payload = {
             "schema_version": 1,
             "leads": [
@@ -35,9 +37,16 @@ class AdvertisingExportTests(unittest.TestCase):
                     "fields": {
                         "name": "Test",
                         "phone_raw": "+79265350168",
-                        "description": "private text",
-                        "yclid": "TEST_YCLID_20260905_1434",
+                        "yclid": yclid,
                         "event_type": "Свадьба",
+                        "description": (
+                            "private text\n"
+                            "UTM source: yandex_search\n"
+                            "UTM medium: cpc\n"
+                            "UTM campaign: Search_Main\n"
+                            "UTM content: search|cid|707720217|gid|5724131407|aid|17630916799|dvc|desktop\n"
+                            "UTM term: potentially sensitive query\n"
+                        ),
                     },
                     "status": "PENDING",
                     "crm": {"found": True, "status_name": "Первичный контакт"},
@@ -56,12 +65,20 @@ class AdvertisingExportTests(unittest.TestCase):
             result = json.loads(output.read_text(encoding="utf-8"))
 
         self.assertEqual(result["lead_count"], 1)
-        self.assertEqual(result["leads"][0]["lead_id"], "newhash")
-        self.assertEqual(result["leads"][0]["yclid"], "TEST_YCLID_20260905_1434")
-        self.assertEqual(result["leads"][0]["crm_status"], "Первичный контакт")
+        item = result["leads"][0]
+        self.assertEqual(item["lead_id"], "newhash")
+        self.assertTrue(item["has_yclid"])
+        self.assertEqual(item["yclid_sha256"], hashlib.sha256(yclid.encode()).hexdigest())
+        self.assertEqual(item["crm_status"], "Первичный контакт")
+        self.assertEqual(item["campaign_id"], "707720217")
+        self.assertEqual(item["group_id"], "5724131407")
+        self.assertEqual(item["ad_id"], "17630916799")
+        self.assertEqual(item["utm_campaign"], "Search_Main")
         serialized = json.dumps(result, ensure_ascii=False)
         self.assertNotIn("79265350168", serialized)
         self.assertNotIn("private text", serialized)
+        self.assertNotIn("potentially sensitive query", serialized)
+        self.assertNotIn(yclid, serialized)
         self.assertNotIn('"name"', serialized)
         self.assertNotIn('"identifier"', serialized)
 
