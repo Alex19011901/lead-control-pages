@@ -75,6 +75,12 @@ class MetrikaLogsReadOnlyClient:
         query = self._export_query(date1=date1, date2=date2, fields=fields, attribution=attribution)
         return self._json("GET", f"/counter/{self.counter_id}/logrequests/evaluate", query)
 
+    def counters(self) -> dict[str, Any]:
+        return self._json("GET", "/counters", None)
+
+    def counter(self) -> dict[str, Any]:
+        return self._json("GET", f"/counter/{self.counter_id}", None)
+
     def create_export(self, *, date1: str, date2: str, fields: Iterable[str], attribution: str = DEFAULT_ATTRIBUTION) -> LogRequest:
         query = self._export_query(date1=date1, date2=date2, fields=fields, attribution=attribution)
         payload = self._json("POST", f"/counter/{self.counter_id}/logrequests", query)
@@ -132,10 +138,12 @@ class MetrikaLogsReadOnlyClient:
             with urllib.request.urlopen(request, timeout=self.timeout) as response:
                 return response.read().decode("utf-8")
         except urllib.error.HTTPError as exc:
-            # Safe diagnostic only: HTTP code and standard reason phrase.
-            # Never include URL, headers, response body, or token.
+            # Safe diagnostic only: HTTP code, reason phrase and sanitized API error.
+            # Never include URL, headers, full response body, or token.
             reason = str(exc.reason or "HTTPError").replace("\n", " ").replace("\r", " ")[:120]
-            raise LogsApiError(f"http_{int(exc.code)}:{reason}") from None
+            api_error = _safe_api_error(exc)
+            detail = f"{reason}:{api_error}" if api_error else reason
+            raise LogsApiError(f"http_{int(exc.code)}:{detail}") from None
         except Exception as exc:
             # Never include headers/token in diagnostics.
             raise LogsApiError(type(exc).__name__) from None
@@ -143,6 +151,12 @@ class MetrikaLogsReadOnlyClient:
 
 def _allowed_path(method: str, path: str) -> bool:
     segments = [part for part in path.split("/") if part]
+    # /counters -- read-only tag list for token/counter access diagnostics.
+    if method == "GET" and segments == ["counters"]:
+        return True
+    # /counter/{id} -- read-only tag information for target counter diagnostics.
+    if method == "GET" and len(segments) == 2 and segments[0] == "counter":
+        return segments[1].isdigit()
     # /counter/{id}/logrequests/evaluate
     if method == "GET" and len(segments) == 4 and segments[0] == "counter" and segments[2] == "logrequests" and segments[3] == "evaluate":
         return segments[1].isdigit()
@@ -206,6 +220,37 @@ def safe_diagnostic(matches: list[dict[str, str]], *, yclid: str, request_id: in
     }
 
 
+def access_diagnostic(client: MetrikaLogsReadOnlyClient) -> dict[str, Any]:
+    result: dict[str, Any] = {
+        "token_access_status": "unknown",
+        "counter_access_status": "unknown",
+        "counter_visible_in_list": None,
+        "counter_id": client.counter_id,
+    }
+
+    try:
+        counters_payload = client.counters()
+    except LogsApiError as exc:
+        result["token_access_status"] = str(exc)
+        result["counter_access_status"] = "not_checked"
+        return result
+
+    result["token_access_status"] = "ok"
+    result["counter_visible_in_list"] = _counter_visible(counters_payload, client.counter_id)
+
+    try:
+        counter_payload = client.counter()
+    except LogsApiError as exc:
+        result["counter_access_status"] = str(exc)
+        return result
+
+    result["counter_access_status"] = "ok"
+    counter = counter_payload.get("counter") if isinstance(counter_payload, dict) else None
+    if isinstance(counter, dict):
+        result["counter_id"] = int(counter.get("id") or client.counter_id)
+    return result
+
+
 def collect(
     client: MetrikaLogsReadOnlyClient,
     *,
@@ -218,27 +263,95 @@ def collect(
     max_polls: int = 30,
 ) -> dict[str, Any]:
     # Evaluate is read-only. Creation is the only stateful read-export operation.
-    client.evaluate(date1=date1, date2=date2, fields=fields, attribution=attribution)
-    request = client.create_export(date1=date1, date2=date2, fields=fields, attribution=attribution)
-    current = request
-    for _ in range(max_polls + 1):
-        if current.status == "processed":
-            break
-        if current.status in {"canceled", "cleaned_by_user", "cleaned_automatically_as_too_old", "processing_failed"}:
-            raise LogsApiError(f"log_request_{current.status}")
-        if poll_seconds > 0:
-            time.sleep(poll_seconds)
-        current = client.status(request.request_id)
-    else:
-        raise LogsApiError("log_request_timeout")
-    if current.status != "processed":
-        raise LogsApiError("log_request_timeout")
+    access = access_diagnostic(client)
+    if access["token_access_status"] != "ok" or access["counter_access_status"] != "ok":
+        return {
+            "status": "blocked",
+            "reason": "counter_access_failed",
+            "access": access,
+            "yclid": str(yclid),
+            "matches_count": 0,
+            "visits": [],
+        }
 
-    rows: list[dict[str, str]] = []
-    for part_number in current.parts:
-        rows.extend(parse_tsv(client.download_part(current.request_id, part_number)))
-    matches = find_by_yclid(rows, yclid)
-    return safe_diagnostic(matches, yclid=yclid, request_id=current.request_id)
+    try:
+        client.evaluate(date1=date1, date2=date2, fields=fields, attribution=attribution)
+        request = client.create_export(date1=date1, date2=date2, fields=fields, attribution=attribution)
+        current = request
+        for _ in range(max_polls + 1):
+            if current.status == "processed":
+                break
+            if current.status in {"canceled", "cleaned_by_user", "cleaned_automatically_as_too_old", "processing_failed"}:
+                raise LogsApiError(f"log_request_{current.status}")
+            if poll_seconds > 0:
+                time.sleep(poll_seconds)
+            current = client.status(request.request_id)
+        else:
+            raise LogsApiError("log_request_timeout")
+        if current.status != "processed":
+            raise LogsApiError("log_request_timeout")
+
+        rows: list[dict[str, str]] = []
+        for part_number in current.parts:
+            rows.extend(parse_tsv(client.download_part(current.request_id, part_number)))
+        matches = find_by_yclid(rows, yclid)
+        result = safe_diagnostic(matches, yclid=yclid, request_id=current.request_id)
+        result["access"] = access
+        return result
+    except LogsApiError as exc:
+        return {
+            "status": "error",
+            "reason": str(exc),
+            "access": access,
+            "yclid": str(yclid),
+            "matches_count": 0,
+            "visits": [],
+        }
+
+
+def _counter_visible(payload: dict[str, Any], counter_id: int) -> bool:
+    counters = payload.get("counters") if isinstance(payload, dict) else None
+    if not isinstance(counters, list):
+        return False
+    for item in counters:
+        if isinstance(item, dict) and str(item.get("id") or "") == str(int(counter_id)):
+            return True
+    return False
+
+
+def _safe_api_error(exc: urllib.error.HTTPError) -> str:
+    try:
+        body = exc.read(4096)
+    except Exception:
+        return ""
+    try:
+        payload = json.loads(body.decode("utf-8"))
+    except Exception:
+        return ""
+    if not isinstance(payload, dict):
+        return ""
+    errors = payload.get("errors")
+    if isinstance(errors, list) and errors:
+        first = errors[0]
+        if isinstance(first, dict):
+            parts = [
+                str(first.get(key) or "").strip()
+                for key in ("error_type", "message")
+                if str(first.get(key) or "").strip()
+            ]
+            return _safe_error_text(":".join(parts))
+    parts = [
+        str(payload.get(key) or "").strip()
+        for key in ("error_type", "message")
+        if str(payload.get(key) or "").strip()
+    ]
+    return _safe_error_text(":".join(parts))
+
+
+def _safe_error_text(value: str) -> str:
+    text = value.replace("\n", " ").replace("\r", " ")
+    text = re.sub(r"(OAuth|Bearer)\s+[A-Za-z0-9._~+/=-]+", r"\1 [redacted]", text)
+    return text[:200]
 
 
 def main() -> int:

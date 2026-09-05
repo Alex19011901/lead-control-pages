@@ -15,11 +15,22 @@ SPEC.loader.exec_module(mod)
 
 class FakeClient:
     def __init__(self) -> None:
+        self.counter_id = 112267492
+        self.counters_calls = 0
+        self.counter_calls = 0
         self.evaluate_calls = []
         self.create_calls = []
         self.status_calls = []
         self.download_calls = []
         self._status_count = 0
+
+    def counters(self):
+        self.counters_calls += 1
+        return {"counters": [{"id": 112267492}, {"id": 1}]}
+
+    def counter(self):
+        self.counter_calls += 1
+        return {"counter": {"id": 112267492}}
 
     def evaluate(self, **kwargs):
         self.evaluate_calls.append(kwargs)
@@ -58,10 +69,14 @@ class MetrikaLogsReadonlyTests(unittest.TestCase):
         )
 
     def test_allowed_paths_are_strict(self):
+        self.assertTrue(mod._allowed_path("GET", "/counters"))
+        self.assertTrue(mod._allowed_path("GET", "/counter/112267492"))
         self.assertTrue(mod._allowed_path("POST", "/counter/112267492/logrequests"))
         self.assertTrue(mod._allowed_path("GET", "/counter/112267492/logrequests/evaluate"))
         self.assertTrue(mod._allowed_path("GET", "/counter/112267492/logrequest/77"))
         self.assertTrue(mod._allowed_path("GET", "/counter/112267492/logrequest/77/part/0/download"))
+        self.assertFalse(mod._allowed_path("POST", "/counters"))
+        self.assertFalse(mod._allowed_path("POST", "/counter/112267492"))
         self.assertFalse(mod._allowed_path("POST", "/counter/112267492/offline_conversions/upload"))
         self.assertFalse(mod._allowed_path("POST", "/counter/112267492/logrequest/77/clean"))
         self.assertFalse(mod._allowed_path("PUT", "/counter/112267492/logrequests"))
@@ -83,9 +98,64 @@ class MetrikaLogsReadonlyTests(unittest.TestCase):
         self.assertEqual(result["matches_count"], 1)
         self.assertEqual(result["visits"][0]["ym:s:visitID"], "2")
         self.assertEqual(result["visits"][0]["ym:s:lastDirectClickOrder"], "11")
+        self.assertEqual(result["access"]["token_access_status"], "ok")
+        self.assertEqual(result["access"]["counter_access_status"], "ok")
+        self.assertTrue(result["access"]["counter_visible_in_list"])
+        self.assertEqual(client.counters_calls, 1)
+        self.assertEqual(client.counter_calls, 1)
         self.assertEqual(len(client.evaluate_calls), 1)
         self.assertEqual(len(client.create_calls), 1)
         self.assertEqual(client.download_calls, [(77, 0), (77, 1)])
+
+    def test_collect_blocks_when_token_cannot_list_counters(self):
+        class ForbiddenClient(FakeClient):
+            def counters(self):
+                self.counters_calls += 1
+                raise mod.LogsApiError("http_403:Forbidden:Access is denied")
+
+        client = ForbiddenClient()
+        result = mod.collect(
+            client,
+            yclid="5288069203188252671",
+            date1="2026-09-03",
+            date2="2026-09-03",
+            poll_seconds=0,
+            max_polls=3,
+        )
+
+        self.assertEqual(result["status"], "blocked")
+        self.assertEqual(result["reason"], "counter_access_failed")
+        self.assertEqual(result["access"]["token_access_status"], "http_403:Forbidden:Access is denied")
+        self.assertEqual(result["access"]["counter_access_status"], "not_checked")
+        self.assertEqual(result["matches_count"], 0)
+        self.assertEqual(client.counters_calls, 1)
+        self.assertEqual(client.counter_calls, 0)
+        self.assertEqual(len(client.evaluate_calls), 0)
+        self.assertEqual(len(client.create_calls), 0)
+
+    def test_collect_preserves_access_diagnostic_when_evaluate_fails(self):
+        class EvaluateForbiddenClient(FakeClient):
+            def evaluate(self, **kwargs):
+                self.evaluate_calls.append(kwargs)
+                raise mod.LogsApiError("http_403:Forbidden:Access is denied")
+
+        client = EvaluateForbiddenClient()
+        result = mod.collect(
+            client,
+            yclid="5288069203188252671",
+            date1="2026-09-03",
+            date2="2026-09-03",
+            poll_seconds=0,
+            max_polls=3,
+        )
+
+        self.assertEqual(result["status"], "error")
+        self.assertEqual(result["reason"], "http_403:Forbidden:Access is denied")
+        self.assertEqual(result["access"]["token_access_status"], "ok")
+        self.assertEqual(result["access"]["counter_access_status"], "ok")
+        self.assertTrue(result["access"]["counter_visible_in_list"])
+        self.assertEqual(len(client.evaluate_calls), 1)
+        self.assertEqual(len(client.create_calls), 0)
 
     def test_collect_returns_not_found_without_fallback_matching(self):
         client = FakeClient()

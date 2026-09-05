@@ -24,7 +24,7 @@ from lead_control.metrika_offline import (
 
 
 class MetrikaOfflineRunnerTests(unittest.TestCase):
-    def test_workflow_metrika_step_is_disabled_and_positioned_safely(self) -> None:
+    def test_production_workflow_does_not_run_metrika_offline_upload(self) -> None:
         workflow_path = ROOT.parent / ".github" / "workflows" / "lead-control-public.yml"
         text = workflow_path.read_text(encoding="utf-8")
         step_names = [
@@ -42,7 +42,6 @@ class MetrikaOfflineRunnerTests(unittest.TestCase):
                 "Install OCR",
                 "Collect Telegram MAX and amoCRM",
                 "Rebuild dashboard",
-                "Metrika offline conversions disabled runner",
                 "Save refreshed data",
                 "Configure Pages",
                 "Upload Pages artifact",
@@ -51,29 +50,13 @@ class MetrikaOfflineRunnerTests(unittest.TestCase):
         )
         self.assertLess(
             step_names.index("Rebuild dashboard"),
-            step_names.index("Metrika offline conversions disabled runner"),
-        )
-        self.assertLess(
-            step_names.index("Metrika offline conversions disabled runner"),
             step_names.index("Save refreshed data"),
         )
-        step_body = _workflow_step_body(text, "Metrika offline conversions disabled runner")
-        self.assertIn("timeout-minutes: 2", step_body)
-        self.assertIn("continue-on-error: true", step_body)
-        self.assertIn('METRIKA_OFFLINE_ENABLED: "1"', step_body)
-        self.assertIn('METRIKA_OFFLINE_DRY_RUN: "1"', step_body)
-        self.assertNotIn('METRIKA_OFFLINE_DRY_RUN: "0"', step_body)
-        self.assertIn(
-            "YANDEX_METRIKA_OFFLINE_TOKEN: ${{ secrets.YANDEX_METRIKA_OFFLINE_TOKEN }}",
-            step_body,
-        )
-        self.assertIn("run: python app/scripts/run_metrika_offline.py", step_body)
-        other_steps = "\n".join(
-            body
-            for name, body in _workflow_step_bodies(text)
-            if name != "Metrika offline conversions disabled runner"
-        )
-        self.assertNotIn("YANDEX_METRIKA_OFFLINE_TOKEN", other_steps)
+        self.assertNotIn("Metrika offline conversions disabled runner", step_names)
+        self.assertNotIn("run_metrika_offline.py", text)
+        self.assertNotIn("YANDEX_METRIKA_OFFLINE_TOKEN", text)
+        self.assertNotIn("METRIKA_OFFLINE_ENABLED", text)
+        self.assertNotIn("METRIKA_OFFLINE_DRY_RUN", text)
 
     def test_default_disabled_does_not_call_http(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
