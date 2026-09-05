@@ -4,6 +4,8 @@ import json
 import os
 import re
 import sys
+import urllib.error
+import urllib.request
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Callable, Mapping, TextIO
@@ -22,6 +24,8 @@ DEFAULT_DATA_DIR = Path("runtime-data")
 METRIKA_OFFLINE_ENABLED_ENV = "METRIKA_OFFLINE_ENABLED"
 METRIKA_OFFLINE_DRY_RUN_ENV = "METRIKA_OFFLINE_DRY_RUN"
 YANDEX_METRIKA_OFFLINE_TOKEN_ENV = "YANDEX_METRIKA_OFFLINE_TOKEN"
+DIAGNOSTIC_AMOCRM_LEAD_ID = 48223023
+DIAGNOSTIC_LEAD_ADDED_CREATED_AT = 1_788_445_384
 
 EventsClientFactory = Callable[[str, str, int], Any]
 MetrikaClientFactory = Callable[[str, int], Any]
@@ -79,8 +83,13 @@ def run(
                 summary["qualification_check"] = "missing_amocrm_token"
                 summary["candidate_details"] = [_safe_candidate_details(lead) for lead in candidates]
             else:
-                events_client = events_client_factory(amocrm_domain, amocrm_token, timeout) if events_client_factory is not None else metrika_offline.AmoCRMEventsReadOnlyClient(amocrm_domain, amocrm_token, timeout=timeout)
+                events_client = (
+                    events_client_factory(amocrm_domain, amocrm_token, timeout)
+                    if events_client_factory is not None
+                    else _AmoCRMDryRunReadOnlyClient(amocrm_domain, amocrm_token, timeout=timeout)
+                )
                 summary["qualification_check"] = "read_only_amocrm_events"
+                summary["diagnostics"] = _dry_run_diagnostics(events_client)
                 summary["candidate_details"] = [_dry_run_candidate_details(lead, events_client) for lead in candidates]
             _save_summary(state, state_path, summary)
             _write_summary(stdout, summary)
@@ -296,6 +305,52 @@ def _lead_added_diagnostics(events_client: Any, crm_lead_id: int) -> dict[str, A
     }
 
 
+def _dry_run_diagnostics(amocrm_client: Any) -> dict[str, Any]:
+    return {
+        "amocrm_lead_48223023": _amocrm_lead_diagnostics(
+            amocrm_client,
+            DIAGNOSTIC_AMOCRM_LEAD_ID,
+        )
+    }
+
+
+def _amocrm_lead_diagnostics(amocrm_client: Any, lead_id: int) -> dict[str, Any]:
+    try:
+        payload = amocrm_client.get_lead(lead_id)
+    except Exception:
+        return _empty_lead_diagnostics(lead_id)
+    if not isinstance(payload, dict):
+        return _empty_lead_diagnostics(lead_id)
+
+    created_at = _int_or_none(payload.get("created_at"))
+    updated_at = _int_or_none(payload.get("updated_at"))
+    return {
+        "id": _int_or_none(payload.get("id")),
+        "name": str(payload.get("name") or ""),
+        "created_at": created_at,
+        "created_at_iso": _unix_to_utc_iso(created_at),
+        "updated_at": updated_at,
+        "updated_at_iso": _unix_to_utc_iso(updated_at),
+        "pipeline_id": _int_or_none(payload.get("pipeline_id")),
+        "status_id": _int_or_none(payload.get("status_id")),
+        "lead_created_matches_lead_added": created_at == DIAGNOSTIC_LEAD_ADDED_CREATED_AT,
+    }
+
+
+def _empty_lead_diagnostics(lead_id: int) -> dict[str, Any]:
+    return {
+        "id": int(lead_id),
+        "name": "",
+        "created_at": None,
+        "created_at_iso": "",
+        "updated_at": None,
+        "updated_at_iso": "",
+        "pipeline_id": None,
+        "status_id": None,
+        "lead_created_matches_lead_added": False,
+    }
+
+
 def _event_lead_statuses(value: object) -> list[dict[str, Any]]:
     if not isinstance(value, list):
         return []
@@ -364,6 +419,13 @@ def _positive_int(value: object, *, default: int) -> int:
     return parsed if parsed > 0 else default
 
 
+def _int_or_none(value: object) -> int | None:
+    try:
+        return int(value)
+    except (TypeError, ValueError):
+        return None
+
+
 def _sensitive_env_values(env: Mapping[str, str]) -> list[str]:
     values: list[str] = []
     for key, value in env.items():
@@ -386,6 +448,34 @@ def _redact(value: object, sensitive_values: list[str]) -> str:
 
 def _now_utc_iso() -> str:
     return datetime.now(timezone.utc).replace(microsecond=0).isoformat().replace("+00:00", "Z")
+
+
+class _AmoCRMDryRunReadOnlyClient(metrika_offline.AmoCRMEventsReadOnlyClient):
+    def get_lead(self, lead_id: int) -> dict[str, Any]:
+        request = urllib.request.Request(
+            f"{self.domain}/api/v4/leads/{int(lead_id)}",
+            headers={
+                "Accept": "application/json",
+                "Authorization": f"Bearer {self._token}",
+            },
+            method="GET",
+        )
+        try:
+            with urllib.request.urlopen(request, timeout=self.timeout) as response:
+                if response.status == 204:
+                    return {}
+                return json.loads(response.read().decode("utf-8"))
+        except urllib.error.HTTPError as exc:
+            raise metrika_offline.AmoCRMEventsLookupError("http_error", http_status=exc.code) from None
+        except TimeoutError as exc:
+            raise metrika_offline.AmoCRMEventsLookupError("timeout", detail=str(exc)) from None
+        except urllib.error.URLError as exc:
+            reason = getattr(exc, "reason", exc)
+            if isinstance(reason, TimeoutError):
+                raise metrika_offline.AmoCRMEventsLookupError("timeout", detail=str(reason)) from None
+            raise metrika_offline.AmoCRMEventsLookupError("network_error", detail=str(reason)) from None
+        except json.JSONDecodeError as exc:
+            raise metrika_offline.AmoCRMEventsLookupError("invalid_json", detail=str(exc)) from None
 
 
 if __name__ == "__main__":

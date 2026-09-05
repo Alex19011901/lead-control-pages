@@ -60,8 +60,9 @@ class MetrikaOfflineRunnerTests(unittest.TestCase):
         step_body = _workflow_step_body(text, "Metrika offline conversions disabled runner")
         self.assertIn("timeout-minutes: 2", step_body)
         self.assertIn("continue-on-error: true", step_body)
-        self.assertIn('METRIKA_OFFLINE_ENABLED: "0"', step_body)
-        self.assertNotIn('METRIKA_OFFLINE_ENABLED: "1"', step_body)
+        self.assertIn('METRIKA_OFFLINE_ENABLED: "1"', step_body)
+        self.assertIn('METRIKA_OFFLINE_DRY_RUN: "1"', step_body)
+        self.assertNotIn('METRIKA_OFFLINE_DRY_RUN: "0"', step_body)
         self.assertIn(
             "YANDEX_METRIKA_OFFLINE_TOKEN: ${{ secrets.YANDEX_METRIKA_OFFLINE_TOKEN }}",
             step_body,
@@ -129,6 +130,97 @@ class MetrikaOfflineRunnerTests(unittest.TestCase):
             self.assertEqual(result.summary["candidates"], 1)
             self.assertEqual(len(events_factory.calls), 0)
             self.assertEqual(len(metrika_factory.calls), 0)
+
+    def test_dry_run_adds_read_only_lead_diagnostics(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            data_dir = Path(tmp)
+            _write_leads(data_dir, [_lead()])
+            events_client = _FakeEventsClient(
+                lead_payload={
+                    "id": 48223023,
+                    "name": "Фирстова Татьяна Валерьевна",
+                    "created_at": 1_788_445_384,
+                    "updated_at": 1_788_445_392,
+                    "pipeline_id": QUALIFYING_CRM_PIPELINE_ID,
+                    "status_id": 79927038,
+                    "price": 123456,
+                    "_embedded": {"contacts": [{"id": 1}]},
+                },
+            )
+            metrika_factory = _Factory(_FakeMetrikaClient())
+
+            result = _run(
+                data_dir,
+                {
+                    "METRIKA_OFFLINE_ENABLED": "1",
+                    "METRIKA_OFFLINE_DRY_RUN": "1",
+                    "AMOCRM_TOKEN": "amo-token",
+                },
+                _Factory(events_client),
+                metrika_factory,
+            )
+
+            diagnostics = result.summary["diagnostics"]["amocrm_lead_48223023"]
+            self.assertEqual(
+                set(diagnostics),
+                {
+                    "id",
+                    "name",
+                    "created_at",
+                    "created_at_iso",
+                    "updated_at",
+                    "updated_at_iso",
+                    "pipeline_id",
+                    "status_id",
+                    "lead_created_matches_lead_added",
+                },
+            )
+            self.assertEqual(diagnostics["id"], 48223023)
+            self.assertEqual(diagnostics["name"], "Фирстова Татьяна Валерьевна")
+            self.assertEqual(diagnostics["created_at"], 1_788_445_384)
+            self.assertEqual(diagnostics["created_at_iso"], "2026-09-03T14:23:04Z")
+            self.assertEqual(diagnostics["updated_at"], 1_788_445_392)
+            self.assertEqual(diagnostics["updated_at_iso"], "2026-09-03T14:23:12Z")
+            self.assertEqual(diagnostics["pipeline_id"], QUALIFYING_CRM_PIPELINE_ID)
+            self.assertEqual(diagnostics["status_id"], 79927038)
+            self.assertTrue(diagnostics["lead_created_matches_lead_added"])
+            self.assertEqual(events_client.lead_calls, [48223023])
+            self.assertEqual(len(metrika_factory.calls), 0)
+
+    def test_dry_run_lead_diagnostics_exposes_only_safe_fields(self) -> None:
+        secret = "amo-token"
+        with tempfile.TemporaryDirectory() as tmp:
+            data_dir = Path(tmp)
+            _write_leads(data_dir, [_lead()])
+            events_client = _FakeEventsClient(
+                lead_payload={
+                    "id": 48223023,
+                    "name": "Safe name",
+                    "created_at": 1_788_445_000,
+                    "updated_at": 1_788_445_392,
+                    "pipeline_id": QUALIFYING_CRM_PIPELINE_ID,
+                    "status_id": 79927038,
+                    "secret": secret,
+                    "custom_fields_values": [{"field_name": "phone", "values": ["hidden"]}],
+                },
+            )
+
+            result = _run(
+                data_dir,
+                {
+                    "METRIKA_OFFLINE_ENABLED": "1",
+                    "METRIKA_OFFLINE_DRY_RUN": "1",
+                    "AMOCRM_TOKEN": secret,
+                },
+                _Factory(events_client),
+                _Factory(_FakeMetrikaClient()),
+            )
+
+            diagnostics = result.summary["diagnostics"]["amocrm_lead_48223023"]
+            self.assertFalse(diagnostics["lead_created_matches_lead_added"])
+            serialized = json.dumps({"summary": result.summary, "stdout": result.stdout, "stderr": result.stderr})
+            self.assertNotIn(secret, serialized)
+            self.assertNotIn("custom_fields_values", serialized)
 
     def test_missing_token_while_enabled_blocks_upload(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
@@ -415,8 +507,17 @@ class _Factory:
 
 
 class _FakeEventsClient:
-    def __init__(self) -> None:
+    def __init__(self, *, lead_payload: dict[str, object] | None = None) -> None:
         self.calls: list[dict[str, object]] = []
+        self.lead_calls: list[int] = []
+        self.lead_payload = lead_payload or {
+            "id": 48223023,
+            "name": "Diagnostic lead",
+            "created_at": 1_788_445_384,
+            "updated_at": 1_788_445_392,
+            "pipeline_id": QUALIFYING_CRM_PIPELINE_ID,
+            "status_id": 79927038,
+        }
 
     def get_events(self, params: dict[str, object]) -> dict[str, object]:
         self.calls.append(dict(params))
@@ -441,6 +542,10 @@ class _FakeEventsClient:
             },
             "_links": {},
         }
+
+    def get_lead(self, lead_id: int) -> dict[str, object]:
+        self.lead_calls.append(lead_id)
+        return dict(self.lead_payload)
 
 
 class _FakeMetrikaClient:
