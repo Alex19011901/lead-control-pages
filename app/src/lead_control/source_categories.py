@@ -14,6 +14,7 @@ TATIANA_TG = "ОТ ТАТЬЯНЫ ТГ"
 _TATIANA_NAMES = {"tatiana ts"}
 _TATIANA_USERNAMES = {"tati_ts_a"}
 _TATIANA_USER_IDS = {1366518980}
+_TILDA_TEST_NAMES = {"test", "тест"}
 
 # Explicit one-off decision for this Telegram history only.
 # Do not generalize this exclusion by sender, wording, format, or source.
@@ -44,6 +45,8 @@ def normalize_known_source_events(events: list[dict[str, Any]]) -> list[dict[str
                 event.get("sender_name"),
                 event.get("sender_username"),
             )
+            if source == SITE_TILDA and _norm(lead.get("name")) in _TILDA_TEST_NAMES:
+                continue
             if source:
                 lead["source"] = source
                 event["source"] = source
