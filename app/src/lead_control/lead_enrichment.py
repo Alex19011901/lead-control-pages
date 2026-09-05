@@ -4,7 +4,7 @@ import re
 from typing import Any
 
 from .event_type import infer_event_type
-from .normalize import normalize_phone
+from .normalize import THREE_DAYS_SECONDS, normalize_phone
 
 
 _SERVICE_NAME_FRAGMENTS = (
@@ -86,6 +86,145 @@ def enrich_leads_from_events(leads: list[dict[str, Any]], events: list[dict[str,
             lead["name"] = name
             lead["name_source"] = "MESSAGE"
             break
+
+    _dedupe_same_phone_leads(leads)
+
+
+def _dedupe_same_phone_leads(leads: list[dict[str, Any]]) -> None:
+    """Collapse repeated leads with the same normalized phone within the duplicate window.
+
+    Source and channel do not create a second lead when the phone is the same.
+    The earliest lead remains canonical and later message references/fields are
+    merged into it.
+    """
+    canonical_by_phone: dict[str, list[dict[str, Any]]] = {}
+    duplicate_object_ids: set[int] = set()
+
+    ordered = sorted(leads, key=_first_seen_ts)
+    for lead in ordered:
+        phone_digits = _lead_phone_digits(lead)
+        created_at = _first_seen_ts(lead)
+        if not phone_digits or created_at <= 0:
+            continue
+
+        canonical = None
+        for candidate in reversed(canonical_by_phone.get(phone_digits, [])):
+            candidate_created_at = _first_seen_ts(candidate)
+            if candidate_created_at <= 0:
+                continue
+            if created_at - candidate_created_at <= THREE_DAYS_SECONDS:
+                canonical = candidate
+                break
+
+        if canonical is None:
+            canonical_by_phone.setdefault(phone_digits, []).append(lead)
+            continue
+
+        _merge_duplicate_lead(canonical, lead)
+        duplicate_object_ids.add(id(lead))
+
+    if duplicate_object_ids:
+        leads[:] = [lead for lead in leads if id(lead) not in duplicate_object_ids]
+
+
+def _lead_phone_digits(lead: dict[str, Any]) -> str:
+    identifier = lead.get("identifier") or {}
+    fields = lead.get("fields") or {}
+    return normalize_phone(
+        identifier.get("value") if identifier.get("type") == "phone" else None
+        or lead.get("phone")
+        or fields.get("phone_digits")
+        or fields.get("phone_raw")
+    )
+
+
+def _first_seen_ts(lead: dict[str, Any]) -> int:
+    try:
+        return int(lead.get("first_seen_ts") or 0)
+    except (TypeError, ValueError):
+        return 0
+
+
+def _merge_duplicate_lead(primary: dict[str, Any], duplicate: dict[str, Any]) -> None:
+    primary_fields = primary.setdefault("fields", {})
+    duplicate_fields = duplicate.get("fields") or {}
+    _merge_missing_values(primary_fields, duplicate_fields)
+
+    for key in (
+        "event_date",
+        "guests",
+        "guests_raw",
+        "guests_min",
+        "guests_max",
+        "name",
+        "phone",
+        "username",
+        "event_type",
+        "event_type_source",
+        "name_source",
+    ):
+        if primary.get(key) in ("", None) and duplicate.get(key) not in ("", None):
+            primary[key] = duplicate.get(key)
+
+    duplicate_last_seen_ts = _safe_int(duplicate.get("last_seen_ts"))
+    primary_last_seen_ts = _safe_int(primary.get("last_seen_ts"))
+    if duplicate_last_seen_ts > primary_last_seen_ts:
+        primary["last_seen_ts"] = duplicate_last_seen_ts
+        if duplicate.get("last_seen_at"):
+            primary["last_seen_at"] = duplicate.get("last_seen_at")
+
+    if duplicate.get("crm_required") is True:
+        primary["crm_required"] = True
+
+    primary_reaction = primary.get("manager_reaction") or {}
+    duplicate_reaction = duplicate.get("manager_reaction") or {}
+    if duplicate_reaction and _safe_int(duplicate_reaction.get("reacted_ts")) > _safe_int(primary_reaction.get("reacted_ts")):
+        primary["manager_reaction"] = duplicate.get("manager_reaction")
+
+    if not primary.get("manual_review") and duplicate.get("manual_review"):
+        primary["manual_review"] = duplicate.get("manual_review")
+
+    _merge_channel_payload(primary, duplicate, "max", ("message_ids",))
+    _merge_channel_payload(primary, duplicate, "telegram", ("message_ids", "update_ids"))
+
+
+def _merge_channel_payload(
+    primary: dict[str, Any],
+    duplicate: dict[str, Any],
+    key: str,
+    list_keys: tuple[str, ...],
+) -> None:
+    duplicate_payload = duplicate.get(key) or {}
+    if not duplicate_payload:
+        return
+
+    primary_payload = primary.setdefault(key, {})
+    _merge_missing_values(primary_payload, duplicate_payload, skip_keys=set(list_keys))
+    for list_key in list_keys:
+        current = primary_payload.setdefault(list_key, [])
+        for value in duplicate_payload.get(list_key) or []:
+            if value not in current:
+                current.append(value)
+
+
+def _merge_missing_values(
+    current: dict[str, Any],
+    incoming: dict[str, Any],
+    skip_keys: set[str] | None = None,
+) -> None:
+    skip_keys = skip_keys or set()
+    for key, value in incoming.items():
+        if key in skip_keys:
+            continue
+        if current.get(key) in ("", None) and value not in ("", None):
+            current[key] = value
+
+
+def _safe_int(value: Any) -> int:
+    try:
+        return int(value or 0)
+    except (TypeError, ValueError):
+        return 0
 
 
 def _extract_name_from_original_text(text: str, phone_digits: str) -> str:
