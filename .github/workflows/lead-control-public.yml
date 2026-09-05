@@ -82,17 +82,6 @@ jobs:
           cp runtime-data/dashboard_view.json dashboard_view.json
           cp dashboard_view.json public-site/dashboard_view.json
 
-      - name: Metrika offline conversions disabled runner
-        timeout-minutes: 2
-        continue-on-error: true
-        env:
-          AMOCRM_TOKEN: ${{ secrets.AMOCRM_TOKEN }}
-          AMOCRM_DOMAIN: https://alex1901yaru.amocrm.ru
-          METRIKA_OFFLINE_ENABLED: "1"
-          METRIKA_OFFLINE_DRY_RUN: "1"
-          YANDEX_METRIKA_OFFLINE_TOKEN: ${{ secrets.YANDEX_METRIKA_OFFLINE_TOKEN }}
-        run: python app/scripts/run_metrika_offline.py
-
       - name: Save refreshed data
         run: |
           git config user.name "github-actions[bot]"
