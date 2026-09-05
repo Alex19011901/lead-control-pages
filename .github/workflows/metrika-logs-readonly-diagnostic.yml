@@ -8,6 +8,7 @@ on:
       - "app/scripts/metrika_logs_readonly.py"
       - "app/scripts/metrika_starturl_diagnostic.py"
       - "app/scripts/metrika_hits_url_diagnostic.py"
+      - "app/scripts/metrika_visit_time_diagnostic.py"
       - "app/tests/test_metrika_logs_readonly.py"
 
 permissions:
@@ -50,3 +51,19 @@ jobs:
           --date1 2026-09-01
           --date2 2026-09-03
           --sample-limit 12
+
+      - name: Run Metrika visit time read-export diagnostic
+        env:
+          YANDEX_METRIKA_READ_TOKEN: ${{ secrets.YANDEX_METRIKA_READ_TOKEN }}
+        run: >-
+          PYTHONPATH=app python app/scripts/metrika_visit_time_diagnostic.py
+          --counter-id 112267492
+          --lead-timestamp-utc 1788443371
+          --date1 2026-09-01
+          --date2 2026-09-03
+          --window-minutes 120
+          --sample-limit 20
+          --utm-source yandex_direct
+          --utm-medium cpc
+          --utm-campaign Bankety_poisk_konversii
+          --utm-term ---autotargeting

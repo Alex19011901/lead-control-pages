@@ -21,6 +21,13 @@ hits_mod = importlib.util.module_from_spec(HITS_SPEC)
 sys.modules[HITS_SPEC.name] = hits_mod
 HITS_SPEC.loader.exec_module(hits_mod)
 
+TIME_MODULE_PATH = Path(__file__).resolve().parents[1] / "scripts" / "metrika_visit_time_diagnostic.py"
+TIME_SPEC = importlib.util.spec_from_file_location("metrika_visit_time_diagnostic", TIME_MODULE_PATH)
+assert TIME_SPEC is not None and TIME_SPEC.loader is not None
+time_mod = importlib.util.module_from_spec(TIME_SPEC)
+sys.modules[TIME_SPEC.name] = time_mod
+TIME_SPEC.loader.exec_module(time_mod)
+
 
 class FakeClient:
     def __init__(self) -> None:
@@ -310,6 +317,76 @@ class HitsFakeClient(FakeClient):
     def create_export(self, **kwargs):
         self.create_calls.append(kwargs)
         return mod.LogRequest(request_id=88, status="processed", parts=(0,))
+
+    def download_part(self, request_id, part_number):
+        self.download_calls.append((request_id, part_number))
+        return self._tsv
+
+
+class MetrikaVisitTimeDiagnosticTests(unittest.TestCase):
+    def test_visit_time_diagnostic_returns_nearest_utm_candidates(self):
+        client = VisitTimeFakeClient(
+            "ym:s:visitID\tym:s:dateTime\tym:s:dateTimeUTC\tym:s:clientID\tym:s:startURL\tym:s:endURL\tym:s:referer\tym:s:lastDirectClickOrderName\tym:s:lastDirectBannerGroup\tym:s:lastUTMSource\tym:s:lastUTMMedium\tym:s:lastUTMCampaign\tym:s:lastUTMTerm\tym:s:lastAdvEngine\n"
+            "1\t2026-09-03 13:20:00\t2026-09-03 13:20:00\tclient-a\thttps://example.test/?utm_source=yandex_direct\t\t\tCampaign A\t10\tyandex_direct\tcpc\tBankety_poisk_konversii\t---autotargeting\tdirect\n"
+            "2\t2026-09-03 13:49:20\t2026-09-03 13:49:20\tclient-b\thttps://example.test/?utm_source=yandex_direct&utm_campaign=Bankety_poisk_konversii\t\t\tCampaign B\t20\tyandex_direct\tcpc\tBankety_poisk_konversii\t---autotargeting\tdirect\n"
+            "3\t2026-09-03 18:00:00\t2026-09-03 18:00:00\tclient-c\thttps://example.test/?utm_source=yandex_direct\t\t\tCampaign C\t30\tyandex_direct\tcpc\tOther\t---autotargeting\tdirect\n"
+        )
+
+        result = time_mod.collect_visit_time_diagnostic(
+            client,
+            lead_timestamp_utc=1788443371,
+            date1="2026-09-01",
+            date2="2026-09-03",
+            window_minutes=120,
+            sample_limit=10,
+            utm_source="yandex_direct",
+            utm_medium="cpc",
+            utm_campaign="Bankety_poisk_konversii",
+            utm_term="---autotargeting",
+            poll_seconds=0,
+            max_polls=2,
+        )
+
+        self.assertEqual(result["status"], "ok")
+        self.assertEqual(result["matching_mode"], "time_utm_heuristic")
+        self.assertEqual(result["exact_yclid_match_available"], False)
+        self.assertEqual(result["candidates_total"], 2)
+        self.assertEqual(result["utm_filter_matches"], 2)
+        self.assertEqual(result["nearest_candidates"][0]["ym:s:visitID"], "2")
+        self.assertEqual(result["nearest_candidates"][0]["delta_seconds_from_lead_utc"], -11)
+        self.assertEqual(result["nearest_candidates"][0]["utm"]["ym:s:lastUTMCampaign"], "Bankety_poisk_konversii")
+        self.assertNotIn("ym:s:startURL", result["nearest_candidates"][0])
+        self.assertEqual(client.evaluate_calls[0]["source"], "visits")
+        self.assertEqual(client.create_calls[0]["source"], "visits")
+
+    def test_visit_time_diagnostic_falls_back_to_counter_timezone_when_utc_missing(self):
+        client = VisitTimeFakeClient(
+            "ym:s:visitID\tym:s:dateTime\tym:s:dateTimeUTC\tym:s:clientID\tym:s:startURL\n"
+            "4\t2026-09-03 16:49:31\t\tclient-d\thttps://example.test/\n"
+        )
+
+        result = time_mod.collect_visit_time_diagnostic(
+            client,
+            lead_timestamp_utc=1788443371,
+            date1="2026-09-01",
+            date2="2026-09-03",
+            window_minutes=5,
+            poll_seconds=0,
+            max_polls=2,
+        )
+
+        self.assertEqual(result["candidates_total"], 1)
+        self.assertEqual(result["nearest_candidates"][0]["delta_seconds_from_lead_utc"], 0)
+
+
+class VisitTimeFakeClient(FakeClient):
+    def __init__(self, tsv: str) -> None:
+        super().__init__()
+        self._tsv = tsv
+
+    def create_export(self, **kwargs):
+        self.create_calls.append(kwargs)
+        return mod.LogRequest(request_id=99, status="processed", parts=(0,))
 
     def download_part(self, request_id, part_number):
         self.download_calls.append((request_id, part_number))
