@@ -19,6 +19,13 @@ DIRECT_FIELDS = (
     "ym:s:lastDirectClickOrder",
     "ym:s:lastDirectBannerGroup",
     "ym:s:lastDirectClickBanner",
+    "ym:s:lastDirectClickOrderName",
+    "ym:s:lastClickBannerGroupName",
+    "ym:s:lastDirectClickBannerName",
+    "ym:s:lastDirectPhraseOrCond",
+    "ym:s:lastDirectPlatformType",
+    "ym:s:lastDirectPlatform",
+    "ym:s:lastDirectConditionType",
 )
 
 UTM_FIELDS = (
@@ -29,17 +36,41 @@ UTM_FIELDS = (
     "ym:s:lastUTMTerm",
 )
 
+OPENSTAT_FIELDS = (
+    "ym:s:lastOpenstatAd",
+    "ym:s:lastOpenstatCampaign",
+    "ym:s:lastOpenstatService",
+    "ym:s:lastOpenstatSource",
+)
+
+SOURCE_FIELDS = (
+    "ym:s:lastTrafficSource",
+    "ym:s:lastAdvEngine",
+    "ym:s:lastSearchEngineRoot",
+    "ym:s:lastSearchEngine",
+    "ym:s:from",
+)
+
+URL_FIELDS = (
+    "ym:s:startURL",
+    "ym:s:endURL",
+    "ym:s:referer",
+)
+
 FIELDS = (
     "ym:s:visitID",
     "ym:s:dateTime",
     "ym:s:dateTimeUTC",
-    "ym:s:startURL",
+    "ym:s:clientID",
+    *URL_FIELDS,
     *DIRECT_FIELDS,
     *UTM_FIELDS,
+    *OPENSTAT_FIELDS,
+    *SOURCE_FIELDS,
 )
 
 
-def _sanitize_start_url(value: str) -> dict[str, object]:
+def _sanitize_url(value: str) -> dict[str, object]:
     try:
         parsed = urllib.parse.urlsplit(str(value))
         pairs = urllib.parse.parse_qsl(parsed.query, keep_blank_values=True)
@@ -49,7 +80,7 @@ def _sanitize_start_url(value: str) -> dict[str, object]:
             key = str(key)
             if key not in keys:
                 keys.append(key)
-            if key == "yclid" and not yclid_length:
+            if key.lower() == "yclid" and not yclid_length:
                 yclid_length = len(str(val))
         return {
             "host": parsed.hostname or "",
@@ -59,20 +90,11 @@ def _sanitize_start_url(value: str) -> dict[str, object]:
             "yclid_length": yclid_length,
         }
     except Exception:
-        return {
-            "host": "",
-            "path": "",
-            "query_keys": [],
-            "has_yclid": False,
-            "yclid_length": 0,
-        }
+        return {"host": "", "path": "", "query_keys": [], "has_yclid": False, "yclid_length": 0}
 
 
 def _nonempty_counts(rows: list[dict[str, str]], fields: tuple[str, ...]) -> dict[str, int]:
-    return {
-        field: sum(1 for row in rows if str(row.get(field, "")).strip())
-        for field in fields
-    }
+    return {field: sum(1 for row in rows if str(row.get(field, "")).strip()) for field in fields}
 
 
 def collect_starturl_diagnostic(
@@ -107,7 +129,7 @@ def collect_starturl_diagnostic(
         rows.extend(parse_tsv(client.download_part(current.request_id, part_number)))
 
     start_urls = [row.get("ym:s:startURL", "") for row in rows if str(row.get("ym:s:startURL", "")).strip()]
-    sanitized = [_sanitize_start_url(url) for url in start_urls]
+    sanitized = [_sanitize_url(url) for url in start_urls]
     with_yclid = [item for item in sanitized if item["has_yclid"]]
 
     query_keys: list[str] = []
@@ -125,14 +147,17 @@ def collect_starturl_diagnostic(
         "rows_with_startURL": len(start_urls),
         "rows_with_yclid_param": len(with_yclid),
         "sample_start_urls_sanitized": sanitized[:sample_limit],
-        "sample_query_keys": query_keys[:50],
+        "sample_query_keys": query_keys[:100],
+        "url_fields_nonempty_counts": _nonempty_counts(rows, URL_FIELDS),
         "direct_fields_nonempty_counts": _nonempty_counts(rows, DIRECT_FIELDS),
         "utm_fields_nonempty_counts": _nonempty_counts(rows, UTM_FIELDS),
+        "openstat_fields_nonempty_counts": _nonempty_counts(rows, OPENSTAT_FIELDS),
+        "source_fields_nonempty_counts": _nonempty_counts(rows, SOURCE_FIELDS),
     }
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Safe read-only diagnostic of yclid presence in Metrika visit startURL")
+    parser = argparse.ArgumentParser(description="Safe read-only diagnostic of Metrika visit attribution fields")
     parser.add_argument("--counter-id", type=int, default=DEFAULT_COUNTER_ID)
     parser.add_argument("--date1", default="2026-09-01")
     parser.add_argument("--date2", default="2026-09-03")
