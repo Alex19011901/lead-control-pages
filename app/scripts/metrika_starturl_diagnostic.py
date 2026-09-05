@@ -15,19 +15,27 @@ from scripts.metrika_logs_readonly import (
     parse_tsv,
 )
 
-FIELDS = (
-    "ym:s:visitID",
-    "ym:s:dateTime",
-    "ym:s:dateTimeUTC",
-    "ym:s:startURL",
+DIRECT_FIELDS = (
     "ym:s:lastDirectClickOrder",
     "ym:s:lastDirectBannerGroup",
     "ym:s:lastDirectClickBanner",
+)
+
+UTM_FIELDS = (
     "ym:s:lastUTMSource",
     "ym:s:lastUTMMedium",
     "ym:s:lastUTMCampaign",
     "ym:s:lastUTMContent",
     "ym:s:lastUTMTerm",
+)
+
+FIELDS = (
+    "ym:s:visitID",
+    "ym:s:dateTime",
+    "ym:s:dateTimeUTC",
+    "ym:s:startURL",
+    *DIRECT_FIELDS,
+    *UTM_FIELDS,
 )
 
 
@@ -36,22 +44,35 @@ def _sanitize_start_url(value: str) -> dict[str, object]:
         parsed = urllib.parse.urlsplit(str(value))
         pairs = urllib.parse.parse_qsl(parsed.query, keep_blank_values=True)
         keys: list[str] = []
-        yclids: list[str] = []
+        yclid_length = 0
         for key, val in pairs:
             key = str(key)
             if key not in keys:
                 keys.append(key)
-            if key == "yclid":
-                yclids.append(str(val))
+            if key == "yclid" and not yclid_length:
+                yclid_length = len(str(val))
         return {
             "host": parsed.hostname or "",
             "path": parsed.path or "/",
             "query_keys": keys,
-            "has_yclid": bool(yclids),
-            "yclid_values": yclids,
+            "has_yclid": yclid_length > 0,
+            "yclid_length": yclid_length,
         }
     except Exception:
-        return {"host": "", "path": "", "query_keys": [], "has_yclid": False, "yclid_values": []}
+        return {
+            "host": "",
+            "path": "",
+            "query_keys": [],
+            "has_yclid": False,
+            "yclid_length": 0,
+        }
+
+
+def _nonempty_counts(rows: list[dict[str, str]], fields: tuple[str, ...]) -> dict[str, int]:
+    return {
+        field: sum(1 for row in rows if str(row.get(field, "")).strip())
+        for field in fields
+    }
 
 
 def collect_starturl_diagnostic(
@@ -85,20 +106,28 @@ def collect_starturl_diagnostic(
     for part_number in current.parts:
         rows.extend(parse_tsv(client.download_part(current.request_id, part_number)))
 
-    start_urls = [row.get("ym:s:startURL", "") for row in rows if row.get("ym:s:startURL", "")]
+    start_urls = [row.get("ym:s:startURL", "") for row in rows if str(row.get("ym:s:startURL", "")).strip()]
     sanitized = [_sanitize_start_url(url) for url in start_urls]
     with_yclid = [item for item in sanitized if item["has_yclid"]]
+
+    query_keys: list[str] = []
+    for item in sanitized:
+        for key in item.get("query_keys", []):
+            key = str(key)
+            if key not in query_keys:
+                query_keys.append(key)
 
     return {
         "status": "ok",
         "access": access,
         "request_id": current.request_id,
         "rows_total": len(rows),
-        "start_urls_total": len(start_urls),
-        "start_urls_with_yclid": len(with_yclid),
-        "yclid_share": (len(with_yclid) / len(start_urls)) if start_urls else 0.0,
-        "sample_start_urls": sanitized[:sample_limit],
-        "sample_with_yclid": with_yclid[:sample_limit],
+        "rows_with_startURL": len(start_urls),
+        "rows_with_yclid_param": len(with_yclid),
+        "sample_start_urls_sanitized": sanitized[:sample_limit],
+        "sample_query_keys": query_keys[:50],
+        "direct_fields_nonempty_counts": _nonempty_counts(rows, DIRECT_FIELDS),
+        "utm_fields_nonempty_counts": _nonempty_counts(rows, UTM_FIELDS),
     }
 
 
