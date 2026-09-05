@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import re
 from datetime import date
@@ -47,20 +48,28 @@ def text_value(text: str, label: str) -> str:
 
 def attribution_fields(fields: dict[str, Any]) -> dict[str, str]:
     description = str(fields.get("description") or "")
+    utm_source = str(fields.get("utm_source") or text_value(description, "UTM source"))
+    utm_medium = str(fields.get("utm_medium") or text_value(description, "UTM medium"))
+    utm_campaign = str(fields.get("utm_campaign") or text_value(description, "UTM campaign"))
+    utm_content = str(fields.get("utm_content") or text_value(description, "UTM content"))
     result = {
-        "utm_source": str(fields.get("utm_source") or text_value(description, "UTM source")),
-        "utm_medium": str(fields.get("utm_medium") or text_value(description, "UTM medium")),
-        "utm_campaign": str(fields.get("utm_campaign") or text_value(description, "UTM campaign")),
-        "utm_content": str(fields.get("utm_content") or text_value(description, "UTM content")),
-        "utm_term": str(fields.get("utm_term") or text_value(description, "UTM term")),
+        "utm_source": utm_source,
+        "utm_medium": utm_medium,
+        "utm_campaign": utm_campaign,
+        "campaign_id": "",
+        "group_id": "",
+        "ad_id": "",
     }
-    content = result["utm_content"]
     for marker, key in (("cid", "campaign_id"), ("gid", "group_id"), ("aid", "ad_id")):
-        match = re.search(rf"(?:^|[|;,_-]){marker}(?:[|:=_-])([0-9]+)(?:$|[|;,_-])", content, flags=re.I)
+        match = re.search(rf"(?:^|\|){marker}\|([0-9]+)(?:\||$)", utm_content, flags=re.I)
         if not match:
-            match = re.search(rf"(?:^|\|){marker}\|([0-9]+)(?:\||$)", content, flags=re.I)
+            match = re.search(rf"(?:^|[;,_-]){marker}(?:[:=_-])([0-9]+)(?:$|[;,_-])", utm_content, flags=re.I)
         result[key] = match.group(1) if match else ""
     return result
+
+
+def hash_value(value: str) -> str:
+    return hashlib.sha256(value.encode("utf-8")).hexdigest() if value else ""
 
 
 def safe_lead(lead: dict[str, Any]) -> dict[str, Any]:
@@ -72,7 +81,8 @@ def safe_lead(lead: dict[str, Any]) -> dict[str, Any]:
         "created_ts": lead.get("first_seen_ts"),
         "source": str(lead.get("source") or ""),
         "channel": str(lead.get("channel") or ""),
-        "yclid": yclid,
+        "has_yclid": bool(yclid),
+        "yclid_sha256": hash_value(yclid),
         "event_type": str(fields.get("event_type") or lead.get("event_type") or ""),
         "status": str(lead.get("status") or ""),
         "crm_found": bool(lead.get("crm_found") or (lead.get("crm") or {}).get("found")),
@@ -101,7 +111,7 @@ def main() -> int:
 
     exported.sort(key=lambda item: (item.get("created_ts") or 0, item.get("lead_id") or ""))
     output = {
-        "schema_version": 2,
+        "schema_version": 3,
         "start_date": args.start_date,
         "lead_count": len(exported),
         "leads": exported,
