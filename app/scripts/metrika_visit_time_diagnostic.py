@@ -111,16 +111,23 @@ def collect_visit_time_diagnostic(
         candidate = _candidate(row, lead_dt, window_minutes)
         if candidate is not None:
             candidates.append(candidate)
-    candidates.sort(key=lambda item: abs(int(item["delta_seconds_from_lead_utc"])))
+    candidates.sort(key=lambda item: abs(int(item["delta_seconds_from_lead_counter_tz"])))
+    utm_candidates = [
+        item
+        for item in candidates
+        if _utm_matches(item["utm"], source=utm_source, medium=utm_medium, campaign=utm_campaign, term=utm_term)
+    ]
 
     return {
         "status": "ok",
         "source": "visits",
         "matching_mode": "time_utm_heuristic",
         "exact_yclid_match_available": False,
+        "time_basis": "ym:s:dateTime_as_counter_timezone_utc_plus_3",
         "request_id": current.request_id,
         "lead_timestamp_utc": int(lead_timestamp_utc),
         "lead_timestamp_utc_iso": lead_dt.isoformat().replace("+00:00", "Z"),
+        "lead_timestamp_counter_tz_iso": lead_dt.astimezone(COUNTER_TZ).isoformat(),
         "date1": date1,
         "date2": date2,
         "window_minutes": int(window_minutes),
@@ -133,30 +140,29 @@ def collect_visit_time_diagnostic(
             "ym:s:lastUTMCampaign": str(utm_campaign),
             "ym:s:lastUTMTerm": str(utm_term),
         },
-        "utm_filter_matches": sum(
-            1
-            for item in candidates
-            if _utm_matches(item["utm"], source=utm_source, medium=utm_medium, campaign=utm_campaign, term=utm_term)
-        ),
+        "utm_filter_matches": len(utm_candidates),
         "nearest_candidates": candidates[:sample_limit],
+        "utm_filter_nearest_candidates": utm_candidates[:sample_limit],
     }
 
 
 def _candidate(row: dict[str, str], lead_dt: dt.datetime, window_minutes: int) -> dict[str, Any] | None:
-    visit_dt = _parse_utc(row.get("ym:s:dateTimeUTC", ""))
-    if visit_dt is None:
-        visit_dt = _parse_counter_tz(row.get("ym:s:dateTime", ""))
+    visit_counter_dt = _parse_counter_tz(row.get("ym:s:dateTime", ""))
+    visit_utc_field_dt = _parse_utc(row.get("ym:s:dateTimeUTC", ""))
+    visit_dt = visit_counter_dt or visit_utc_field_dt
     if visit_dt is None:
         return None
     delta = int((visit_dt - lead_dt).total_seconds())
     if abs(delta) > int(window_minutes) * 60:
         return None
+    utc_field_delta = int((visit_utc_field_dt - lead_dt).total_seconds()) if visit_utc_field_dt is not None else None
     return {
         "ym:s:visitID": row.get("ym:s:visitID", ""),
         "ym:s:dateTime": row.get("ym:s:dateTime", ""),
         "ym:s:dateTimeUTC": row.get("ym:s:dateTimeUTC", ""),
         "ym:s:clientID": row.get("ym:s:clientID", ""),
-        "delta_seconds_from_lead_utc": delta,
+        "delta_seconds_from_lead_counter_tz": delta,
+        "delta_seconds_from_lead_utc_field_as_utc": utc_field_delta,
         "start_url_sanitized": _sanitize_url(row.get("ym:s:startURL", "")),
         "end_url_sanitized": _sanitize_url(row.get("ym:s:endURL", "")),
         "referer_sanitized": _sanitize_url(row.get("ym:s:referer", "")),
@@ -169,7 +175,7 @@ def _candidate(row: dict[str, str], lead_dt: dt.datetime, window_minutes: int) -
 def _window_counts(rows: list[dict[str, str]], lead_dt: dt.datetime) -> dict[str, int]:
     counts = {"5m": 0, "15m": 0, "30m": 0, "60m": 0, "120m": 0}
     for row in rows:
-        visit_dt = _parse_utc(row.get("ym:s:dateTimeUTC", "")) or _parse_counter_tz(row.get("ym:s:dateTime", ""))
+        visit_dt = _parse_counter_tz(row.get("ym:s:dateTime", "")) or _parse_utc(row.get("ym:s:dateTimeUTC", ""))
         if visit_dt is None:
             continue
         delta = abs(int((visit_dt - lead_dt).total_seconds()))

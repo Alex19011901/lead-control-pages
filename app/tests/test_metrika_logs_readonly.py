@@ -333,9 +333,9 @@ class MetrikaVisitTimeDiagnosticTests(unittest.TestCase):
     def test_visit_time_diagnostic_returns_nearest_utm_candidates(self):
         client = VisitTimeFakeClient(
             "ym:s:visitID\tym:s:dateTime\tym:s:dateTimeUTC\tym:s:clientID\tym:s:startURL\tym:s:endURL\tym:s:referer\tym:s:lastDirectClickOrderName\tym:s:lastDirectBannerGroup\tym:s:lastUTMSource\tym:s:lastUTMMedium\tym:s:lastUTMCampaign\tym:s:lastUTMTerm\tym:s:lastAdvEngine\n"
-            "1\t2026-09-03 13:20:00\t2026-09-03 13:20:00\tclient-a\thttps://example.test/?utm_source=yandex_direct\t\t\tCampaign A\t10\tyandex_direct\tcpc\tBankety_poisk_konversii\t---autotargeting\tdirect\n"
-            "2\t2026-09-03 13:49:20\t2026-09-03 13:49:20\tclient-b\thttps://example.test/?utm_source=yandex_direct&utm_campaign=Bankety_poisk_konversii\t\t\tCampaign B\t20\tyandex_direct\tcpc\tBankety_poisk_konversii\t---autotargeting\tdirect\n"
-            "3\t2026-09-03 18:00:00\t2026-09-03 18:00:00\tclient-c\thttps://example.test/?utm_source=yandex_direct\t\t\tCampaign C\t30\tyandex_direct\tcpc\tOther\t---autotargeting\tdirect\n"
+            "1\t2026-09-03 16:20:00\t2026-09-03 13:20:00\tclient-a\thttps://example.test/?utm_source=yandex_direct\t\t\tCampaign A\t10\tyandex_direct\tcpc\tBankety_poisk_konversii\t---autotargeting\tdirect\n"
+            "2\t2026-09-03 16:49:20\t2026-09-03 13:49:20\tclient-b\thttps://example.test/?utm_source=yandex_direct&utm_campaign=Bankety_poisk_konversii\t\t\tCampaign B\t20\tyandex_direct\tcpc\tBankety_poisk_konversii\t---autotargeting\tdirect\n"
+            "3\t2026-09-03 21:00:00\t2026-09-03 18:00:00\tclient-c\thttps://example.test/?utm_source=yandex_direct\t\t\tCampaign C\t30\tyandex_direct\tcpc\tOther\t---autotargeting\tdirect\n"
         )
 
         result = time_mod.collect_visit_time_diagnostic(
@@ -356,11 +356,14 @@ class MetrikaVisitTimeDiagnosticTests(unittest.TestCase):
         self.assertEqual(result["status"], "ok")
         self.assertEqual(result["matching_mode"], "time_utm_heuristic")
         self.assertEqual(result["exact_yclid_match_available"], False)
+        self.assertEqual(result["time_basis"], "ym:s:dateTime_as_counter_timezone_utc_plus_3")
         self.assertEqual(result["candidates_total"], 2)
         self.assertEqual(result["utm_filter_matches"], 2)
         self.assertEqual(result["nearest_candidates"][0]["ym:s:visitID"], "2")
-        self.assertEqual(result["nearest_candidates"][0]["delta_seconds_from_lead_utc"], -11)
+        self.assertEqual(result["nearest_candidates"][0]["delta_seconds_from_lead_counter_tz"], -11)
+        self.assertEqual(result["nearest_candidates"][0]["delta_seconds_from_lead_utc_field_as_utc"], -11)
         self.assertEqual(result["nearest_candidates"][0]["utm"]["ym:s:lastUTMCampaign"], "Bankety_poisk_konversii")
+        self.assertEqual(result["utm_filter_nearest_candidates"][0]["ym:s:visitID"], "2")
         self.assertNotIn("ym:s:startURL", result["nearest_candidates"][0])
         self.assertEqual(client.evaluate_calls[0]["source"], "visits")
         self.assertEqual(client.create_calls[0]["source"], "visits")
@@ -382,7 +385,7 @@ class MetrikaVisitTimeDiagnosticTests(unittest.TestCase):
         )
 
         self.assertEqual(result["candidates_total"], 1)
-        self.assertEqual(result["nearest_candidates"][0]["delta_seconds_from_lead_utc"], 0)
+        self.assertEqual(result["nearest_candidates"][0]["delta_seconds_from_lead_counter_tz"], 0)
 
 
 class VisitTimeFakeClient(FakeClient):
