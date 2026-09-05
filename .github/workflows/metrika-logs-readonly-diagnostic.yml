@@ -7,6 +7,7 @@ on:
       - ".github/workflows/metrika-logs-readonly-diagnostic.yml"
       - "app/scripts/metrika_logs_readonly.py"
       - "app/scripts/metrika_starturl_diagnostic.py"
+      - "app/scripts/metrika_hits_url_diagnostic.py"
       - "app/tests/test_metrika_logs_readonly.py"
 
 permissions:
@@ -35,6 +36,17 @@ jobs:
         run: >-
           PYTHONPATH=app python app/scripts/metrika_starturl_diagnostic.py
           --counter-id 112267492
+          --date1 2026-09-01
+          --date2 2026-09-03
+          --sample-limit 12
+
+      - name: Run Metrika hits URL read-export diagnostic
+        env:
+          YANDEX_METRIKA_READ_TOKEN: ${{ secrets.YANDEX_METRIKA_READ_TOKEN }}
+        run: >-
+          PYTHONPATH=app python app/scripts/metrika_hits_url_diagnostic.py
+          --counter-id 112267492
+          --yclid 5288069203188252671
           --date1 2026-09-01
           --date2 2026-09-03
           --sample-limit 12

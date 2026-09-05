@@ -19,6 +19,7 @@ DEFAULT_YCLID = "5288069203188252671"
 DEFAULT_DATE1 = "2026-09-03"
 DEFAULT_DATE2 = "2026-09-03"
 DEFAULT_ATTRIBUTION = "LAST_YANDEX_DIRECT_CLICK"
+ALLOWED_LOG_SOURCES = {"visits", "hits"}
 
 # Isolated diagnostic field set only. Nothing here changes Metrika or Direct entities.
 DEFAULT_FIELDS = (
@@ -72,8 +73,16 @@ class MetrikaLogsReadOnlyClient:
         self.counter_id = int(counter_id)
         self.timeout = int(timeout)
 
-    def evaluate(self, *, date1: str, date2: str, fields: Iterable[str], attribution: str = DEFAULT_ATTRIBUTION) -> dict[str, Any]:
-        query = self._export_query(date1=date1, date2=date2, fields=fields, attribution=attribution)
+    def evaluate(
+        self,
+        *,
+        date1: str,
+        date2: str,
+        fields: Iterable[str],
+        attribution: str = DEFAULT_ATTRIBUTION,
+        source: str = "visits",
+    ) -> dict[str, Any]:
+        query = self._export_query(date1=date1, date2=date2, fields=fields, attribution=attribution, source=source)
         return self._json("GET", f"/counter/{self.counter_id}/logrequests/evaluate", query)
 
     def counters(self) -> dict[str, Any]:
@@ -82,8 +91,16 @@ class MetrikaLogsReadOnlyClient:
     def counter(self) -> dict[str, Any]:
         return self._json("GET", f"/counter/{self.counter_id}", None)
 
-    def create_export(self, *, date1: str, date2: str, fields: Iterable[str], attribution: str = DEFAULT_ATTRIBUTION) -> LogRequest:
-        query = self._export_query(date1=date1, date2=date2, fields=fields, attribution=attribution)
+    def create_export(
+        self,
+        *,
+        date1: str,
+        date2: str,
+        fields: Iterable[str],
+        attribution: str = DEFAULT_ATTRIBUTION,
+        source: str = "visits",
+    ) -> LogRequest:
+        query = self._export_query(date1=date1, date2=date2, fields=fields, attribution=attribution, source=source)
         payload = self._json("POST", f"/counter/{self.counter_id}/logrequests", query)
         return _parse_log_request(payload)
 
@@ -98,15 +115,18 @@ class MetrikaLogsReadOnlyClient:
             None,
         )
 
-    def _export_query(self, *, date1: str, date2: str, fields: Iterable[str], attribution: str) -> dict[str, str]:
+    def _export_query(self, *, date1: str, date2: str, fields: Iterable[str], attribution: str, source: str = "visits") -> dict[str, str]:
         field_list = [str(field).strip() for field in fields if str(field).strip()]
         if not field_list:
             raise ValueError("fields are required")
+        source = str(source).strip()
+        if source not in ALLOWED_LOG_SOURCES:
+            raise ValueError("unsupported log source")
         return {
             "date1": str(date1),
             "date2": str(date2),
             "fields": ",".join(field_list),
-            "source": "visits",
+            "source": source,
             "attribution": str(attribution),
         }
 

@@ -14,6 +14,13 @@ mod = importlib.util.module_from_spec(SPEC)
 sys.modules[SPEC.name] = mod
 SPEC.loader.exec_module(mod)
 
+HITS_MODULE_PATH = Path(__file__).resolve().parents[1] / "scripts" / "metrika_hits_url_diagnostic.py"
+HITS_SPEC = importlib.util.spec_from_file_location("metrika_hits_url_diagnostic", HITS_MODULE_PATH)
+assert HITS_SPEC is not None and HITS_SPEC.loader is not None
+hits_mod = importlib.util.module_from_spec(HITS_SPEC)
+sys.modules[HITS_SPEC.name] = hits_mod
+HITS_SPEC.loader.exec_module(hits_mod)
+
 
 class FakeClient:
     def __init__(self) -> None:
@@ -83,6 +90,34 @@ class MetrikaLogsReadonlyTests(unittest.TestCase):
         self.assertFalse(mod._allowed_path("POST", "/counter/112267492/logrequest/77/clean"))
         self.assertFalse(mod._allowed_path("PUT", "/counter/112267492/logrequests"))
         self.assertFalse(mod._allowed_path("DELETE", "/counter/112267492/logrequests"))
+
+    def test_export_query_allows_only_read_logs_sources(self):
+        client = mod.MetrikaLogsReadOnlyClient("token", counter_id=112267492)
+
+        visits_query = client._export_query(
+            date1="2026-09-01",
+            date2="2026-09-03",
+            fields=("ym:s:visitID",),
+            attribution=mod.DEFAULT_ATTRIBUTION,
+        )
+        hits_query = client._export_query(
+            date1="2026-09-01",
+            date2="2026-09-03",
+            fields=("ym:pv:URL",),
+            attribution=mod.DEFAULT_ATTRIBUTION,
+            source="hits",
+        )
+
+        self.assertEqual(visits_query["source"], "visits")
+        self.assertEqual(hits_query["source"], "hits")
+        with self.assertRaises(ValueError):
+            client._export_query(
+                date1="2026-09-01",
+                date2="2026-09-03",
+                fields=("ym:pv:URL",),
+                attribution=mod.DEFAULT_ATTRIBUTION,
+                source="offline_conversions",
+            )
 
     def test_collect_finds_target_locally_in_start_url(self):
         client = FakeClient()
@@ -198,6 +233,87 @@ class MetrikaLogsReadonlyTests(unittest.TestCase):
         self.assertIn("access_denied", result)
         self.assertIn("Bearer [redacted]", result)
         self.assertNotIn("abc123token", result)
+
+
+class MetrikaHitsUrlDiagnosticTests(unittest.TestCase):
+    def test_hits_diagnostic_uses_hits_source_and_finds_yclid_in_page_url(self):
+        client = HitsFakeClient(
+            "ym:pv:watchID\tym:pv:pageViewID\tym:pv:visitID\tym:pv:dateTime\tym:pv:clientID\tym:pv:URL\tym:pv:referer\tym:pv:UTMSource\tym:pv:params\n"
+            "1\t10\t100\t2026-09-03 17:23:00\tclient-a\thttps://example.test/?foo=1\t\t\t\n"
+            "2\t20\t200\t2026-09-03 17:24:00\tclient-b\thttps://example.test/?yclid=5288069203188252671&utm_source=yandex\t\tyandex\t\n"
+        )
+
+        result = hits_mod.collect_hits_url_diagnostic(
+            client,
+            yclid="5288069203188252671",
+            date1="2026-09-01",
+            date2="2026-09-03",
+            poll_seconds=0,
+            max_polls=2,
+        )
+
+        self.assertEqual(result["status"], "found")
+        self.assertEqual(result["source"], "hits")
+        self.assertEqual(result["matches_count"], 1)
+        self.assertEqual(result["matches"][0]["ym:pv:visitID"], "200")
+        self.assertEqual(result["matches"][0]["url_sanitized"]["has_yclid"], True)
+        self.assertIn("ym:pv:URL", result["matches"][0]["yclid_sources"])
+        self.assertNotIn("ym:pv:URL", result["matches"][0])
+        self.assertEqual(client.evaluate_calls[0]["source"], "hits")
+        self.assertEqual(client.create_calls[0]["source"], "hits")
+
+    def test_hits_diagnostic_can_find_yclid_in_params_without_raw_params_output(self):
+        client = HitsFakeClient(
+            "ym:pv:watchID\tym:pv:pageViewID\tym:pv:visitID\tym:pv:dateTime\tym:pv:clientID\tym:pv:URL\tym:pv:referer\tym:pv:params\n"
+            "3\t30\t300\t2026-09-03 17:25:00\tclient-c\thttps://example.test/?foo=1\t\t{\"yclid\":\"5288069203188252671\"}\n"
+        )
+
+        result = hits_mod.collect_hits_url_diagnostic(
+            client,
+            yclid="5288069203188252671",
+            date1="2026-09-01",
+            date2="2026-09-03",
+            poll_seconds=0,
+            max_polls=2,
+        )
+
+        self.assertEqual(result["status"], "found")
+        self.assertEqual(result["matches_count"], 1)
+        self.assertIn("ym:pv:params", result["matches"][0]["params_fields_with_yclid"])
+        self.assertNotIn("ym:pv:params", result["matches"][0])
+
+    def test_hits_diagnostic_returns_not_found_when_yclid_is_absent(self):
+        client = HitsFakeClient(
+            "ym:pv:watchID\tym:pv:pageViewID\tym:pv:visitID\tym:pv:dateTime\tym:pv:clientID\tym:pv:URL\tym:pv:referer\tym:pv:params\n"
+            "4\t40\t400\t2026-09-03 17:26:00\tclient-d\thttps://example.test/?foo=1\t\t{}\n"
+        )
+
+        result = hits_mod.collect_hits_url_diagnostic(
+            client,
+            yclid="5288069203188252671",
+            date1="2026-09-01",
+            date2="2026-09-03",
+            poll_seconds=0,
+            max_polls=2,
+        )
+
+        self.assertEqual(result["status"], "not_found")
+        self.assertEqual(result["matches_count"], 0)
+        self.assertEqual(result["matches"], [])
+
+
+class HitsFakeClient(FakeClient):
+    def __init__(self, tsv: str) -> None:
+        super().__init__()
+        self._tsv = tsv
+
+    def create_export(self, **kwargs):
+        self.create_calls.append(kwargs)
+        return mod.LogRequest(request_id=88, status="processed", parts=(0,))
+
+    def download_part(self, request_id, part_number):
+        self.download_calls.append((request_id, part_number))
+        return self._tsv
 
 
 if __name__ == "__main__":
