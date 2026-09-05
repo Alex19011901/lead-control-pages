@@ -324,6 +324,12 @@ class HitsFakeClient(FakeClient):
 
 
 class MetrikaVisitTimeDiagnosticTests(unittest.TestCase):
+    def test_workflow_passes_leading_dash_utm_term_as_arg_value(self):
+        workflow = (Path(__file__).resolve().parents[2] / ".github" / "workflows" / "metrika-logs-readonly-diagnostic.yml").read_text(encoding="utf-8")
+
+        self.assertIn("--utm-term=---autotargeting", workflow)
+        self.assertNotIn("--utm-term ---autotargeting", workflow)
+
     def test_visit_time_diagnostic_returns_nearest_utm_candidates(self):
         client = VisitTimeFakeClient(
             "ym:s:visitID\tym:s:dateTime\tym:s:dateTimeUTC\tym:s:clientID\tym:s:startURL\tym:s:endURL\tym:s:referer\tym:s:lastDirectClickOrderName\tym:s:lastDirectBannerGroup\tym:s:lastUTMSource\tym:s:lastUTMMedium\tym:s:lastUTMCampaign\tym:s:lastUTMTerm\tym:s:lastAdvEngine\n"
