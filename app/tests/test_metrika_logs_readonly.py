@@ -1,8 +1,10 @@
 from __future__ import annotations
 
 import importlib.util
+import io
 import sys
 import unittest
+import urllib.error
 from pathlib import Path
 
 MODULE_PATH = Path(__file__).resolve().parents[1] / "scripts" / "metrika_logs_readonly.py"
@@ -179,6 +181,23 @@ class MetrikaLogsReadonlyTests(unittest.TestCase):
         }
         result = mod.safe_diagnostic([row], yclid="5288069203188252671", request_id=1)
         self.assertNotIn("secret", result["visits"][0])
+
+    def test_safe_api_error_redacts_authorization_tokens(self):
+        error = urllib.error.HTTPError(
+            "https://api-metrika.yandex.net/safe",
+            403,
+            "Forbidden",
+            {},
+            io.BytesIO(
+                b'{"errors":[{"error_type":"access_denied","message":"Bearer abc123token denied"}]}'
+            ),
+        )
+
+        result = mod._safe_api_error(error)
+
+        self.assertIn("access_denied", result)
+        self.assertIn("Bearer [redacted]", result)
+        self.assertNotIn("abc123token", result)
 
 
 if __name__ == "__main__":
