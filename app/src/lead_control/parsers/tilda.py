@@ -26,6 +26,20 @@ FIELD_ALIASES = {
     },
     "event_type": {"тип мероприятия", "формат мероприятия", "event type"},
     "yclid": {"yclid"},
+    "metrika_client_id": {
+        "clientid",
+        "client id",
+        "client_id",
+        "metrika clientid",
+        "metrika client id",
+        "metrika_client_id",
+        "metrica clientid",
+        "metrica client id",
+        "metrica_client_id",
+        "ym clientid",
+        "ym client id",
+        "ym_client_id",
+    },
 }
 
 WORD_NUMBERS = {
@@ -69,6 +83,7 @@ def parse_tilda_message(message: dict[str, Any]) -> dict[str, Any] | None:
         "guests_count": _parse_int(fields.get("guests_count")),
         "event_type": event_type,
         "yclid": fields.get("yclid", ""),
+        "metrika_client_id": fields.get("metrika_client_id", ""),
         "description": str(text).strip(),
     }
     reason = test_lead_reason(lead, text)
