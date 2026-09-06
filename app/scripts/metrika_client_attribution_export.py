@@ -35,6 +35,12 @@ FIELDS = (
     "ym:s:lastDirectPlatform",
 )
 
+DIRECT_ID_FIELDS = (
+    "ym:s:lastDirectClickOrder",
+    "ym:s:lastDirectBannerGroup",
+    "ym:s:lastDirectClickBanner",
+)
+
 
 def sha256_text(value: str) -> str:
     return hashlib.sha256(value.encode("utf-8")).hexdigest() if value else ""
@@ -43,6 +49,13 @@ def sha256_text(value: str) -> str:
 def normalize_id(value: Any) -> str:
     text = str(value or "").strip()
     return "" if text in {"", "0", "0.0"} else text
+
+
+def nonempty_counts(rows: list[dict[str, str]]) -> dict[str, int]:
+    return {
+        field: sum(1 for row in rows if normalize_id(row.get(field)))
+        for field in DIRECT_ID_FIELDS
+    }
 
 
 def safe_rows(rows: list[dict[str, str]]) -> list[dict[str, Any]]:
@@ -109,6 +122,8 @@ def collect(client: MetrikaLogsReadOnlyClient, *, date1: str, date2: str, poll_s
         "attribution": DEFAULT_ATTRIBUTION,
         "request_id": current.request_id,
         "rows_total": len(rows),
+        "rows_with_client_id": sum(1 for row in rows if str(row.get("ym:s:clientID") or "").strip()),
+        "direct_id_nonempty_counts": nonempty_counts(rows),
         "mapped_rows": len(mapped),
         "rows": mapped,
     }
@@ -140,6 +155,7 @@ def main() -> int:
     output.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print(f"Metrika attribution map written: {output}")
     print(f"Rows: {payload['mapped_rows']}/{payload['rows_total']}")
+    print(f"Direct field counts: {payload['direct_id_nonempty_counts']}")
     return 0
 
 
