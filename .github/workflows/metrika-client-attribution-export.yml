@@ -4,6 +4,11 @@ on:
   workflow_dispatch:
   schedule:
     - cron: "20 4 * * *"
+  push:
+    paths:
+      - ".github/workflows/metrika-client-attribution-export.yml"
+      - "app/scripts/metrika_client_attribution_export.py"
+      - "app/tests/test_metrika_client_attribution_export.py"
 
 permissions:
   contents: write
