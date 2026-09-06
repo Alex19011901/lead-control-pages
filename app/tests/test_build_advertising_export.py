@@ -15,6 +15,7 @@ SCRIPT = ROOT / "scripts" / "build_advertising_export.py"
 class AdvertisingExportTests(unittest.TestCase):
     def test_export_is_anonymized_and_starts_from_cutoff(self) -> None:
         yclid = "TEST_YCLID_20260905_1434"
+        client_id = "12345678901234567890"
         payload = {
             "schema_version": 1,
             "leads": [
@@ -38,6 +39,7 @@ class AdvertisingExportTests(unittest.TestCase):
                         "name": "Test",
                         "phone_raw": "+79265350168",
                         "yclid": yclid,
+                        "metrika_client_id": client_id,
                         "event_type": "Свадьба",
                         "description": (
                             "private text\n"
@@ -64,11 +66,14 @@ class AdvertisingExportTests(unittest.TestCase):
             )
             result = json.loads(output.read_text(encoding="utf-8"))
 
+        self.assertEqual(result["schema_version"], 4)
         self.assertEqual(result["lead_count"], 1)
         item = result["leads"][0]
         self.assertEqual(item["lead_id"], "newhash")
         self.assertTrue(item["has_yclid"])
         self.assertEqual(item["yclid_sha256"], hashlib.sha256(yclid.encode()).hexdigest())
+        self.assertTrue(item["has_metrika_client_id"])
+        self.assertEqual(item["metrika_client_id_sha256"], hashlib.sha256(client_id.encode()).hexdigest())
         self.assertEqual(item["crm_status"], "Первичный контакт")
         self.assertEqual(item["campaign_id"], "707720217")
         self.assertEqual(item["group_id"], "5724131407")
@@ -79,6 +84,7 @@ class AdvertisingExportTests(unittest.TestCase):
         self.assertNotIn("private text", serialized)
         self.assertNotIn("potentially sensitive query", serialized)
         self.assertNotIn(yclid, serialized)
+        self.assertNotIn(client_id, serialized)
         self.assertNotIn('"name"', serialized)
         self.assertNotIn('"identifier"', serialized)
 
