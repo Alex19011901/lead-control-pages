@@ -46,6 +46,14 @@ def text_value(text: str, label: str) -> str:
     return match.group(1).strip() if match else ""
 
 
+def first_text_value(text: str, labels: tuple[str, ...]) -> str:
+    for label in labels:
+        value = text_value(text, label)
+        if value:
+            return value
+    return ""
+
+
 def attribution_fields(fields: dict[str, Any]) -> dict[str, str]:
     description = str(fields.get("description") or "")
     utm_source = str(fields.get("utm_source") or text_value(description, "UTM source"))
@@ -72,9 +80,35 @@ def hash_value(value: str) -> str:
     return hashlib.sha256(value.encode("utf-8")).hexdigest() if value else ""
 
 
+def metrika_client_id(fields: dict[str, Any]) -> str:
+    direct = str(
+        fields.get("metrika_client_id")
+        or fields.get("client_id")
+        or fields.get("clientid")
+        or fields.get("ym_client_id")
+        or ""
+    ).strip()
+    if direct:
+        return direct
+    description = str(fields.get("description") or "")
+    return first_text_value(
+        description,
+        (
+            "metrika_client_id",
+            "Metrika ClientID",
+            "Metrika Client ID",
+            "clientID",
+            "ClientID",
+            "client_id",
+            "ym_client_id",
+        ),
+    )
+
+
 def safe_lead(lead: dict[str, Any]) -> dict[str, Any]:
     fields = lead.get("fields") or {}
     yclid = str(fields.get("yclid") or lead.get("yclid") or "").strip()
+    client_id = metrika_client_id(fields)
     item = {
         "lead_id": str(lead.get("id") or ""),
         "created_at": str(lead.get("first_seen_at") or lead.get("received_at") or ""),
@@ -83,6 +117,8 @@ def safe_lead(lead: dict[str, Any]) -> dict[str, Any]:
         "channel": str(lead.get("channel") or ""),
         "has_yclid": bool(yclid),
         "yclid_sha256": hash_value(yclid),
+        "has_metrika_client_id": bool(client_id),
+        "metrika_client_id_sha256": hash_value(client_id),
         "event_type": str(fields.get("event_type") or lead.get("event_type") or ""),
         "status": str(lead.get("status") or ""),
         "crm_found": bool(lead.get("crm_found") or (lead.get("crm") or {}).get("found")),
@@ -111,7 +147,7 @@ def main() -> int:
 
     exported.sort(key=lambda item: (item.get("created_ts") or 0, item.get("lead_id") or ""))
     output = {
-        "schema_version": 3,
+        "schema_version": 4,
         "start_date": args.start_date,
         "lead_count": len(exported),
         "leads": exported,
