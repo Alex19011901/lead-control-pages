@@ -5,6 +5,7 @@ import argparse
 import hashlib
 import json
 import os
+import re
 import time
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
@@ -33,12 +34,22 @@ FIELDS = (
     "ym:s:lastDirectPhraseOrCond",
     "ym:s:lastDirectPlatformType",
     "ym:s:lastDirectPlatform",
+    "ym:s:lastUTMSource",
+    "ym:s:lastUTMMedium",
+    "ym:s:lastUTMCampaign",
+    "ym:s:lastUTMContent",
 )
 
 DIRECT_ID_FIELDS = (
     "ym:s:lastDirectClickOrder",
     "ym:s:lastDirectBannerGroup",
     "ym:s:lastDirectClickBanner",
+)
+UTM_FIELDS = (
+    "ym:s:lastUTMSource",
+    "ym:s:lastUTMMedium",
+    "ym:s:lastUTMCampaign",
+    "ym:s:lastUTMContent",
 )
 
 
@@ -51,11 +62,42 @@ def normalize_id(value: Any) -> str:
     return "" if text in {"", "0", "0.0"} else text
 
 
-def nonempty_counts(rows: list[dict[str, str]]) -> dict[str, int]:
+def parse_tracking_ids(content: str, campaign: str = "") -> dict[str, str]:
+    text = str(content or "")
+    result = {"campaign_id": "", "group_id": "", "ad_id": ""}
+    for marker, key in (("cid", "campaign_id"), ("gid", "group_id"), ("aid", "ad_id")):
+        patterns = (
+            rf"(?:^|\|){marker}\|([0-9]+)(?:\||$)",
+            rf"(?:^|[;,&_ -]){marker}(?:[:=_-])([0-9]+)(?:$|[;,&_ -])",
+        )
+        for pattern in patterns:
+            match = re.search(pattern, text, flags=re.I)
+            if match:
+                result[key] = match.group(1)
+                break
+    campaign_text = str(campaign or "").strip()
+    if not result["campaign_id"] and campaign_text.isdigit():
+        result["campaign_id"] = campaign_text
+    return result
+
+
+def nonempty_counts(rows: list[dict[str, str]], fields: tuple[str, ...]) -> dict[str, int]:
     return {
         field: sum(1 for row in rows if normalize_id(row.get(field)))
-        for field in DIRECT_ID_FIELDS
+        for field in fields
     }
+
+
+def sample_distinct(rows: list[dict[str, str]], field: str, limit: int = 20) -> list[str]:
+    values: list[str] = []
+    for row in rows:
+        value = str(row.get(field) or "").strip()
+        if not value or value in values:
+            continue
+        values.append(value[:160])
+        if len(values) >= limit:
+            break
+    return values
 
 
 def safe_rows(rows: list[dict[str, str]]) -> list[dict[str, Any]]:
@@ -67,6 +109,13 @@ def safe_rows(rows: list[dict[str, str]]) -> list[dict[str, Any]]:
         campaign_id = normalize_id(row.get("ym:s:lastDirectClickOrder"))
         group_id = normalize_id(row.get("ym:s:lastDirectBannerGroup"))
         ad_id = normalize_id(row.get("ym:s:lastDirectClickBanner"))
+        ids_from_utm = parse_tracking_ids(
+            str(row.get("ym:s:lastUTMContent") or ""),
+            str(row.get("ym:s:lastUTMCampaign") or ""),
+        )
+        campaign_id = campaign_id or ids_from_utm["campaign_id"]
+        group_id = group_id or ids_from_utm["group_id"]
+        ad_id = ad_id or ids_from_utm["ad_id"]
         if not (campaign_id or group_id or ad_id):
             continue
         duration_raw = str(row.get("ym:s:visitDuration") or "0").strip()
@@ -83,12 +132,15 @@ def safe_rows(rows: list[dict[str, str]]) -> list[dict[str, Any]]:
                 "campaign_id": campaign_id,
                 "group_id": group_id,
                 "ad_id": ad_id,
+                "utm_source": str(row.get("ym:s:lastUTMSource") or ""),
+                "utm_medium": str(row.get("ym:s:lastUTMMedium") or ""),
+                "utm_campaign": str(row.get("ym:s:lastUTMCampaign") or ""),
                 "campaign_name": str(row.get("ym:s:lastDirectClickOrderName") or ""),
                 "group_name": str(row.get("ym:s:lastClickBannerGroupName") or ""),
                 "ad_name": str(row.get("ym:s:lastDirectClickBannerName") or ""),
-                "criterion": str(row.get("ym:s:lastDirectPhraseOrCond") or ""),
                 "platform_type": str(row.get("ym:s:lastDirectPlatformType") or ""),
                 "platform": str(row.get("ym:s:lastDirectPlatform") or ""),
+                "id_source": "direct_fields" if any(normalize_id(row.get(field)) for field in DIRECT_ID_FIELDS) else "utm_tags",
             }
         )
     exported.sort(key=lambda item: (item["client_id_sha256"], item["visit_datetime"]))
@@ -115,7 +167,7 @@ def collect(client: MetrikaLogsReadOnlyClient, *, date1: str, date2: str, poll_s
         rows.extend(parse_tsv(client.download_part(current.request_id, part_number)))
     mapped = safe_rows(rows)
     return {
-        "schema_version": 1,
+        "schema_version": 2,
         "counter_id": client.counter_id,
         "date1": date1,
         "date2": date2,
@@ -123,8 +175,13 @@ def collect(client: MetrikaLogsReadOnlyClient, *, date1: str, date2: str, poll_s
         "request_id": current.request_id,
         "rows_total": len(rows),
         "rows_with_client_id": sum(1 for row in rows if str(row.get("ym:s:clientID") or "").strip()),
-        "direct_id_nonempty_counts": nonempty_counts(rows),
+        "direct_id_nonempty_counts": nonempty_counts(rows, DIRECT_ID_FIELDS),
+        "utm_nonempty_counts": nonempty_counts(rows, UTM_FIELDS),
+        "utm_campaign_samples": sample_distinct(rows, "ym:s:lastUTMCampaign"),
+        "utm_content_samples": sample_distinct(rows, "ym:s:lastUTMContent", limit=10),
         "mapped_rows": len(mapped),
+        "mapped_from_direct_fields": sum(1 for item in mapped if item.get("id_source") == "direct_fields"),
+        "mapped_from_utm_tags": sum(1 for item in mapped if item.get("id_source") == "utm_tags"),
         "rows": mapped,
     }
 
@@ -156,6 +213,7 @@ def main() -> int:
     print(f"Metrika attribution map written: {output}")
     print(f"Rows: {payload['mapped_rows']}/{payload['rows_total']}")
     print(f"Direct field counts: {payload['direct_id_nonempty_counts']}")
+    print(f"UTM field counts: {payload['utm_nonempty_counts']}")
     return 0
 
 
