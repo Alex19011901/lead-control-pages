@@ -1,5 +1,5 @@
 name: Lead Control Public Runner
-# validation-retry: explicit-tilda-test-name-exclusion
+# validation-retry: clientid-advertising-bridge
 on:
   schedule:
     - cron: "50 6 * * *"
@@ -33,7 +33,7 @@ jobs:
 
       - name: Test Tilda parser and advertising export
         working-directory: app
-        run: PYTHONPATH=. python -m unittest tests.test_tilda_parser tests.test_build_advertising_export -v
+        run: PYTHONPATH=. python -m unittest tests.test_tilda_parser tests.test_build_advertising_export tests.test_metrika_client_attribution_export -v
 
       - name: Install OCR
         run: |
