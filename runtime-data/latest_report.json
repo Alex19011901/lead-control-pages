@@ -1,7 +1,7 @@
 {
   "alarm_no_crm": 0,
   "by_manager": {
-    "no_manager_reaction": 401,
+    "no_manager_reaction": 402,
     "Максим": 42,
     "Олеся": 40
   },
@@ -9,7 +9,7 @@
     "MARQUIZ": 26,
     "Restoran.Cafe": 3,
     "WedWed": 7,
-    "ЗАЯВКА ПОЧТА": 7,
+    "ЗАЯВКА ПОЧТА": 8,
     "Заявка с ТГ": 20,
     "Заявка сайт": 3,
     "Заявки хост": 247,
@@ -25,7 +25,7 @@
     "ДР": 1,
     "Деловое мероприятие": 1,
     "Детский праздник": 5,
-    "Корпоратив": 114,
+    "Корпоратив": 115,
     "Поминки": 1,
     "Свадьба": 155,
     "Съемки": 1,
@@ -37,7 +37,7 @@
     "101-150": 33,
     "151+": 19,
     "21-50": 142,
-    "51-100": 63,
+    "51-100": 64,
     "unknown": 70
   },
   "late_crm": 110,
@@ -57,6 +57,24 @@
       "manager_username": "",
       "name": "Ангелина",
       "source": "WedWed",
+      "status": "OK",
+      "violations": []
+    },
+    {
+      "created_at": "2026-09-07T16:48:29+03:00",
+      "crm_entity_id": 48338233,
+      "crm_entity_type": "lead",
+      "crm_found": true,
+      "event_date": "",
+      "event_type": "Корпоратив",
+      "guests_count": 90,
+      "identifier": "7********78",
+      "identifier_type": "phone",
+      "lead_id": "bc2a91cfccb9520f",
+      "manager": "",
+      "manager_username": "",
+      "name": "Валентина Резникова",
+      "source": "ЗАЯВКА ПОЧТА",
       "status": "OK",
       "violations": []
     },
@@ -383,29 +401,11 @@
       "source": "Заявка с ТГ",
       "status": "OK",
       "violations": []
-    },
-    {
-      "created_at": "2026-09-04T13:46:00+03:00",
-      "crm_entity_id": 48250245,
-      "crm_entity_type": "lead",
-      "crm_found": true,
-      "event_date": "2026-09-26",
-      "event_type": "",
-      "guests_count": 100,
-      "identifier": "7********50",
-      "identifier_type": "phone",
-      "lead_id": "851b6dc5f02a549a",
-      "manager": "",
-      "manager_username": "",
-      "name": "Марина",
-      "source": "Заявки хост",
-      "status": "OK",
-      "violations": []
     }
   ],
   "needs_review": 75,
   "no_reaction": 0,
-  "ok": 326,
-  "total_leads": 483,
-  "updated_at": "2026-09-07T21:24:11+03:00"
+  "ok": 327,
+  "total_leads": 484,
+  "updated_at": "2026-09-07T21:48:50+03:00"
 }
