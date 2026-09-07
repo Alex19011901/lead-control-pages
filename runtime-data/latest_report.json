@@ -1,7 +1,7 @@
 {
   "alarm_no_crm": 0,
   "by_manager": {
-    "no_manager_reaction": 398,
+    "no_manager_reaction": 399,
     "Максим": 36,
     "Олеся": 40
   },
@@ -14,7 +14,7 @@
     "Заявка сайт": 3,
     "Заявки хост": 246,
     "С улицы": 2,
-    "САЙТ ТИЛЬДА": 120,
+    "САЙТ ТИЛЬДА": 121,
     "Тильда Веранда": 43,
     "ТоМесто": 1
   },
@@ -27,13 +27,13 @@
     "Детский праздник": 5,
     "Корпоратив": 110,
     "Поминки": 1,
-    "Свадьба": 151,
+    "Свадьба": 152,
     "Съемки": 1,
     "Съёмки": 1,
     "Юбилей": 87
   },
   "guest_ranges": {
-    "1-20": 152,
+    "1-20": 153,
     "101-150": 32,
     "151+": 19,
     "21-50": 140,
@@ -42,6 +42,24 @@
   },
   "late_crm": 110,
   "latest_leads": [
+    {
+      "created_at": "2026-09-07T09:07:40+03:00",
+      "crm_entity_id": null,
+      "crm_entity_type": null,
+      "crm_found": false,
+      "event_date": "2026-10-25",
+      "event_type": "Свадьба",
+      "guests_count": 20,
+      "identifier": "7********19",
+      "identifier_type": "phone",
+      "lead_id": "a026060cdb972507",
+      "manager": "",
+      "manager_username": "",
+      "name": "Анна",
+      "source": "САЙТ ТИЛЬДА",
+      "status": "PENDING",
+      "violations": []
+    },
     {
       "created_at": "2026-09-06T21:05:35+03:00",
       "crm_entity_id": 48310455,
@@ -109,7 +127,7 @@
       "lead_id": "025bfe49a4680ddc",
       "manager": "",
       "manager_username": "",
-      "name": "",
+      "name": "Игорь",
       "source": "Заявки хост",
       "status": "-",
       "violations": []
@@ -383,29 +401,11 @@
       "source": "Тильда Веранда",
       "status": "-",
       "violations": []
-    },
-    {
-      "created_at": "2026-09-02T22:14:55+03:00",
-      "crm_entity_id": 48196869,
-      "crm_entity_type": "lead",
-      "crm_found": true,
-      "event_date": "2026-10-01",
-      "event_type": "Свадьба",
-      "guests_count": 40,
-      "identifier": "7********17",
-      "identifier_type": "phone",
-      "lead_id": "0fcecf9093c65670",
-      "manager": "Олеся",
-      "manager_username": "Olesyagozhina",
-      "name": "Анна",
-      "source": "САЙТ ТИЛЬДА",
-      "status": "OK",
-      "violations": []
     }
   ],
   "needs_review": 74,
   "no_reaction": 0,
   "ok": 316,
-  "total_leads": 474,
-  "updated_at": "2026-09-07T08:53:56+03:00"
+  "total_leads": 475,
+  "updated_at": "2026-09-07T09:17:10+03:00"
 }
