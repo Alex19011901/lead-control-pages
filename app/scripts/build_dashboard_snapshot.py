@@ -176,7 +176,8 @@ def source_for_lead(lead: dict) -> str:
 def identifier_value(lead: dict) -> str:
     ident = lead.get("identifier")
     if isinstance(ident, dict):
-        ident = ident.get("value") or ""
+        ident_type = str(ident.get("type") or "")
+        ident = "" if ident_type == "review_message" else (ident.get("value") or "")
     return str(ident or lead.get("phone") or lead.get("username") or "")
 
 
