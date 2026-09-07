@@ -12155,26 +12155,43 @@
       "channel": "TELEGRAM",
       "crm": {
         "ambiguity_count": 0,
-        "created_at": null,
-        "entity_id": null,
-        "entity_type": null,
-        "event_type": null,
-        "found": false,
-        "responsible_user_id": null,
-        "responsible_user_name": null,
-        "updated_at": null
+        "created_at": 1788776517,
+        "entity_id": 48328499,
+        "entity_type": "lead",
+        "event_type": "Юбилей",
+        "found": true,
+        "guests": "10",
+        "guests_source": "CRM",
+        "responsible_user_id": 12982830,
+        "responsible_user_name": "Максим",
+        "updated_at": 1788777177
       },
-      "crm_created_at": null,
-      "crm_found": false,
+      "crm_created_at": 1788776517,
+      "crm_feedback": {
+        "crm_lead_id": 48328499,
+        "deadline_at": 1789074000,
+        "excluded": false,
+        "first_activity_at": null,
+        "lead_created_at": 1788776517,
+        "pipeline_id": 10081590,
+        "responsible_user_id": 12982830,
+        "rule_version": 6,
+        "state": "WAITING",
+        "status_id": 79927034,
+        "status_name": "Первичный контакт"
+      },
+      "crm_found": true,
       "crm_required": true,
-      "crm_responsible": null,
+      "crm_responsible": 12982830,
       "deadline_msk_ts": 1788814799,
+      "event_type": "Юбилей",
+      "event_type_source": "CRM",
       "fields": {
         "category": "САЙТ ТИЛЬДА",
         "description": "Содержание заявки:\nname: Дарья\nphone: +79234941300\nDate: 16-10-2026\nInput: 10\nCheckbox: yes\nyclid: 2115524799214649343\n\nДополнительная информация:\nКод заявки: 2925975:8656073142\nКод блока: rec917331892\nhttps://moscowbanket.ru/weddings/#menuu\nUTM source: yandex_direct\nUTM medium: cpc\nUTM campaign: Svadba_RSYA\nUTM term: свадьба в москве\n-----",
         "event_date": "2026-10-16",
         "event_date_raw": "16-10-2026",
-        "event_type": "Свадьба",
+        "event_type": "Юбилей",
         "guests_count": 10,
         "metrika_client_id": "",
         "name": "Дарья",
@@ -12212,7 +12229,7 @@
       "sender_user_id": 265299531,
       "sender_username": "TildaFormsBot",
       "source": "САЙТ ТИЛЬДА",
-      "status": "PENDING",
+      "status": "OK",
       "telegram": {
         "chat_id": -1001645768111,
         "message_ids": [
@@ -12220,6 +12237,279 @@
         ],
         "update_ids": [
           185608214
+        ]
+      },
+      "violations": []
+    },
+    {
+      "category": "САЙТ ТИЛЬДА",
+      "channel": "TELEGRAM",
+      "crm": {
+        "ambiguity_count": 0,
+        "created_at": 1788781681,
+        "entity_id": 48331781,
+        "entity_type": "lead",
+        "event_type": "Юбилей",
+        "found": true,
+        "guests": "20",
+        "guests_source": "CRM",
+        "responsible_user_id": 12982830,
+        "responsible_user_name": "Максим",
+        "updated_at": 1788781683
+      },
+      "crm_created_at": 1788781681,
+      "crm_feedback": {
+        "crm_lead_id": 48331781,
+        "excluded": true,
+        "first_activity_at": null,
+        "lead_created_at": 1788781681,
+        "pipeline_id": 10081590,
+        "responsible_user_id": 12982830,
+        "rule_version": 6,
+        "state": "EXCLUDED",
+        "status_id": 143,
+        "status_name": "Закрыто и не реализовано"
+      },
+      "crm_found": true,
+      "crm_required": true,
+      "crm_responsible": 12982830,
+      "deadline_msk_ts": 1788814799,
+      "event_type": "Юбилей",
+      "event_type_source": "CRM",
+      "fields": {
+        "category": "САЙТ ТИЛЬДА",
+        "description": "Содержание заявки:\nname: Юлия\nphone: +79219610608\nDate: 12-09-2026\nInput: 20\nCheckbox: yes\nyclid: 16937587866220625919\n\nДополнительная информация:\nКод заявки: 2925975:8656273573\nКод блока: rec2245066331\nhttps://moscowbanket.ru/polukabinet\n-----",
+        "event_date": "2026-09-12",
+        "event_date_raw": "12-09-2026",
+        "event_type": "Юбилей",
+        "guests_count": 20,
+        "metrika_client_id": "",
+        "name": "Юлия",
+        "phone_digits": "79219610608",
+        "phone_raw": "+79219610608",
+        "source": "САЙТ ТИЛЬДА",
+        "telegram_username": "",
+        "yclid": "16937587866220625919"
+      },
+      "first_seen_at": "2026-09-07T13:59:30+03:00",
+      "first_seen_ts": 1788778770,
+      "id": "96ae8151460e0b44",
+      "identifier": {
+        "type": "phone",
+        "value": "79219610608"
+      },
+      "last_seen_at": "2026-09-07T13:59:30+03:00",
+      "last_seen_ts": 1788778770,
+      "manager_reaction": {
+        "name": "Максим",
+        "reacted_at": "2026-09-07T14:45:06+03:00",
+        "reacted_ts": 1788781506,
+        "reaction": [
+          {
+            "emoji": "👍",
+            "type": "emoji"
+          }
+        ],
+        "update_id": 185608217,
+        "user_id": 392177002,
+        "username": "empairbey"
+      },
+      "received_at": "2026-09-07T13:59:30+03:00",
+      "sender_name": "TildaForms",
+      "sender_user_id": 265299531,
+      "sender_username": "TildaFormsBot",
+      "source": "САЙТ ТИЛЬДА",
+      "status": "OK",
+      "telegram": {
+        "chat_id": -1001645768111,
+        "message_ids": [
+          5803
+        ],
+        "update_ids": [
+          185608216
+        ]
+      },
+      "violations": []
+    },
+    {
+      "category": "MARQUIZ",
+      "channel": "TELEGRAM",
+      "crm": {
+        "ambiguity_count": 0,
+        "created_at": null,
+        "entity_id": null,
+        "entity_type": null,
+        "event_type": null,
+        "found": false,
+        "responsible_user_id": null,
+        "responsible_user_name": null,
+        "updated_at": null
+      },
+      "crm_created_at": null,
+      "crm_found": false,
+      "crm_required": true,
+      "crm_responsible": null,
+      "deadline_msk_ts": 1788814799,
+      "fields": {
+        "category": "MARQUIZ",
+        "description": "🎯 Заявка на квиз \"Организуйте идеальное мероприятие в ресторане «Светлый».\"\n\nИмя: Елизавета\nТелефон: +79310013837\n\nКакое мероприятие вы планируете?\nКорпоратив\n\nСколько гостей ожидается?\n70\n\nУточните дату Вашего мероприятия?\n20.12.2026\n\nКакой формат мероприятия интересует?\nБанкет\n\nТовары:\n\nТовары не выбраны\n\n\nБонусы: Бесплатная дегустация, Без арендной платы\n\nМестоположение: Россия, Санкт-Петербург\nUTM-метки:\ncampaign: Bankety_poisk_quiz\nmedium: cpc\nsource: yandex_direct\n\nСтраница: https://mrqz.me/moscowbanket?callibri=yd_c:712849433_gb:5773918679_ad:1915822986185365520_ph:205773918679_st:search_s:none_dt:desktop&utm_source=yandex_direct&utm_medium=cpc&utm_campaign=Bankety_poisk_quiz&type=search&source=none&added=no&block=premium&position=2&keyword=---autotargeting&etext=2202.O1K11L8U0jjnya7f3ocyoTH5hJhsnq6QUAwtOKQP4eSOAh1sp02CCcGIMwDWCnCgvVHYdRon59oAQxJzw89scbB9SCZAp4bUut--AsYjCKhXIcDOV4GUWU-q_f37BxYUbXBseHFxZ3dtZ214eW1veQ.37edb956d6605c86c53db63e858228beba0d45c3&yclid=5366511542909009919&ybaip=1\n\nСогласия:\nЯ согласен на обработку персональных данных: Да",
+        "event_date": "2026-12-20",
+        "event_date_raw": "20.12.2026",
+        "event_format": "Банкет",
+        "event_type": "Корпоратив",
+        "guests_count": 70,
+        "guests_raw": "70",
+        "name": "Елизавета",
+        "phone_digits": "79310013837",
+        "phone_raw": "+79310013837",
+        "source": "MARQUIZ",
+        "telegram_username": ""
+      },
+      "first_seen_at": "2026-09-07T14:49:39+03:00",
+      "first_seen_ts": 1788781779,
+      "id": "16622fce17e37ec5",
+      "identifier": {
+        "type": "phone",
+        "value": "79310013837"
+      },
+      "last_seen_at": "2026-09-07T14:49:39+03:00",
+      "last_seen_ts": 1788781779,
+      "manager_reaction": null,
+      "received_at": "2026-09-07T14:49:39+03:00",
+      "sender_name": "MarquizBot",
+      "sender_user_id": 446491725,
+      "sender_username": "MarquizBot",
+      "source": "MARQUIZ",
+      "status": "PENDING",
+      "telegram": {
+        "chat_id": -1001645768111,
+        "message_ids": [
+          5804
+        ],
+        "update_ids": [
+          185608218
+        ]
+      },
+      "violations": []
+    },
+    {
+      "category": "MARQUIZ",
+      "channel": "TELEGRAM",
+      "crm": {
+        "ambiguity_count": 0,
+        "created_at": null,
+        "entity_id": null,
+        "entity_type": null,
+        "event_type": null,
+        "found": false,
+        "responsible_user_id": null,
+        "responsible_user_name": null,
+        "updated_at": null
+      },
+      "crm_created_at": null,
+      "crm_found": false,
+      "crm_required": true,
+      "crm_responsible": null,
+      "deadline_msk_ts": 1788814799,
+      "fields": {
+        "category": "MARQUIZ",
+        "description": "🎯 Заявка на квиз \"Организуйте идеальное мероприятие в ресторане «Светлый».\"\n\nИмя: Элина\nТелефон: +79870239356\n\nКакое мероприятие вы планируете?\nКорпоратив\n\nСколько гостей ожидается?\n17\n\nУточните дату Вашего мероприятия?\n18.09.2026\n\nКакой формат мероприятия интересует?\nБанкет\n\nТовары:\n\nТовары не выбраны\n\n\nБонусы: Бесплатная дегустация, Без арендной платы\n\nМестоположение: Россия, Москва\nUTM-метки:\ncampaign: Bankety_poisk_quiz\nmedium: cpc\nsource: yandex_direct\n\nСтраница: https://mrqz.me/moscowbanket?callibri=yd_c:712849433_gb:5773918659_ad:1915822986185365500_ph:205773918659_st:search_s:none_dt:desktop&utm_source=yandex_direct&utm_medium=cpc&utm_campaign=Bankety_poisk_quiz&type=search&source=none&added=no&block=premium&position=4&keyword=---autotargeting&etext=2202.MjymbOk_VYN4z5jq48Yk03EqHt087ARe-WN2yB-Vm-oqgKwqddsKhVH5YvAd4wtOlEMJV9AX2g_KUQTXHfECydkgvjCq1t8DieIkCKK_S6hkcm1wcnZ2eGhtd3BodGVv.dea3fa2e52dff307298b981c99940b50ee6e2afe&yclid=13742571645678649343&ybaip=1\n\nСогласия:\nЯ согласен на обработку персональных данных: Да",
+        "event_date": "2026-09-18",
+        "event_date_raw": "18.09.2026",
+        "event_format": "Банкет",
+        "event_type": "Корпоратив",
+        "guests_count": 17,
+        "guests_raw": "17",
+        "name": "Элина",
+        "phone_digits": "79870239356",
+        "phone_raw": "+79870239356",
+        "source": "MARQUIZ",
+        "telegram_username": ""
+      },
+      "first_seen_at": "2026-09-07T15:07:54+03:00",
+      "first_seen_ts": 1788782874,
+      "id": "e6602da7c1fc2de7",
+      "identifier": {
+        "type": "phone",
+        "value": "79870239356"
+      },
+      "last_seen_at": "2026-09-07T15:07:54+03:00",
+      "last_seen_ts": 1788782874,
+      "manager_reaction": null,
+      "received_at": "2026-09-07T15:07:54+03:00",
+      "sender_name": "MarquizBot",
+      "sender_user_id": 446491725,
+      "sender_username": "MarquizBot",
+      "source": "MARQUIZ",
+      "status": "PENDING",
+      "telegram": {
+        "chat_id": -1001645768111,
+        "message_ids": [
+          5805
+        ],
+        "update_ids": [
+          185608219
+        ]
+      },
+      "violations": []
+    },
+    {
+      "category": "САЙТ ТИЛЬДА",
+      "channel": "TELEGRAM",
+      "crm": {
+        "ambiguity_count": 0,
+        "created_at": null,
+        "entity_id": null,
+        "entity_type": null,
+        "event_type": null,
+        "found": false,
+        "responsible_user_id": null,
+        "responsible_user_name": null,
+        "updated_at": null
+      },
+      "crm_created_at": null,
+      "crm_found": false,
+      "crm_required": true,
+      "crm_responsible": null,
+      "deadline_msk_ts": 1788814799,
+      "fields": {
+        "category": "САЙТ ТИЛЬДА",
+        "description": "Содержание заявки:\nname: Александра\nphone: +79857369210\nDate: 09-08-2027\nInput: 40\nCheckbox: yes\nyclid: 260622783065882623\n\nДополнительная информация:\nКод заявки: 2925975:8656507413\nКод блока: rec917331922\nhttps://moscowbanket.ru/weddings/\nUTM source: yandex_direct\nUTM medium: cpc\nUTM campaign: Svadba_poisk\nUTM term: место для свадьбы\n-----",
+        "event_date": "2027-08-09",
+        "event_date_raw": "09-08-2027",
+        "event_type": "Свадьба",
+        "guests_count": 40,
+        "metrika_client_id": "",
+        "name": "Александра",
+        "phone_digits": "79857369210",
+        "phone_raw": "+79857369210",
+        "source": "САЙТ ТИЛЬДА",
+        "telegram_username": "",
+        "yclid": "260622783065882623"
+      },
+      "first_seen_at": "2026-09-07T15:21:53+03:00",
+      "first_seen_ts": 1788783713,
+      "id": "300fbfa6c93bdcb2",
+      "identifier": {
+        "type": "phone",
+        "value": "79857369210"
+      },
+      "last_seen_at": "2026-09-07T15:21:53+03:00",
+      "last_seen_ts": 1788783713,
+      "manager_reaction": null,
+      "received_at": "2026-09-07T15:21:53+03:00",
+      "sender_name": "TildaForms",
+      "sender_user_id": 265299531,
+      "sender_username": "TildaFormsBot",
+      "source": "САЙТ ТИЛЬДА",
+      "status": "PENDING",
+      "telegram": {
+        "chat_id": -1001645768111,
+        "message_ids": [
+          5806
+        ],
+        "update_ids": [
+          185608220
         ]
       },
       "violations": []
@@ -36227,16 +36517,15 @@
       "crm_created_at": 1788110241,
       "crm_feedback": {
         "crm_lead_id": 48087477,
-        "deadline_at": 1788382800,
-        "excluded": false,
-        "first_activity_at": 1788514960,
+        "excluded": true,
+        "first_activity_at": null,
         "lead_created_at": 1788110241,
         "pipeline_id": 10081590,
         "responsible_user_id": 12982830,
         "rule_version": 6,
-        "state": "CLEAR",
-        "status_id": 79927038,
-        "status_name": "Выслано предложение"
+        "state": "EXCLUDED",
+        "status_id": 143,
+        "status_name": "Закрыто и не реализовано"
       },
       "crm_found": true,
       "crm_required": true,
@@ -39645,6 +39934,163 @@
       "sender_user_id": 115556789,
       "source": "Заявки хост",
       "status": "OK",
+      "username": "",
+      "violations": []
+    },
+    {
+      "category": "TG_LEAD",
+      "channel": "MAX",
+      "crm": {
+        "ambiguity_count": 1,
+        "created_at": 1788777583,
+        "entity_id": 48329289,
+        "entity_type": "lead",
+        "event_type": "Корпоратив",
+        "found": true,
+        "guests": "100",
+        "guests_source": "CRM",
+        "responsible_user_id": 12982830,
+        "responsible_user_name": "Максим",
+        "updated_at": 1788780477
+      },
+      "crm_created_at": 1788777583,
+      "crm_feedback": {
+        "crm_lead_id": 48329289,
+        "deadline_at": 1789074000,
+        "excluded": false,
+        "first_activity_at": null,
+        "lead_created_at": 1788777583,
+        "pipeline_id": 10081590,
+        "responsible_user_id": 12982830,
+        "rule_version": 6,
+        "state": "WAITING",
+        "status_id": 79927038,
+        "status_name": "Выслано предложение"
+      },
+      "crm_found": true,
+      "crm_required": true,
+      "crm_responsible": 12982830,
+      "deadline_msk_ts": 1788814799,
+      "event_date": "2026-11-13",
+      "event_type": "Корпоратив",
+      "event_type_source": "CRM",
+      "fields": {
+        "category": "TG_LEAD",
+        "email": "",
+        "event_date": "2026-11-13",
+        "event_date_raw": "13 ноября",
+        "event_type": "Корпоратив",
+        "guests_count": 100,
+        "guests_max": null,
+        "guests_min": null,
+        "guests_raw": "100 гостей",
+        "name": "",
+        "phone_digits": "79151588406",
+        "phone_raw": "+7 915 158-84-06",
+        "source": "Заявка с ТГ",
+        "telegram_username": ""
+      },
+      "first_seen_at": "2026-09-07T13:30:09+03:00",
+      "first_seen_ts": 1788777009,
+      "guests": 100,
+      "guests_max": null,
+      "guests_min": null,
+      "guests_raw": "100 гостей",
+      "id": "30b61baa65bbdfef",
+      "identifier": {
+        "type": "phone",
+        "value": "79151588406"
+      },
+      "last_seen_at": "2026-09-07T13:30:09+03:00",
+      "last_seen_ts": 1788777009,
+      "manager_reaction": null,
+      "max": {
+        "chat_id": -71704692523093,
+        "message_ids": [
+          "mid.ffffbec8f345ffab01a07b6b11a14f17"
+        ],
+        "sender_name": "Олеся",
+        "sender_user_id": 48906491,
+        "sender_username": null
+      },
+      "message_id": "mid.ffffbec8f345ffab01a07b6b11a14f17",
+      "name": "",
+      "phone": "+7 915 158-84-06",
+      "received_at": "2026-09-07T13:30:09+03:00",
+      "sender_name": "Олеся",
+      "sender_user_id": 48906491,
+      "source": "Заявка с ТГ",
+      "status": "OK",
+      "username": "",
+      "violations": []
+    },
+    {
+      "category": "HOST",
+      "channel": "MAX",
+      "crm": {
+        "ambiguity_count": 0,
+        "created_at": null,
+        "entity_id": null,
+        "entity_type": null,
+        "event_type": null,
+        "found": false,
+        "responsible_user_id": null,
+        "responsible_user_name": null,
+        "updated_at": null
+      },
+      "crm_created_at": null,
+      "crm_found": false,
+      "crm_required": true,
+      "crm_responsible": null,
+      "deadline_msk_ts": 1788814799,
+      "event_date": "",
+      "fields": {
+        "category": "HOST",
+        "email": "",
+        "event_date": "",
+        "event_date_raw": "декабрь",
+        "event_type": "",
+        "guests_count": 150,
+        "guests_max": null,
+        "guests_min": null,
+        "guests_raw": "",
+        "name": "Конец",
+        "phone_digits": "79688610725",
+        "phone_raw": "89688610725",
+        "source": "Заявки хост",
+        "telegram_username": ""
+      },
+      "first_seen_at": "2026-09-07T15:31:12+03:00",
+      "first_seen_ts": 1788784272,
+      "guests": 150,
+      "guests_max": null,
+      "guests_min": null,
+      "guests_raw": "",
+      "id": "1e036d083b6a1433",
+      "identifier": {
+        "type": "phone",
+        "value": "79688610725"
+      },
+      "last_seen_at": "2026-09-07T15:31:12+03:00",
+      "last_seen_ts": 1788784272,
+      "manager_reaction": null,
+      "max": {
+        "chat_id": -71704692523093,
+        "message_ids": [
+          "mid.ffffbec8f345ffab01a07bd9e43402e1"
+        ],
+        "sender_name": "SV",
+        "sender_user_id": 205529129,
+        "sender_username": null
+      },
+      "message_id": "mid.ffffbec8f345ffab01a07bd9e43402e1",
+      "name": "Конец",
+      "phone": "89688610725",
+      "received_at": "2026-09-07T15:31:12+03:00",
+      "sender_name": "SV",
+      "sender_user_id": 205529129,
+      "source": "Заявки хост",
+      "status": "PENDING",
       "username": "",
       "violations": []
     }
