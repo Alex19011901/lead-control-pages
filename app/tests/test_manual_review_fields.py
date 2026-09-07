@@ -32,6 +32,36 @@ class ManualReviewFieldsTests(unittest.TestCase):
         self.assertEqual(leads[0]["name"], "Marina Chudaeva")
         self.assertEqual(leads[0]["fields"]["name"], "Marina Chudaeva")
 
+    def test_confirmed_shorthand_recovers_clear_name_without_contact(self) -> None:
+        message_id = "mid.ffffbec8f345ffab01a0765604665d10"
+        leads = [{
+            "channel": "MAX",
+            "message_id": message_id,
+            "max": {"chat_id": -71704692523093, "message_ids": [message_id]},
+            "name": "",
+            "fields": {"name": "", "guests_count": 22},
+            "identifier": {
+                "type": "review_message",
+                "value": f"MAX:-71704692523093:{message_id}",
+            },
+            "crm_required": True,
+            "crm_check_status": "NO_IDENTIFIER",
+        }]
+        overrides = [{
+            "channel": "MAX",
+            "chat_id": -71704692523093,
+            "message_id": message_id,
+            "decision": "HOST",
+            "original_text": "ЗАЯВКА\n09.09.26 Игорь 22п\nХочет попить у нас свое шампанское.",
+        }]
+
+        enrich_manual_review_fields(leads, overrides)
+
+        self.assertEqual(leads[0]["name"], "Игорь")
+        self.assertEqual(leads[0]["fields"]["name"], "Игорь")
+        self.assertEqual(leads[0]["identifier"]["type"], "review_message")
+        self.assertEqual(leads[0]["crm_check_status"], "NO_IDENTIFIER")
+
     def test_confirmed_username_becomes_crm_identifier(self) -> None:
         leads = [{
             "channel": "TELEGRAM",
