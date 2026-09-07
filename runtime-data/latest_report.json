@@ -1,8 +1,8 @@
 {
   "alarm_no_crm": 0,
   "by_manager": {
-    "no_manager_reaction": 399,
-    "Максим": 36,
+    "no_manager_reaction": 398,
+    "Максим": 38,
     "Олеся": 40
   },
   "by_source": {
@@ -14,7 +14,7 @@
     "Заявка сайт": 3,
     "Заявки хост": 246,
     "С улицы": 2,
-    "САЙТ ТИЛЬДА": 121,
+    "САЙТ ТИЛЬДА": 122,
     "Тильда Веранда": 43,
     "ТоМесто": 1
   },
@@ -27,13 +27,13 @@
     "Детский праздник": 5,
     "Корпоратив": 110,
     "Поминки": 1,
-    "Свадьба": 153,
+    "Свадьба": 154,
     "Съемки": 1,
     "Съёмки": 1,
     "Юбилей": 87
   },
   "guest_ranges": {
-    "1-20": 153,
+    "1-20": 154,
     "101-150": 32,
     "151+": 19,
     "21-50": 140,
@@ -43,21 +43,39 @@
   "late_crm": 110,
   "latest_leads": [
     {
-      "created_at": "2026-09-07T09:07:40+03:00",
+      "created_at": "2026-09-07T12:49:23+03:00",
       "crm_entity_id": null,
       "crm_entity_type": null,
       "crm_found": false,
+      "event_date": "2026-10-16",
+      "event_type": "Свадьба",
+      "guests_count": 10,
+      "identifier": "7********00",
+      "identifier_type": "phone",
+      "lead_id": "3154d0299ae04d83",
+      "manager": "Максим",
+      "manager_username": "empairbey",
+      "name": "Дарья",
+      "source": "САЙТ ТИЛЬДА",
+      "status": "PENDING",
+      "violations": []
+    },
+    {
+      "created_at": "2026-09-07T09:07:40+03:00",
+      "crm_entity_id": 48323347,
+      "crm_entity_type": "lead",
+      "crm_found": true,
       "event_date": "2026-10-25",
       "event_type": "Свадьба",
       "guests_count": 20,
       "identifier": "7********19",
       "identifier_type": "phone",
       "lead_id": "a026060cdb972507",
-      "manager": "",
-      "manager_username": "",
+      "manager": "Максим",
+      "manager_username": "empairbey",
       "name": "Анна",
       "source": "САЙТ ТИЛЬДА",
-      "status": "PENDING",
+      "status": "OK",
       "violations": []
     },
     {
@@ -383,29 +401,11 @@
       "source": "Заявка с ТГ",
       "status": "OK",
       "violations": []
-    },
-    {
-      "created_at": "2026-09-03T07:41:40+03:00",
-      "crm_entity_id": null,
-      "crm_entity_type": null,
-      "crm_found": false,
-      "event_date": "2026-09-05",
-      "event_type": "",
-      "guests_count": 2,
-      "identifier": "7********60",
-      "identifier_type": "phone",
-      "lead_id": "a60f70e0bbb09ee7",
-      "manager": "",
-      "manager_username": "",
-      "name": "Хелиана",
-      "source": "Тильда Веранда",
-      "status": "-",
-      "violations": []
     }
   ],
-  "needs_review": 74,
+  "needs_review": 75,
   "no_reaction": 0,
-  "ok": 317,
-  "total_leads": 475,
-  "updated_at": "2026-09-07T09:36:16+03:00"
+  "ok": 318,
+  "total_leads": 476,
+  "updated_at": "2026-09-07T13:04:34+03:00"
 }

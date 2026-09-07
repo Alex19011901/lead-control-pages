@@ -12064,20 +12064,37 @@
       "channel": "TELEGRAM",
       "crm": {
         "ambiguity_count": 0,
-        "created_at": null,
-        "entity_id": null,
-        "entity_type": null,
-        "event_type": null,
-        "found": false,
-        "responsible_user_id": null,
-        "responsible_user_name": null,
-        "updated_at": null
+        "created_at": 1788769178,
+        "entity_id": 48323347,
+        "entity_type": "lead",
+        "event_type": "Свадьба",
+        "found": true,
+        "guests": "20",
+        "guests_source": "CRM",
+        "responsible_user_id": 12982830,
+        "responsible_user_name": "Максим",
+        "updated_at": 1788773812
       },
-      "crm_created_at": null,
-      "crm_found": false,
+      "crm_created_at": 1788769178,
+      "crm_feedback": {
+        "crm_lead_id": 48323347,
+        "deadline_at": 1789074000,
+        "excluded": false,
+        "first_activity_at": null,
+        "lead_created_at": 1788769178,
+        "pipeline_id": 10081590,
+        "responsible_user_id": 12982830,
+        "rule_version": 6,
+        "state": "WAITING",
+        "status_id": 79927038,
+        "status_name": "Выслано предложение"
+      },
+      "crm_found": true,
       "crm_required": true,
-      "crm_responsible": null,
+      "crm_responsible": 12982830,
       "deadline_msk_ts": 1788814799,
+      "event_type": "Свадьба",
+      "event_type_source": "CRM",
       "fields": {
         "category": "САЙТ ТИЛЬДА",
         "description": "Содержание заявки:\nname: Анна\nphone: +79032701619\nDate: 25-10-2026\nInput: 20\nCheckbox: yes\n\nДополнительная информация:\nКод заявки: 2925975:8655468772\nКод блока: rec917331922\nhttps://moscowbanket.ru/weddings#rec917331922\n-----",
@@ -12102,8 +12119,95 @@
       },
       "last_seen_at": "2026-09-07T09:07:40+03:00",
       "last_seen_ts": 1788761260,
-      "manager_reaction": null,
+      "manager_reaction": {
+        "name": "Максим",
+        "reacted_at": "2026-09-07T11:03:08+03:00",
+        "reacted_ts": 1788768188,
+        "reaction": [
+          {
+            "emoji": "👍",
+            "type": "emoji"
+          }
+        ],
+        "update_id": 185608212,
+        "user_id": 392177002,
+        "username": "empairbey"
+      },
       "received_at": "2026-09-07T09:07:40+03:00",
+      "sender_name": "TildaForms",
+      "sender_user_id": 265299531,
+      "sender_username": "TildaFormsBot",
+      "source": "САЙТ ТИЛЬДА",
+      "status": "OK",
+      "telegram": {
+        "chat_id": -1001645768111,
+        "message_ids": [
+          5799
+        ],
+        "update_ids": [
+          185608209
+        ]
+      },
+      "violations": []
+    },
+    {
+      "category": "САЙТ ТИЛЬДА",
+      "channel": "TELEGRAM",
+      "crm": {
+        "ambiguity_count": 0,
+        "created_at": null,
+        "entity_id": null,
+        "entity_type": null,
+        "event_type": null,
+        "found": false,
+        "responsible_user_id": null,
+        "responsible_user_name": null,
+        "updated_at": null
+      },
+      "crm_created_at": null,
+      "crm_found": false,
+      "crm_required": true,
+      "crm_responsible": null,
+      "deadline_msk_ts": 1788814799,
+      "fields": {
+        "category": "САЙТ ТИЛЬДА",
+        "description": "Содержание заявки:\nname: Дарья\nphone: +79234941300\nDate: 16-10-2026\nInput: 10\nCheckbox: yes\nyclid: 2115524799214649343\n\nДополнительная информация:\nКод заявки: 2925975:8656073142\nКод блока: rec917331892\nhttps://moscowbanket.ru/weddings/#menuu\nUTM source: yandex_direct\nUTM medium: cpc\nUTM campaign: Svadba_RSYA\nUTM term: свадьба в москве\n-----",
+        "event_date": "2026-10-16",
+        "event_date_raw": "16-10-2026",
+        "event_type": "Свадьба",
+        "guests_count": 10,
+        "metrika_client_id": "",
+        "name": "Дарья",
+        "phone_digits": "79234941300",
+        "phone_raw": "+79234941300",
+        "source": "САЙТ ТИЛЬДА",
+        "telegram_username": "",
+        "yclid": "2115524799214649343"
+      },
+      "first_seen_at": "2026-09-07T12:49:23+03:00",
+      "first_seen_ts": 1788774563,
+      "id": "3154d0299ae04d83",
+      "identifier": {
+        "type": "phone",
+        "value": "79234941300"
+      },
+      "last_seen_at": "2026-09-07T12:49:23+03:00",
+      "last_seen_ts": 1788774563,
+      "manager_reaction": {
+        "name": "Максим",
+        "reacted_at": "2026-09-07T12:53:08+03:00",
+        "reacted_ts": 1788774788,
+        "reaction": [
+          {
+            "emoji": "👍",
+            "type": "emoji"
+          }
+        ],
+        "update_id": 185608215,
+        "user_id": 392177002,
+        "username": "empairbey"
+      },
+      "received_at": "2026-09-07T12:49:23+03:00",
       "sender_name": "TildaForms",
       "sender_user_id": 265299531,
       "sender_username": "TildaFormsBot",
@@ -12112,10 +12216,10 @@
       "telegram": {
         "chat_id": -1001645768111,
         "message_ids": [
-          5799
+          5802
         ],
         "update_ids": [
-          185608209
+          185608214
         ]
       },
       "violations": []
@@ -38546,12 +38650,12 @@
         "crm_lead_id": 48213805,
         "deadline_at": 1788728400,
         "excluded": false,
-        "first_activity_at": null,
+        "first_activity_at": 1788774744,
         "lead_created_at": 1788431337,
         "pipeline_id": 10081590,
         "responsible_user_id": 12982830,
         "rule_version": 6,
-        "state": "NO_FEEDBACK",
+        "state": "CLEAR",
         "status_id": 79927038,
         "status_name": "Выслано предложение"
       },
@@ -38633,12 +38737,12 @@
         "crm_lead_id": 48225881,
         "deadline_at": 1788728400,
         "excluded": false,
-        "first_activity_at": null,
+        "first_activity_at": 1788774525,
         "lead_created_at": 1788451583,
         "pipeline_id": 10081590,
         "responsible_user_id": 12982830,
         "rule_version": 6,
-        "state": "NO_FEEDBACK",
+        "state": "CLEAR",
         "status_id": 79927038,
         "status_name": "Выслано предложение"
       },
