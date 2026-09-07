@@ -13,6 +13,7 @@ from .manual_history import missing_manual_history_events
 from .manual_review_fields import enrich_manual_review_fields
 from .max_attachment_ocr import enrich_max_mail_attachments
 from .max_client import MaxClient, filter_new_max_events, normalize_max_updates
+from .max_edits import apply_max_message_edits
 from .max_mail_lead_apply import apply_max_mail_leads
 from .normalize import now_moscow_iso
 from .processor import collect_known_manager_ids, normalize_updates, rebuild_leads_and_needs_review
@@ -115,12 +116,21 @@ def main() -> None:
     max_state = state.setdefault("max", {})
     max_marker = max_state.get("marker")
     max_client = MaxClient(config.max_bot_token, ca_file=str(repo_root / "certs" / "max_ca_bundle.pem"))
-    max_result = max_client.get_updates(marker=max_marker, timeout=0)
+    max_result = max_client.get_updates(
+        marker=max_marker,
+        timeout=0,
+        update_types=("bot_added", "message_created", "message_edited"),
+    )
     normalized_max_events = normalize_max_updates(max_result.updates, chat_id=config.max_chat_id)
     new_max_events = filter_new_max_events(normalized_max_events, existing_max_message_ids)
     if new_max_events:
         append_events(events_path, new_max_events)
         events.extend(new_max_events)
+
+    max_edits_changed = apply_max_message_edits(events, max_result.updates, chat_id=config.max_chat_id)
+    if max_edits_changed:
+        save_events(events_path, events)
+        LOG.info("MAX edited messages applied")
 
     max_attachment_changed = enrich_max_mail_attachments(events, max_client)
     if max_attachment_changed:
@@ -177,6 +187,7 @@ def main() -> None:
         or manual_history_events
         or new_events
         or new_max_events
+        or max_edits_changed
         or max_attachment_changed
         or offset_changed
         or max_marker_changed
