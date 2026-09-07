@@ -436,6 +436,7 @@ def _classify_tg_lead_from_olesya(text: str) -> dict[str, Any] | None:
         is_lead=True,
         crm_check_required=True,
         fields={
+            "name": _extract_probable_name(text, phone_raw),
             "telegram_username": normalize_username(username),
             "phone_raw": phone_raw,
             "phone_digits": normalize_phone(phone_raw),
