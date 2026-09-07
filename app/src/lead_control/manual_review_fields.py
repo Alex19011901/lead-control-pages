@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import re
 from typing import Any
 
 from .normalize import normalize_phone, normalize_username
@@ -9,24 +10,30 @@ def enrich_manual_review_fields(
     leads: list[dict[str, Any]],
     overrides: list[dict[str, Any]],
 ) -> None:
-    """Apply explicitly confirmed lead fields stored with review decisions.
+    """Apply fields attached to confirmed review decisions.
 
-    This is intentionally message-specific: it never creates a rule for other
-    messages or senders. It is used when the original forwarded request carries
-    useful metadata (for example, the original author's name or contact) that is
-    not part of the plain message text used by the manual-review parser.
+    Explicit ``lead_fields`` always take priority. For a confirmed review whose
+    text itself contains an unambiguous short form such as
+    ``09.09.26 Игорь 22п``, a missing name may also be recovered from that exact
+    message. This stays message-specific and does not classify unconfirmed
+    messages or infer a contact that is not present in the stored review data.
 
-    If a confirmed phone or Telegram username is supplied for a CRM-required
-    lead, it becomes the reliable CRM identifier and the lead is eligible for a
-    real amoCRM lookup instead of staying in NO_IDENTIFIER.
+    If a confirmed phone, Telegram username or email is supplied for a
+    CRM-required lead, it becomes the reliable CRM identifier and the lead is
+    eligible for a real amoCRM lookup instead of staying in NO_IDENTIFIER.
     """
     by_key: dict[tuple[str, str, str], dict[str, Any]] = {}
     for item in overrides:
         lead_fields = item.get("lead_fields") or {}
-        if not isinstance(lead_fields, dict) or not lead_fields:
+        confirmed_fields = dict(lead_fields) if isinstance(lead_fields, dict) else {}
+        if not confirmed_fields.get("name"):
+            recovered_name = _confirmed_name_from_text(str(item.get("original_text") or ""))
+            if recovered_name:
+                confirmed_fields["name"] = recovered_name
+        if not confirmed_fields:
             continue
         channel = "MAX" if str(item.get("channel") or "").upper() == "MAX" else "TELEGRAM"
-        by_key[(channel, str(item.get("chat_id") or ""), str(item.get("message_id") or ""))] = lead_fields
+        by_key[(channel, str(item.get("chat_id") or ""), str(item.get("message_id") or ""))] = confirmed_fields
 
     if not by_key:
         return
@@ -92,3 +99,17 @@ def enrich_manual_review_fields(
             lead["identifier"] = {"type": "email", "value": email}
             lead["crm_required"] = True
             lead["crm_check_status"] = "PENDING"
+
+
+def _confirmed_name_from_text(text: str) -> str:
+    """Recover only an obvious ``date + capitalized name + guest count`` name."""
+    match = re.search(
+        r"\b\d{1,2}[./-]\d{1,2}(?:[./-]\d{2,4})?\s+"
+        r"(?P<name>[А-ЯЁ][а-яё]+|[A-Z][a-z]+)\s+"
+        r"\d{1,4}\s*(?:п\.?|чел\.?|человек|гост(?:ей|я|ь)?|персон)\b",
+        text,
+        flags=re.IGNORECASE,
+    )
+    if not match:
+        return ""
+    return match.group("name")
