@@ -31,8 +31,7 @@
       "end": "2026-09-06",
       "total": 6,
       "status": {
-        "OK": 5,
-        "-": 1
+        "OK": 6
       },
       "source": {
         "САЙТ ТИЛЬДА": 3,
@@ -48,9 +47,8 @@
         "21-50": 3
       },
       "event": {
-        "Свадьба": 2,
-        "Юбилей": 3,
-        "Не определено": 1
+        "Свадьба": 3,
+        "Юбилей": 3
       },
       "days": [
         [
@@ -64,8 +62,8 @@
       "end": "2026-09-07",
       "total": 50,
       "status": {
-        "OK": 42,
-        "-": 5,
+        "OK": 43,
+        "-": 4,
         "LATE_CRM": 2,
         "PENDING": 1
       },
@@ -89,10 +87,10 @@
         "101-150": 1
       },
       "event": {
-        "Свадьба": 17,
+        "Свадьба": 18,
         "Корпоратив": 14,
         "Юбилей": 12,
-        "Не определено": 7
+        "Не определено": 6
       },
       "days": [
         [
@@ -130,9 +128,9 @@
       "end": "2026-09-07",
       "total": 216,
       "status": {
-        "OK": 161,
+        "OK": 162,
         "LATE_CRM": 40,
-        "-": 14,
+        "-": 13,
         "PENDING": 1
       },
       "source": {
@@ -160,9 +158,9 @@
         "Не указано": 1
       },
       "event": {
-        "Свадьба": 69,
+        "Свадьба": 70,
         "Юбилей": 34,
-        "Не определено": 33,
+        "Не определено": 32,
         "Корпоратив": 69,
         "Бизнес мероприятие": 6,
         "Детский праздник": 4,
@@ -293,8 +291,8 @@
       "total": 475,
       "status": {
         "LATE_CRM": 110,
-        "OK": 316,
-        "-": 48,
+        "OK": 317,
+        "-": 47,
         "PENDING": 1
       },
       "source": {
@@ -325,8 +323,8 @@
       "event": {
         "Юбилей": 88,
         "Корпоратив": 110,
-        "Не определено": 98,
-        "Свадьба": 152,
+        "Не определено": 97,
+        "Свадьба": 153,
         "Бизнес мероприятие": 17,
         "Детский праздник": 5,
         "Съёмки": 2,
@@ -663,14 +661,14 @@
       "date": "2026-09-06",
       "ts": "2026-09-06T13:49:03+03:00",
       "source": "Заявки хост",
-      "status": "-",
+      "status": "OK",
       "channel": "MAX",
-      "guest_range": "22",
-      "guests": "22",
-      "event_type": "unknown",
+      "guest_range": "25",
+      "guests": "25",
+      "event_type": "Свадьба",
       "name": "Игорь",
-      "identifier": "",
-      "manager": ""
+      "identifier": "79995444493",
+      "manager": "Олеся"
     },
     {
       "date": "2026-09-06",
@@ -1389,7 +1387,7 @@
     }
   ],
   "not_entered": [],
-  "snapshot_generated_at": "2026-09-07T06:17:10Z",
+  "snapshot_generated_at": "2026-09-07T06:36:16Z",
   "snapshot_at": "2026-09-07T09:07:40+03:00",
   "min_date": "2026-07-01",
   "max_date": "2026-09-07",
@@ -1415,7 +1413,7 @@
       "crm_status": "Выслано предложение",
       "first_activity_at": "",
       "first_activity_ts": null,
-      "age_seconds": 310247,
+      "age_seconds": 311393,
       "feedback_state": "NO_FEEDBACK"
     },
     {
@@ -1431,7 +1429,7 @@
       "crm_status": "Выслано предложение",
       "first_activity_at": "",
       "first_activity_ts": null,
-      "age_seconds": 330493,
+      "age_seconds": 331639,
       "feedback_state": "NO_FEEDBACK"
     },
     {
@@ -1447,7 +1445,7 @@
       "crm_status": "Выслано предложение",
       "first_activity_at": "",
       "first_activity_ts": null,
-      "age_seconds": 229754,
+      "age_seconds": 230900,
       "feedback_state": "WAITING_BLUE"
     },
     {
@@ -1463,7 +1461,7 @@
       "crm_status": "Выслано предложение",
       "first_activity_at": "",
       "first_activity_ts": null,
-      "age_seconds": 230097,
+      "age_seconds": 231243,
       "feedback_state": "WAITING_BLUE"
     },
     {
@@ -1479,7 +1477,7 @@
       "crm_status": "Первичный контакт",
       "first_activity_at": "",
       "first_activity_ts": null,
-      "age_seconds": 230416,
+      "age_seconds": 231562,
       "feedback_state": "WAITING_BLUE"
     },
     {
@@ -1495,7 +1493,7 @@
       "crm_status": "Выслано предложение",
       "first_activity_at": "",
       "first_activity_ts": null,
-      "age_seconds": 253579,
+      "age_seconds": 254725,
       "feedback_state": "WAITING_BLUE"
     }
   ],
