@@ -136,6 +136,7 @@ def collect_starturl_diagnostic(
         "access": access,
         "request_id": current.request_id,
         "rows_total": len(rows),
+        "rows_with_clientID": sum(1 for row in rows if str(row.get("ym:s:clientID", "")).strip()),
         "rows_with_startURL": len(start_urls),
         "rows_with_yclid_param": len(with_yclid),
         "sample_start_urls_sanitized": sanitized[:sample_limit],
