@@ -1,0 +1,39 @@
+name: Patch mail reverse pair review once
+
+on:
+  push:
+    paths:
+      - ".github/workflows/patch-mail-reverse-pair-review-once.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Apply patch
+        run: python app/scripts/patch_mail_reverse_pair_review_once.py
+
+      - name: Run mail regression tests
+        working-directory: app
+        run: PYTHONPATH=src python -m unittest tests.test_max_mail_historical_pair tests.test_max_mail_lead tests.test_max_leads_parser -v
+
+      - name: Commit fix
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add app/src/lead_control/max_attachment_ocr.py app/src/lead_control/parsers/max_leads.py app/tests/test_max_mail_historical_pair.py
+          git commit -m "Handle reversed MAX mail screenshots safely"
+          git pull --rebase --autostash origin main
+          git push origin main
