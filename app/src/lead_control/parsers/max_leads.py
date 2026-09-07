@@ -1186,21 +1186,57 @@ def _extract_probable_name(text: str, phone_raw: str) -> str:
         "весь",
         "малый",
         "основной",
+        "конец",
+        "начало",
+        "середина",
+        "январь",
+        "января",
+        "февраль",
+        "февраля",
+        "март",
+        "марта",
+        "апрель",
+        "апреля",
+        "май",
+        "мая",
+        "июнь",
+        "июня",
+        "июль",
+        "июля",
+        "август",
+        "августа",
+        "сентябрь",
+        "сентября",
+        "октябрь",
+        "октября",
+        "ноябрь",
+        "ноября",
+        "декабрь",
+        "декабря",
     }
 
-    # Highest priority: a human name written on the same line as the phone.
-    # This preserves free-form host requests such as:
-    # "Ксения 8916...", "Ангелина 8983...", "04.09 Валерия 8917...".
-    for line in _nonempty_lines(text):
-        if phone_raw not in line:
-            continue
-        same_line = line.replace(phone_raw, " ")
-        same_line = re.sub(r"\b\d{1,2}[./-]\d{1,2}(?:[./-]\d{2,4})?\b", " ", same_line)
-        words = re.findall(r"[А-ЯЁ][а-яё]+(?:\s+[А-ЯЁ][а-яё]+)?", same_line)
+    def first_human_name(fragment: str) -> str:
+        fragment = re.sub(r"\b\d{1,2}[./-]\d{1,2}(?:[./-]\d{2,4})?\b", " ", fragment)
+        words = re.findall(r"[А-ЯЁ][а-яё]+(?:\s+[А-ЯЁ][а-яё]+)?", fragment)
         for word in words:
             tokens = [token.casefold() for token in word.split()]
             if tokens and all(token not in stop_words for token in tokens):
                 return word.strip()
+        return ""
+
+    # When a phone and a client name share a line, prefer the text immediately
+    # after the phone. This covers formats like "8968... Оксана" and avoids
+    # mistaking period words in "Конец декабрь, 150чел.8968... Оксана" for names.
+    # If there is no name after the phone, fall back to the text before it so
+    # formats like "Ксения 8916..." keep working.
+    for line in _nonempty_lines(text):
+        if phone_raw not in line:
+            continue
+        before_phone, _, after_phone = line.partition(phone_raw)
+        for fragment in (after_phone, before_phone):
+            name = first_human_name(fragment)
+            if name:
+                return name
 
     # Fallback for older host formats where the name is not on the phone line.
     compact = _normalize_space(text)
