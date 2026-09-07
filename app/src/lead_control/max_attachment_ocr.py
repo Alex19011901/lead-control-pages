@@ -100,17 +100,35 @@ def _find_paired_image(
     ts = int(header.get("timestamp") or 0)
     sender = header.get("sender_user_id")
     chat = header.get("chat_id")
-    for event in events[index + 1 : index + 4]:
+    header_mid = str(header.get("message_id") or "")
+    candidates: list[tuple[int, int, dict[str, Any]]] = []
+
+    # MAX may deliver the screenshot immediately before OR after the caption.
+    # Search a small symmetric neighborhood and choose the closest image from
+    # the same sender/chat inside the existing 10-second pairing window.
+    start = max(0, index - 3)
+    stop = min(len(events), index + 4)
+    for candidate_index in range(start, stop):
+        if candidate_index == index:
+            continue
+        event = events[candidate_index]
         ets = int(event.get("timestamp") or 0)
-        if ets - ts > PAIR_WINDOW_MS:
-            break
-        if (
-            event.get("sender_user_id") == sender
-            and event.get("chat_id") == chat
-            and _has_image(event)
-        ):
-            return event
-    return None
+        if abs(ets - ts) > PAIR_WINDOW_MS:
+            continue
+        if event.get("sender_user_id") != sender or event.get("chat_id") != chat:
+            continue
+        if not _has_image(event):
+            continue
+
+        paired_to = str(event.get("paired_mail_header_message_id") or "")
+        if paired_to and paired_to != header_mid:
+            continue
+        candidates.append((abs(ets - ts), abs(candidate_index - index), event))
+
+    if not candidates:
+        return None
+    candidates.sort(key=lambda item: (item[0], item[1]))
+    return candidates[0][2]
 
 
 def _has_image(event: dict[str, Any]) -> bool:

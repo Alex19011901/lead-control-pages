@@ -80,6 +80,79 @@ class HistoricalPairTests(unittest.TestCase):
         self.assertEqual(leads[0]["fields"]["name"], "Алена Тимофеева")
         self.assertEqual(leads[0]["identifier"], {"type": "phone", "value": "79636698819"})
 
+    def test_mail_image_before_header_pairs_and_builds_lead(self):
+        header_mid = "mid.mail.header.reverse"
+        image_mid = "mid.mail.image.reverse"
+        copied_attachment = {"type": "image", "payload": {"photo_id": 39206957415}}
+        image = {
+            "type": "max_message_created",
+            "source": "MAX",
+            "update_type": "message_created",
+            "chat_id": -71704692523093,
+            "message_id": image_mid,
+            "body_mid": image_mid,
+            "text": "",
+            "has_attachments": True,
+            "attachment_types": ["image"],
+            "attachments": [copied_attachment],
+            "attachment_ocr_text": OCR,
+            "sender_user_id": 74336871,
+            "sender_name": "Al",
+            "timestamp": 1788788908730,
+        }
+        header = {
+            "type": "max_message_created",
+            "source": "MAX",
+            "update_type": "message_created",
+            "chat_id": -71704692523093,
+            "message_id": header_mid,
+            "body_mid": header_mid,
+            "text": "Заявка почта:",
+            "has_attachments": False,
+            "attachments": [],
+            "sender_user_id": 74336871,
+            "sender_name": "Al",
+            "timestamp": 1788788909327,
+        }
+        events = [image, header]
+
+        self.assertTrue(enrich_max_mail_attachments(events, FakeMaxClient()))
+        self.assertEqual(header["attachment_message_id"], image_mid)
+        self.assertEqual(header["attachment_ocr_text"], OCR)
+        self.assertTrue(image["mail_attachment_only"])
+        self.assertEqual(image["paired_mail_header_message_id"], header_mid)
+
+        leads, needs_review = rebuild_leads_and_needs_review(events, existing_needs_review=[])
+        apply_max_mail_leads(leads, events)
+        self.assertEqual(needs_review, [])
+        self.assertEqual(len(leads), 1)
+        self.assertEqual(leads[0]["source"], "ЗАЯВКА ПОЧТА")
+        self.assertEqual(leads[0]["fields"]["name"], "Алена Тимофеева")
+        self.assertEqual(leads[0]["identifier"], {"type": "phone", "value": "79636698819"})
+
+    def test_unpaired_mail_header_goes_to_needs_review(self):
+        header = {
+            "type": "max_message_created",
+            "source": "MAX",
+            "update_type": "message_created",
+            "chat_id": -71704692523093,
+            "message_id": "mid.mail.header.unpaired",
+            "body_mid": "mid.mail.header.unpaired",
+            "text": "Заявка почта:",
+            "has_attachments": False,
+            "attachments": [],
+            "sender_user_id": 74336871,
+            "sender_name": "Al",
+            "timestamp": 1788789000000,
+        }
+
+        leads, needs_review = rebuild_leads_and_needs_review([header], existing_needs_review=[])
+        self.assertEqual(leads, [])
+        self.assertEqual(len(needs_review), 1)
+        self.assertEqual(needs_review[0]["status"], "NEEDS_REVIEW")
+        self.assertEqual(needs_review[0]["review_reason"], "mail_header_without_paired_image")
+        self.assertEqual(needs_review[0]["text"], "Заявка почта:")
+
     def test_already_enriched_header_still_marks_real_image_as_attachment_only(self):
         copied_attachment = {"type": "image", "payload": {"photo_id": 123}}
         header = {

@@ -62,8 +62,14 @@ def classify_max_event(event: dict[str, Any]) -> dict[str, Any]:
     if event_category is None:
         event_category = _classify_site_lead_event(event_text, attachment_text, has_attachments)
 
+    mail_header_without_image = bool(
+        re.fullmatch(r"\s*заявка\s+почта\s*:\s*", event_text, flags=re.IGNORECASE)
+    ) and not has_attachments
+
     if event_category is not None:
         result = event_category
+    elif mail_header_without_image:
+        result = _needs_review(event_text, "mail_header_without_paired_image")
     elif not classification_text.strip() and has_attachments:
         result = _result(
             IGNORE,
