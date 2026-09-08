@@ -41262,6 +41262,93 @@
       "status": "OK",
       "username": "",
       "violations": []
+    },
+    {
+      "category": "TG_LEAD",
+      "channel": "MAX",
+      "crm": {
+        "ambiguity_count": 2,
+        "created_at": 1788887609,
+        "entity_id": 48373003,
+        "entity_type": "lead",
+        "event_type": "Свадьба",
+        "found": true,
+        "guests": "35",
+        "guests_source": "CRM",
+        "responsible_user_id": 12982830,
+        "responsible_user_name": "Максим",
+        "updated_at": 1788887781
+      },
+      "crm_created_at": 1788887609,
+      "crm_feedback": {
+        "crm_lead_id": 48373003,
+        "deadline_at": 1789160400,
+        "excluded": false,
+        "first_activity_at": null,
+        "lead_created_at": 1788887609,
+        "pipeline_id": 10081590,
+        "responsible_user_id": 12982830,
+        "rule_version": 6,
+        "state": "WAITING",
+        "status_id": 79927038,
+        "status_name": "Выслано предложение"
+      },
+      "crm_found": true,
+      "crm_required": true,
+      "crm_responsible": 12982830,
+      "deadline_msk_ts": 1788901199,
+      "event_date": "",
+      "event_type": "Свадьба",
+      "event_type_source": "CRM",
+      "fields": {
+        "category": "TG_LEAD",
+        "email": "",
+        "event_date": "",
+        "event_date_raw": "13.12.26",
+        "event_type": "Свадьба",
+        "guests_count": null,
+        "guests_max": 35,
+        "guests_min": 30,
+        "guests_raw": "30-35 человек",
+        "name": "Василиса",
+        "phone_digits": "79911408817",
+        "phone_raw": "+79911408817",
+        "source": "Заявка с ТГ",
+        "telegram_username": ""
+      },
+      "first_seen_at": "2026-09-08T19:30:09+03:00",
+      "first_seen_ts": 1788885009,
+      "guests": null,
+      "guests_max": 35,
+      "guests_min": 30,
+      "guests_raw": "30-35 человек",
+      "id": "88291699ee260aa3",
+      "identifier": {
+        "type": "phone",
+        "value": "79911408817"
+      },
+      "last_seen_at": "2026-09-08T19:30:09+03:00",
+      "last_seen_ts": 1788885009,
+      "manager_reaction": null,
+      "max": {
+        "chat_id": -71704692523093,
+        "message_ids": [
+          "mid.ffffbec8f345ffab01a081db044e539b"
+        ],
+        "sender_name": "Олеся",
+        "sender_user_id": 48906491,
+        "sender_username": null
+      },
+      "message_id": "mid.ffffbec8f345ffab01a081db044e539b",
+      "name": "Василиса",
+      "phone": "+79911408817",
+      "received_at": "2026-09-08T19:30:09+03:00",
+      "sender_name": "Олеся",
+      "sender_user_id": 48906491,
+      "source": "Заявка с ТГ",
+      "status": "OK",
+      "username": "",
+      "violations": []
     }
   ],
   "schema_version": 1

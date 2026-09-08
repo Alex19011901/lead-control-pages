@@ -1,7 +1,7 @@
 {
   "alarm_no_crm": 0,
   "by_manager": {
-    "no_manager_reaction": 407,
+    "no_manager_reaction": 408,
     "Максим": 47,
     "Олеся": 40
   },
@@ -10,7 +10,7 @@
     "Restoran.Cafe": 3,
     "WedWed": 7,
     "ЗАЯВКА ПОЧТА": 9,
-    "Заявка с ТГ": 20,
+    "Заявка с ТГ": 21,
     "Заявка сайт": 3,
     "Заявки хост": 251,
     "С улицы": 2,
@@ -27,7 +27,7 @@
     "Детский праздник": 5,
     "Корпоратив": 119,
     "Поминки": 1,
-    "Свадьба": 158,
+    "Свадьба": 159,
     "Съемки": 1,
     "Съёмки": 1,
     "Юбилей": 92
@@ -38,10 +38,28 @@
     "151+": 20,
     "21-50": 147,
     "51-100": 64,
-    "unknown": 71
+    "unknown": 72
   },
   "late_crm": 110,
   "latest_leads": [
+    {
+      "created_at": "2026-09-08T19:30:09+03:00",
+      "crm_entity_id": 48373003,
+      "crm_entity_type": "lead",
+      "crm_found": true,
+      "event_date": "",
+      "event_type": "Свадьба",
+      "guests_count": null,
+      "identifier": "7********17",
+      "identifier_type": "phone",
+      "lead_id": "88291699ee260aa3",
+      "manager": "",
+      "manager_username": "",
+      "name": "Василиса",
+      "source": "Заявка с ТГ",
+      "status": "OK",
+      "violations": []
+    },
     {
       "created_at": "2026-09-08T16:06:31+03:00",
       "crm_entity_id": 48366365,
@@ -383,29 +401,11 @@
       "source": "САЙТ ТИЛЬДА",
       "status": "OK",
       "violations": []
-    },
-    {
-      "created_at": "2026-09-07T09:07:40+03:00",
-      "crm_entity_id": 48323347,
-      "crm_entity_type": "lead",
-      "crm_found": true,
-      "event_date": "2026-10-25",
-      "event_type": "Свадьба",
-      "guests_count": 20,
-      "identifier": "7********19",
-      "identifier_type": "phone",
-      "lead_id": "a026060cdb972507",
-      "manager": "Максим",
-      "manager_username": "empairbey",
-      "name": "Анна",
-      "source": "САЙТ ТИЛЬДА",
-      "status": "OK",
-      "violations": []
     }
   ],
-  "needs_review": 75,
+  "needs_review": 77,
   "no_reaction": 0,
-  "ok": 336,
-  "total_leads": 494,
-  "updated_at": "2026-09-08T17:59:14+03:00"
+  "ok": 337,
+  "total_leads": 495,
+  "updated_at": "2026-09-08T21:20:00+03:00"
 }
