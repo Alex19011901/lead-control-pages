@@ -109,7 +109,8 @@ def merge_range(daily: dict[str, dict], start: date, end: date) -> dict:
             if nk:
                 event[nk] += count
                 defined_event_count += count
-        undefined_event_count = max(0, n - defined_event_count)
+        excluded_event_count = int(item.get("event_type_excluded") or 0)
+        undefined_event_count = max(0, n - defined_event_count - excluded_event_count)
         if undefined_event_count:
             event["Не определено"] += undefined_event_count
 

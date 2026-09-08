@@ -49,6 +49,52 @@ class DashboardSnapshotTests(unittest.TestCase):
             self.assertEqual(daily["latest"][0]["identifier"], "79606254413")
             self.assertEqual(daily["latest"][0]["guests"], "14")
 
+    def test_tilda_veranda_unknown_event_is_excluded_only_from_event_metric(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            input_path = root / "leads.json"
+            daily_path = root / "dashboard_daily.json"
+            view_path = root / "dashboard_view.json"
+            input_path.write_text(
+                json.dumps(
+                    {
+                        "leads": [
+                            {
+                                "received_at": "2026-08-20T12:00:00+03:00",
+                                "source": "Тильда Веранда",
+                                "category": "TILDA_VERANDA",
+                                "status": "OK",
+                                "channel": "MAX",
+                                "guests": 20,
+                            },
+                            {
+                                "received_at": "2026-08-20T11:00:00+03:00",
+                                "source": "Заявки хост",
+                                "status": "OK",
+                                "channel": "MAX",
+                                "guests": 30,
+                            },
+                        ]
+                    },
+                    ensure_ascii=False,
+                ),
+                encoding="utf-8",
+            )
+
+            build(input_path, daily_path)
+            build_view(daily_path, view_path)
+
+            daily = json.loads(daily_path.read_text(encoding="utf-8"))
+            view = json.loads(view_path.read_text(encoding="utf-8"))
+            day = daily["daily"]["2026-08-20"]
+            self.assertEqual(day["total"], 2)
+            self.assertEqual(day["source"]["Тильда Веранда"], 1)
+            self.assertEqual(day["event_type_excluded"], 1)
+            self.assertEqual(day["event_types"], {"unknown": 1})
+            self.assertEqual(view["ranges"]["all"]["total"], 2)
+            self.assertEqual(view["ranges"]["all"]["source"]["Тильда Веранда"], 1)
+            self.assertEqual(view["ranges"]["all"]["event"], {"Не определено": 1})
+
     def test_dashboard_rows_use_exact_guest_value_from_text(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)

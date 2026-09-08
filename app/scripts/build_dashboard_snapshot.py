@@ -226,6 +226,7 @@ def build(input_path: Path, output_path: Path, view_output_path: Path | None = N
             "source": Counter(),
             "guest_ranges": Counter(),
             "event_types": Counter(),
+            "event_type_excluded": 0,
             "channel": Counter(),
         }
     )
@@ -249,7 +250,13 @@ def build(input_path: Path, output_path: Path, view_output_path: Path | None = N
         d["status"][status] += 1
         d["source"][source] += 1
         d["guest_ranges"][guest_key] += 1
-        d["event_types"][event_type] += 1
+        # Tilda Veranda does not collect an event type by design. Keep these
+        # leads in totals/source/channel/guest statistics, but do not treat a
+        # missing type from this source as an unknown event type.
+        if source == "Тильда Веранда" and event_type == "unknown":
+            d["event_type_excluded"] += 1
+        else:
+            d["event_types"][event_type] += 1
         d["channel"][channel] += 1
 
         compact.append(
@@ -281,6 +288,7 @@ def build(input_path: Path, output_path: Path, view_output_path: Path | None = N
                 "source": dict(values["source"]),
                 "guest_ranges": dict(values["guest_ranges"]),
                 "event_types": dict(values["event_types"]),
+                "event_type_excluded": int(values["event_type_excluded"]),
                 "channel": dict(values["channel"]),
             }
             for day, values in sorted(daily.items())

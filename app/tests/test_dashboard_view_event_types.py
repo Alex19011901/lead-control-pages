@@ -34,6 +34,22 @@ class DashboardViewEventTypeTests(unittest.TestCase):
         self.assertEqual(result["event"], {"Свадьба": 3, "Не определено": 4})
         self.assertEqual(sum(result["event"].values()), result["total"])
 
+    def test_excluded_event_type_does_not_become_undefined(self) -> None:
+        daily = {
+            "2026-08-22": {
+                "total": 5,
+                "source": {"Тильда Веранда": 2, "Заявки хост": 3},
+                "event_types": {"Свадьба": 1, "unknown": 2},
+                "event_type_excluded": 2,
+            }
+        }
+
+        result = module.merge_range(daily, date(2026, 8, 22), date(2026, 8, 22))
+
+        self.assertEqual(result["total"], 5)
+        self.assertEqual(result["source"]["Тильда Веранда"], 2)
+        self.assertEqual(result["event"], {"Свадьба": 1, "Не определено": 2})
+
     def test_explicit_unknown_is_counted_as_undefined(self) -> None:
         daily = {
             "2026-08-22": {
