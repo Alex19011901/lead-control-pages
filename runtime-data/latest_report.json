@@ -1,7 +1,7 @@
 {
   "alarm_no_crm": 0,
   "by_manager": {
-    "no_manager_reaction": 405,
+    "no_manager_reaction": 406,
     "Максим": 47,
     "Олеся": 40
   },
@@ -9,7 +9,7 @@
     "MARQUIZ": 28,
     "Restoran.Cafe": 3,
     "WedWed": 7,
-    "ЗАЯВКА ПОЧТА": 8,
+    "ЗАЯВКА ПОЧТА": 9,
     "Заявка с ТГ": 20,
     "Заявка сайт": 3,
     "Заявки хост": 250,
@@ -19,23 +19,23 @@
     "ТоМесто": 1
   },
   "event_types": {
-    "unknown": 99,
+    "unknown": 97,
     "Бизнес мероприятие": 17,
     "Выпускной": 1,
     "ДР": 1,
     "Деловое мероприятие": 1,
     "Детский праздник": 5,
-    "Корпоратив": 117,
+    "Корпоратив": 119,
     "Поминки": 1,
     "Свадьба": 157,
     "Съемки": 1,
     "Съёмки": 1,
-    "Юбилей": 91
+    "Юбилей": 92
   },
   "guest_ranges": {
     "1-20": 158,
     "101-150": 34,
-    "151+": 19,
+    "151+": 20,
     "21-50": 147,
     "51-100": 64,
     "unknown": 70
@@ -43,12 +43,30 @@
   "late_crm": 110,
   "latest_leads": [
     {
-      "created_at": "2026-09-08T15:17:38+03:00",
+      "created_at": "2026-09-08T15:28:05+03:00",
       "crm_entity_id": null,
       "crm_entity_type": null,
       "crm_found": false,
       "event_date": "",
-      "event_type": "",
+      "event_type": "Корпоратив",
+      "guests_count": 170,
+      "identifier": "mid.ffffbec8f345ffab01a080fd675f3fd3",
+      "identifier_type": "max_message",
+      "lead_id": "5b5e0ff0ca3e1f3e",
+      "manager": "",
+      "manager_username": "",
+      "name": "",
+      "source": "ЗАЯВКА ПОЧТА",
+      "status": "-",
+      "violations": []
+    },
+    {
+      "created_at": "2026-09-08T15:17:38+03:00",
+      "crm_entity_id": 48365165,
+      "crm_entity_type": "lead",
+      "crm_found": true,
+      "event_date": "",
+      "event_type": "Корпоратив",
       "guests_count": 12,
       "identifier": "7********50",
       "identifier_type": "phone",
@@ -57,16 +75,16 @@
       "manager_username": "",
       "name": "Яна",
       "source": "Заявки хост",
-      "status": "PENDING",
+      "status": "OK",
       "violations": []
     },
     {
       "created_at": "2026-09-08T15:12:29+03:00",
-      "crm_entity_id": null,
-      "crm_entity_type": null,
-      "crm_found": false,
+      "crm_entity_id": 48364665,
+      "crm_entity_type": "lead",
+      "crm_found": true,
       "event_date": "2026-10-17",
-      "event_type": "",
+      "event_type": "Юбилей",
       "guests_count": 21,
       "identifier": "7********10",
       "identifier_type": "phone",
@@ -75,7 +93,7 @@
       "manager_username": "empairbey",
       "name": "Виктор",
       "source": "САЙТ ТИЛЬДА",
-      "status": "PENDING",
+      "status": "OK",
       "violations": []
     },
     {
@@ -383,29 +401,11 @@
       "source": "Заявки хост",
       "status": "OK",
       "violations": []
-    },
-    {
-      "created_at": "2026-09-06T18:15:41+03:00",
-      "crm_entity_id": 48310337,
-      "crm_entity_type": "lead",
-      "crm_found": true,
-      "event_date": "2027-08-07",
-      "event_type": "Свадьба",
-      "guests_count": 34,
-      "identifier": "7********22",
-      "identifier_type": "phone",
-      "lead_id": "667bdbef5f46be52",
-      "manager": "Олеся",
-      "manager_username": "Olesyagozhina",
-      "name": "Дарья",
-      "source": "САЙТ ТИЛЬДА",
-      "status": "OK",
-      "violations": []
     }
   ],
   "needs_review": 75,
   "no_reaction": 0,
-  "ok": 333,
-  "total_leads": 492,
-  "updated_at": "2026-09-08T15:34:26+03:00"
+  "ok": 335,
+  "total_leads": 493,
+  "updated_at": "2026-09-08T15:58:20+03:00"
 }
