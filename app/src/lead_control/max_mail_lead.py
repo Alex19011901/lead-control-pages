@@ -1,10 +1,11 @@
 from __future__ import annotations
 
+from datetime import date
 import re
 from typing import Any
 
 from .event_type import infer_event_type
-from .normalize import normalize_phone, normalize_username
+from .normalize import normalize_phone, normalize_username, parse_event_date
 
 MAIL_LEAD = "ЗАЯВКА ПОЧТА"
 HEADER_RE = re.compile(r"^\s*заявка\s+(?:сайт|почта)\s*:\s*$", re.IGNORECASE)
@@ -23,6 +24,45 @@ _RUSSIAN_MONTHS = (
     "ноябр(?:ь|я|е)",
     "декабр(?:ь|я|е)",
 )
+
+_RUSSIAN_MONTH_NUMBERS = {
+    "январь": 1,
+    "января": 1,
+    "январе": 1,
+    "февраль": 2,
+    "февраля": 2,
+    "феврале": 2,
+    "март": 3,
+    "марта": 3,
+    "марте": 3,
+    "апрель": 4,
+    "апреля": 4,
+    "апреле": 4,
+    "май": 5,
+    "мая": 5,
+    "мае": 5,
+    "июнь": 6,
+    "июня": 6,
+    "июне": 6,
+    "июль": 7,
+    "июля": 7,
+    "июле": 7,
+    "август": 8,
+    "августа": 8,
+    "августе": 8,
+    "сентябрь": 9,
+    "сентября": 9,
+    "сентябре": 9,
+    "октябрь": 10,
+    "октября": 10,
+    "октябре": 10,
+    "ноябрь": 11,
+    "ноября": 11,
+    "ноябре": 11,
+    "декабрь": 12,
+    "декабря": 12,
+    "декабре": 12,
+}
 
 
 def classify_max_mail_event(event: dict[str, Any]) -> dict[str, Any] | None:
@@ -84,6 +124,7 @@ def parse_attachment_fields(text: str) -> dict[str, Any]:
     name = (
         _extract_labeled_value(raw, ("имя", "фио", "name", "клиент"))
         or _extract_signature_name(raw)
+        or _extract_intro_name(raw)
     )
     email = _extract_email(raw)
     event_type = infer_event_type(raw)
@@ -119,7 +160,7 @@ def _extract_labeled_value(text: str, labels: tuple[str, ...]) -> str:
     for line in text.splitlines():
         for label in labels:
             match = re.match(
-                rf"^\s*{re.escape(label)}\s*[:=\-]\s*(.+?)\s*$",
+                rf"^\s*{re.escape(label)}\s*[:=\-–—]\s*(.+?)\s*$",
                 line,
                 flags=re.IGNORECASE,
             )
@@ -210,9 +251,25 @@ def _extract_signature_name(text: str) -> str:
     return ""
 
 
+def _extract_intro_name(text: str) -> str:
+    match = re.search(
+        r"\bменя\s+зовут\s+([А-ЯЁ][а-яё-]{1,30}(?:\s+[А-ЯЁ][а-яё-]{1,30})?)\b",
+        text,
+        flags=re.IGNORECASE,
+    )
+    return match.group(1).strip() if match else ""
+
+
 def _clean_person_name(value: str) -> str:
     text = re.sub(r"[^А-Яа-яЁё\-\s]", " ", str(value or ""))
     text = re.sub(r"\s+", " ", text).strip()
+    token_re = re.compile(r"[А-ЯЁ][а-яё-]{1,30}")
+    tokens = text.split()
+    while tokens and not token_re.fullmatch(tokens[0]):
+        tokens.pop(0)
+    while tokens and not token_re.fullmatch(tokens[-1]):
+        tokens.pop()
+    text = " ".join(tokens)
     if not re.fullmatch(r"[А-ЯЁ][а-яё-]{1,30}\s+[А-ЯЁ][а-яё-]{1,30}", text):
         return ""
     lowered = text.casefold()
@@ -226,6 +283,30 @@ def _clean_person_name(value: str) -> str:
     if any(fragment in lowered for fragment in blocked):
         return ""
     return text
+
+
+def parse_mail_event_date(value: str) -> str:
+    raw = str(value or "").strip()
+    parsed = parse_event_date(raw)
+    if parsed:
+        return parsed
+
+    month_pattern = "|".join(_RUSSIAN_MONTHS)
+    match = re.search(
+        rf"\b(\d{{1,2}})\s+({month_pattern})\s+(\d{{4}})\b",
+        raw,
+        flags=re.IGNORECASE,
+    )
+    if not match:
+        return ""
+
+    month = _RUSSIAN_MONTH_NUMBERS.get(match.group(2).casefold())
+    if month is None:
+        return ""
+    try:
+        return date(int(match.group(3)), month, int(match.group(1))).isoformat()
+    except ValueError:
+        return ""
 
 
 def _parse_guests(text: str) -> tuple[int | None, int | None, int | None]:

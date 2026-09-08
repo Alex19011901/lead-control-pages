@@ -45,6 +45,19 @@ REAL_OCR = """17:31 98%
 timofeeva_a@kommersant.ru
 служебный мусор 30-23"""
 
+CURRENT_CONTACT_OCR = """15:27
+Запрос на организацию мероприятия.
+Мандариновая лиса
+a, Алина Лоскутова ху
+08 сент. 2026, 14:58
+Добрый день
+Меня зовут Алина, я ивент-менеджер
+агентства «Мандариновая лиса».
+Мы ищем ресторан для проведения корпоративного мероприятия
+в формате банкета на 170 человек.
+Дата — 18 декабря 2026 года
+Просьба выслать актуальное коммерческое предложение."""
+
 
 def mail_event() -> dict:
     return {
@@ -100,6 +113,23 @@ class MaxMailLeadTests(unittest.TestCase):
         self.assertEqual(fields["guests_max"], 150)
         self.assertEqual(fields["email"], "timofeeva_a@kommersant.ru")
         self.assertNotEqual(fields["event_date_raw"], "30-23")
+
+    def test_current_mail_ocr_extracts_contact_and_em_dash_date(self):
+        fields = parse_attachment_fields(CURRENT_CONTACT_OCR)
+        self.assertEqual(fields["name"], "Алина Лоскутова")
+        self.assertEqual(fields["event_date_raw"], "18 декабря 2026 года")
+        self.assertEqual(fields["guests_count"], 170)
+        self.assertEqual(fields["event_type"], "Корпоратив")
+
+        event = mail_event()
+        event["attachment_ocr_text"] = CURRENT_CONTACT_OCR
+        event["attachment_text"] = CURRENT_CONTACT_OCR
+        leads, needs_review = rebuild_leads_and_needs_review([event], existing_needs_review=[])
+        apply_max_mail_leads(leads, [event])
+
+        self.assertEqual(needs_review, [])
+        self.assertEqual(leads[0]["name"], "Алина Лоскутова")
+        self.assertEqual(leads[0]["event_date"], "2026-12-18")
 
     def test_mail_lead_does_not_stay_in_needs_review(self):
         event = mail_event()

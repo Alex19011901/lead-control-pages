@@ -2,8 +2,7 @@ from __future__ import annotations
 
 from typing import Any
 
-from .max_mail_lead import MAIL_LEAD, classify_max_mail_event
-from .normalize import parse_event_date
+from .max_mail_lead import MAIL_LEAD, classify_max_mail_event, parse_mail_event_date
 
 
 def apply_max_mail_leads(leads: list[dict[str, Any]], events: list[dict[str, Any]]) -> None:
@@ -37,7 +36,7 @@ def apply_max_mail_leads(leads: list[dict[str, Any]], events: list[dict[str, Any
         fields.update({key: value for key, value in parsed.items() if value not in (None, "")})
         fields["source"] = MAIL_LEAD
         fields["category"] = MAIL_LEAD
-        fields["event_date"] = parse_event_date(str(fields.get("event_date_raw") or ""))
+        fields["event_date"] = parse_mail_event_date(str(fields.get("event_date_raw") or ""))
 
         lead["source"] = MAIL_LEAD
         lead["category"] = MAIL_LEAD
