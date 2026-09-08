@@ -9922,16 +9922,15 @@
       "crm_created_at": 1787825239,
       "crm_feedback": {
         "crm_lead_id": 47990819,
-        "deadline_at": 1788123600,
-        "excluded": false,
-        "first_activity_at": 1788187934,
+        "excluded": true,
+        "first_activity_at": null,
         "lead_created_at": 1787825239,
         "pipeline_id": 10081590,
         "responsible_user_id": 12982830,
         "rule_version": 6,
-        "state": "CLEAR",
-        "status_id": 79927042,
-        "status_name": "Принимают решение"
+        "state": "EXCLUDED",
+        "status_id": 143,
+        "status_name": "Закрыто и не реализовано"
       },
       "crm_found": true,
       "crm_required": true,
@@ -12351,16 +12350,15 @@
       "crm_created_at": 1788788019,
       "crm_feedback": {
         "crm_lead_id": 48335683,
-        "deadline_at": 1789074000,
-        "excluded": false,
+        "excluded": true,
         "first_activity_at": null,
         "lead_created_at": 1788788019,
         "pipeline_id": 10081590,
         "responsible_user_id": 12982830,
         "rule_version": 6,
-        "state": "WAITING",
-        "status_id": 79927038,
-        "status_name": "Выслано предложение"
+        "state": "EXCLUDED",
+        "status_id": 143,
+        "status_name": "Закрыто и не реализовано"
       },
       "crm_found": true,
       "crm_required": true,
@@ -12600,6 +12598,111 @@
         ],
         "update_ids": [
           185608220
+        ]
+      },
+      "violations": []
+    },
+    {
+      "category": "САЙТ ТИЛЬДА",
+      "channel": "TELEGRAM",
+      "crm": {
+        "ambiguity_count": 1,
+        "created_at": 1788856888,
+        "entity_id": 48356363,
+        "entity_type": "lead",
+        "event_type": "Юбилей",
+        "found": true,
+        "guests": "23",
+        "guests_source": "CRM",
+        "responsible_user_id": 12982830,
+        "responsible_user_name": "Максим",
+        "updated_at": 1788857518
+      },
+      "crm_created_at": 1788856888,
+      "crm_feedback": {
+        "crm_lead_id": 48356363,
+        "deadline_at": 1789160400,
+        "excluded": false,
+        "first_activity_at": null,
+        "lead_created_at": 1788856888,
+        "pipeline_id": 10081590,
+        "responsible_user_id": 12982830,
+        "rule_version": 6,
+        "state": "WAITING",
+        "status_id": 79927034,
+        "status_name": "Первичный контакт"
+      },
+      "crm_found": true,
+      "crm_required": true,
+      "crm_responsible": 12982830,
+      "deadline_msk_ts": 1788901199,
+      "event_type": "Юбилей",
+      "event_type_source": "CRM",
+      "fields": {
+        "category": "САЙТ ТИЛЬДА",
+        "description": "Содержание заявки:\nName: Наталья\nPhone: +79153624586\nколичество_гостей: 23\nDate: 10/10/2026\nCheckbox: yes\nyclid: 3423025379031121919\n\nДополнительная информация:\nКод заявки: 2925975:8658366252\nКод блока: rec917743534\nhttps://moscowbanket.ru/#menuu\nUTM source: yandex_direct\nUTM medium: cpc\nUTM campaign: Bankety_konverii_RSYA\nUTM term: помещение для банкета\n-----",
+        "event_date": "2026-10-10",
+        "event_date_raw": "10/10/2026",
+        "event_type": "Юбилей",
+        "form_submit_timestamp": null,
+        "guests_count": 23,
+        "guests_raw": "25 чел",
+        "metrika_client_id": "",
+        "name": "Наталья",
+        "phone_digits": "79153624586",
+        "phone_raw": "+79153624586",
+        "source": "САЙТ ТИЛЬДА",
+        "telegram_username": "",
+        "yclid": "3423025379031121919"
+      },
+      "first_seen_at": "2026-09-08T11:26:15+03:00",
+      "first_seen_ts": 1788855975,
+      "guests": 25,
+      "guests_raw": "25 чел",
+      "id": "71753a0f17bc9f2b",
+      "identifier": {
+        "type": "phone",
+        "value": "79153624586"
+      },
+      "last_seen_at": "2026-09-08T11:37:16+03:00",
+      "last_seen_ts": 1788856636,
+      "manager_reaction": {
+        "name": "Максим",
+        "reacted_at": "2026-09-08T11:39:11+03:00",
+        "reacted_ts": 1788856751,
+        "reaction": [
+          {
+            "emoji": "👍",
+            "type": "emoji"
+          }
+        ],
+        "update_id": 185608250,
+        "user_id": 392177002,
+        "username": "empairbey"
+      },
+      "max": {
+        "chat_id": -71704692523093,
+        "message_ids": [
+          "mid.ffffbec8f345ffab01a0802a13606ffa"
+        ],
+        "sender_name": "Дмитрий Жуков",
+        "sender_user_id": 201560258
+      },
+      "name": "Наталья",
+      "phone": "+79153624586",
+      "received_at": "2026-09-08T11:26:15+03:00",
+      "sender_name": "TildaForms",
+      "sender_user_id": 265299531,
+      "sender_username": "TildaFormsBot",
+      "source": "САЙТ ТИЛЬДА",
+      "status": "OK",
+      "telegram": {
+        "chat_id": -1001645768111,
+        "message_ids": [
+          5823
+        ],
+        "update_ids": [
+          185608247
         ]
       },
       "violations": []
@@ -16508,16 +16611,15 @@
       "crm_created_at": 1788197860,
       "crm_feedback": {
         "crm_lead_id": 48120965,
-        "deadline_at": 1788469200,
-        "excluded": false,
-        "first_activity_at": 1788514713,
+        "excluded": true,
+        "first_activity_at": null,
         "lead_created_at": 1788197860,
         "pipeline_id": 10081590,
         "responsible_user_id": 12982830,
         "rule_version": 6,
-        "state": "CLEAR",
-        "status_id": 79927038,
-        "status_name": "Выслано предложение"
+        "state": "EXCLUDED",
+        "status_id": 143,
+        "status_name": "Закрыто и не реализовано"
       },
       "crm_found": true,
       "crm_required": true,
@@ -40381,6 +40483,93 @@
       "username": "",
       "violations": [],
       "wedwed_url": "https://wedwed.ru/l/32b4nY3"
+    },
+    {
+      "category": "HOST",
+      "channel": "MAX",
+      "crm": {
+        "ambiguity_count": 0,
+        "created_at": 1788853581,
+        "entity_id": 48354127,
+        "entity_type": "lead",
+        "event_type": "Корпоратив",
+        "found": true,
+        "guests": "150",
+        "guests_source": "CRM",
+        "responsible_user_id": 12982830,
+        "responsible_user_name": "Максим",
+        "updated_at": 1788854085
+      },
+      "crm_created_at": 1788853581,
+      "crm_feedback": {
+        "crm_lead_id": 48354127,
+        "deadline_at": 1789160400,
+        "excluded": false,
+        "first_activity_at": null,
+        "lead_created_at": 1788853581,
+        "pipeline_id": 10081590,
+        "responsible_user_id": 12982830,
+        "rule_version": 6,
+        "state": "WAITING",
+        "status_id": 80331318,
+        "status_name": "Предбронь"
+      },
+      "crm_found": true,
+      "crm_required": true,
+      "crm_responsible": 12982830,
+      "deadline_msk_ts": 1788901199,
+      "event_date": "",
+      "event_type": "Корпоратив",
+      "event_type_source": "CRM",
+      "fields": {
+        "category": "HOST",
+        "email": "",
+        "event_date": "",
+        "event_date_raw": "",
+        "event_type": "Корпоратив",
+        "guests_count": 150,
+        "guests_max": null,
+        "guests_min": null,
+        "guests_raw": "150 чел",
+        "name": "Никита",
+        "phone_digits": "79966265432",
+        "phone_raw": "+79966265432",
+        "source": "Заявки хост",
+        "telegram_username": ""
+      },
+      "first_seen_at": "2026-09-08T10:13:34+03:00",
+      "first_seen_ts": 1788851614,
+      "guests": 150,
+      "guests_max": null,
+      "guests_min": null,
+      "guests_raw": "150 чел",
+      "id": "b0c61b35c9bab71b",
+      "identifier": {
+        "type": "phone",
+        "value": "79966265432"
+      },
+      "last_seen_at": "2026-09-08T10:13:34+03:00",
+      "last_seen_ts": 1788851614,
+      "manager_reaction": null,
+      "max": {
+        "chat_id": -71704692523093,
+        "message_ids": [
+          "mid.ffffbec8f345ffab01a07fdd75034085"
+        ],
+        "sender_name": "Дмитрий Жуков",
+        "sender_user_id": 201560258,
+        "sender_username": null
+      },
+      "message_id": "mid.ffffbec8f345ffab01a07fdd75034085",
+      "name": "Никита",
+      "phone": "+79966265432",
+      "received_at": "2026-09-08T10:13:34+03:00",
+      "sender_name": "Дмитрий Жуков",
+      "sender_user_id": 201560258,
+      "source": "Заявки хост",
+      "status": "OK",
+      "username": "",
+      "violations": []
     }
   ],
   "schema_version": 1
