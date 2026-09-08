@@ -1,0 +1,39 @@
+name: Patch Tilda Veranda event metric once
+
+on:
+  push:
+    paths:
+      - ".github/workflows/patch-tilda-veranda-event-metric-once.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Apply patch
+        run: python app/scripts/patch_tilda_veranda_event_metric_once.py
+
+      - name: Run dashboard regression tests
+        working-directory: app
+        run: PYTHONPATH=src:. python -m unittest tests.test_dashboard_snapshot tests.test_dashboard_view_event_types -v
+
+      - name: Commit fix
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add app/scripts/build_dashboard_snapshot.py app/scripts/build_dashboard_view.py app/tests/test_dashboard_snapshot.py app/tests/test_dashboard_view_event_types.py
+          git commit -m "Exclude Tilda Veranda from undefined event type"
+          git pull --rebase --autostash origin main
+          git push origin main
