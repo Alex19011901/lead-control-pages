@@ -1,0 +1,110 @@
+name: Diagnose phone 79165961844 once
+
+on:
+  push:
+    paths:
+      - ".github/workflows/diag-phone-79165961844-once.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  diagnose:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Query amoCRM read-only by phone
+        env:
+          AMOCRM_TOKEN: ${{ secrets.AMOCRM_TOKEN }}
+        run: |
+          python - <<'PY'
+          import json, os, urllib.parse, urllib.request
+          from datetime import datetime, timezone, timedelta
+
+          BASE = 'https://alex1901yaru.amocrm.ru'
+          TOKEN = os.environ['AMOCRM_TOKEN'].strip()
+          MSK = timezone(timedelta(hours=3))
+
+          def get(path, params=None):
+              url = BASE + path
+              if params:
+                  url += '?' + urllib.parse.urlencode(params)
+              req = urllib.request.Request(url, headers={
+                  'Authorization': 'Bearer ' + TOKEN,
+                  'Accept': 'application/json',
+                  'User-Agent': 'lead-control-readonly-diagnostic',
+              })
+              with urllib.request.urlopen(req, timeout=30) as r:
+                  return json.load(r)
+
+          def msk(ts):
+              return datetime.fromtimestamp(int(ts), tz=timezone.utc).astimezone(MSK).isoformat() if ts else ''
+
+          # Lead custom field dictionary.
+          field_names = {}
+          page = 1
+          while True:
+              data = get('/api/v4/leads/custom_fields', {'limit': 250, 'page': page})
+              items = data.get('_embedded', {}).get('custom_fields', [])
+              for f in items:
+                  field_names[int(f['id'])] = f.get('name', str(f['id']))
+              nxt = data.get('_links', {}).get('next')
+              if not nxt or not items:
+                  break
+              page += 1
+
+          contacts = []
+          seen = set()
+          for q in ('79165961844', '9165961844', '89165961844'):
+              data = get('/api/v4/contacts', {'query': q, 'with': 'leads', 'limit': 250})
+              for c in data.get('_embedded', {}).get('contacts', []):
+                  if c['id'] not in seen:
+                      seen.add(c['id'])
+                      contacts.append(c)
+
+          print('CONTACT_COUNT', len(contacts))
+          lead_ids = set()
+          for c in contacts:
+              phones = []
+              for cf in c.get('custom_fields_values') or []:
+                  for v in cf.get('values') or []:
+                      val = str(v.get('value', ''))
+                      if any(ch.isdigit() for ch in val):
+                          phones.append(val)
+              print('CONTACT', json.dumps({'id': c['id'], 'name': c.get('name'), 'created_at_msk': msk(c.get('created_at')), 'phones': phones}, ensure_ascii=False))
+              for l in c.get('_embedded', {}).get('leads', []) or []:
+                  if l.get('id'):
+                      lead_ids.add(int(l['id']))
+              # Fallback: contact links.
+              try:
+                  links = get(f"/api/v4/contacts/{c['id']}/links")
+                  for l in links.get('_embedded', {}).get('links', []) or []:
+                      if l.get('to_entity_type') == 'leads' and l.get('to_entity_id'):
+                          lead_ids.add(int(l['to_entity_id']))
+              except Exception as e:
+                  print('LINKS_WARN', c['id'], type(e).__name__, str(e))
+
+          print('LEAD_IDS', sorted(lead_ids))
+          rows = []
+          for lid in sorted(lead_ids):
+              lead = get(f'/api/v4/leads/{lid}')
+              custom = {}
+              for cf in lead.get('custom_fields_values') or []:
+                  name = field_names.get(int(cf['field_id']), cf.get('field_name') or str(cf['field_id']))
+                  vals = []
+                  for v in cf.get('values') or []:
+                      vals.append(v.get('value'))
+                  custom[name] = vals
+              rows.append({
+                  'id': lid,
+                  'name': lead.get('name'),
+                  'created_at_msk': msk(lead.get('created_at')),
+                  'updated_at_msk': msk(lead.get('updated_at')),
+                  'pipeline_id': lead.get('pipeline_id'),
+                  'status_id': lead.get('status_id'),
+                  'responsible_user_id': lead.get('responsible_user_id'),
+                  'custom_fields': custom,
+              })
+          print('LEADS_JSON_BEGIN')
+          print(json.dumps(rows, ensure_ascii=False, indent=2))
+          print('LEADS_JSON_END')
+          PY
