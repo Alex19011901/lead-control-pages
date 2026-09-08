@@ -40570,6 +40570,93 @@
       "status": "OK",
       "username": "",
       "violations": []
+    },
+    {
+      "category": "HOST",
+      "channel": "MAX",
+      "crm": {
+        "ambiguity_count": 0,
+        "created_at": 1788860555,
+        "entity_id": 48358685,
+        "entity_type": "lead",
+        "event_type": "Корпоратив",
+        "found": true,
+        "guests": "50",
+        "guests_source": "CRM",
+        "responsible_user_id": 12982830,
+        "responsible_user_name": "Максим",
+        "updated_at": 1788861015
+      },
+      "crm_created_at": 1788860555,
+      "crm_feedback": {
+        "crm_lead_id": 48358685,
+        "deadline_at": 1789160400,
+        "excluded": false,
+        "first_activity_at": null,
+        "lead_created_at": 1788860555,
+        "pipeline_id": 10081590,
+        "responsible_user_id": 12982830,
+        "rule_version": 6,
+        "state": "WAITING",
+        "status_id": 79927038,
+        "status_name": "Выслано предложение"
+      },
+      "crm_found": true,
+      "crm_required": true,
+      "crm_responsible": 12982830,
+      "deadline_msk_ts": 1788901199,
+      "event_date": "",
+      "event_type": "Корпоратив",
+      "event_type_source": "CRM",
+      "fields": {
+        "category": "HOST",
+        "email": "",
+        "event_date": "",
+        "event_date_raw": "",
+        "event_type": "Корпоратив",
+        "guests_count": 50,
+        "guests_max": null,
+        "guests_min": null,
+        "guests_raw": "50 чел",
+        "name": "Елена",
+        "phone_digits": "79645328682",
+        "phone_raw": "+79645328682",
+        "source": "Заявки хост",
+        "telegram_username": ""
+      },
+      "first_seen_at": "2026-09-08T12:39:45+03:00",
+      "first_seen_ts": 1788860385,
+      "guests": 50,
+      "guests_max": null,
+      "guests_min": null,
+      "guests_raw": "50 чел",
+      "id": "5cf6bd06410f19ce",
+      "identifier": {
+        "type": "phone",
+        "value": "79645328682"
+      },
+      "last_seen_at": "2026-09-08T12:39:45+03:00",
+      "last_seen_ts": 1788860385,
+      "manager_reaction": null,
+      "max": {
+        "chat_id": -71704692523093,
+        "message_ids": [
+          "mid.ffffbec8f345ffab01a0806349c0760b"
+        ],
+        "sender_name": "Дмитрий Жуков",
+        "sender_user_id": 201560258,
+        "sender_username": null
+      },
+      "message_id": "mid.ffffbec8f345ffab01a0806349c0760b",
+      "name": "Елена",
+      "phone": "+79645328682",
+      "received_at": "2026-09-08T12:39:45+03:00",
+      "sender_name": "Дмитрий Жуков",
+      "sender_user_id": 201560258,
+      "source": "Заявки хост",
+      "status": "OK",
+      "username": "",
+      "violations": []
     }
   ],
   "schema_version": 1
