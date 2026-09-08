@@ -15,76 +15,143 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Query amoCRM read-only by phone
+      - name: Scan maximum available MAX and archived Telegram history
         working-directory: app
         env:
-          AMOCRM_TOKEN: ${{ secrets.AMOCRM_TOKEN }}
+          MAX_BOT_TOKEN: ${{ secrets.MAX_BOT_TOKEN }}
         run: |
           PYTHONPATH=src python - <<'PY'
-          import json, os
+          import json, os, re, ssl, urllib.error, urllib.parse, urllib.request
           from datetime import datetime, timezone, timedelta
-          import lead_control.amocrm_client as amo
+          from pathlib import Path
+          from zoneinfo import ZoneInfo
 
-          # Diagnostic must never retry a 429/HTTP failure automatically.
-          amo.MAX_REQUEST_ATTEMPTS = 1
-          client = amo.AmoCRMClient('https://alex1901yaru.amocrm.ru', os.environ['AMOCRM_TOKEN'].strip())
-          MSK = timezone(timedelta(hours=3))
+          from lead_control.normalize import normalize_phone
+          from lead_control.telegram_history_202607_202608 import load_history
+          from lead_control.wedwed_enrichment import _extract_wedwed_url, _fetch_html, parse_wedwed_request_page
 
-          def msk(ts):
-              return datetime.fromtimestamp(int(ts), tz=timezone.utc).astimezone(MSK).isoformat() if ts else ''
+          TARGET = '79165961844'
+          TARGET10 = TARGET[-10:]
+          CHAT_ID = -71704692523093
+          API = 'https://platform-api2.max.ru/messages'
+          MSK = ZoneInfo('Europe/Moscow')
+          token = os.environ['MAX_BOT_TOKEN'].strip()
+          cafile = Path('certs/max_ca_bundle.pem')
+          context = ssl.create_default_context(cafile=str(cafile)) if cafile.exists() else ssl.create_default_context()
 
-          queries = ('+7 916 596-18-44', '79165961844', '89165961844', '9165961844')
-          candidates = {}
-          contacts_seen = {}
+          def ts_msk(ms):
+              if not ms:
+                  return ''
+              return datetime.fromtimestamp(int(ms)/1000, tz=timezone.utc).astimezone(MSK).isoformat()
 
-          for q in queries:
+          def fetch_batch(from_ms, to_ms=0, count=100):
+              params = {'chat_id': CHAT_ID, 'from': from_ms, 'to': to_ms, 'count': count}
+              req = urllib.request.Request(API + '?' + urllib.parse.urlencode(params), headers={'Accept':'application/json','Authorization':token}, method='GET')
               try:
-                  direct = client._search_collection('leads', q, with_value=None)
-                  contacts = client._search_collection('contacts', q, with_value='leads')
-              except RuntimeError as exc:
-                  print('QUERY_ERROR', q, str(exc))
-                  continue
-              print('QUERY_COUNTS', q, 'leads=', len(direct), 'contacts=', len(contacts))
-              for c in contacts:
-                  contacts_seen[int(c['id'])] = c
-              for item in client._flatten_lead_candidates(direct, contacts):
-                  candidates[int(item['id'])] = item
+                  with urllib.request.urlopen(req, timeout=30, context=context) as r:
+                      body = json.loads(r.read().decode('utf-8'))
+              except urllib.error.HTTPError as e:
+                  raise SystemExit(f'MAX_HTTP_{e.code}')
+              except urllib.error.URLError as e:
+                  raise SystemExit(f'MAX_URL_ERROR {e.reason}')
+              def extract(x):
+                  if isinstance(x, list): return x
+                  if isinstance(x, dict):
+                      for k in ('messages','items','result'):
+                          v=x.get(k)
+                          if isinstance(v,list): return v
+                          if isinstance(v,dict):
+                              z=extract(v)
+                              if isinstance(z,list): return z
+                  return None
+              out=extract(body)
+              if not isinstance(out,list):
+                  raise SystemExit('MAX_BAD_RESPONSE')
+              return [x for x in out if isinstance(x,dict)]
 
-          print('CONTACTS_BEGIN')
-          for cid, c in sorted(contacts_seen.items()):
-              full = client._get_entity('contacts', cid, params={'with':'leads'}) or c
-              phones=[]
-              for cf in full.get('custom_fields_values') or []:
-                  if str(cf.get('field_code') or '').upper() == 'PHONE' or str(cf.get('field_name') or '').casefold() in {'телефон','phone'}:
-                      phones.extend(str(v.get('value') or '') for v in (cf.get('values') or []))
-              print(json.dumps({
-                  'id': cid,
-                  'name': full.get('name'),
-                  'created_at_msk': msk(full.get('created_at')),
-                  'updated_at_msk': msk(full.get('updated_at')),
-                  'phones': phones,
-                  'lead_ids': [x.get('id') for x in ((full.get('_embedded') or {}).get('leads') or [])],
-              }, ensure_ascii=False))
-          print('CONTACTS_END')
+          now_ms = int(datetime.now(timezone.utc).timestamp()*1000)
+          cursor = now_ms
+          seen=set(); messages=[]; pages=0
+          while cursor >= 0 and pages < 500:
+              batch=fetch_batch(cursor, 0, 100)
+              pages += 1
+              if not batch: break
+              oldest=None; added=0
+              for m in batch:
+                  body=m.get('body') if isinstance(m.get('body'),dict) else {}
+                  mid=str(body.get('mid') or m.get('message_id') or '')
+                  t=m.get('timestamp') or body.get('timestamp')
+                  if t is not None:
+                      oldest=int(t) if oldest is None else min(oldest,int(t))
+                  key=mid or json.dumps(m,sort_keys=True,ensure_ascii=False)
+                  if key in seen: continue
+                  seen.add(key); messages.append(m); added += 1
+              if oldest is None or len(batch)<100 or added==0: break
+              nxt=oldest-1
+              if nxt>=cursor: break
+              cursor=nxt
+          if pages >= 500:
+              raise SystemExit('MAX_PAGE_LIMIT_REACHED')
 
-          rows=[]
-          for lid in sorted(candidates):
-              lead = client._get_entity('leads', lid) or candidates[lid]
-              custom={}
-              for cf in lead.get('custom_fields_values') or []:
-                  label = str(cf.get('field_name') or cf.get('field_id') or '')
-                  custom[label] = [v.get('value') for v in (cf.get('values') or [])]
-              rows.append({
-                  'id': lid,
-                  'name': lead.get('name'),
-                  'created_at_msk': msk(lead.get('created_at')),
-                  'updated_at_msk': msk(lead.get('updated_at')),
-                  'pipeline_id': lead.get('pipeline_id'),
-                  'status_id': lead.get('status_id'),
-                  'responsible_user_id': lead.get('responsible_user_id'),
-                  'custom_fields': custom,
-              })
-          print('LEADS_JSON_BEGIN')
-          print(json.dumps(rows, ensure_ascii=False, indent=2))
-          print('LEADS_JSON_END')
+          times=[]
+          for m in messages:
+              body=m.get('body') if isinstance(m.get('body'),dict) else {}
+              t=m.get('timestamp') or body.get('timestamp')
+              if t: times.append(int(t))
+          print('MAX_RANGE', ts_msk(min(times) if times else None), ts_msk(max(times) if times else None), 'messages', len(messages), 'pages', pages)
+
+          direct=[]; wed_urls={}; tomesto_markers=[]
+          for m in messages:
+              body=m.get('body') if isinstance(m.get('body'),dict) else {}
+              t=m.get('timestamp') or body.get('timestamp')
+              raw=json.dumps(m,ensure_ascii=False)
+              digits=re.sub(r'\D','',raw)
+              if TARGET in digits or TARGET10 in digits:
+                  direct.append((t, raw[:2500]))
+              low=raw.casefold().replace('ё','е')
+              if 'то место' in low or 'tomesto' in low or 'to mesto' in low:
+                  tomesto_markers.append((t, raw[:1800]))
+              for url in re.findall(r'https://wedwed\.ru/(?:l/[A-Za-z0-9_-]+|api/viewOrder/[^\s<>"\']+)', raw, flags=re.I):
+                  wed_urls.setdefault(url.rstrip('.,);]\\"'), t)
+
+          print('MAX_DIRECT_MATCHES', len(direct))
+          for t,raw in direct:
+              print('MAX_DIRECT', ts_msk(t), raw)
+          print('MAX_TOMESTO_MARKERS', len(tomesto_markers))
+          for t,raw in tomesto_markers[:100]:
+              print('MAX_TOMESTO', ts_msk(t), raw)
+          print('MAX_WEDWED_URLS', len(wed_urls))
+
+          target_wed=[]
+          for url,t in sorted(wed_urls.items(), key=lambda kv: int(kv[1] or 0)):
+              try:
+                  page=_fetch_html(url)
+                  data=parse_wedwed_request_page(page)
+                  phone=normalize_phone(str(data.get('phone_raw') or ''))
+                  print('WEDWED_PAGE', ts_msk(t), url, json.dumps(data,ensure_ascii=False), 'normalized', phone)
+                  if phone == TARGET:
+                      target_wed.append((t,url,data))
+              except Exception as e:
+                  print('WEDWED_PAGE_ERROR', ts_msk(t), url, type(e).__name__, str(e))
+          print('TARGET_WEDWED_MATCHES', len(target_wed))
+          for t,url,data in target_wed:
+              print('TARGET_WEDWED', ts_msk(t), url, json.dumps(data,ensure_ascii=False))
+
+          # Maximum Telegram archive available in this repository.
+          tg=load_history()
+          tg_times=[]; tg_hits=[]
+          for item in tg:
+              stamp=item.get('telegram_date') or item.get('date') or item.get('timestamp')
+              if isinstance(stamp,(int,float)):
+                  # Telegram timestamps are seconds.
+                  tg_times.append(int(stamp)*1000 if int(stamp)<10**12 else int(stamp))
+              raw=json.dumps(item,ensure_ascii=False)
+              digs=re.sub(r'\D','',raw)
+              if TARGET in digs or TARGET10 in digs:
+                  tg_hits.append(raw[:2500])
+          print('TG_ARCHIVE_ITEMS', len(tg))
+          print('TG_RANGE', ts_msk(min(tg_times) if tg_times else None), ts_msk(max(tg_times) if tg_times else None))
+          print('TG_TARGET_MATCHES', len(tg_hits))
+          for raw in tg_hits:
+              print('TG_TARGET', raw)
           PY
