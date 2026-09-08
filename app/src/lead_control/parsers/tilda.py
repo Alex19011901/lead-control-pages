@@ -40,6 +40,7 @@ FIELD_ALIASES = {
         "ym client id",
         "ym_client_id",
     },
+    "form_submit_timestamp": {"form_submit_timestamp"},
 }
 
 WORD_NUMBERS = {
@@ -84,6 +85,7 @@ def parse_tilda_message(message: dict[str, Any]) -> dict[str, Any] | None:
         "event_type": event_type,
         "yclid": fields.get("yclid", ""),
         "metrika_client_id": fields.get("metrika_client_id", ""),
+        "form_submit_timestamp": _parse_unix_timestamp_seconds(fields.get("form_submit_timestamp")),
         "description": str(text).strip(),
     }
     reason = test_lead_reason(lead, text)
@@ -169,3 +171,12 @@ def _parse_int(value: str | None) -> int | None:
     if not match:
         return None
     return int(match.group(0))
+
+
+def _parse_unix_timestamp_seconds(value: str | None) -> int | None:
+    if not value:
+        return None
+    raw = value.strip()
+    if not re.fullmatch(r"\d{1,10}", raw):
+        return None
+    return int(raw)
