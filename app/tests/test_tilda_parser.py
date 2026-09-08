@@ -107,14 +107,14 @@ class TildaParserTests(unittest.TestCase):
         self.assertEqual(lead["ignored_reason"], "test_yclid")
         self.assertIn("yclid: TEST_YCLID_20260903", lead["description"])
 
-    def test_tilda_metrika_client_id_is_parsed(self) -> None:
+    def test_tilda_metrika_client_id_is_parsed_as_string(self) -> None:
         message = {
             "from": {"username": "TildaFormsBot", "first_name": "TildaForms"},
             "text": (
                 "Содержание заявки:\n"
                 "Name: Client ID Check\n"
                 "Phone: +79265350168\n"
-                "Metrika ClientID: 12345678901234567890\n"
+                "metrika_client_id: 12345678901234567890\n"
                 "yclid: 987654321\n"
             ),
         }
@@ -122,7 +122,58 @@ class TildaParserTests(unittest.TestCase):
         self.assertIsNotNone(lead)
         assert lead is not None
         self.assertEqual(lead["metrika_client_id"], "12345678901234567890")
+        self.assertIsInstance(lead["metrika_client_id"], str)
         self.assertEqual(lead["yclid"], "987654321")
+
+    def test_tilda_ym_client_id_is_alias_for_metrika_client_id(self) -> None:
+        message = {
+            "from": {"username": "TildaFormsBot", "first_name": "TildaForms"},
+            "text": (
+                "Содержание заявки:\n"
+                "Name: Alias Check\n"
+                "Phone: +79265350168\n"
+                "ym_client_id: 998877665544332211\n"
+            ),
+        }
+        lead = parse_tilda_message(message)
+        self.assertIsNotNone(lead)
+        assert lead is not None
+        self.assertEqual(lead["metrika_client_id"], "998877665544332211")
+
+    def test_tilda_form_submit_timestamp_is_unix_utc_seconds(self) -> None:
+        message = {
+            "from": {"username": "TildaFormsBot", "first_name": "TildaForms"},
+            "text": (
+                "Содержание заявки:\n"
+                "Name: Timestamp Check\n"
+                "Phone: +79265350168\n"
+                "form_submit_timestamp: 1788851045\n"
+            ),
+        }
+        lead = parse_tilda_message(message)
+        self.assertIsNotNone(lead)
+        assert lead is not None
+        self.assertEqual(lead["form_submit_timestamp"], 1788851045)
+        self.assertIsInstance(lead["form_submit_timestamp"], int)
+
+    def test_tilda_bad_or_empty_timestamp_does_not_break_lead(self) -> None:
+        for raw_line in ("form_submit_timestamp: not-a-timestamp\n", "form_submit_timestamp:\n"):
+            with self.subTest(raw_line=raw_line):
+                message = {
+                    "from": {"username": "TildaFormsBot", "first_name": "TildaForms"},
+                    "text": (
+                        "Содержание заявки:\n"
+                        "Name: Safe Timestamp Check\n"
+                        "Phone: +79265350168\n"
+                        "yclid: 987654321\n"
+                        + raw_line
+                    ),
+                }
+                lead = parse_tilda_message(message)
+                self.assertIsNotNone(lead)
+                assert lead is not None
+                self.assertIsNone(lead["form_submit_timestamp"])
+                self.assertEqual(lead["yclid"], "987654321")
 
 
 if __name__ == "__main__":
