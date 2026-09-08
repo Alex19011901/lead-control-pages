@@ -11708,14 +11708,14 @@
         "crm_lead_id": 48256049,
         "deadline_at": 1788814800,
         "excluded": false,
-        "first_activity_at": null,
+        "first_activity_at": 1788864996,
         "lead_created_at": 1788531733,
         "pipeline_id": 10081590,
         "responsible_user_id": 12982830,
         "rule_version": 6,
-        "state": "NO_FEEDBACK",
-        "status_id": 79927038,
-        "status_name": "Выслано предложение"
+        "state": "CLEAR",
+        "status_id": 88382034,
+        "status_name": "Запрошена ос"
       },
       "crm_found": true,
       "crm_required": true,
@@ -12703,6 +12703,220 @@
         ],
         "update_ids": [
           185608247
+        ]
+      },
+      "violations": []
+    },
+    {
+      "category": "MARQUIZ",
+      "channel": "TELEGRAM",
+      "crm": {
+        "ambiguity_count": 0,
+        "created_at": 1788863514,
+        "entity_id": 48360627,
+        "entity_type": "lead",
+        "event_type": "Свадьба",
+        "found": true,
+        "guests": "25",
+        "guests_source": "CRM",
+        "responsible_user_id": 12982830,
+        "responsible_user_name": "Максим",
+        "updated_at": 1788863607
+      },
+      "crm_created_at": 1788863514,
+      "crm_feedback": {
+        "crm_lead_id": 48360627,
+        "deadline_at": 1789160400,
+        "excluded": false,
+        "first_activity_at": null,
+        "lead_created_at": 1788863514,
+        "pipeline_id": 10081590,
+        "responsible_user_id": 12982830,
+        "rule_version": 6,
+        "state": "WAITING",
+        "status_id": 79927038,
+        "status_name": "Выслано предложение"
+      },
+      "crm_found": true,
+      "crm_required": true,
+      "crm_responsible": 12982830,
+      "deadline_msk_ts": 1788901199,
+      "event_type": "Свадьба",
+      "event_type_source": "CRM",
+      "fields": {
+        "category": "MARQUIZ",
+        "description": "🎯 Заявка на квиз \"Организуйте идеальное мероприятие в ресторане «Светлый».\"\n\nИмя: Мария\nТелефон: +79996067361\n\nКакое мероприятие вы планируете?\nСвадьба\n\nСколько гостей ожидается?\n25\n\nУточните дату Вашего мероприятия?\n27.08.2027\n\nКакой формат мероприятия интересует?\nБанкет\n\nТовары:\n\nТовары не выбраны\n\n\nБонусы: Бесплатная дегустация, Без арендной платы\n\nМестоположение: Россия, Москва\nUTM-метки:\ncampaign: Bankety_poisk_quiz\nmedium: cpc\nsource: yandex_direct\n\nСтраница: https://mrqz.me/moscowbanket?callibri=yd_c:712849433_gb:5773918675_ad:1915822986185365516_ph:57675183343_st:search_s:yandex.ru_dt:mobile&utm_source=yandex_direct&utm_medium=cpc&utm_campaign=Bankety_poisk_quiz&type=search&source=yandex.ru&added=no&block=other&position=1&keyword=%D0%B7%D0%B0%D0%BB%20%D0%B1%D0%B0%D0%BD%D0%BA%D0%B5%D1%82%D0%B0%20%D0%BC%D0%BE%D1%81%D0%BA%D0%B2%D0%B5&etext=2202.Q10hrJD-Xhc-XbOJfL42fKrv6XLvciIVeIkXUiwaHTkjdFEI9cx1erVuU9rH191g0-GyzzIPx_f5fGdcWWFmMGNrY3RocGhhb3Rlb2Z1Zmg.132d6c5cf5e838b00320452af6408e9aeea30c80&yclid=7539029197073416191&ybaip=1\n\nСогласия:\nЯ согласен на обработку персональных данных: Да",
+        "event_date": "2027-08-27",
+        "event_date_raw": "27.08.2027",
+        "event_format": "Банкет",
+        "event_type": "Свадьба",
+        "guests_count": 25,
+        "guests_raw": "25",
+        "name": "Мария",
+        "phone_digits": "79996067361",
+        "phone_raw": "+79996067361",
+        "source": "MARQUIZ",
+        "telegram_username": ""
+      },
+      "first_seen_at": "2026-09-08T13:25:21+03:00",
+      "first_seen_ts": 1788863121,
+      "id": "946c24dec20377af",
+      "identifier": {
+        "type": "phone",
+        "value": "79996067361"
+      },
+      "last_seen_at": "2026-09-08T13:25:21+03:00",
+      "last_seen_ts": 1788863121,
+      "manager_reaction": {
+        "name": "Максим",
+        "reacted_at": "2026-09-08T13:29:17+03:00",
+        "reacted_ts": 1788863357,
+        "reaction": [
+          {
+            "emoji": "👍",
+            "type": "emoji"
+          }
+        ],
+        "update_id": 185608253,
+        "user_id": 392177002,
+        "username": "empairbey"
+      },
+      "received_at": "2026-09-08T13:25:21+03:00",
+      "sender_name": "MarquizBot",
+      "sender_user_id": 446491725,
+      "sender_username": "MarquizBot",
+      "source": "MARQUIZ",
+      "status": "OK",
+      "telegram": {
+        "chat_id": -1001645768111,
+        "message_ids": [
+          5826
+        ],
+        "update_ids": [
+          185608252
+        ]
+      },
+      "violations": []
+    },
+    {
+      "category": "MARQUIZ",
+      "channel": "TELEGRAM",
+      "crm": {
+        "ambiguity_count": 0,
+        "created_at": null,
+        "entity_id": null,
+        "entity_type": null,
+        "event_type": null,
+        "found": false,
+        "responsible_user_id": null,
+        "responsible_user_name": null,
+        "updated_at": null
+      },
+      "crm_created_at": null,
+      "crm_found": false,
+      "crm_required": true,
+      "crm_responsible": null,
+      "deadline_msk_ts": 1788901199,
+      "fields": {
+        "category": "MARQUIZ",
+        "description": "🎯 Заявка на квиз \"Организуйте идеальное мероприятие в ресторане «Светлый».\"\n\nИмя: Мила Киселева\nТелефон: +79854130392\n\nКакое мероприятие вы планируете?\nторжественный обед\n\nСколько гостей ожидается?\n12\n\nУточните дату Вашего мероприятия?\n31.10.2026\n\nКакой формат мероприятия интересует?\nБанкет\n\nТовары:\n\nТовары не выбраны\n\n\nБонусы: Бесплатная дегустация, Без арендной платы\n\nМестоположение: Россия, Москва\nUTM-метки:\ncampaign: Bankety_poisk_quiz\nmedium: cpc\nsource: yandex_direct\n\nСтраница: https://mrqz.me/moscowbanket?callibri=yd_c:712849433_gb:5773918675_ad:1915822986185365516_ph:57675183326_st:search_s:none_dt:desktop&utm_source=yandex_direct&utm_medium=cpc&utm_campaign=Bankety_poisk_quiz&type=search&source=none&added=no&block=premium&position=1&keyword=%D0%B1%D0%B0%D0%BD%D0%BA%D0%B5%D1%82%D0%BD%D1%8B%D0%B5%20%D0%B7%D0%B0%D0%BB%D1%8B%20%D0%BC%D0%BE%D1%81%D0%BA%D0%B2%D1%8B&etext=2202.sGZM24Fuky1noE4iZv8Pk2_bVUvW9bPjaxobZPzvv5-LnGGQowBrzG48EKimuTM5ggqXuq4XHJWNPjv43ziWO1CrelthItTZeEdWGXhcN6xxZWx3dWxmZHpqc2FueGxp.6723e4a4b0f58049ddd0b95e57ed8b207a037439&yclid=9404878925962936319&ybaip=1\n\nСогласия:\nЯ согласен на обработку персональных данных: Да",
+        "event_date": "2026-10-31",
+        "event_date_raw": "31.10.2026",
+        "event_format": "Банкет",
+        "event_type": "торжественный обед",
+        "guests_count": 12,
+        "guests_raw": "12",
+        "name": "Мила Киселева",
+        "phone_digits": "79854130392",
+        "phone_raw": "+79854130392",
+        "source": "MARQUIZ",
+        "telegram_username": ""
+      },
+      "first_seen_at": "2026-09-08T14:15:43+03:00",
+      "first_seen_ts": 1788866143,
+      "id": "97a6634f2297e24f",
+      "identifier": {
+        "type": "phone",
+        "value": "79854130392"
+      },
+      "last_seen_at": "2026-09-08T14:15:43+03:00",
+      "last_seen_ts": 1788866143,
+      "manager_reaction": null,
+      "received_at": "2026-09-08T14:15:43+03:00",
+      "sender_name": "MarquizBot",
+      "sender_user_id": 446491725,
+      "sender_username": "MarquizBot",
+      "source": "MARQUIZ",
+      "status": "PENDING",
+      "telegram": {
+        "chat_id": -1001645768111,
+        "message_ids": [
+          5827
+        ],
+        "update_ids": [
+          185608254
+        ]
+      },
+      "violations": []
+    },
+    {
+      "category": "САЙТ ТИЛЬДА",
+      "channel": "TELEGRAM",
+      "crm": {
+        "ambiguity_count": 0,
+        "created_at": null,
+        "entity_id": null,
+        "entity_type": null,
+        "event_type": null,
+        "found": false,
+        "responsible_user_id": null,
+        "responsible_user_name": null,
+        "updated_at": null
+      },
+      "crm_created_at": null,
+      "crm_found": false,
+      "crm_required": true,
+      "crm_responsible": null,
+      "deadline_msk_ts": 1788901199,
+      "fields": {
+        "category": "САЙТ ТИЛЬДА",
+        "description": "Содержание заявки:\nName: Ольга\nPhone: +79163641370\nInput: 25\nCheckbox: yes\n\nДополнительная информация:\nКод заявки: 2925975:8658890712\nКод блока: rec940366316\nhttps://moscowbanket.ru/maiizal\nUTM source: yandex_direct\nUTM medium: cpc\nUTM campaign: svadba_rsya\nUTM term: банкет для свадьбы\n-----",
+        "event_date": "",
+        "event_date_raw": "",
+        "event_type": "",
+        "form_submit_timestamp": null,
+        "guests_count": 25,
+        "metrika_client_id": "",
+        "name": "Ольга",
+        "phone_digits": "79163641370",
+        "phone_raw": "+79163641370",
+        "source": "САЙТ ТИЛЬДА",
+        "telegram_username": "",
+        "yclid": ""
+      },
+      "first_seen_at": "2026-09-08T14:19:09+03:00",
+      "first_seen_ts": 1788866349,
+      "id": "b82ac7158c79bd92",
+      "identifier": {
+        "type": "phone",
+        "value": "79163641370"
+      },
+      "last_seen_at": "2026-09-08T14:19:09+03:00",
+      "last_seen_ts": 1788866349,
+      "manager_reaction": null,
+      "received_at": "2026-09-08T14:19:09+03:00",
+      "sender_name": "TildaForms",
+      "sender_user_id": 265299531,
+      "sender_username": "TildaFormsBot",
+      "source": "САЙТ ТИЛЬДА",
+      "status": "PENDING",
+      "telegram": {
+        "chat_id": -1001645768111,
+        "message_ids": [
+          5828
+        ],
+        "update_ids": [
+          185608255
         ]
       },
       "violations": []
@@ -33258,8 +33472,8 @@
         "responsible_user_id": 12982830,
         "rule_version": 6,
         "state": "EXCLUDED",
-        "status_id": 86372998,
-        "status_name": "ЖДУНЫ"
+        "status_id": 143,
+        "status_name": "Закрыто и не реализовано"
       },
       "crm_found": true,
       "crm_required": true,
@@ -39391,14 +39605,14 @@
         "crm_lead_id": 48242055,
         "deadline_at": 1788814800,
         "excluded": false,
-        "first_activity_at": null,
+        "first_activity_at": 1788865091,
         "lead_created_at": 1788508251,
         "pipeline_id": 10081590,
         "responsible_user_id": 12982830,
         "rule_version": 6,
-        "state": "NO_FEEDBACK",
-        "status_id": 79927038,
-        "status_name": "Выслано предложение"
+        "state": "CLEAR",
+        "status_id": 79927042,
+        "status_name": "Принимают решение"
       },
       "crm_found": true,
       "crm_required": true,
@@ -39627,7 +39841,7 @@
         "first_activity_at": null,
         "lead_created_at": 1788531414,
         "pipeline_id": 10081590,
-        "responsible_user_id": 12982830,
+        "responsible_user_id": 13009530,
         "rule_version": 6,
         "state": "NO_FEEDBACK",
         "status_id": 79927034,
@@ -39711,14 +39925,14 @@
         "crm_lead_id": 48256203,
         "deadline_at": 1788814800,
         "excluded": false,
-        "first_activity_at": null,
+        "first_activity_at": 1788864880,
         "lead_created_at": 1788532076,
         "pipeline_id": 10081590,
         "responsible_user_id": 12982830,
         "rule_version": 6,
-        "state": "NO_FEEDBACK",
-        "status_id": 79927038,
-        "status_name": "Выслано предложение"
+        "state": "CLEAR",
+        "status_id": 88382034,
+        "status_name": "Запрошена ос"
       },
       "crm_found": true,
       "crm_required": true,
