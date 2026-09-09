@@ -13111,7 +13111,20 @@
       },
       "last_seen_at": "2026-09-09T13:02:43+03:00",
       "last_seen_ts": 1788948163,
-      "manager_reaction": null,
+      "manager_reaction": {
+        "name": "Олеся",
+        "reacted_at": "2026-09-09T14:08:28+03:00",
+        "reacted_ts": 1788952108,
+        "reaction": [
+          {
+            "emoji": "❤",
+            "type": "emoji"
+          }
+        ],
+        "update_id": 185608284,
+        "user_id": 328611361,
+        "username": "Olesyagozhina"
+      },
       "received_at": "2026-09-09T13:02:43+03:00",
       "sender_name": "TildaForms",
       "sender_user_id": 265299531,
@@ -13125,6 +13138,67 @@
         ],
         "update_ids": [
           185608281
+        ]
+      },
+      "violations": []
+    },
+    {
+      "category": "MARQUIZ",
+      "channel": "TELEGRAM",
+      "crm": {
+        "ambiguity_count": 0,
+        "created_at": null,
+        "entity_id": null,
+        "entity_type": null,
+        "event_type": null,
+        "found": false,
+        "responsible_user_id": null,
+        "responsible_user_name": null,
+        "updated_at": null
+      },
+      "crm_created_at": null,
+      "crm_found": false,
+      "crm_required": true,
+      "crm_responsible": null,
+      "deadline_msk_ts": 1788987599,
+      "fields": {
+        "category": "MARQUIZ",
+        "description": "🎯 Заявка на квиз \"Организуйте идеальное мероприятие в ресторане «Светлый».\"\n\nИмя: Анастасия Соколовская\nТелефон: +79779369625\n\nКакое мероприятие вы планируете?\nКорпоратив\n\nСколько гостей ожидается?\n25\n\nУточните дату Вашего мероприятия?\n25.12.2026\n\nКакой формат мероприятия интересует?\nБанкет\n\nТовары:\n\nТовары не выбраны\n\n\nБонусы: Бесплатная дегустация, Без арендной платы\n\nМестоположение: Россия, Москва\nUTM-метки:\ncampaign: Bankety_poisk_quiz\nmedium: cpc\nsource: yandex_direct\n\nСтраница: https://mrqz.me/moscowbanket?callibri=yd_c:712849433_gb:5773918659_ad:1915822986185365500_ph:205773918659_st:search_s:none_dt:mobile&utm_source=yandex_direct&utm_medium=cpc&utm_campaign=Bankety_poisk_quiz&type=search&source=none&added=no&block=premium&position=1&keyword=---autotargeting&etext=2202.OIQEkw2d7-AgZe3QmncGbMfDW7I0yvJoT7XUhoMhhs4ZxQGkJLSkvhcbs86uv-fOBnXoBjHnbgwIIThTjoDuUuo8CF2OFx6Yo-rZ_LD5bThxeWFlbmV5aGRtaW14anJn.c2ae3d05b22c406dbaea493a5d8e3b37426d9a87&yclid=13035897976882200575&ybaip=1\n\nСогласия:\nЯ согласен на обработку персональных данных: Да",
+        "event_date": "2026-12-25",
+        "event_date_raw": "25.12.2026",
+        "event_format": "Банкет",
+        "event_type": "Корпоратив",
+        "guests_count": 25,
+        "guests_raw": "25",
+        "name": "Анастасия Соколовская",
+        "phone_digits": "79779369625",
+        "phone_raw": "+79779369625",
+        "source": "MARQUIZ",
+        "telegram_username": ""
+      },
+      "first_seen_at": "2026-09-09T14:26:42+03:00",
+      "first_seen_ts": 1788953202,
+      "id": "736be1e47c95f456",
+      "identifier": {
+        "type": "phone",
+        "value": "79779369625"
+      },
+      "last_seen_at": "2026-09-09T14:26:42+03:00",
+      "last_seen_ts": 1788953202,
+      "manager_reaction": null,
+      "received_at": "2026-09-09T14:26:42+03:00",
+      "sender_name": "MarquizBot",
+      "sender_user_id": 446491725,
+      "sender_username": "MarquizBot",
+      "source": "MARQUIZ",
+      "status": "PENDING",
+      "telegram": {
+        "chat_id": -1001645768111,
+        "message_ids": [
+          5848
+        ],
+        "update_ids": [
+          185608286
         ]
       },
       "violations": []
@@ -41526,27 +41600,44 @@
       "channel": "MAX",
       "crm": {
         "ambiguity_count": 0,
-        "created_at": null,
-        "entity_id": null,
-        "entity_type": null,
-        "event_type": null,
-        "found": false,
-        "responsible_user_id": null,
-        "responsible_user_name": null,
-        "updated_at": null
+        "created_at": 1788948590,
+        "entity_id": 48393971,
+        "entity_type": "lead",
+        "event_type": "Корпоратив",
+        "found": true,
+        "guests": "20",
+        "guests_source": "CRM",
+        "responsible_user_id": 13009530,
+        "responsible_user_name": "Олеся",
+        "updated_at": 1788948596
       },
-      "crm_created_at": null,
-      "crm_found": false,
+      "crm_created_at": 1788948590,
+      "crm_feedback": {
+        "crm_lead_id": 48393971,
+        "deadline_at": 1789246800,
+        "excluded": false,
+        "first_activity_at": null,
+        "lead_created_at": 1788948590,
+        "pipeline_id": 10081590,
+        "responsible_user_id": 13009530,
+        "rule_version": 6,
+        "state": "WAITING",
+        "status_id": 79927038,
+        "status_name": "Выслано предложение"
+      },
+      "crm_found": true,
       "crm_required": true,
-      "crm_responsible": null,
+      "crm_responsible": 13009530,
       "deadline_msk_ts": 1788987599,
       "event_date": "2026-10-16",
+      "event_type": "Корпоратив",
+      "event_type_source": "CRM",
       "fields": {
         "category": "HOST",
         "email": "",
         "event_date": "2026-10-16",
         "event_date_raw": "16.10",
-        "event_type": "",
+        "event_type": "Корпоратив",
         "guests_count": null,
         "guests_max": 25,
         "guests_min": 20,
@@ -41587,7 +41678,7 @@
       "sender_name": "Елена",
       "sender_user_id": 121513620,
       "source": "Заявки хост",
-      "status": "PENDING",
+      "status": "OK",
       "username": "",
       "violations": []
     },
@@ -41654,6 +41745,76 @@
       "name": "Яна",
       "phone": "89250779787",
       "received_at": "2026-09-09T13:04:37+03:00",
+      "sender_name": "Елена",
+      "sender_user_id": 121513620,
+      "source": "Заявки хост",
+      "status": "PENDING",
+      "username": "",
+      "violations": []
+    },
+    {
+      "category": "HOST",
+      "channel": "MAX",
+      "crm": {
+        "ambiguity_count": 0,
+        "created_at": null,
+        "entity_id": null,
+        "entity_type": null,
+        "event_type": null,
+        "found": false,
+        "responsible_user_id": null,
+        "responsible_user_name": null,
+        "updated_at": null
+      },
+      "crm_created_at": null,
+      "crm_found": false,
+      "crm_required": true,
+      "crm_responsible": null,
+      "deadline_msk_ts": 1788987599,
+      "event_date": "2026-09-18",
+      "fields": {
+        "category": "HOST",
+        "email": "",
+        "event_date": "2026-09-18",
+        "event_date_raw": "18.09",
+        "event_type": "",
+        "guests_count": 8,
+        "guests_max": null,
+        "guests_min": null,
+        "guests_raw": "8п.",
+        "name": "Элла",
+        "phone_digits": "79031510919",
+        "phone_raw": "89031510919",
+        "source": "Заявки хост",
+        "telegram_username": ""
+      },
+      "first_seen_at": "2026-09-09T13:36:57+03:00",
+      "first_seen_ts": 1788950217,
+      "guests": 8,
+      "guests_max": null,
+      "guests_min": null,
+      "guests_raw": "8п.",
+      "id": "699bbb122fcca0f4",
+      "identifier": {
+        "type": "phone",
+        "value": "79031510919"
+      },
+      "last_seen_at": "2026-09-09T13:36:57+03:00",
+      "last_seen_ts": 1788950217,
+      "manager_reaction": null,
+      "max": {
+        "chat_id": -71704692523093,
+        "message_ids": [
+          "mid.ffffbec8f345ffab01a085be040406e0"
+        ],
+        "sender_name": "Елена",
+        "sender_user_id": 121513620,
+        "sender_username": null
+      },
+      "message_id": "mid.ffffbec8f345ffab01a085be040406e0",
+      "name": "Элла",
+      "phone": "89031510919",
+      "received_at": "2026-09-09T13:36:57+03:00",
       "sender_name": "Елена",
       "sender_user_id": 121513620,
       "source": "Заявки хост",
