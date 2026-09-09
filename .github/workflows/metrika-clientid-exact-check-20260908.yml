@@ -1,0 +1,224 @@
+name: One-off Metrika ClientID Exact Check 2026-09-08
+
+on:
+  push:
+    paths:
+      - ".github/workflows/metrika-clientid-exact-check-20260908.yml"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: metrika-clientid-exact-check-20260908
+  cancel-in-progress: false
+
+jobs:
+  diagnostic:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Verify read-only client allow-list
+        working-directory: app
+        run: PYTHONPATH=. python -m unittest tests.test_metrika_logs_readonly -v
+
+      - name: Check one ClientID against one day
+        working-directory: app
+        env:
+          YANDEX_METRIKA_READ_TOKEN: ${{ secrets.YANDEX_METRIKA_READ_TOKEN }}
+        run: |
+          PYTHONPATH=. python - <<'PY'
+          from __future__ import annotations
+
+          import datetime as dt
+          import hashlib
+          import json
+          import os
+          import re
+          import sys
+          import time
+
+          from scripts.metrika_logs_readonly import (
+              DEFAULT_ATTRIBUTION,
+              LogsApiError,
+              MetrikaLogsReadOnlyClient,
+              parse_tsv,
+          )
+
+          COUNTER_ID = 52597240
+          DATE1 = "2026-09-08"
+          DATE2 = "2026-09-08"
+          TARGET_CLIENT_ID_SHA256 = "9394a52a99bc1fe36f345bc0f1e6ef0d0efbf681bf1d15f3795cbf6b42c570da"
+          FORM_SUBMIT_TIMESTAMP = 1788874363
+          TELEGRAM_SERVER_TIMESTAMP = 1788874269
+          TERMINAL_FAILURES = {
+              "canceled",
+              "cleaned_by_user",
+              "cleaned_automatically_as_too_old",
+              "processing_failed",
+          }
+          FIELDS = (
+              "ym:s:visitID",
+              "ym:s:dateTime",
+              "ym:s:dateTimeUTC",
+              "ym:s:visitDuration",
+              "ym:s:clientID",
+              "ym:s:lastDirectClickOrder",
+              "ym:s:lastDirectBannerGroup",
+              "ym:s:lastDirectClickBanner",
+              "ym:s:lastDirectClickOrderName",
+              "ym:s:lastClickBannerGroupName",
+              "ym:s:lastDirectClickBannerName",
+              "ym:s:lastUTMSource",
+              "ym:s:lastUTMMedium",
+              "ym:s:lastUTMCampaign",
+              "ym:s:lastUTMContent",
+              "ym:s:lastUTMTerm",
+          )
+
+
+          def parse_utc(value: str) -> dt.datetime | None:
+              text = str(value or "").strip()
+              for fmt in ("%Y-%m-%d %H:%M:%S", "%Y-%m-%dT%H:%M:%S"):
+                  try:
+                      return dt.datetime.strptime(text, fmt).replace(tzinfo=dt.timezone.utc)
+                  except ValueError:
+                      pass
+              return None
+
+
+          def parse_duration(value: str) -> int | None:
+              try:
+                  parsed = int(float(str(value).strip()))
+              except (TypeError, ValueError):
+                  return None
+              return max(parsed, 0)
+
+
+          def clean(value: object) -> str:
+              return str(value or "").strip()
+
+
+          def contains(start: dt.datetime | None, duration: int | None, timestamp: int) -> bool | None:
+              if start is None or duration is None:
+                  return None
+              start_epoch = int(start.timestamp())
+              return start_epoch <= int(timestamp) <= start_epoch + duration
+
+
+          def safe_reason(exc: Exception) -> str:
+              value = f"{type(exc).__name__}:{exc}".replace("\n", " ").replace("\r", " ")
+              value = re.sub(r"(OAuth|Bearer)\\s+[A-Za-z0-9._~+/=-]+", r"\\1 [redacted]", value)
+              return value[:240]
+
+
+          token = os.environ.get("YANDEX_METRIKA_READ_TOKEN", "").strip()
+          if not token:
+              print(json.dumps({"status": "blocked", "reason": "missing_read_token"}, sort_keys=True))
+              raise SystemExit(2)
+
+          client = MetrikaLogsReadOnlyClient(token, counter_id=COUNTER_ID)
+          try:
+              client.evaluate(
+                  date1=DATE1,
+                  date2=DATE2,
+                  fields=FIELDS,
+                  attribution=DEFAULT_ATTRIBUTION,
+                  source="visits",
+              )
+              request = client.create_export(
+                  date1=DATE1,
+                  date2=DATE2,
+                  fields=FIELDS,
+                  attribution=DEFAULT_ATTRIBUTION,
+                  source="visits",
+              )
+              current = request
+              for poll_number in range(201):
+                  if current.status == "processed":
+                      break
+                  if current.status in TERMINAL_FAILURES:
+                      raise LogsApiError(f"log_request_{current.status}")
+                  if poll_number == 200:
+                      raise LogsApiError("log_request_timeout")
+                  time.sleep(3)
+                  current = client.status(request.request_id)
+
+              rows: list[dict[str, str]] = []
+              for part_number in current.parts:
+                  rows.extend(parse_tsv(client.download_part(current.request_id, part_number)))
+          except Exception as exc:
+              print(json.dumps({"status": "error", "reason": safe_reason(exc)}, sort_keys=True))
+              raise SystemExit(1)
+
+          visits = []
+          for row in rows:
+              client_id = clean(row.get("ym:s:clientID"))
+              if hashlib.sha256(client_id.encode("utf-8")).hexdigest() != TARGET_CLIENT_ID_SHA256:
+                  continue
+
+              visit_id = clean(row.get("ym:s:visitID"))
+              start_utc = parse_utc(clean(row.get("ym:s:dateTimeUTC")))
+              duration = parse_duration(clean(row.get("ym:s:visitDuration")))
+              campaign_id = clean(row.get("ym:s:lastDirectClickOrder"))
+              group_id = clean(row.get("ym:s:lastDirectBannerGroup"))
+              ad_id = clean(row.get("ym:s:lastDirectClickBanner"))
+              visits.append({
+                  "visit_id_sha256": hashlib.sha256(visit_id.encode("utf-8")).hexdigest() if visit_id else "",
+                  "date_time_counter": clean(row.get("ym:s:dateTime")),
+                  "date_time_utc": clean(row.get("ym:s:dateTimeUTC")),
+                  "visit_duration_seconds": duration,
+                  "contains_form_submit_timestamp": contains(start_utc, duration, FORM_SUBMIT_TIMESTAMP),
+                  "contains_telegram_server_timestamp": contains(start_utc, duration, TELEGRAM_SERVER_TIMESTAMP),
+                  "campaign_id": campaign_id,
+                  "group_id": group_id,
+                  "ad_id": ad_id,
+                  "direct_ids_complete": bool(campaign_id and group_id and ad_id),
+                  "campaign_name": clean(row.get("ym:s:lastDirectClickOrderName")),
+                  "group_name": clean(row.get("ym:s:lastClickBannerGroupName")),
+                  "ad_name": clean(row.get("ym:s:lastDirectClickBannerName")),
+                  "utm_source": clean(row.get("ym:s:lastUTMSource")),
+                  "utm_medium": clean(row.get("ym:s:lastUTMMedium")),
+                  "utm_campaign": clean(row.get("ym:s:lastUTMCampaign")),
+                  "utm_content": clean(row.get("ym:s:lastUTMContent")),
+                  "utm_term": clean(row.get("ym:s:lastUTMTerm")),
+              })
+
+          form_matches = sum(item["contains_form_submit_timestamp"] is True for item in visits)
+          telegram_matches = sum(item["contains_telegram_server_timestamp"] is True for item in visits)
+          unique_client_visit = len(visits) == 1
+          direct_triple_complete = unique_client_visit and visits[0]["direct_ids_complete"]
+          time_consistent = unique_client_visit and (form_matches == 1 or telegram_matches == 1)
+          proof_complete = bool(unique_client_visit and direct_triple_complete and time_consistent)
+          result = {
+              "status": "proved" if proof_complete else "not_proved",
+              "operation": "read_export_only",
+              "counter_id": COUNTER_ID,
+              "date1": DATE1,
+              "date2": DATE2,
+              "attribution": DEFAULT_ATTRIBUTION,
+              "target_client_id_sha256": TARGET_CLIENT_ID_SHA256,
+              "form_submit_timestamp": FORM_SUBMIT_TIMESTAMP,
+              "telegram_server_timestamp": TELEGRAM_SERVER_TIMESTAMP,
+              "rows_total": len(rows),
+              "target_client_visits_total": len(visits),
+              "form_timestamp_matches": form_matches,
+              "telegram_timestamp_matches": telegram_matches,
+              "unique_client_visit": unique_client_visit,
+              "direct_triple_complete": direct_triple_complete,
+              "time_consistent": time_consistent,
+              "proof_complete": proof_complete,
+              "request_id": current.request_id,
+              "visits_truncated": len(visits) > 10,
+              "visits": visits[:10],
+          }
+          print(json.dumps(result, ensure_ascii=False, sort_keys=True))
+          raise SystemExit(0 if proof_complete else 3)
+          PY
