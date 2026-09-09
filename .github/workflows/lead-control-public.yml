@@ -37,6 +37,14 @@ jobs:
 
       - name: Install OCR
         run: |
+          # Chrome is preinstalled and its APT source is unrelated to Lead Control OCR.
+          # Disable that third-party source to prevent transient index hash mismatches.
+          if [ -f /etc/apt/sources.list.d/google-chrome.list ]; then
+            sudo mv /etc/apt/sources.list.d/google-chrome.list /etc/apt/sources.list.d/google-chrome.list.disabled
+          fi
+          if [ -f /etc/apt/sources.list.d/google-chrome.sources ]; then
+            sudo mv /etc/apt/sources.list.d/google-chrome.sources /etc/apt/sources.list.d/google-chrome.sources.disabled
+          fi
           sudo apt-get update -qq
           sudo apt-get install -y -qq tesseract-ocr tesseract-ocr-rus
 
