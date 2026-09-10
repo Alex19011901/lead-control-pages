@@ -29,7 +29,7 @@ jobs:
         working-directory: app
         run: PYTHONPATH=. python -m unittest tests.test_metrika_logs_readonly -v
 
-      - name: Narrow one real Yandex Direct lead to exact hit and visit
+      - name: Disambiguate duplicate submitted hits for one real Direct lead
         working-directory: app
         env:
           YANDEX_METRIKA_READ_TOKEN: ${{ secrets.YANDEX_METRIKA_READ_TOKEN }}
@@ -52,6 +52,8 @@ jobs:
           DATE = "2026-09-07"
           ATTRIBUTION = "AUTOMATIC"
           TARGET_LEAD_ID = "300fbfa6c93bdcb2"
+          EXPECTED_UTM_SOURCE = "yandex_direct"
+          EXPECTED_UTM_MEDIUM = "cpc"
           EXPECTED_UTM_CAMPAIGN = "Svadba_poisk"
           TZ = dt.timezone(dt.timedelta(hours=3))
           TERMINAL_FAILURES = {
@@ -71,11 +73,15 @@ jobs:
               "ym:s:dateTimeUTC",
               "ym:s:visitDuration",
               "ym:s:clientID",
+              "ym:s:startURL",
               "ym:s:automaticTrafficSource",
               "ym:s:automaticAdvEngine",
               "ym:s:automaticDirectClickOrder",
               "ym:s:automaticDirectBannerGroup",
               "ym:s:automaticDirectClickBanner",
+              "ym:s:automaticUTMSource",
+              "ym:s:automaticUTMMedium",
+              "ym:s:automaticUTMCampaign",
           )
 
           def clean(value: object) -> str:
@@ -90,6 +96,16 @@ jobs:
                   return urllib.parse.urlsplit(clean(value)).path or "/"
               except Exception:
                   return ""
+
+          def yclid_hash_from_url(value: object) -> str:
+              try:
+                  query = urllib.parse.urlsplit(clean(value)).query
+                  for key, item in urllib.parse.parse_qsl(query, keep_blank_values=True):
+                      if key.lower() == "yclid" and item:
+                          return sha(item)
+              except Exception:
+                  pass
+              return ""
 
           def safe_reason(exc: Exception) -> str:
               value = f"{type(exc).__name__}:{exc}".replace("\n", " ").replace("\r", " ")
@@ -121,13 +137,16 @@ jobs:
               print(json.dumps({"status": "blocked", "reason": "target_lead_not_found", "lead_id": TARGET_LEAD_ID}, sort_keys=True))
               raise SystemExit(2)
 
+          target_yclid_hash = clean(lead.get("yclid_sha256"))
           if not (
               clean(lead.get("created_at")).startswith(DATE)
               and clean(lead.get("source")) == "САЙТ ТИЛЬДА"
               and clean(lead.get("channel")) == "TELEGRAM"
-              and clean(lead.get("utm_source")).lower() == "yandex_direct"
-              and clean(lead.get("utm_medium")).lower() == "cpc"
+              and clean(lead.get("utm_source")).lower() == EXPECTED_UTM_SOURCE
+              and clean(lead.get("utm_medium")).lower() == EXPECTED_UTM_MEDIUM
               and clean(lead.get("utm_campaign")) == EXPECTED_UTM_CAMPAIGN
+              and bool(lead.get("has_yclid"))
+              and len(target_yclid_hash) == 64
           ):
               print(json.dumps({"status": "blocked", "reason": "target_lead_facts_changed", "lead_id": TARGET_LEAD_ID}, sort_keys=True))
               raise SystemExit(2)
@@ -150,12 +169,8 @@ jobs:
               hits_request_id, hits = export_rows(client, HIT_FIELDS, "hits")
           except Exception as exc:
               print(json.dumps({
-                  "status": "error",
-                  "stage": "hits",
-                  "reason": safe_reason(exc),
-                  "counter_id": COUNTER_ID,
-                  "date": DATE,
-                  "lead_id": TARGET_LEAD_ID,
+                  "status": "error", "stage": "hits", "reason": safe_reason(exc),
+                  "counter_id": COUNTER_ID, "date": DATE, "lead_id": TARGET_LEAD_ID,
                   "lead_time_counter": expected_counter_time,
               }, sort_keys=True))
               raise SystemExit(1)
@@ -171,87 +186,119 @@ jobs:
               client_id = clean(hit.get("ym:pv:clientID"))
               if not visit_id or not client_id:
                   continue
-              exact_submit_hits.append({"visit_id": visit_id, "client_id": client_id, "path": path})
+              exact_submit_hits.append({
+                  "visit_id": visit_id,
+                  "client_id": client_id,
+                  "path": path,
+                  "hit_yclid_match": yclid_hash_from_url(hit.get("ym:pv:URL")) == target_yclid_hash,
+              })
 
-          if len(exact_submit_hits) != 1:
+          pair_map = {}
+          for hit in exact_submit_hits:
+              key = (hit["visit_id"], hit["client_id"])
+              entry = pair_map.setdefault(key, {"hits": 0, "hit_yclid_matches": 0, "paths": set()})
+              entry["hits"] += 1
+              entry["hit_yclid_matches"] += int(hit["hit_yclid_match"])
+              entry["paths"].add(hit["path"])
+
+          if not pair_map:
               print(json.dumps({
-                  "status": "not_proved",
-                  "stage": "exact_submit_hit",
-                  "operation": "read_export_only",
-                  "counter_id": COUNTER_ID,
-                  "date": DATE,
-                  "attribution": ATTRIBUTION,
-                  "lead_id": TARGET_LEAD_ID,
-                  "lead_time_counter": expected_counter_time,
-                  "declared_utm_campaign": EXPECTED_UTM_CAMPAIGN,
-                  "hits_request_id": hits_request_id,
-                  "hits_rows_total": len(hits),
-                  "exact_submit_hits": len(exact_submit_hits),
+                  "status": "not_proved", "stage": "exact_submit_hit", "operation": "read_export_only",
+                  "counter_id": COUNTER_ID, "date": DATE, "attribution": ATTRIBUTION,
+                  "lead_id": TARGET_LEAD_ID, "lead_time_counter": expected_counter_time,
+                  "declared_utm_campaign": EXPECTED_UTM_CAMPAIGN, "hits_request_id": hits_request_id,
+                  "hits_rows_total": len(hits), "exact_submit_hits": 0, "distinct_identity_pairs": 0,
               }, ensure_ascii=False, sort_keys=True))
               raise SystemExit(3)
-
-          exact_hit = exact_submit_hits[0]
-          target_visit_id = exact_hit["visit_id"]
-          target_client_id = exact_hit["client_id"]
 
           try:
               visits_request_id, visits = export_rows(client, VISIT_FIELDS, "visits")
           except Exception as exc:
               print(json.dumps({
-                  "status": "partial",
-                  "stage": "visits",
-                  "reason": safe_reason(exc),
-                  "operation": "read_export_only",
-                  "counter_id": COUNTER_ID,
-                  "date": DATE,
-                  "attribution": ATTRIBUTION,
-                  "lead_id": TARGET_LEAD_ID,
-                  "lead_time_counter": expected_counter_time,
-                  "declared_utm_campaign": EXPECTED_UTM_CAMPAIGN,
-                  "hits_request_id": hits_request_id,
-                  "exact_submit_hits": 1,
-                  "visit_id_sha256": sha(target_visit_id),
-                  "client_id_sha256": sha(target_client_id),
+                  "status": "partial", "stage": "visits", "reason": safe_reason(exc),
+                  "operation": "read_export_only", "counter_id": COUNTER_ID, "date": DATE,
+                  "attribution": ATTRIBUTION, "lead_id": TARGET_LEAD_ID,
+                  "lead_time_counter": expected_counter_time, "hits_request_id": hits_request_id,
+                  "exact_submit_hits": len(exact_submit_hits), "distinct_identity_pairs": len(pair_map),
               }, ensure_ascii=False, sort_keys=True))
               raise SystemExit(4)
 
-          matching_visits = [
-              row for row in visits
-              if clean(row.get("ym:s:visitID")) == target_visit_id
-              and clean(row.get("ym:s:clientID")) == target_client_id
-          ]
+          candidates = []
+          for (visit_id, client_id), pair in pair_map.items():
+              matching = [
+                  row for row in visits
+                  if clean(row.get("ym:s:visitID")) == visit_id
+                  and clean(row.get("ym:s:clientID")) == client_id
+              ]
+              row = matching[0] if len(matching) == 1 else None
+              start_yclid_match = bool(row and yclid_hash_from_url(row.get("ym:s:startURL")) == target_yclid_hash)
+              utm_source = clean(row.get("ym:s:automaticUTMSource")) if row else ""
+              utm_medium = clean(row.get("ym:s:automaticUTMMedium")) if row else ""
+              utm_campaign = clean(row.get("ym:s:automaticUTMCampaign")) if row else ""
+              exact_utm_match = bool(
+                  row
+                  and utm_source.lower() == EXPECTED_UTM_SOURCE
+                  and utm_medium.lower() == EXPECTED_UTM_MEDIUM
+                  and utm_campaign == EXPECTED_UTM_CAMPAIGN
+              )
+              candidates.append({
+                  "visit_id": visit_id,
+                  "client_id": client_id,
+                  "visit_id_sha256": sha(visit_id),
+                  "client_id_sha256": sha(client_id),
+                  "submit_hits": pair["hits"],
+                  "submit_paths": sorted(pair["paths"]),
+                  "hit_yclid_matches": pair["hit_yclid_matches"],
+                  "matching_visit_rows": len(matching),
+                  "start_yclid_match": start_yclid_match,
+                  "exact_utm_match": exact_utm_match,
+                  "traffic_source": clean(row.get("ym:s:automaticTrafficSource")) if row else "",
+                  "adv_engine": clean(row.get("ym:s:automaticAdvEngine")) if row else "",
+                  "utm_source": utm_source,
+                  "utm_medium": utm_medium,
+                  "utm_campaign": utm_campaign,
+                  "campaign_id": clean(row.get("ym:s:automaticDirectClickOrder")) if row else "",
+                  "group_id": clean(row.get("ym:s:automaticDirectBannerGroup")) if row else "",
+                  "ad_id": clean(row.get("ym:s:automaticDirectClickBanner")) if row else "",
+              })
 
-          if len(matching_visits) != 1:
+          yclid_matches = [c for c in candidates if c["hit_yclid_matches"] > 0 or c["start_yclid_match"]]
+          selected = None
+          selection_reason = ""
+          if len(yclid_matches) == 1 and yclid_matches[0]["matching_visit_rows"] == 1:
+              selected = yclid_matches[0]
+              selection_reason = "yclid_sha256_exact_match"
+          elif len(candidates) == 1 and candidates[0]["matching_visit_rows"] == 1:
+              selected = candidates[0]
+              selection_reason = "duplicate_submit_same_identity"
+
+          safe_candidates = []
+          for candidate in candidates:
+              safe_candidates.append({key: value for key, value in candidate.items() if key not in {"visit_id", "client_id"}})
+
+          if selected is None:
               print(json.dumps({
-                  "status": "not_proved",
-                  "stage": "exact_visit",
-                  "operation": "read_export_only",
-                  "counter_id": COUNTER_ID,
-                  "date": DATE,
-                  "attribution": ATTRIBUTION,
-                  "lead_id": TARGET_LEAD_ID,
-                  "lead_time_counter": expected_counter_time,
+                  "status": "not_proved", "stage": "candidate_disambiguation", "operation": "read_export_only",
+                  "counter_id": COUNTER_ID, "date": DATE, "attribution": ATTRIBUTION,
+                  "lead_id": TARGET_LEAD_ID, "lead_time_counter": expected_counter_time,
                   "declared_utm_campaign": EXPECTED_UTM_CAMPAIGN,
-                  "hits_request_id": hits_request_id,
-                  "visits_request_id": visits_request_id,
-                  "exact_submit_hits": 1,
-                  "matching_visits": len(matching_visits),
-                  "visit_id_sha256": sha(target_visit_id),
-                  "client_id_sha256": sha(target_client_id),
+                  "hits_request_id": hits_request_id, "visits_request_id": visits_request_id,
+                  "hits_rows_total": len(hits), "visits_rows_total": len(visits),
+                  "exact_submit_hits": len(exact_submit_hits), "distinct_identity_pairs": len(candidates),
+                  "yclid_exact_candidates": len(yclid_matches), "candidates": safe_candidates,
               }, ensure_ascii=False, sort_keys=True))
               raise SystemExit(3)
 
-          row = matching_visits[0]
-          campaign_id = clean(row.get("ym:s:automaticDirectClickOrder"))
-          group_id = clean(row.get("ym:s:automaticDirectBannerGroup"))
-          ad_id = clean(row.get("ym:s:automaticDirectClickBanner"))
+          campaign_id = selected["campaign_id"]
+          group_id = selected["group_id"]
+          ad_id = selected["ad_id"]
           direct_triple_complete = bool(
               campaign_id and group_id and ad_id
               and campaign_id != "0" and group_id != "0" and ad_id != "0"
           )
 
           result = {
-              "status": "proved" if direct_triple_complete else "not_proved",
+              "status": "proved" if direct_triple_complete else "identity_proved_direct_not_proved",
               "stage": "complete",
               "operation": "read_export_only",
               "counter_id": COUNTER_ID,
@@ -264,17 +311,21 @@ jobs:
               "visits_request_id": visits_request_id,
               "hits_rows_total": len(hits),
               "visits_rows_total": len(visits),
-              "exact_submit_hits": 1,
-              "exact_matching_visits": 1,
-              "submit_path": exact_hit["path"],
-              "visit_id_sha256": sha(target_visit_id),
-              "client_id_sha256": sha(target_client_id),
-              "traffic_source": clean(row.get("ym:s:automaticTrafficSource")),
-              "adv_engine": clean(row.get("ym:s:automaticAdvEngine")),
+              "exact_submit_hits": len(exact_submit_hits),
+              "distinct_identity_pairs": len(candidates),
+              "selection_reason": selection_reason,
+              "selected_visit_id_sha256": selected["visit_id_sha256"],
+              "selected_client_id_sha256": selected["client_id_sha256"],
+              "traffic_source": selected["traffic_source"],
+              "adv_engine": selected["adv_engine"],
+              "utm_source": selected["utm_source"],
+              "utm_medium": selected["utm_medium"],
+              "utm_campaign": selected["utm_campaign"],
               "campaign_id": campaign_id,
               "group_id": group_id,
               "ad_id": ad_id,
               "direct_triple_complete": direct_triple_complete,
+              "candidates": safe_candidates,
           }
           print(json.dumps(result, ensure_ascii=False, sort_keys=True))
           raise SystemExit(0 if direct_triple_complete else 3)
