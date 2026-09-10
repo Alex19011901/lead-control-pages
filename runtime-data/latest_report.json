@@ -1,7 +1,7 @@
 {
   "alarm_no_crm": 0,
   "by_manager": {
-    "no_manager_reaction": 420,
+    "no_manager_reaction": 421,
     "Максим": 47,
     "Олеся": 45
   },
@@ -12,20 +12,20 @@
     "ЗАЯВКА ПОЧТА": 9,
     "Заявка с ТГ": 21,
     "Заявка сайт": 3,
-    "Заявки хост": 259,
+    "Заявки хост": 260,
     "С улицы": 2,
     "САЙТ ТИЛЬДА": 132,
     "Тильда Веранда": 44,
     "ТоМесто": 1
   },
   "event_types": {
-    "unknown": 100,
+    "unknown": 99,
     "Бизнес мероприятие": 17,
     "Выпускной": 2,
     "ДР": 1,
     "Деловое мероприятие": 1,
     "Детский праздник": 5,
-    "Корпоратив": 126,
+    "Корпоратив": 128,
     "Поминки": 1,
     "Свадьба": 162,
     "Съемки": 1,
@@ -37,11 +37,29 @@
     "101-150": 35,
     "151+": 21,
     "21-50": 151,
-    "51-100": 67,
+    "51-100": 68,
     "unknown": 77
   },
   "late_crm": 113,
   "latest_leads": [
+    {
+      "created_at": "2026-09-10T14:32:53+03:00",
+      "crm_entity_id": null,
+      "crm_entity_type": null,
+      "crm_found": false,
+      "event_date": "2026-12-17",
+      "event_type": "Корпоратив",
+      "guests_count": 70,
+      "identifier": "7********96",
+      "identifier_type": "phone",
+      "lead_id": "04a62fde30e31eda",
+      "manager": "",
+      "manager_username": "",
+      "name": "Сергей",
+      "source": "Заявки хост",
+      "status": "PENDING",
+      "violations": []
+    },
     {
       "created_at": "2026-09-10T13:26:58+03:00",
       "crm_entity_id": null,
@@ -66,7 +84,7 @@
       "crm_entity_type": null,
       "crm_found": false,
       "event_date": "2026-12-19",
-      "event_type": "",
+      "event_type": "Корпоратив",
       "guests_count": 40,
       "identifier": "7********88",
       "identifier_type": "phone",
@@ -389,29 +407,11 @@
       "source": "Заявки хост",
       "status": "OK",
       "violations": []
-    },
-    {
-      "created_at": "2026-09-08T15:28:05+03:00",
-      "crm_entity_id": 48365269,
-      "crm_entity_type": "lead",
-      "crm_found": true,
-      "event_date": "2026-12-18",
-      "event_type": "Корпоратив",
-      "guests_count": 170,
-      "identifier": "alina.loskutova@mandarinfox.ru",
-      "identifier_type": "email",
-      "lead_id": "0eea017b8ec7968f",
-      "manager": "",
-      "manager_username": "",
-      "name": "Алина Лоскутова",
-      "source": "ЗАЯВКА ПОЧТА",
-      "status": "OK",
-      "violations": []
     }
   ],
   "needs_review": 77,
   "no_reaction": 0,
   "ok": 347,
-  "total_leads": 512,
-  "updated_at": "2026-09-10T14:06:18+03:00"
+  "total_leads": 513,
+  "updated_at": "2026-09-10T15:02:49+03:00"
 }
