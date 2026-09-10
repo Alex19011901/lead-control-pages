@@ -46,7 +46,6 @@ jobs:
           import time
 
           from scripts.metrika_logs_readonly import (
-              DEFAULT_ATTRIBUTION,
               LogsApiError,
               MetrikaLogsReadOnlyClient,
               parse_tsv,
@@ -55,6 +54,8 @@ jobs:
           COUNTER_ID = 52597240
           DATE1 = "2026-09-08"
           DATE2 = "2026-09-08"
+          ATTRIBUTION = "AUTOMATIC"
+          METRIKA_LOGS_TIMEZONE = dt.timezone(dt.timedelta(hours=3))
           TARGET_CLIENT_ID_SHA256 = "9394a52a99bc1fe36f345bc0f1e6ef0d0efbf681bf1d15f3795cbf6b42c570da"
           FORM_SUBMIT_TIMESTAMP = 1788874363
           TELEGRAM_SERVER_TIMESTAMP = 1788874269
@@ -84,11 +85,11 @@ jobs:
           )
 
 
-          def parse_utc(value: str) -> dt.datetime | None:
+          def parse_metrika_time(value: str) -> dt.datetime | None:
               text = str(value or "").strip()
               for fmt in ("%Y-%m-%d %H:%M:%S", "%Y-%m-%dT%H:%M:%S"):
                   try:
-                      return dt.datetime.strptime(text, fmt).replace(tzinfo=dt.timezone.utc)
+                      return dt.datetime.strptime(text, fmt).replace(tzinfo=METRIKA_LOGS_TIMEZONE)
                   except ValueError:
                       pass
               return None
@@ -130,14 +131,14 @@ jobs:
                   date1=DATE1,
                   date2=DATE2,
                   fields=FIELDS,
-                  attribution=DEFAULT_ATTRIBUTION,
+                  attribution=ATTRIBUTION,
                   source="visits",
               )
               request = client.create_export(
                   date1=DATE1,
                   date2=DATE2,
                   fields=FIELDS,
-                  attribution=DEFAULT_ATTRIBUTION,
+                  attribution=ATTRIBUTION,
                   source="visits",
               )
               current = request
@@ -165,7 +166,7 @@ jobs:
                   continue
 
               visit_id = clean(row.get("ym:s:visitID"))
-              start_utc = parse_utc(clean(row.get("ym:s:dateTimeUTC")))
+              start_time = parse_metrika_time(clean(row.get("ym:s:dateTimeUTC")))
               duration = parse_duration(clean(row.get("ym:s:visitDuration")))
               campaign_id = clean(row.get("ym:s:lastDirectClickOrder"))
               group_id = clean(row.get("ym:s:lastDirectBannerGroup"))
@@ -175,8 +176,8 @@ jobs:
                   "date_time_counter": clean(row.get("ym:s:dateTime")),
                   "date_time_utc": clean(row.get("ym:s:dateTimeUTC")),
                   "visit_duration_seconds": duration,
-                  "contains_form_submit_timestamp": contains(start_utc, duration, FORM_SUBMIT_TIMESTAMP),
-                  "contains_telegram_server_timestamp": contains(start_utc, duration, TELEGRAM_SERVER_TIMESTAMP),
+                  "contains_form_submit_timestamp": contains(start_time, duration, FORM_SUBMIT_TIMESTAMP),
+                  "contains_telegram_server_timestamp": contains(start_time, duration, TELEGRAM_SERVER_TIMESTAMP),
                   "campaign_id": campaign_id,
                   "group_id": group_id,
                   "ad_id": ad_id,
@@ -203,7 +204,7 @@ jobs:
               "counter_id": COUNTER_ID,
               "date1": DATE1,
               "date2": DATE2,
-              "attribution": DEFAULT_ATTRIBUTION,
+              "attribution": ATTRIBUTION,
               "target_client_id_sha256": TARGET_CLIENT_ID_SHA256,
               "form_submit_timestamp": FORM_SUBMIT_TIMESTAMP,
               "telegram_server_timestamp": TELEGRAM_SERVER_TIMESTAMP,
