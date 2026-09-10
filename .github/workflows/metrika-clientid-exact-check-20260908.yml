@@ -42,7 +42,6 @@ jobs:
           import json
           import os
           import re
-          import sys
           import time
 
           from scripts.metrika_logs_readonly import (
@@ -71,17 +70,25 @@ jobs:
               "ym:s:dateTimeUTC",
               "ym:s:visitDuration",
               "ym:s:clientID",
-              "ym:s:lastDirectClickOrder",
-              "ym:s:lastDirectBannerGroup",
-              "ym:s:lastDirectClickBanner",
-              "ym:s:lastDirectClickOrderName",
-              "ym:s:lastClickBannerGroupName",
-              "ym:s:lastDirectClickBannerName",
-              "ym:s:lastUTMSource",
-              "ym:s:lastUTMMedium",
-              "ym:s:lastUTMCampaign",
-              "ym:s:lastUTMContent",
-              "ym:s:lastUTMTerm",
+              "ym:s:startURL",
+              "ym:s:referer",
+              "ym:s:automaticTrafficSource",
+              "ym:s:automaticAdvEngine",
+              "ym:s:automaticDirectClickOrder",
+              "ym:s:automaticDirectBannerGroup",
+              "ym:s:automaticDirectClickBanner",
+              "ym:s:automaticDirectClickOrderName",
+              "ym:s:automaticClickBannerGroupName",
+              "ym:s:automaticDirectClickBannerName",
+              "ym:s:automaticDirectPhraseOrCond",
+              "ym:s:automaticDirectPlatformType",
+              "ym:s:automaticDirectPlatform",
+              "ym:s:automaticDirectConditionType",
+              "ym:s:automaticUTMSource",
+              "ym:s:automaticUTMMedium",
+              "ym:s:automaticUTMCampaign",
+              "ym:s:automaticUTMContent",
+              "ym:s:automaticUTMTerm",
           )
 
 
@@ -116,7 +123,7 @@ jobs:
 
           def safe_reason(exc: Exception) -> str:
               value = f"{type(exc).__name__}:{exc}".replace("\n", " ").replace("\r", " ")
-              value = re.sub(r"(OAuth|Bearer)\\s+[A-Za-z0-9._~+/=-]+", r"\\1 [redacted]", value)
+              value = re.sub(r"(OAuth|Bearer)\s+[A-Za-z0-9._~+/=-]+", r"\1 [redacted]", value)
               return value[:240]
 
 
@@ -168,28 +175,36 @@ jobs:
               visit_id = clean(row.get("ym:s:visitID"))
               start_time = parse_metrika_time(clean(row.get("ym:s:dateTimeUTC")))
               duration = parse_duration(clean(row.get("ym:s:visitDuration")))
-              campaign_id = clean(row.get("ym:s:lastDirectClickOrder"))
-              group_id = clean(row.get("ym:s:lastDirectBannerGroup"))
-              ad_id = clean(row.get("ym:s:lastDirectClickBanner"))
+              campaign_id = clean(row.get("ym:s:automaticDirectClickOrder"))
+              group_id = clean(row.get("ym:s:automaticDirectBannerGroup"))
+              ad_id = clean(row.get("ym:s:automaticDirectClickBanner"))
               visits.append({
                   "visit_id_sha256": hashlib.sha256(visit_id.encode("utf-8")).hexdigest() if visit_id else "",
                   "date_time_counter": clean(row.get("ym:s:dateTime")),
-                  "date_time_utc": clean(row.get("ym:s:dateTimeUTC")),
+                  "date_time_utc_plus_3": clean(row.get("ym:s:dateTimeUTC")),
                   "visit_duration_seconds": duration,
                   "contains_form_submit_timestamp": contains(start_time, duration, FORM_SUBMIT_TIMESTAMP),
                   "contains_telegram_server_timestamp": contains(start_time, duration, TELEGRAM_SERVER_TIMESTAMP),
+                  "start_url": clean(row.get("ym:s:startURL")),
+                  "referer": clean(row.get("ym:s:referer")),
+                  "traffic_source": clean(row.get("ym:s:automaticTrafficSource")),
+                  "adv_engine": clean(row.get("ym:s:automaticAdvEngine")),
                   "campaign_id": campaign_id,
                   "group_id": group_id,
                   "ad_id": ad_id,
-                  "direct_ids_complete": bool(campaign_id and group_id and ad_id),
-                  "campaign_name": clean(row.get("ym:s:lastDirectClickOrderName")),
-                  "group_name": clean(row.get("ym:s:lastClickBannerGroupName")),
-                  "ad_name": clean(row.get("ym:s:lastDirectClickBannerName")),
-                  "utm_source": clean(row.get("ym:s:lastUTMSource")),
-                  "utm_medium": clean(row.get("ym:s:lastUTMMedium")),
-                  "utm_campaign": clean(row.get("ym:s:lastUTMCampaign")),
-                  "utm_content": clean(row.get("ym:s:lastUTMContent")),
-                  "utm_term": clean(row.get("ym:s:lastUTMTerm")),
+                  "direct_ids_complete": bool(campaign_id and group_id and ad_id and group_id != "0" and ad_id != "0"),
+                  "campaign_name": clean(row.get("ym:s:automaticDirectClickOrderName")),
+                  "group_name": clean(row.get("ym:s:automaticClickBannerGroupName")),
+                  "ad_name": clean(row.get("ym:s:automaticDirectClickBannerName")),
+                  "direct_phrase_or_condition": clean(row.get("ym:s:automaticDirectPhraseOrCond")),
+                  "direct_platform_type": clean(row.get("ym:s:automaticDirectPlatformType")),
+                  "direct_platform": clean(row.get("ym:s:automaticDirectPlatform")),
+                  "direct_condition_type": clean(row.get("ym:s:automaticDirectConditionType")),
+                  "utm_source": clean(row.get("ym:s:automaticUTMSource")),
+                  "utm_medium": clean(row.get("ym:s:automaticUTMMedium")),
+                  "utm_campaign": clean(row.get("ym:s:automaticUTMCampaign")),
+                  "utm_content": clean(row.get("ym:s:automaticUTMContent")),
+                  "utm_term": clean(row.get("ym:s:automaticUTMTerm")),
               })
 
           form_matches = sum(item["contains_form_submit_timestamp"] is True for item in visits)
@@ -205,6 +220,7 @@ jobs:
               "date1": DATE1,
               "date2": DATE2,
               "attribution": ATTRIBUTION,
+              "field_attribution": "automatic",
               "target_client_id_sha256": TARGET_CLIENT_ID_SHA256,
               "form_submit_timestamp": FORM_SUBMIT_TIMESTAMP,
               "telegram_server_timestamp": TELEGRAM_SERVER_TIMESTAMP,
