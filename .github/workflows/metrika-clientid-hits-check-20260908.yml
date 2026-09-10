@@ -29,7 +29,7 @@ jobs:
         working-directory: app
         run: PYTHONPATH=. python -m unittest tests.test_metrika_logs_readonly -v
 
-      - name: Check hits for exact ClientID and visit
+      - name: Check minimal hits for exact ClientID and visit
         working-directory: app
         env:
           YANDEX_METRIKA_READ_TOKEN: ${{ secrets.YANDEX_METRIKA_READ_TOKEN }}
@@ -59,37 +59,16 @@ jobs:
               "processing_failed",
           }
           FIELDS = (
-              "ym:pv:watchID",
-              "ym:pv:pageViewID",
               "ym:pv:visitID",
               "ym:pv:dateTime",
               "ym:pv:clientID",
               "ym:pv:URL",
               "ym:pv:referer",
-              "ym:pv:UTMSource",
-              "ym:pv:UTMMedium",
-              "ym:pv:UTMCampaign",
-              "ym:pv:UTMContent",
-              "ym:pv:UTMTerm",
               "ym:pv:from",
-              "ym:pv:hasGCLID",
               "ym:pv:lastTrafficSource",
               "ym:pv:lastAdvEngine",
-              "ym:pv:isPageView",
-              "ym:pv:artificial",
               "ym:pv:params",
-              "ym:pv:parsedParamsKey1",
-              "ym:pv:parsedParamsKey2",
-              "ym:pv:parsedParamsKey3",
-              "ym:pv:parsedParamsKey4",
-              "ym:pv:parsedParamsKey5",
-              "ym:pv:parsedParamsKey6",
-              "ym:pv:parsedParamsKey7",
-              "ym:pv:parsedParamsKey8",
-              "ym:pv:parsedParamsKey9",
-              "ym:pv:parsedParamsKey10",
           )
-          PARAM_FIELDS = tuple(field for field in FIELDS if field == "ym:pv:params" or "parsedParamsKey" in field)
           MARKERS = ("yclid", "utm_source", "utm_medium", "utm_campaign", "yandex", "direct", "gclid")
 
           def clean(value: object) -> str:
@@ -123,7 +102,9 @@ jobs:
               haystack = "\n".join([
                   clean(row.get("ym:pv:URL")),
                   clean(row.get("ym:pv:referer")),
-                  *[clean(row.get(field)) for field in PARAM_FIELDS],
+                  clean(row.get("ym:pv:params")),
+                  clean(row.get("ym:pv:from")),
+                  clean(row.get("ym:pv:lastAdvEngine")),
               ]).lower()
               return {marker: marker in haystack for marker in MARKERS}
 
@@ -166,23 +147,13 @@ jobs:
           for row in visit_rows:
               safe_hits.append({
                   "date_time_counter": clean(row.get("ym:pv:dateTime")),
-                  "page_view_id_sha256": sha(row.get("ym:pv:pageViewID")) if clean(row.get("ym:pv:pageViewID")) else "",
-                  "watch_id_sha256": sha(row.get("ym:pv:watchID")) if clean(row.get("ym:pv:watchID")) else "",
                   "url": safe_url(row.get("ym:pv:URL")),
                   "referer": safe_url(row.get("ym:pv:referer")),
-                  "utm_source": clean(row.get("ym:pv:UTMSource")),
-                  "utm_medium": clean(row.get("ym:pv:UTMMedium")),
-                  "utm_campaign": clean(row.get("ym:pv:UTMCampaign")),
-                  "utm_content": clean(row.get("ym:pv:UTMContent")),
-                  "utm_term": clean(row.get("ym:pv:UTMTerm")),
                   "from": clean(row.get("ym:pv:from")),
-                  "has_gclid": clean(row.get("ym:pv:hasGCLID")),
                   "traffic_source": clean(row.get("ym:pv:lastTrafficSource")),
                   "adv_engine": clean(row.get("ym:pv:lastAdvEngine")),
-                  "is_page_view": clean(row.get("ym:pv:isPageView")),
-                  "artificial": clean(row.get("ym:pv:artificial")),
                   "markers": marker_presence(row),
-                  "param_fields_nonempty": [field for field in PARAM_FIELDS if clean(row.get(field))],
+                  "params_nonempty": bool(clean(row.get("ym:pv:params"))),
               })
 
           result = {
@@ -193,6 +164,7 @@ jobs:
               "date1": DATE1,
               "date2": DATE2,
               "attribution": ATTRIBUTION,
+              "fields_total": len(FIELDS),
               "rows_total": len(rows),
               "target_client_hits_total": len(client_rows),
               "target_visit_hits_total": len(visit_rows),
