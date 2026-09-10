@@ -15,7 +15,7 @@ concurrency:
 jobs:
   diagnostic:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 20
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -29,7 +29,7 @@ jobs:
         working-directory: app
         run: PYTHONPATH=. python -m unittest tests.test_metrika_logs_readonly -v
 
-      - name: Match real Yandex Direct leads to Metrika visits and submit hits
+      - name: Narrow one real Yandex Direct lead to exact hit and visit
         working-directory: app
         env:
           YANDEX_METRIKA_READ_TOKEN: ${{ secrets.YANDEX_METRIKA_READ_TOKEN }}
@@ -51,6 +51,8 @@ jobs:
           COUNTER_ID = 52597240
           DATE = "2026-09-07"
           ATTRIBUTION = "AUTOMATIC"
+          TARGET_LEAD_ID = "300fbfa6c93bdcb2"
+          EXPECTED_UTM_CAMPAIGN = "Svadba_poisk"
           TZ = dt.timezone(dt.timedelta(hours=3))
           TERMINAL_FAILURES = {
               "canceled",
@@ -58,29 +60,22 @@ jobs:
               "cleaned_automatically_as_too_old",
               "processing_failed",
           }
-          VISIT_FIELDS = (
-              "ym:s:visitID",
-              "ym:s:dateTimeUTC",
-              "ym:s:visitDuration",
-              "ym:s:clientID",
-              "ym:s:startURL",
-              "ym:s:automaticTrafficSource",
-              "ym:s:automaticAdvEngine",
-              "ym:s:automaticDirectClickOrder",
-              "ym:s:automaticDirectBannerGroup",
-              "ym:s:automaticDirectClickBanner",
-              "ym:s:automaticDirectClickOrderName",
-              "ym:s:automaticClickBannerGroupName",
-              "ym:s:automaticDirectClickBannerName",
-              "ym:s:automaticUTMSource",
-              "ym:s:automaticUTMMedium",
-              "ym:s:automaticUTMCampaign",
-          )
           HIT_FIELDS = (
               "ym:pv:visitID",
               "ym:pv:dateTime",
               "ym:pv:clientID",
               "ym:pv:URL",
+          )
+          VISIT_FIELDS = (
+              "ym:s:visitID",
+              "ym:s:dateTimeUTC",
+              "ym:s:visitDuration",
+              "ym:s:clientID",
+              "ym:s:automaticTrafficSource",
+              "ym:s:automaticAdvEngine",
+              "ym:s:automaticDirectClickOrder",
+              "ym:s:automaticDirectBannerGroup",
+              "ym:s:automaticDirectClickBanner",
           )
 
           def clean(value: object) -> str:
@@ -90,220 +85,197 @@ jobs:
               text = clean(value)
               return hashlib.sha256(text.encode("utf-8")).hexdigest() if text else ""
 
-          def parse_counter_time(value: object) -> dt.datetime | None:
-              text = clean(value)
-              for fmt in ("%Y-%m-%d %H:%M:%S", "%Y-%m-%dT%H:%M:%S"):
-                  try:
-                      return dt.datetime.strptime(text, fmt).replace(tzinfo=TZ)
-                  except ValueError:
-                      pass
-              return None
-
-          def parse_duration(value: object) -> int | None:
-              try:
-                  return max(int(float(clean(value))), 0)
-              except (TypeError, ValueError):
-                  return None
-
-          def is_complete_direct(row: dict[str, str]) -> bool:
-              campaign = clean(row.get("ym:s:automaticDirectClickOrder"))
-              group = clean(row.get("ym:s:automaticDirectBannerGroup"))
-              ad = clean(row.get("ym:s:automaticDirectClickBanner"))
-              return bool(campaign and group and ad and campaign != "0" and group != "0" and ad != "0")
-
-          def contains_lead_time(row: dict[str, str], lead_ts: int) -> bool:
-              start = parse_counter_time(row.get("ym:s:dateTimeUTC"))
-              duration = parse_duration(row.get("ym:s:visitDuration"))
-              if start is None or duration is None:
-                  return False
-              start_ts = int(start.timestamp())
-              return start_ts <= int(lead_ts) <= start_ts + duration
-
           def safe_path(value: object) -> str:
               try:
                   return urllib.parse.urlsplit(clean(value)).path or "/"
               except Exception:
                   return ""
 
+          def safe_reason(exc: Exception) -> str:
+              value = f"{type(exc).__name__}:{exc}".replace("\n", " ").replace("\r", " ")
+              value = re.sub(r"(OAuth|Bearer)\s+[A-Za-z0-9._~+/=-]+", r"\1 [redacted]", value)
+              return value[:240]
+
           def export_rows(client, fields, source):
               client.evaluate(date1=DATE, date2=DATE, fields=fields, attribution=ATTRIBUTION, source=source)
               request = client.create_export(date1=DATE, date2=DATE, fields=fields, attribution=ATTRIBUTION, source=source)
               current = request
-              for poll_number in range(241):
+              for poll_number in range(301):
                   if current.status == "processed":
                       break
                   if current.status in TERMINAL_FAILURES:
                       raise LogsApiError(f"log_request_{current.status}")
-                  if poll_number == 240:
+                  if poll_number == 300:
                       raise LogsApiError(f"{source}_log_request_timeout")
-                  time.sleep(3)
+                  time.sleep(2)
                   current = client.status(request.request_id)
               rows = []
               for part_number in current.parts:
                   rows.extend(parse_tsv(client.download_part(current.request_id, part_number)))
               return current.request_id, rows
 
-          def safe_reason(exc: Exception) -> str:
-              value = f"{type(exc).__name__}:{exc}".replace("\n", " ").replace("\r", " ")
-              value = re.sub(r"(OAuth|Bearer)\s+[A-Za-z0-9._~+/=-]+", r"\1 [redacted]", value)
-              return value[:240]
+          payload = json.loads(Path("../runtime-data/advertising_leads.json").read_text(encoding="utf-8"))
+          leads = payload.get("leads") if isinstance(payload, dict) else []
+          lead = next((item for item in leads if isinstance(item, dict) and clean(item.get("lead_id")) == TARGET_LEAD_ID), None)
+          if lead is None:
+              print(json.dumps({"status": "blocked", "reason": "target_lead_not_found", "lead_id": TARGET_LEAD_ID}, sort_keys=True))
+              raise SystemExit(2)
 
-          leads_payload = json.loads(Path("../runtime-data/advertising_leads.json").read_text(encoding="utf-8"))
-          all_leads = leads_payload.get("leads") if isinstance(leads_payload, dict) else []
-          target_leads = []
-          for lead in all_leads if isinstance(all_leads, list) else []:
-              if not isinstance(lead, dict):
-                  continue
-              if not clean(lead.get("created_at")).startswith(DATE):
-                  continue
-              if clean(lead.get("source")) != "САЙТ ТИЛЬДА":
-                  continue
-              if clean(lead.get("channel")) != "TELEGRAM":
-                  continue
-              if clean(lead.get("utm_source")).lower() != "yandex_direct":
-                  continue
-              try:
-                  created_ts = int(lead.get("created_ts"))
-              except (TypeError, ValueError):
-                  continue
-              target_leads.append({
-                  "lead_id": clean(lead.get("lead_id")),
-                  "created_at": clean(lead.get("created_at")),
-                  "created_ts": created_ts,
-                  "declared_utm_campaign": clean(lead.get("utm_campaign")),
-                  "stored_client_id_sha256": clean(lead.get("metrika_client_id_sha256")),
-              })
+          if not (
+              clean(lead.get("created_at")).startswith(DATE)
+              and clean(lead.get("source")) == "САЙТ ТИЛЬДА"
+              and clean(lead.get("channel")) == "TELEGRAM"
+              and clean(lead.get("utm_source")).lower() == "yandex_direct"
+              and clean(lead.get("utm_medium")).lower() == "cpc"
+              and clean(lead.get("utm_campaign")) == EXPECTED_UTM_CAMPAIGN
+          ):
+              print(json.dumps({"status": "blocked", "reason": "target_lead_facts_changed", "lead_id": TARGET_LEAD_ID}, sort_keys=True))
+              raise SystemExit(2)
 
+          try:
+              lead_ts = int(lead.get("created_ts"))
+          except (TypeError, ValueError):
+              print(json.dumps({"status": "blocked", "reason": "target_lead_timestamp_missing", "lead_id": TARGET_LEAD_ID}, sort_keys=True))
+              raise SystemExit(2)
+
+          expected_counter_time = dt.datetime.fromtimestamp(lead_ts, tz=TZ).strftime("%Y-%m-%d %H:%M:%S")
           token = os.environ.get("YANDEX_METRIKA_READ_TOKEN", "").strip()
           if not token:
               print(json.dumps({"status": "blocked", "reason": "missing_read_token"}, sort_keys=True))
               raise SystemExit(2)
 
           client = MetrikaLogsReadOnlyClient(token, counter_id=COUNTER_ID)
+
+          try:
+              hits_request_id, hits = export_rows(client, HIT_FIELDS, "hits")
+          except Exception as exc:
+              print(json.dumps({
+                  "status": "error",
+                  "stage": "hits",
+                  "reason": safe_reason(exc),
+                  "counter_id": COUNTER_ID,
+                  "date": DATE,
+                  "lead_id": TARGET_LEAD_ID,
+                  "lead_time_counter": expected_counter_time,
+              }, sort_keys=True))
+              raise SystemExit(1)
+
+          exact_submit_hits = []
+          for hit in hits:
+              if clean(hit.get("ym:pv:dateTime")) != expected_counter_time:
+                  continue
+              path = safe_path(hit.get("ym:pv:URL"))
+              if not (path.startswith("/tilda/form") and "/submitted/" in path):
+                  continue
+              visit_id = clean(hit.get("ym:pv:visitID"))
+              client_id = clean(hit.get("ym:pv:clientID"))
+              if not visit_id or not client_id:
+                  continue
+              exact_submit_hits.append({"visit_id": visit_id, "client_id": client_id, "path": path})
+
+          if len(exact_submit_hits) != 1:
+              print(json.dumps({
+                  "status": "not_proved",
+                  "stage": "exact_submit_hit",
+                  "operation": "read_export_only",
+                  "counter_id": COUNTER_ID,
+                  "date": DATE,
+                  "attribution": ATTRIBUTION,
+                  "lead_id": TARGET_LEAD_ID,
+                  "lead_time_counter": expected_counter_time,
+                  "declared_utm_campaign": EXPECTED_UTM_CAMPAIGN,
+                  "hits_request_id": hits_request_id,
+                  "hits_rows_total": len(hits),
+                  "exact_submit_hits": len(exact_submit_hits),
+              }, ensure_ascii=False, sort_keys=True))
+              raise SystemExit(3)
+
+          exact_hit = exact_submit_hits[0]
+          target_visit_id = exact_hit["visit_id"]
+          target_client_id = exact_hit["client_id"]
+
           try:
               visits_request_id, visits = export_rows(client, VISIT_FIELDS, "visits")
           except Exception as exc:
-              print(json.dumps({"status": "error", "stage": "visits", "reason": safe_reason(exc)}, sort_keys=True))
-              raise SystemExit(1)
+              print(json.dumps({
+                  "status": "partial",
+                  "stage": "visits",
+                  "reason": safe_reason(exc),
+                  "operation": "read_export_only",
+                  "counter_id": COUNTER_ID,
+                  "date": DATE,
+                  "attribution": ATTRIBUTION,
+                  "lead_id": TARGET_LEAD_ID,
+                  "lead_time_counter": expected_counter_time,
+                  "declared_utm_campaign": EXPECTED_UTM_CAMPAIGN,
+                  "hits_request_id": hits_request_id,
+                  "exact_submit_hits": 1,
+                  "visit_id_sha256": sha(target_visit_id),
+                  "client_id_sha256": sha(target_client_id),
+              }, ensure_ascii=False, sort_keys=True))
+              raise SystemExit(4)
 
-          complete_direct_visits = [row for row in visits if is_complete_direct(row)]
-          lead_checks = []
-          candidate_visit_ids = set()
-          candidate_by_lead = {}
+          matching_visits = [
+              row for row in visits
+              if clean(row.get("ym:s:visitID")) == target_visit_id
+              and clean(row.get("ym:s:clientID")) == target_client_id
+          ]
 
-          for lead in target_leads:
-              candidates = [row for row in complete_direct_visits if contains_lead_time(row, lead["created_ts"])]
-              safe_candidates = []
-              for row in candidates:
-                  visit_id = clean(row.get("ym:s:visitID"))
-                  client_id = clean(row.get("ym:s:clientID"))
-                  candidate_visit_ids.add(visit_id)
-                  safe_candidates.append({
-                      "visit_id_sha256": sha(visit_id),
-                      "client_id_sha256": sha(client_id),
-                      "start_time_utc_plus_3": clean(row.get("ym:s:dateTimeUTC")),
-                      "duration_seconds": parse_duration(row.get("ym:s:visitDuration")),
-                      "traffic_source": clean(row.get("ym:s:automaticTrafficSource")),
-                      "adv_engine": clean(row.get("ym:s:automaticAdvEngine")),
-                      "campaign_id": clean(row.get("ym:s:automaticDirectClickOrder")),
-                      "group_id": clean(row.get("ym:s:automaticDirectBannerGroup")),
-                      "ad_id": clean(row.get("ym:s:automaticDirectClickBanner")),
-                      "campaign_name": clean(row.get("ym:s:automaticDirectClickOrderName")),
-                      "group_name": clean(row.get("ym:s:automaticClickBannerGroupName")),
-                      "ad_name": clean(row.get("ym:s:automaticDirectClickBannerName")),
-                      "utm_source": clean(row.get("ym:s:automaticUTMSource")),
-                      "utm_medium": clean(row.get("ym:s:automaticUTMMedium")),
-                      "utm_campaign": clean(row.get("ym:s:automaticUTMCampaign")),
-                      "stored_client_hash_matches": bool(lead["stored_client_id_sha256"] and lead["stored_client_id_sha256"] == sha(client_id)),
-                  })
-              candidate_by_lead[lead["lead_id"]] = candidates
-              lead_checks.append({
-                  "lead_id": lead["lead_id"],
-                  "created_at": lead["created_at"],
-                  "declared_utm_campaign": lead["declared_utm_campaign"],
-                  "stored_client_id_present": bool(lead["stored_client_id_sha256"]),
-                  "complete_direct_visit_candidates": len(candidates),
-                  "candidates": safe_candidates,
-              })
+          if len(matching_visits) != 1:
+              print(json.dumps({
+                  "status": "not_proved",
+                  "stage": "exact_visit",
+                  "operation": "read_export_only",
+                  "counter_id": COUNTER_ID,
+                  "date": DATE,
+                  "attribution": ATTRIBUTION,
+                  "lead_id": TARGET_LEAD_ID,
+                  "lead_time_counter": expected_counter_time,
+                  "declared_utm_campaign": EXPECTED_UTM_CAMPAIGN,
+                  "hits_request_id": hits_request_id,
+                  "visits_request_id": visits_request_id,
+                  "exact_submit_hits": 1,
+                  "matching_visits": len(matching_visits),
+                  "visit_id_sha256": sha(target_visit_id),
+                  "client_id_sha256": sha(target_client_id),
+              }, ensure_ascii=False, sort_keys=True))
+              raise SystemExit(3)
 
-          hits_request_id = None
-          hits = []
-          if candidate_visit_ids:
-              try:
-                  hits_request_id, hits = export_rows(client, HIT_FIELDS, "hits")
-              except Exception as exc:
-                  print(json.dumps({
-                      "status": "partial",
-                      "stage": "hits",
-                      "reason": safe_reason(exc),
-                      "counter_id": COUNTER_ID,
-                      "date": DATE,
-                      "attribution": ATTRIBUTION,
-                      "target_leads_total": len(target_leads),
-                      "complete_direct_visits_total": len(complete_direct_visits),
-                      "visits_request_id": visits_request_id,
-                      "lead_checks": lead_checks,
-                  }, ensure_ascii=False, sort_keys=True))
-                  raise SystemExit(4)
-
-          proved = []
-          for check in lead_checks:
-              lead_id = check["lead_id"]
-              raw_candidates = candidate_by_lead.get(lead_id, [])
-              if len(raw_candidates) != 1:
-                  check["exact_submit_hits"] = 0
-                  check["proof_complete"] = False
-                  continue
-              raw_candidate = raw_candidates[0]
-              visit_id = clean(raw_candidate.get("ym:s:visitID"))
-              client_id = clean(raw_candidate.get("ym:s:clientID"))
-              lead = next(item for item in target_leads if item["lead_id"] == lead_id)
-              expected_counter_time = dt.datetime.fromtimestamp(lead["created_ts"], tz=TZ).strftime("%Y-%m-%d %H:%M:%S")
-              exact_submit_hits = []
-              for hit in hits:
-                  if clean(hit.get("ym:pv:visitID")) != visit_id:
-                      continue
-                  if clean(hit.get("ym:pv:clientID")) != client_id:
-                      continue
-                  if clean(hit.get("ym:pv:dateTime")) != expected_counter_time:
-                      continue
-                  path = safe_path(hit.get("ym:pv:URL"))
-                  if path.startswith("/tilda/form") and "/submitted/" in path:
-                      exact_submit_hits.append({
-                          "date_time_counter": clean(hit.get("ym:pv:dateTime")),
-                          "path": path,
-                      })
-              check["exact_submit_hits"] = len(exact_submit_hits)
-              check["submit_hits"] = exact_submit_hits[:5]
-              check["proof_complete"] = len(exact_submit_hits) == 1
-              if check["proof_complete"]:
-                  proved.append({
-                      "lead_id": lead_id,
-                      "client_id_sha256": sha(client_id),
-                      "campaign_id": clean(raw_candidate.get("ym:s:automaticDirectClickOrder")),
-                      "group_id": clean(raw_candidate.get("ym:s:automaticDirectBannerGroup")),
-                      "ad_id": clean(raw_candidate.get("ym:s:automaticDirectClickBanner")),
-                      "campaign_name": clean(raw_candidate.get("ym:s:automaticDirectClickOrderName")),
-                      "group_name": clean(raw_candidate.get("ym:s:automaticClickBannerGroupName")),
-                      "ad_name": clean(raw_candidate.get("ym:s:automaticDirectClickBannerName")),
-                  })
+          row = matching_visits[0]
+          campaign_id = clean(row.get("ym:s:automaticDirectClickOrder"))
+          group_id = clean(row.get("ym:s:automaticDirectBannerGroup"))
+          ad_id = clean(row.get("ym:s:automaticDirectClickBanner"))
+          direct_triple_complete = bool(
+              campaign_id and group_id and ad_id
+              and campaign_id != "0" and group_id != "0" and ad_id != "0"
+          )
 
           result = {
-              "status": "proved" if proved else "not_proved",
+              "status": "proved" if direct_triple_complete else "not_proved",
+              "stage": "complete",
               "operation": "read_export_only",
               "counter_id": COUNTER_ID,
               "date": DATE,
               "attribution": ATTRIBUTION,
-              "target_leads_total": len(target_leads),
-              "visits_rows_total": len(visits),
-              "complete_direct_visits_total": len(complete_direct_visits),
-              "visits_request_id": visits_request_id,
+              "lead_id": TARGET_LEAD_ID,
+              "lead_time_counter": expected_counter_time,
+              "declared_utm_campaign": EXPECTED_UTM_CAMPAIGN,
               "hits_request_id": hits_request_id,
+              "visits_request_id": visits_request_id,
               "hits_rows_total": len(hits),
-              "proved_leads_total": len(proved),
-              "proved": proved,
-              "lead_checks": lead_checks,
+              "visits_rows_total": len(visits),
+              "exact_submit_hits": 1,
+              "exact_matching_visits": 1,
+              "submit_path": exact_hit["path"],
+              "visit_id_sha256": sha(target_visit_id),
+              "client_id_sha256": sha(target_client_id),
+              "traffic_source": clean(row.get("ym:s:automaticTrafficSource")),
+              "adv_engine": clean(row.get("ym:s:automaticAdvEngine")),
+              "campaign_id": campaign_id,
+              "group_id": group_id,
+              "ad_id": ad_id,
+              "direct_triple_complete": direct_triple_complete,
           }
           print(json.dumps(result, ensure_ascii=False, sort_keys=True))
-          raise SystemExit(0 if proved else 3)
+          raise SystemExit(0 if direct_triple_complete else 3)
           PY
