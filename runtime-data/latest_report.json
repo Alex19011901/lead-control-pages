@@ -1,7 +1,7 @@
 {
   "alarm_no_crm": 1,
   "by_manager": {
-    "no_manager_reaction": 426,
+    "no_manager_reaction": 427,
     "Максим": 47,
     "Олеся": 47
   },
@@ -12,7 +12,7 @@
     "ЗАЯВКА ПОЧТА": 9,
     "Заявка с ТГ": 21,
     "Заявка сайт": 3,
-    "Заявки хост": 267,
+    "Заявки хост": 268,
     "С улицы": 2,
     "САЙТ ТИЛЬДА": 132,
     "Тильда Веранда": 44,
@@ -30,18 +30,36 @@
     "Свадьба": 163,
     "Съемки": 1,
     "Съёмки": 1,
-    "Юбилей": 97
+    "Юбилей": 98
   },
   "guest_ranges": {
     "1-20": 164,
     "101-150": 36,
     "151+": 21,
-    "21-50": 152,
+    "21-50": 153,
     "51-100": 68,
     "unknown": 79
   },
   "late_crm": 113,
   "latest_leads": [
+    {
+      "created_at": "2026-09-11T16:15:23+03:00",
+      "crm_entity_id": 48480075,
+      "crm_entity_type": "lead",
+      "crm_found": true,
+      "event_date": "2026-10-22",
+      "event_type": "Юбилей",
+      "guests_count": 40,
+      "identifier": "7********17",
+      "identifier_type": "phone",
+      "lead_id": "f89ced1eb1cb4f99",
+      "manager": "",
+      "manager_username": "",
+      "name": "Марина",
+      "source": "Заявки хост",
+      "status": "OK",
+      "violations": []
+    },
     {
       "created_at": "2026-09-11T14:26:08+03:00",
       "crm_entity_id": 48476351,
@@ -387,31 +405,11 @@
       "source": "Заявки хост",
       "status": "OK",
       "violations": []
-    },
-    {
-      "created_at": "2026-09-09T14:26:42+03:00",
-      "crm_entity_id": 48423691,
-      "crm_entity_type": "lead",
-      "crm_found": true,
-      "event_date": "2026-12-25",
-      "event_type": "Корпоратив",
-      "guests_count": 25,
-      "identifier": "7********25",
-      "identifier_type": "phone",
-      "lead_id": "736be1e47c95f456",
-      "manager": "Олеся",
-      "manager_username": "Olesyagozhina",
-      "name": "Анастасия Соколовская",
-      "source": "MARQUIZ",
-      "status": "LATE_CRM",
-      "violations": [
-        "LATE_CRM"
-      ]
     }
   ],
-  "needs_review": 77,
+  "needs_review": 82,
   "no_reaction": 0,
-  "ok": 358,
-  "total_leads": 520,
-  "updated_at": "2026-09-11T15:37:35+03:00"
+  "ok": 359,
+  "total_leads": 521,
+  "updated_at": "2026-09-11T18:09:05+03:00"
 }
