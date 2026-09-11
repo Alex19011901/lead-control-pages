@@ -12081,7 +12081,7 @@
         "pipeline_id": 10081590,
         "responsible_user_id": 12982830,
         "rule_version": 6,
-        "state": "WAITING",
+        "state": "NO_FEEDBACK",
         "status_id": 79927038,
         "status_name": "Выслано предложение"
       },
@@ -12172,7 +12172,7 @@
         "pipeline_id": 10081590,
         "responsible_user_id": 12982830,
         "rule_version": 6,
-        "state": "WAITING",
+        "state": "NO_FEEDBACK",
         "status_id": 79927034,
         "status_name": "Первичный контакт"
       },
@@ -12533,7 +12533,7 @@
         "pipeline_id": 10081590,
         "responsible_user_id": 12982830,
         "rule_version": 6,
-        "state": "WAITING",
+        "state": "NO_FEEDBACK",
         "status_id": 79927038,
         "status_name": "Выслано предложение"
       },
@@ -41247,7 +41247,7 @@
         "pipeline_id": 10081590,
         "responsible_user_id": 12982830,
         "rule_version": 6,
-        "state": "WAITING",
+        "state": "NO_FEEDBACK",
         "status_id": 79927038,
         "status_name": "Выслано предложение"
       },
@@ -41334,7 +41334,7 @@
         "pipeline_id": 10081590,
         "responsible_user_id": 12982830,
         "rule_version": 6,
-        "state": "WAITING",
+        "state": "NO_FEEDBACK",
         "status_id": 79927038,
         "status_name": "Выслано предложение"
       },
@@ -41421,7 +41421,7 @@
         "pipeline_id": 10081590,
         "responsible_user_id": 12982830,
         "rule_version": 6,
-        "state": "WAITING",
+        "state": "NO_FEEDBACK",
         "status_id": 79927034,
         "status_name": "Первичный контакт"
       },
@@ -41513,7 +41513,7 @@
         "pipeline_id": 10081590,
         "responsible_user_id": 12982830,
         "rule_version": 6,
-        "state": "WAITING",
+        "state": "NO_FEEDBACK",
         "status_id": 79927038,
         "status_name": "Выслано предложение"
       },
@@ -43100,6 +43100,78 @@
       "name": "Элина",
       "phone": "89144145533",
       "received_at": "2026-09-10T16:27:24+03:00",
+      "sender_name": "Елена",
+      "sender_user_id": 121513620,
+      "source": "Заявки хост",
+      "status": "ALARM_NO_CRM",
+      "username": "",
+      "violations": [
+        "ALARM_NO_CRM"
+      ]
+    },
+    {
+      "category": "HOST",
+      "channel": "MAX",
+      "crm": {
+        "ambiguity_count": 0,
+        "created_at": null,
+        "entity_id": null,
+        "entity_type": null,
+        "event_type": null,
+        "found": false,
+        "responsible_user_id": null,
+        "responsible_user_name": null,
+        "updated_at": null
+      },
+      "crm_created_at": null,
+      "crm_found": false,
+      "crm_required": true,
+      "crm_responsible": null,
+      "deadline_msk_ts": 1789160399,
+      "event_date": "2026-12-11",
+      "fields": {
+        "category": "HOST",
+        "email": "",
+        "event_date": "2026-12-11",
+        "event_date_raw": "11.12",
+        "event_type": "Корпоратив",
+        "guests_count": 110,
+        "guests_max": null,
+        "guests_min": null,
+        "guests_raw": "110п.",
+        "name": "Ольга",
+        "phone_digits": "79264278806",
+        "phone_raw": "89264278806",
+        "source": "Заявки хост",
+        "telegram_username": ""
+      },
+      "first_seen_at": "2026-09-11T12:13:02+03:00",
+      "first_seen_ts": 1789117982,
+      "guests": 110,
+      "guests_max": null,
+      "guests_min": null,
+      "guests_raw": "110п.",
+      "id": "d265b3f3b744c5c6",
+      "identifier": {
+        "type": "phone",
+        "value": "79264278806"
+      },
+      "last_seen_at": "2026-09-11T12:13:02+03:00",
+      "last_seen_ts": 1789117982,
+      "manager_reaction": null,
+      "max": {
+        "chat_id": -71704692523093,
+        "message_ids": [
+          "mid.ffffbec8f345ffab01a08fbde80513db"
+        ],
+        "sender_name": "Елена",
+        "sender_user_id": 121513620,
+        "sender_username": null
+      },
+      "message_id": "mid.ffffbec8f345ffab01a08fbde80513db",
+      "name": "Ольга",
+      "phone": "89264278806",
+      "received_at": "2026-09-11T12:13:02+03:00",
       "sender_name": "Елена",
       "sender_user_id": 121513620,
       "source": "Заявки хост",
