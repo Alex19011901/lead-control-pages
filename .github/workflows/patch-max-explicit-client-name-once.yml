@@ -1,0 +1,57 @@
+name: Patch MAX explicit client name once
+
+on:
+  push:
+    paths:
+      - ".github/workflows/patch-max-explicit-client-name-once.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Patch explicit client name priority
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          parser = Path("app/src/lead_control/parsers/max_leads.py")
+          text = parser.read_text(encoding="utf-8")
+          old = '''def _extract_probable_name(text: str, phone_raw: str) -> str:\n    if not phone_raw:\n        return ""\n\n    stop_words = {'''
+          new = '''def _extract_probable_name(text: str, phone_raw: str) -> str:\n    if not phone_raw:\n        return ""\n\n    # An explicit self-introduction is stronger evidence than generic words\n    # elsewhere in the request. This prevents phrases like "Добрый день.\n    # Меня зовут Юлия" from being reduced to the false name "Добрый" when\n    # the phone is on a separate line.\n    explicit_name = re.search(\n        r"(?i:\\bменя\\s+зовут\\s*[:\\-—]?\\s*)([А-ЯЁ][а-яё-]+(?:\\s+[А-ЯЁ][а-яё-]+)?)\\b",\n        text,\n    )\n    if explicit_name:\n        return explicit_name.group(1).strip()\n\n    stop_words = {'''
+          if text.count(old) != 1:
+              raise SystemExit(f"Expected one _extract_probable_name anchor, found {text.count(old)}")
+          parser.write_text(text.replace(old, new, 1), encoding="utf-8")
+
+          test = Path("app/tests/test_max_explicit_client_name.py")
+          test.write_text('''from __future__ import annotations\n\nimport unittest\n\nfrom lead_control.parsers.max_leads import HOST, classify_max_text\n\n\nclass MaxExplicitClientNameTest(unittest.TestCase):\n    def test_menya_zovut_has_priority_over_greeting(self) -> None:\n        text = (\n            "ЗАЯВКА\\n\\n"\n            "Добрый день. Меня зовут Юлия. Скажите, пожалуйста, можно ли "\n            "провести выпускной в банкетным зале Светлый?\\n"\n            "+7 903 669-28-48"\n        )\n        result = classify_max_text(text)\n        self.assertEqual(result["classification"], HOST)\n        self.assertEqual(result["fields"]["phone_digits"], "79036692848")\n        self.assertEqual(result["fields"]["name"], "Юлия")\n        self.assertEqual(result["fields"]["event_type"], "Выпускной")\n\n\nif __name__ == "__main__":\n    unittest.main()\n''', encoding="utf-8")
+          PY
+
+      - name: Run regression tests
+        working-directory: app
+        run: |
+          PYTHONPATH=src python -m unittest \
+            tests.test_max_explicit_client_name \
+            tests.test_max_client_name_priority \
+            tests.test_max_leads_parser -v
+
+      - name: Commit fix
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add app/src/lead_control/parsers/max_leads.py app/tests/test_max_explicit_client_name.py
+          git commit -m "Prefer explicit client names in MAX leads"
+          git pull --rebase --autostash origin main
+          git push origin main
