@@ -1174,6 +1174,17 @@ def _extract_probable_name(text: str, phone_raw: str) -> str:
     if not phone_raw:
         return ""
 
+    # An explicit self-introduction is stronger evidence than generic words
+    # elsewhere in the request. This prevents phrases like "Добрый день.
+    # Меня зовут Юлия" from being reduced to the false name "Добрый" when
+    # the phone is on a separate line.
+    explicit_name = re.search(
+        r"(?i:\bменя\s+зовут\s*[:\-—]?\s*)([А-ЯЁ][а-яё-]+(?:\s+[А-ЯЁ][а-яё-]+)?)\b",
+        text,
+    )
+    if explicit_name:
+        return explicit_name.group(1).strip()
+
     stop_words = {
         "заявка",
         "свадьба",
