@@ -19,7 +19,7 @@
     "ТоМесто": 1
   },
   "event_types": {
-    "unknown": 100,
+    "unknown": 99,
     "Бизнес мероприятие": 17,
     "Выпускной": 3,
     "ДР": 1,
@@ -30,7 +30,7 @@
     "Свадьба": 163,
     "Съемки": 1,
     "Съёмки": 1,
-    "Юбилей": 96
+    "Юбилей": 97
   },
   "guest_ranges": {
     "1-20": 164,
@@ -44,9 +44,9 @@
   "latest_leads": [
     {
       "created_at": "2026-09-11T14:26:08+03:00",
-      "crm_entity_id": null,
-      "crm_entity_type": null,
-      "crm_found": false,
+      "crm_entity_id": 48476351,
+      "crm_entity_type": "lead",
+      "crm_found": true,
       "event_date": "",
       "event_type": "Свадьба",
       "guests_count": 15,
@@ -57,16 +57,16 @@
       "manager_username": "",
       "name": "Михаил",
       "source": "Заявки хост",
-      "status": "PENDING",
+      "status": "OK",
       "violations": []
     },
     {
       "created_at": "2026-09-11T12:58:32+03:00",
-      "crm_entity_id": null,
-      "crm_entity_type": null,
-      "crm_found": false,
+      "crm_entity_id": 48476247,
+      "crm_entity_type": "lead",
+      "crm_found": true,
       "event_date": "2026-09-26",
-      "event_type": "",
+      "event_type": "Юбилей",
       "guests_count": 35,
       "identifier": "7********07",
       "identifier_type": "phone",
@@ -75,14 +75,14 @@
       "manager_username": "",
       "name": "Анна",
       "source": "Заявки хост",
-      "status": "PENDING",
+      "status": "OK",
       "violations": []
     },
     {
       "created_at": "2026-09-11T12:25:50+03:00",
-      "crm_entity_id": null,
-      "crm_entity_type": null,
-      "crm_found": false,
+      "crm_entity_id": 48476171,
+      "crm_entity_type": "lead",
+      "crm_found": true,
       "event_date": "",
       "event_type": "Выпускной",
       "guests_count": null,
@@ -93,7 +93,7 @@
       "manager_username": "",
       "name": "Добрый",
       "source": "Заявки хост",
-      "status": "PENDING",
+      "status": "OK",
       "violations": []
     },
     {
@@ -411,7 +411,7 @@
   ],
   "needs_review": 77,
   "no_reaction": 0,
-  "ok": 355,
+  "ok": 358,
   "total_leads": 520,
-  "updated_at": "2026-09-11T14:58:26+03:00"
+  "updated_at": "2026-09-11T15:17:42+03:00"
 }
