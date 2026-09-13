@@ -14,6 +14,7 @@ from .manual_review_fields import enrich_manual_review_fields
 from .max_attachment_ocr import enrich_max_mail_attachments
 from .max_client import MaxClient, filter_new_max_events, normalize_max_updates
 from .max_edits import apply_max_message_edits
+from .max_forwarded import enrich_incomplete_forwarded_messages
 from .max_mail_lead_apply import apply_max_mail_leads
 from .normalize import now_moscow_iso
 from .processor import collect_known_manager_ids, normalize_updates, rebuild_leads_and_needs_review
@@ -132,6 +133,11 @@ def main() -> None:
         save_events(events_path, events)
         LOG.info("MAX edited messages applied")
 
+    max_forwarded_changed = enrich_incomplete_forwarded_messages(events, max_client)
+    if max_forwarded_changed:
+        save_events(events_path, events)
+        LOG.info("MAX forwarded messages enriched")
+
     max_attachment_changed = enrich_max_mail_attachments(events, max_client)
     if max_attachment_changed:
         save_events(events_path, events)
@@ -188,6 +194,7 @@ def main() -> None:
         or new_events
         or new_max_events
         or max_edits_changed
+        or max_forwarded_changed
         or max_attachment_changed
         or offset_changed
         or max_marker_changed
