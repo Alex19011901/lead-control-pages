@@ -1,33 +1,33 @@
 {
   "alarm_no_crm": 1,
   "by_manager": {
-    "no_manager_reaction": 436,
+    "no_manager_reaction": 437,
     "Максим": 47,
-    "Олеся": 47
+    "Олеся": 49
   },
   "by_source": {
     "MARQUIZ": 31,
     "Restoran.Cafe": 3,
-    "WedWed": 7,
+    "WedWed": 10,
     "ЗАЯВКА ПОЧТА": 9,
     "Заявка с ТГ": 21,
     "Заявка сайт": 3,
-    "Заявки хост": 275,
+    "Заявки хост": 274,
     "С улицы": 2,
-    "САЙТ ТИЛЬДА": 133,
+    "САЙТ ТИЛЬДА": 134,
     "Тильда Веранда": 45,
     "ТоМесто": 1
   },
   "event_types": {
     "unknown": 103,
     "Бизнес мероприятие": 17,
-    "Выпускной": 3,
+    "Выпускной": 4,
     "ДР": 1,
     "Деловое мероприятие": 1,
     "Детский праздник": 5,
-    "Корпоратив": 133,
+    "Корпоратив": 134,
     "Поминки": 1,
-    "Свадьба": 165,
+    "Свадьба": 166,
     "Съемки": 1,
     "Съёмки": 1,
     "Юбилей": 99
@@ -37,13 +37,13 @@
     "101-150": 36,
     "151+": 21,
     "21-50": 153,
-    "51-100": 70,
+    "51-100": 73,
     "unknown": 83
   },
   "late_crm": 113,
   "latest_leads": [
     {
-      "created_at": "2026-09-13T11:32:34+03:00",
+      "created_at": "2026-09-13T11:28:51+03:00",
       "crm_entity_id": null,
       "crm_entity_type": null,
       "crm_found": false,
@@ -52,11 +52,11 @@
       "guests_count": 10,
       "identifier": "7********11",
       "identifier_type": "phone",
-      "lead_id": "d58517309aba7314",
-      "manager": "",
-      "manager_username": "",
+      "lead_id": "fcbbbfbcdca9c25f",
+      "manager": "Олеся",
+      "manager_username": "Olesyagozhina",
       "name": "Владимир",
-      "source": "Заявки хост",
+      "source": "САЙТ ТИЛЬДА",
       "status": "PENDING",
       "violations": []
     },
@@ -71,11 +71,29 @@
       "identifier": "7********80",
       "identifier_type": "phone",
       "lead_id": "685c8ea569e9b4fc",
-      "manager": "",
-      "manager_username": "",
+      "manager": "Олеся",
+      "manager_username": "Olesyagozhina",
       "name": "А",
       "source": "САЙТ ТИЛЬДА",
       "status": "PENDING",
+      "violations": []
+    },
+    {
+      "created_at": "2026-09-12T19:51:10+03:00",
+      "crm_entity_id": 48511117,
+      "crm_entity_type": "lead",
+      "crm_found": true,
+      "event_date": "2027-08-16",
+      "event_type": "Свадьба",
+      "guests_count": 74,
+      "identifier": "7********06",
+      "identifier_type": "phone",
+      "lead_id": "3bf31362ea1789b1",
+      "manager": "",
+      "manager_username": "",
+      "name": "Екатерина",
+      "source": "WedWed",
+      "status": "OK",
       "violations": []
     },
     {
@@ -385,29 +403,11 @@
       "source": "MARQUIZ",
       "status": "OK",
       "violations": []
-    },
-    {
-      "created_at": "2026-09-10T13:22:31+03:00",
-      "crm_entity_id": 48434067,
-      "crm_entity_type": "lead",
-      "crm_found": true,
-      "event_date": "2026-12-19",
-      "event_type": "Корпоратив",
-      "guests_count": 40,
-      "identifier": "7********88",
-      "identifier_type": "phone",
-      "lead_id": "0de22c8a785a824f",
-      "manager": "Олеся",
-      "manager_username": "Olesyagozhina",
-      "name": "Анастасия",
-      "source": "САЙТ ТИЛЬДА",
-      "status": "OK",
-      "violations": []
     }
   ],
-  "needs_review": 82,
+  "needs_review": 86,
   "no_reaction": 0,
-  "ok": 365,
-  "total_leads": 530,
-  "updated_at": "2026-09-13T13:21:44+03:00"
+  "ok": 368,
+  "total_leads": 533,
+  "updated_at": "2026-09-13T13:51:29+03:00"
 }

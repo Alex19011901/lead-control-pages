@@ -13840,7 +13840,20 @@
       },
       "last_seen_at": "2026-09-12T23:29:00+03:00",
       "last_seen_ts": 1789244940,
-      "manager_reaction": null,
+      "manager_reaction": {
+        "name": "Олеся",
+        "reacted_at": "2026-09-13T11:29:17+03:00",
+        "reacted_ts": 1789288157,
+        "reaction": [
+          {
+            "emoji": "❤",
+            "type": "emoji"
+          }
+        ],
+        "update_id": 185608332,
+        "user_id": 328611361,
+        "username": "Olesyagozhina"
+      },
       "received_at": "2026-09-12T23:29:00+03:00",
       "sender_name": "TildaForms",
       "sender_user_id": 265299531,
@@ -13854,6 +13867,95 @@
         ],
         "update_ids": [
           185608331
+        ]
+      },
+      "violations": []
+    },
+    {
+      "category": "САЙТ ТИЛЬДА",
+      "channel": "TELEGRAM",
+      "crm": {
+        "ambiguity_count": 0,
+        "created_at": null,
+        "entity_id": null,
+        "entity_type": null,
+        "event_type": null,
+        "found": false,
+        "responsible_user_id": null,
+        "responsible_user_name": null,
+        "updated_at": null
+      },
+      "crm_created_at": null,
+      "crm_found": false,
+      "crm_required": true,
+      "crm_responsible": null,
+      "deadline_msk_ts": 1789333199,
+      "event_date": "2026-10-05",
+      "fields": {
+        "category": "САЙТ ТИЛЬДА",
+        "description": "Содержание заявки:\nname: Владимир\nphone: +79269765311\nDate: 05-10-2026\nInput: 10\nCheckbox: yes\n\nДополнительная информация:\nКод заявки: 2925975:8669817472\nКод блока: rec917339299\nhttps://moscowbanket.ru/vip#menuu\n-----",
+        "event_date": "2026-10-05",
+        "event_date_raw": "05-10-2026",
+        "event_type": "",
+        "form_submit_timestamp": null,
+        "guests_count": 10,
+        "guests_raw": "10п.",
+        "metrika_client_id": "",
+        "name": "Владимир",
+        "phone_digits": "79269765311",
+        "phone_raw": "+79269765311",
+        "source": "САЙТ ТИЛЬДА",
+        "telegram_username": "",
+        "yclid": ""
+      },
+      "first_seen_at": "2026-09-13T11:28:51+03:00",
+      "first_seen_ts": 1789288131,
+      "guests": 10,
+      "guests_raw": "10п.",
+      "id": "fcbbbfbcdca9c25f",
+      "identifier": {
+        "type": "phone",
+        "value": "79269765311"
+      },
+      "last_seen_at": "2026-09-13T11:32:34+03:00",
+      "last_seen_ts": 1789288354,
+      "manager_reaction": {
+        "name": "Олеся",
+        "reacted_at": "2026-09-13T11:29:23+03:00",
+        "reacted_ts": 1789288163,
+        "reaction": [
+          {
+            "emoji": "❤",
+            "type": "emoji"
+          }
+        ],
+        "update_id": 185608333,
+        "user_id": 328611361,
+        "username": "Olesyagozhina"
+      },
+      "max": {
+        "chat_id": -71704692523093,
+        "message_ids": [
+          "mid.ffffbec8f345ffab01a099e593e23a8e"
+        ],
+        "sender_name": "Алёна",
+        "sender_user_id": 432412696
+      },
+      "name": "Владимир",
+      "phone": "89269765311",
+      "received_at": "2026-09-13T11:28:51+03:00",
+      "sender_name": "TildaForms",
+      "sender_user_id": 265299531,
+      "sender_username": "TildaFormsBot",
+      "source": "САЙТ ТИЛЬДА",
+      "status": "PENDING",
+      "telegram": {
+        "chat_id": -1001645768111,
+        "message_ids": [
+          5880
+        ],
+        "update_ids": [
+          185608334
         ]
       },
       "violations": []
@@ -35872,6 +35974,186 @@
       ]
     },
     {
+      "category": "WEDWED",
+      "channel": "MAX",
+      "crm": {
+        "ambiguity_count": 0,
+        "created_at": 1787740993,
+        "entity_id": 47958655,
+        "entity_type": "lead",
+        "event_type": "Выпускной",
+        "found": true,
+        "guests": "100",
+        "guests_source": "CRM",
+        "responsible_user_id": 12982830,
+        "responsible_user_name": "Максим",
+        "updated_at": 1788186090
+      },
+      "crm_check_status": "PENDING",
+      "crm_created_at": 1787740993,
+      "crm_feedback": {
+        "crm_lead_id": 47958655,
+        "deadline_at": 1788037200,
+        "excluded": false,
+        "first_activity_at": null,
+        "lead_created_at": 1787740993,
+        "pipeline_id": 10081590,
+        "responsible_user_id": 12982830,
+        "rule_version": 6,
+        "state": "NO_FEEDBACK",
+        "status_id": 79927038,
+        "status_name": "Выслано предложение"
+      },
+      "crm_found": true,
+      "crm_required": true,
+      "crm_responsible": 12982830,
+      "deadline_msk_ts": 1787777999,
+      "event_date": "2027-06-25",
+      "event_type": "Выпускной",
+      "event_type_source": "CRM",
+      "fields": {
+        "category": "WEDWED",
+        "email": "",
+        "event_date": "2027-06-25",
+        "event_date_raw": "25.06.2027",
+        "event_type": "Выпускной",
+        "guests_count": 100,
+        "guests_max": null,
+        "guests_min": null,
+        "guests_raw": "100",
+        "name": "Дина",
+        "phone_digits": "79255598889",
+        "phone_raw": "+7 (925) 559-88-89",
+        "source": "WedWed",
+        "telegram_username": "",
+        "wedwed_url": "https://wedwed.ru/l/4gw7IBW"
+      },
+      "first_seen_at": "2026-08-26T13:02:53+03:00",
+      "first_seen_ts": 1787738573,
+      "guests": 100,
+      "guests_max": null,
+      "guests_min": null,
+      "guests_raw": "100",
+      "id": "465b5f8cac76e8fc",
+      "identifier": {
+        "type": "phone",
+        "value": "79255598889"
+      },
+      "last_seen_at": "2026-08-26T13:02:53+03:00",
+      "last_seen_ts": 1787738573,
+      "manager_reaction": null,
+      "max": {
+        "chat_id": -71704692523093,
+        "message_ids": [
+          "mid.ffffbec8f345ffab01a03d85cafc3147"
+        ],
+        "sender_name": "Олеся",
+        "sender_user_id": 48906491,
+        "sender_username": null
+      },
+      "message_id": "mid.ffffbec8f345ffab01a03d85cafc3147",
+      "name": "Дина",
+      "phone": "+7 (925) 559-88-89",
+      "received_at": "2026-08-26T13:02:53+03:00",
+      "sender_name": "Олеся",
+      "sender_user_id": 48906491,
+      "source": "WedWed",
+      "status": "OK",
+      "username": "",
+      "violations": [],
+      "wedwed_url": "https://wedwed.ru/l/4gw7IBW"
+    },
+    {
+      "category": "WEDWED",
+      "channel": "MAX",
+      "crm": {
+        "ambiguity_count": 0,
+        "created_at": 1787748294,
+        "entity_id": 47963727,
+        "entity_type": "lead",
+        "event_type": "Корпоратив",
+        "found": true,
+        "guests": "75",
+        "guests_source": "CRM",
+        "responsible_user_id": 12982830,
+        "responsible_user_name": "Максим",
+        "updated_at": 1788193389
+      },
+      "crm_check_status": "PENDING",
+      "crm_created_at": 1787748294,
+      "crm_feedback": {
+        "crm_lead_id": 47963727,
+        "deadline_at": 1788037200,
+        "excluded": false,
+        "first_activity_at": null,
+        "lead_created_at": 1787748294,
+        "pipeline_id": 10081590,
+        "responsible_user_id": 12982830,
+        "rule_version": 6,
+        "state": "NO_FEEDBACK",
+        "status_id": 79927038,
+        "status_name": "Выслано предложение"
+      },
+      "crm_found": true,
+      "crm_required": true,
+      "crm_responsible": 12982830,
+      "deadline_msk_ts": 1787777999,
+      "event_date": "2026-12-25",
+      "event_type": "Корпоратив",
+      "event_type_source": "CRM",
+      "fields": {
+        "category": "WEDWED",
+        "email": "",
+        "event_date": "2026-12-25",
+        "event_date_raw": "25.12.2026",
+        "event_type": "Корпоратив",
+        "guests_count": 75,
+        "guests_max": null,
+        "guests_min": null,
+        "guests_raw": "75",
+        "name": "Алина",
+        "phone_digits": "79161995484",
+        "phone_raw": "+7 (916) 199-54-84",
+        "source": "WedWed",
+        "telegram_username": "",
+        "wedwed_url": "https://wedwed.ru/l/2bKLQY0"
+      },
+      "first_seen_at": "2026-08-26T15:33:56+03:00",
+      "first_seen_ts": 1787747636,
+      "guests": 75,
+      "guests_max": null,
+      "guests_min": null,
+      "guests_raw": "75",
+      "id": "3f4c9af314dabe71",
+      "identifier": {
+        "type": "phone",
+        "value": "79161995484"
+      },
+      "last_seen_at": "2026-08-26T15:33:56+03:00",
+      "last_seen_ts": 1787747636,
+      "manager_reaction": null,
+      "max": {
+        "chat_id": -71704692523093,
+        "message_ids": [
+          "mid.ffffbec8f345ffab01a03e1014aa3147"
+        ],
+        "sender_name": "Олеся",
+        "sender_user_id": 48906491,
+        "sender_username": null
+      },
+      "message_id": "mid.ffffbec8f345ffab01a03e1014aa3147",
+      "name": "Алина",
+      "phone": "+7 (916) 199-54-84",
+      "received_at": "2026-08-26T15:33:56+03:00",
+      "sender_name": "Олеся",
+      "sender_user_id": 48906491,
+      "source": "WedWed",
+      "status": "OK",
+      "username": "",
+      "violations": [],
+      "wedwed_url": "https://wedwed.ru/l/2bKLQY0"
+    },
+    {
       "category": "HOST",
       "channel": "MAX",
       "crm": {
@@ -44257,74 +44539,94 @@
       "violations": []
     },
     {
-      "category": "HOST",
+      "category": "WEDWED",
       "channel": "MAX",
       "crm": {
         "ambiguity_count": 0,
-        "created_at": null,
-        "entity_id": null,
-        "entity_type": null,
-        "event_type": null,
-        "found": false,
-        "responsible_user_id": null,
-        "responsible_user_name": null,
-        "updated_at": null
+        "created_at": 1789232764,
+        "entity_id": 48511117,
+        "entity_type": "lead",
+        "event_type": "Свадьба",
+        "found": true,
+        "guests": "74",
+        "guests_source": "CRM",
+        "responsible_user_id": 12982830,
+        "responsible_user_name": "Максим",
+        "updated_at": 1789270994
       },
-      "crm_created_at": null,
-      "crm_found": false,
+      "crm_check_status": "PENDING",
+      "crm_created_at": 1789232764,
+      "crm_feedback": {
+        "crm_lead_id": 48511117,
+        "deadline_at": 1789506000,
+        "excluded": false,
+        "first_activity_at": null,
+        "lead_created_at": 1789232764,
+        "pipeline_id": 10081590,
+        "responsible_user_id": 12982830,
+        "rule_version": 6,
+        "state": "WAITING",
+        "status_id": 79927038,
+        "status_name": "Выслано предложение"
+      },
+      "crm_found": true,
       "crm_required": true,
-      "crm_responsible": null,
-      "deadline_msk_ts": 1789333199,
-      "event_date": "2026-10-05",
+      "crm_responsible": 12982830,
+      "deadline_msk_ts": 1789246799,
+      "event_date": "2027-08-16",
+      "event_type": "Свадьба",
+      "event_type_source": "CRM",
       "fields": {
-        "category": "HOST",
+        "category": "WEDWED",
         "email": "",
-        "event_date": "2026-10-05",
-        "event_date_raw": "05.10",
-        "event_type": "",
-        "guests_count": 10,
+        "event_date": "2027-08-16",
+        "event_date_raw": "16.08.2027",
+        "event_type": "Свадьба",
+        "guests_count": 74,
         "guests_max": null,
         "guests_min": null,
-        "guests_raw": "10п.",
-        "name": "Владимир",
-        "phone_digits": "79269765311",
-        "phone_raw": "89269765311",
-        "source": "Заявки хост",
-        "telegram_username": ""
+        "guests_raw": "74",
+        "name": "Екатерина",
+        "phone_digits": "79100029606",
+        "phone_raw": "+7 (910) 002-96-06",
+        "source": "WedWed",
+        "telegram_username": "",
+        "wedwed_url": "https://wedwed.ru/l/4zGkilt"
       },
-      "first_seen_at": "2026-09-13T11:32:34+03:00",
-      "first_seen_ts": 1789288354,
-      "guests": 10,
+      "first_seen_at": "2026-09-12T19:51:10+03:00",
+      "first_seen_ts": 1789231870,
+      "guests": 74,
       "guests_max": null,
       "guests_min": null,
-      "guests_raw": "10п.",
-      "id": "d58517309aba7314",
+      "guests_raw": "74",
+      "id": "3bf31362ea1789b1",
       "identifier": {
         "type": "phone",
-        "value": "79269765311"
+        "value": "79100029606"
       },
-      "last_seen_at": "2026-09-13T11:32:34+03:00",
-      "last_seen_ts": 1789288354,
+      "last_seen_at": "2026-09-12T19:51:10+03:00",
+      "last_seen_ts": 1789231870,
       "manager_reaction": null,
       "max": {
         "chat_id": -71704692523093,
         "message_ids": [
-          "mid.ffffbec8f345ffab01a099e593e23a8e"
+          "mid.ffffbec8f345ffab01a09687b3cc3147"
         ],
-        "sender_name": "Алёна",
-        "sender_user_id": 432412696,
+        "sender_name": "Олеся",
+        "sender_user_id": 48906491,
         "sender_username": null
       },
-      "message_id": "mid.ffffbec8f345ffab01a099e593e23a8e",
-      "name": "Владимир",
-      "phone": "89269765311",
-      "received_at": "2026-09-13T11:32:34+03:00",
-      "sender_name": "Алёна",
-      "sender_user_id": 432412696,
-      "source": "Заявки хост",
-      "status": "PENDING",
+      "message_id": "mid.ffffbec8f345ffab01a09687b3cc3147",
+      "name": "Екатерина",
+      "phone": "+7 (910) 002-96-06",
+      "received_at": "2026-09-12T19:51:10+03:00",
+      "sender_name": "Олеся",
+      "sender_user_id": 48906491,
+      "source": "WedWed",
+      "status": "OK",
       "username": "",
-      "violations": []
+      "violations": [],
+      "wedwed_url": "https://wedwed.ru/l/4zGkilt"
     }
   ],
   "schema_version": 1
