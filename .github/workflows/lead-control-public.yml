@@ -1,5 +1,5 @@
 name: Lead Control Public Runner
-# manual-refresh: max-explicit-client-name-20260911
+# manual-refresh: max-forwarded-wedwed-20260913
 on:
   schedule:
     - cron: "50 6 * * *"
@@ -31,9 +31,9 @@ jobs:
         with:
           python-version: "3.12"
 
-      - name: Test Tilda parser and advertising export
+      - name: Test Lead Control parsers and advertising export
         working-directory: app
-        run: PYTHONPATH=. python -m unittest tests.test_tilda_parser tests.test_build_advertising_export tests.test_metrika_client_attribution_export -v
+        run: PYTHONPATH=. python -m unittest tests.test_tilda_parser tests.test_build_advertising_export tests.test_metrika_client_attribution_export tests.test_max_forwarded_wedwed tests.test_wedwed_enrichment -v
 
       - name: Install OCR
         run: |
