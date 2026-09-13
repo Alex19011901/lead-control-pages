@@ -42,7 +42,7 @@ def enrich_wedwed_leads(
         event = _event_for_lead(lead, events_by_message_id)
         if not event:
             continue
-        url = _extract_wedwed_url(str(event.get("text") or ""))
+        url = _extract_wedwed_url(_event_wedwed_text(event))
         if not url:
             continue
 
@@ -90,9 +90,25 @@ def _event_for_lead(
         message_ids.append(lead.get("message_id"))
     for message_id in message_ids:
         event = events_by_message_id.get(str(message_id))
-        if event and _extract_wedwed_url(str(event.get("text") or "")):
+        if event and _extract_wedwed_url(_event_wedwed_text(event)):
             return event
     return None
+
+
+def _event_wedwed_text(event: dict[str, Any]) -> str:
+    parts: list[str] = []
+    for key in (
+        "text",
+        "linked_or_forwarded_text",
+        "linked_text",
+        "forwarded_text",
+        "attachment_text",
+        "attachment_caption",
+    ):
+        value = event.get(key)
+        if isinstance(value, str) and value.strip():
+            parts.append(value.strip())
+    return "\n".join(parts)
 
 
 def _extract_wedwed_url(text: str) -> str:
