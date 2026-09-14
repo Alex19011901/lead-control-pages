@@ -134,6 +134,8 @@ def main() -> int:
     payload = load_json(Path(args.input))
     exported = []
     for lead in payload.get("leads", []):
+        if lead.get("is_duplicate") or lead.get("status") == "DUPLICATE":
+            continue
         created = date_part(lead.get("first_seen_at") or lead.get("received_at"))
         if not created:
             continue
