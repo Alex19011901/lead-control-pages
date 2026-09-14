@@ -1,10 +1,11 @@
 from __future__ import annotations
 
+from datetime import datetime
 import re
 from typing import Any
 
 from .event_type import infer_event_type
-from .normalize import THREE_DAYS_SECONDS, normalize_phone
+from .normalize import MOSCOW_TZ, normalize_phone
 
 
 _SERVICE_NAME_FRAGMENTS = (
@@ -91,11 +92,12 @@ def enrich_leads_from_events(leads: list[dict[str, Any]], events: list[dict[str,
 
 
 def _dedupe_same_phone_leads(leads: list[dict[str, Any]]) -> None:
-    """Collapse repeated leads with the same normalized phone within the duplicate window.
+    """Collapse only same-day repeats of the same phone and compatible client identity.
 
-    Source and channel do not create a second lead when the phone is the same.
-    The earliest lead remains canonical and later message references/fields are
-    merged into it.
+    A request posted on another Moscow calendar day is a new lead even if the
+    phone is unchanged. Within one day, clearly different client names are also
+    kept separate. This prevents a new daily request from disappearing into an
+    older lead while still collapsing genuine same-day cross-channel repeats.
     """
     canonical_by_phone: dict[str, list[dict[str, Any]]] = {}
     duplicate_object_ids: set[int] = set()
@@ -109,12 +111,12 @@ def _dedupe_same_phone_leads(leads: list[dict[str, Any]]) -> None:
 
         canonical = None
         for candidate in reversed(canonical_by_phone.get(phone_digits, [])):
-            candidate_created_at = _first_seen_ts(candidate)
-            if candidate_created_at <= 0:
+            if _lead_moscow_day(candidate) != _lead_moscow_day(lead):
                 continue
-            if created_at - candidate_created_at <= THREE_DAYS_SECONDS:
-                canonical = candidate
-                break
+            if not _same_request_identity(candidate, lead):
+                continue
+            canonical = candidate
+            break
 
         if canonical is None:
             canonical_by_phone.setdefault(phone_digits, []).append(lead)
@@ -143,6 +145,35 @@ def _first_seen_ts(lead: dict[str, Any]) -> int:
         return int(lead.get("first_seen_ts") or 0)
     except (TypeError, ValueError):
         return 0
+
+
+def _lead_moscow_day(lead: dict[str, Any]) -> str:
+    for key in ("first_seen_at", "received_at"):
+        value = str(lead.get(key) or "").strip()
+        if re.match(r"^\d{4}-\d{2}-\d{2}", value):
+            return value[:10]
+
+    timestamp = _first_seen_ts(lead)
+    if timestamp <= 0:
+        return ""
+    return datetime.fromtimestamp(timestamp, tz=MOSCOW_TZ).date().isoformat()
+
+
+def _same_request_identity(first: dict[str, Any], second: dict[str, Any]) -> bool:
+    first_name = _normalized_lead_name(first)
+    second_name = _normalized_lead_name(second)
+    if not first_name or not second_name:
+        return True
+    if first_name == second_name:
+        return True
+    return first_name.startswith(f"{second_name} ") or second_name.startswith(f"{first_name} ")
+
+
+def _normalized_lead_name(lead: dict[str, Any]) -> str:
+    fields = lead.get("fields") or {}
+    value = str(lead.get("name") or fields.get("name") or "").casefold().replace("ё", "е")
+    value = re.sub(r"[^a-zа-я0-9]+", " ", value, flags=re.IGNORECASE)
+    return re.sub(r"\s+", " ", value).strip()
 
 
 def _merge_duplicate_lead(primary: dict[str, Any], duplicate: dict[str, Any]) -> None:
