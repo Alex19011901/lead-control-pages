@@ -5,7 +5,7 @@ from datetime import datetime
 from typing import Any
 
 from .event_type import infer_event_type
-from .normalize import MOSCOW_TZ, make_lead_id, normalize_phone, unix_to_moscow_iso
+from .normalize import MOSCOW_TZ, make_lead_id, moscow_day_deadline_ts, normalize_phone, unix_to_moscow_iso
 from .parsers.max_leads import IGNORE, NEEDS_REVIEW, classify_max_event
 from .processor import _max_fields, _max_timestamp_seconds
 from .source_categories import normalize_lead_sources
@@ -112,8 +112,10 @@ def _clone_for_occurrence(
     lead["received_at"] = received_at
     lead["last_seen_ts"] = timestamp
     lead["last_seen_at"] = received_at
+    lead["deadline_msk_ts"] = moscow_day_deadline_ts(timestamp)
     lead["manager_reaction"] = None
     lead.pop("crm_feedback", None)
+    lead.pop("daily_repeat_phone", None)
     _clear_duplicate_marker(lead)
 
     if channel == "TELEGRAM":
@@ -178,17 +180,26 @@ def _clone_for_occurrence(
 
 def _mark_duplicates(leads: list[dict[str, Any]]) -> None:
     first_by_day_phone: dict[tuple[str, str], dict[str, Any]] = {}
+    seen_days_by_phone: dict[str, set[str]] = {}
+
     for lead in sorted(leads, key=lambda item: (_lead_ts(item), str(item.get("id") or ""))):
         _clear_duplicate_marker(lead)
+        lead.pop("daily_repeat_phone", None)
         phone = _lead_phone(lead)
         day = _lead_day(lead)
         if not phone or not day:
             continue
+
         key = (day, phone)
         primary = first_by_day_phone.get(key)
         if primary is None:
+            prior_days = seen_days_by_phone.setdefault(phone, set())
+            if prior_days and day not in prior_days:
+                lead["daily_repeat_phone"] = True
             first_by_day_phone[key] = lead
+            prior_days.add(day)
             continue
+
         _set_duplicate(lead, primary)
 
 
