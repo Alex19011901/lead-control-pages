@@ -549,13 +549,13 @@ def _parse_host_without_header(text: str) -> dict[str, Any] | None:
 
 
 def _parse_host_broad(text: str) -> dict[str, Any] | None:
-    if _looks_like_phone_name_only(text):
+    has_header = bool(re.match(r"^\s*заявка\b", text, flags=re.IGNORECASE))
+    if _looks_like_phone_name_only(text) and not has_header:
         return None
     if not _extract_phone_raw(text):
         return None
 
     lowered = text.lower()
-    has_header = bool(re.match(r"^\s*заявка\b", text, flags=re.IGNORECASE))
     has_guest = bool(_extract_guest_value(text) or _extract_guest_count(text))
     has_date = bool(_extract_date_raw(text) or _extract_period_raw(text))
     has_event = _has_event_word(lowered)
@@ -564,7 +564,7 @@ def _parse_host_broad(text: str) -> dict[str, Any] | None:
         return None
     if has_header and _looks_like_service_forward(text):
         return None
-    if not has_event_shape:
+    if not has_event_shape and not has_header:
         return None
 
     phone_raw = _extract_phone_raw(text)
@@ -972,6 +972,7 @@ def _extract_period_raw(text: str) -> str:
         rf"\b(?:конец|начало|середина|первая половина|вторая половина)\s+(?:{MONTHS_PATTERN})\b",
         rf"\b(?:{MONTHS_PATTERN})\s+\d{{4}}\b",
         r"\b(?:июль|июле|август|августе|сентябрь|сентябре|октябрь|октябре|ноябрь|ноябре|декабрь|декабре)\b(?:\s+\d{4})?",
+        r"\b(?:весна|весной|лето|летом|осень|осенью|зима|зимой)\b(?:\s*[,./-]?\s*\d{4})?",
         r"\bдата\s+(?:открыта|не\s+известна|под\s+вопросом|нет)\b",
     ]
     for pattern in patterns:
@@ -1206,6 +1207,14 @@ def _extract_probable_name(text: str, phone_raw: str) -> str:
         "конец",
         "начало",
         "середина",
+        "весна",
+        "весной",
+        "лето",
+        "летом",
+        "осень",
+        "осенью",
+        "зима",
+        "зимой",
         "январь",
         "января",
         "февраль",
