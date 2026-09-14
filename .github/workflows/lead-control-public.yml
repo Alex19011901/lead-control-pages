@@ -33,7 +33,7 @@ jobs:
 
       - name: Test Lead Control parsers and advertising export
         working-directory: app
-        run: PYTHONPATH=. python -m unittest tests.test_tilda_parser tests.test_build_advertising_export tests.test_metrika_client_attribution_export tests.test_max_forwarded_wedwed tests.test_wedwed_enrichment -v
+        run: PYTHONPATH=. python -m unittest tests.test_tilda_parser tests.test_build_advertising_export tests.test_metrika_client_attribution_export tests.test_max_forwarded_wedwed tests.test_wedwed_enrichment tests.test_phone_deduplication tests.test_daily_lead_regressions -v
 
       - name: Install OCR
         run: |
