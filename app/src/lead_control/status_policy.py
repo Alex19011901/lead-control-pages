@@ -7,6 +7,7 @@ from .normalize import MOSCOW_TZ
 
 
 NO_CRM_STATUS = "-"
+DUPLICATE_STATUS = "DUPLICATE"
 EVENING_CUTOFF = time(20, 0, 0)
 EVENING_NEXT_DAY_DEADLINE = time(16, 0, 0)
 SAME_DAY_DEADLINE = time(23, 59, 59)
@@ -30,7 +31,8 @@ def apply_crm_day_status_policy(
     Leads for which CRM verification is intentionally disabled, or impossible
     because there is no reliable CRM identifier, must never be shown as
     successfully entered or waiting for CRM. Their dashboard status is a
-    neutral dash.
+    neutral dash. Same-day phone duplicates are the exception: they remain
+    visible with the dedicated DUPLICATE status and never participate in CRM.
     """
     now_dt = (
         datetime.now(MOSCOW_TZ)
@@ -39,6 +41,10 @@ def apply_crm_day_status_policy(
     )
 
     for lead in leads:
+        if lead.get("is_duplicate"):
+            _set_status(lead, DUPLICATE_STATUS)
+            continue
+
         _apply_crm_event_priority(lead)
 
         if lead.get("crm_required") is False:
