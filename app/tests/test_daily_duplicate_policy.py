@@ -133,6 +133,7 @@ class DailyDuplicatePolicyTests(unittest.TestCase):
         self.assertFalse(sep13[0].get("is_duplicate", False))
         self.assertEqual(len(sep14), 3)
         self.assertFalse(sep14[0].get("is_duplicate", False))
+        self.assertTrue(sep14[0].get("daily_repeat_phone"))
         self.assertEqual([lead["status"] for lead in sep14[1:]], ["DUPLICATE", "DUPLICATE"])
         self.assertTrue(all(lead["crm_required"] is False for lead in sep14[1:]))
         self.assertTrue(all(lead["duplicate_of"] == sep14[0]["id"] for lead in sep14[1:]))
