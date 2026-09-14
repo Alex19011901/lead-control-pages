@@ -7,6 +7,7 @@ from .amocrm_client import AmoCRMClient
 from .config import load_config
 from .crm_apply import apply_crm
 from .crm_feedback import apply_crm_feedback_tracking
+from .daily_duplicates import apply_daily_phone_duplicate_policy
 from .data_branch import commit_data_if_changed, prepare_data_worktree
 from .lead_enrichment import enrich_leads_from_events
 from .manual_history import missing_manual_history_events
@@ -165,6 +166,7 @@ def main() -> None:
     enrich_leads_from_events(leads, events)
     enrich_manual_review_fields(leads, review_overrides_payload.get("items", []))
     enrich_wedwed_leads(leads, events)
+    apply_daily_phone_duplicate_policy(leads, events)
     needs_review_items = filter_known_source_reviews(needs_review_items)
 
     leads_payload = {"schema_version": 1, "leads": leads}
