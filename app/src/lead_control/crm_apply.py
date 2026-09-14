@@ -96,14 +96,16 @@ def _crm_match_is_current_for_lead(
     lead: dict[str, Any],
     crm_payload: dict[str, Any],
 ) -> bool:
-    """Reject an old same-contact deal for a new aggregator request.
+    """Reject an old same-contact deal when the incoming request is a new request.
 
-    Restoran.Cafe and ToMesto messages are counted as distinct incoming
-    requests. A much older amoCRM deal for the same phone must not make the
-    new request look already entered. A short grace window is kept for cases
-    where the manager creates the deal shortly before the MAX forward arrives.
+    Aggregator messages are always distinct requests. A phone that appears for
+    the first time on a new Moscow calendar day is also a new daily lead under
+    Lead Control's duplicate policy. In both cases, an older amoCRM deal must
+    not make the new request look already entered. A short grace window is kept
+    for cases where the manager creates the deal shortly before the source
+    message arrives.
     """
-    if lead.get("category") not in {RESTORAN_CAFE, TO_MESTO}:
+    if lead.get("category") not in {RESTORAN_CAFE, TO_MESTO} and not lead.get("daily_repeat_phone"):
         return True
 
     try:
