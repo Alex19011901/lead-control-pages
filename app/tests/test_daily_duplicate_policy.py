@@ -4,7 +4,7 @@ from datetime import datetime
 import unittest
 
 from lead_control.amocrm_client import AmoCRMSearchResult
-from lead_control.crm_apply import apply_crm
+from lead_control.crm_apply import apply_crm, _crm_match_is_current_for_lead
 from lead_control.daily_duplicates import apply_daily_phone_duplicate_policy
 from lead_control.normalize import MOSCOW_TZ
 from lead_control.status_policy import apply_crm_day_status_policy
@@ -144,6 +144,25 @@ class DailyDuplicatePolicyTests(unittest.TestCase):
 
         apply_crm_day_status_policy(leads, now_ts=_ts(14, 14, 0))
         self.assertEqual([lead["status"] for lead in sep14[1:]], ["DUPLICATE", "DUPLICATE"])
+
+    def test_daily_repeat_crm_rule_does_not_rewrite_history_before_sep14(self) -> None:
+        historical_source_ts = int(datetime(2026, 8, 17, 20, 36, tzinfo=MOSCOW_TZ).timestamp())
+        historical_crm_ts = int(datetime(2026, 8, 14, 13, 30, tzinfo=MOSCOW_TZ).timestamp())
+        historical_lead = {
+            "category": "HOST",
+            "daily_repeat_phone": True,
+            "first_seen_ts": historical_source_ts,
+        }
+        historical_crm = {"created_at": historical_crm_ts}
+        self.assertTrue(_crm_match_is_current_for_lead(historical_lead, historical_crm))
+
+        current_lead = {
+            "category": "HOST",
+            "daily_repeat_phone": True,
+            "first_seen_ts": _ts(14, 13, 6),
+        }
+        prior_day_crm = {"created_at": _ts(13, 11, 28)}
+        self.assertFalse(_crm_match_is_current_for_lead(current_lead, prior_day_crm))
 
 
 if __name__ == "__main__":
