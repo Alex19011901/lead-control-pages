@@ -33,7 +33,7 @@ jobs:
 
       - name: Test Lead Control parsers and advertising export
         working-directory: app
-        run: PYTHONPATH=. python -m unittest tests.test_tilda_parser tests.test_build_advertising_export tests.test_metrika_client_attribution_export tests.test_max_forwarded_wedwed tests.test_wedwed_enrichment tests.test_phone_deduplication tests.test_daily_lead_regressions -v
+        run: PYTHONPATH=. python -m unittest tests.test_tilda_parser tests.test_build_advertising_export tests.test_metrika_client_attribution_export tests.test_max_forwarded_wedwed tests.test_wedwed_enrichment tests.test_phone_deduplication tests.test_daily_lead_regressions tests.test_daily_duplicate_policy -v
 
       - name: Install OCR
         run: |
@@ -67,6 +67,7 @@ jobs:
           PUBLIC_REFRESH_TOKEN: ${{ secrets.PUBLIC_REFRESH_TOKEN }}
         run: |
           python app/scripts/build_dashboard_snapshot.py --input runtime-data/leads.json --output runtime-data/dashboard_daily.json
+          python app/scripts/exclude_dashboard_duplicate_stats.py --leads runtime-data/leads.json --snapshot runtime-data/dashboard_daily.json
           python app/scripts/build_dashboard_view.py --input runtime-data/dashboard_daily.json --output runtime-data/dashboard_view.json
           python app/scripts/apply_dashboard_crm_guest_priority.py --leads runtime-data/leads.json --view runtime-data/dashboard_view.json
           python app/scripts/apply_dashboard_mail_source.py --view runtime-data/dashboard_view.json
@@ -74,6 +75,7 @@ jobs:
           python app/scripts/build_advertising_export.py --input runtime-data/leads.json --output runtime-data/advertising_leads.json --start-date 2026-09-05
           mkdir -p public-site
           python app/scripts/build_github_pages_mirror.py --input app/dashboard/pageshare/index.html --output public-site/index.html
+          python app/scripts/apply_dashboard_duplicate_badge.py --path public-site/index.html
           python - <<'PY'
           import os
           from pathlib import Path
