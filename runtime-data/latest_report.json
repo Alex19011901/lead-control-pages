@@ -19,19 +19,18 @@
     "ТоМесто": 1
   },
   "event_types": {
-    "unknown": 107,
+    "unknown": 106,
     "Бизнес мероприятие": 17,
     "Выпускной": 4,
     "ДР": 1,
     "Деловое мероприятие": 1,
     "Детский праздник": 5,
-    "Корпоратив": 137,
+    "Корпоратив": 138,
     "Поминки": 1,
     "Свадьба": 170,
     "Съемки": 1,
     "Съёмки": 1,
-    "Юбилей": 103,
-    "попросили связаться до конца дня": 1
+    "Юбилей": 104
   },
   "guest_ranges": {
     "1-20": 169,
@@ -45,11 +44,11 @@
   "latest_leads": [
     {
       "created_at": "2026-09-14T16:14:48+03:00",
-      "crm_entity_id": null,
-      "crm_entity_type": null,
-      "crm_found": false,
+      "crm_entity_id": 48565367,
+      "crm_entity_type": "lead",
+      "crm_found": true,
       "event_date": "2026-09-26",
-      "event_type": "попросили связаться до конца дня",
+      "event_type": "Юбилей",
       "guests_count": null,
       "identifier": "7********39",
       "identifier_type": "phone",
@@ -58,16 +57,16 @@
       "manager_username": "",
       "name": "Мария",
       "source": "Заявки хост",
-      "status": "PENDING",
+      "status": "OK",
       "violations": []
     },
     {
       "created_at": "2026-09-14T16:04:39+03:00",
-      "crm_entity_id": null,
-      "crm_entity_type": null,
-      "crm_found": false,
+      "crm_entity_id": 48565963,
+      "crm_entity_type": "lead",
+      "crm_found": true,
       "event_date": "2026-12-25",
-      "event_type": "",
+      "event_type": "Корпоратив",
       "guests_count": null,
       "identifier": "7********51",
       "identifier_type": "phone",
@@ -76,7 +75,7 @@
       "manager_username": "",
       "name": "Ольга",
       "source": "Заявки хост",
-      "status": "PENDING",
+      "status": "OK",
       "violations": []
     },
     {
@@ -410,7 +409,7 @@
   ],
   "needs_review": 88,
   "no_reaction": 0,
-  "ok": 378,
+  "ok": 380,
   "total_leads": 549,
-  "updated_at": "2026-09-14T16:58:58+03:00"
+  "updated_at": "2026-09-14T17:28:54+03:00"
 }
