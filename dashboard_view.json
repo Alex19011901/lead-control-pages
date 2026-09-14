@@ -141,8 +141,7 @@
       "total": 238,
       "status": {
         "LATE_CRM": 31,
-        "OK": 188,
-        "ALARM_NO_CRM": 1,
+        "OK": 189,
         "-": 13,
         "PENDING": 5
       },
@@ -171,10 +170,10 @@
         "Не указано": 5
       },
       "event": {
-        "Юбилей": 40,
+        "Юбилей": 41,
         "Корпоратив": 85,
         "Свадьба": 72,
-        "Не определено": 18,
+        "Не определено": 17,
         "Бизнес мероприятие": 5,
         "Детский праздник": 2,
         "Выпускной": 3
@@ -304,9 +303,8 @@
       "total": 554,
       "status": {
         "LATE_CRM": 118,
-        "OK": 379,
+        "OK": 381,
         "-": 50,
-        "ALARM_NO_CRM": 2,
         "PENDING": 5
       },
       "source": {
@@ -335,10 +333,10 @@
         "Не указано": 12
       },
       "event": {
-        "Юбилей": 106,
+        "Юбилей": 107,
         "Корпоратив": 139,
         "Свадьба": 171,
-        "Не определено": 64,
+        "Не определено": 63,
         "Бизнес мероприятие": 17,
         "Детский праздник": 5,
         "Съёмки": 2,
@@ -1427,35 +1425,8 @@
       "manager": "Максим"
     }
   ],
-  "not_entered": [
-    {
-      "date": "2026-08-17",
-      "ts": "2026-08-17T20:36:01+03:00",
-      "source": "Заявки хост",
-      "status": "ALARM_NO_CRM",
-      "channel": "MAX",
-      "guest_range": "25-30",
-      "guests": "25-30",
-      "event_type": "unknown",
-      "name": "Светлана",
-      "identifier": "79036850807",
-      "manager": ""
-    },
-    {
-      "date": "2026-08-02",
-      "ts": "2026-08-02T14:43:07+03:00",
-      "source": "Заявки хост",
-      "status": "ALARM_NO_CRM",
-      "channel": "MAX",
-      "guest_range": "12",
-      "guests": "12",
-      "event_type": "Юбилей",
-      "name": "Алла",
-      "identifier": "79037200337",
-      "manager": ""
-    }
-  ],
-  "snapshot_generated_at": "2026-09-14T18:12:12Z",
+  "not_entered": [],
+  "snapshot_generated_at": "2026-09-14T19:02:32Z",
   "snapshot_at": "2026-09-14T19:37:11+03:00",
   "min_date": "2026-07-01",
   "max_date": "2026-09-14",
@@ -1481,7 +1452,7 @@
       "crm_status": "Выслано предложение",
       "first_activity_at": "",
       "first_activity_ts": null,
-      "age_seconds": 373778,
+      "age_seconds": 376799,
       "feedback_state": "NO_FEEDBACK"
     },
     {
@@ -1497,7 +1468,7 @@
       "crm_status": "Выслано предложение",
       "first_activity_at": "",
       "first_activity_ts": null,
-      "age_seconds": 281606,
+      "age_seconds": 284627,
       "feedback_state": "WAITING_BLUE"
     },
     {
@@ -1513,7 +1484,7 @@
       "crm_status": "Выслано предложение",
       "first_activity_at": "",
       "first_activity_ts": null,
-      "age_seconds": 282056,
+      "age_seconds": 285077,
       "feedback_state": "WAITING_BLUE"
     },
     {
@@ -1529,7 +1500,7 @@
       "crm_status": "Выслано предложение",
       "first_activity_at": "",
       "first_activity_ts": null,
-      "age_seconds": 176768,
+      "age_seconds": 179789,
       "feedback_state": "WAITING_YELLOW"
     },
     {
@@ -1545,7 +1516,7 @@
       "crm_status": "Выслано предложение",
       "first_activity_at": "",
       "first_activity_ts": null,
-      "age_seconds": 176946,
+      "age_seconds": 179967,
       "feedback_state": "WAITING_YELLOW"
     },
     {
@@ -1561,7 +1532,7 @@
       "crm_status": "Выслано предложение",
       "first_activity_at": "",
       "first_activity_ts": null,
-      "age_seconds": 200338,
+      "age_seconds": 203359,
       "feedback_state": "WAITING_YELLOW"
     }
   ],
