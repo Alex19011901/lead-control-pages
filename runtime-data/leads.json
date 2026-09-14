@@ -13531,7 +13531,7 @@
         "pipeline_id": 10081590,
         "responsible_user_id": 13009530,
         "rule_version": 6,
-        "state": "WAITING",
+        "state": "NO_FEEDBACK",
         "status_id": 79927038,
         "status_name": "Выслано предложение"
       },
@@ -13731,7 +13731,7 @@
         "pipeline_id": 10081590,
         "responsible_user_id": 13009530,
         "rule_version": 6,
-        "state": "WAITING",
+        "state": "NO_FEEDBACK",
         "status_id": 79927038,
         "status_name": "Выслано предложение"
       },
@@ -13859,7 +13859,7 @@
       "sender_user_id": 265299531,
       "sender_username": "TildaFormsBot",
       "source": "САЙТ ТИЛЬДА",
-      "status": "PENDING",
+      "status": "ALARM_NO_CRM",
       "telegram": {
         "chat_id": -1001645768111,
         "message_ids": [
@@ -13869,34 +13869,53 @@
           185608331
         ]
       },
-      "violations": []
+      "violations": [
+        "ALARM_NO_CRM"
+      ]
     },
     {
       "category": "САЙТ ТИЛЬДА",
       "channel": "TELEGRAM",
       "crm": {
         "ambiguity_count": 0,
-        "created_at": null,
-        "entity_id": null,
-        "entity_type": null,
-        "event_type": null,
-        "found": false,
-        "responsible_user_id": null,
-        "responsible_user_name": null,
-        "updated_at": null
+        "created_at": 1789328734,
+        "entity_id": 48537395,
+        "entity_type": "lead",
+        "event_type": "Юбилей",
+        "found": true,
+        "guests": "20",
+        "guests_source": "CRM",
+        "responsible_user_id": 13009530,
+        "responsible_user_name": "Олеся",
+        "updated_at": 1789333241
       },
-      "crm_created_at": null,
-      "crm_found": false,
+      "crm_created_at": 1789328734,
+      "crm_feedback": {
+        "crm_lead_id": 48537395,
+        "deadline_at": 1789592400,
+        "excluded": false,
+        "first_activity_at": null,
+        "lead_created_at": 1789328734,
+        "pipeline_id": 10081590,
+        "responsible_user_id": 13009530,
+        "rule_version": 6,
+        "state": "WAITING",
+        "status_id": 79927038,
+        "status_name": "Выслано предложение"
+      },
+      "crm_found": true,
       "crm_required": true,
-      "crm_responsible": null,
+      "crm_responsible": 13009530,
       "deadline_msk_ts": 1789333199,
       "event_date": "2026-10-05",
+      "event_type": "Юбилей",
+      "event_type_source": "CRM",
       "fields": {
         "category": "САЙТ ТИЛЬДА",
         "description": "Содержание заявки:\nname: Владимир\nphone: +79269765311\nDate: 05-10-2026\nInput: 10\nCheckbox: yes\n\nДополнительная информация:\nКод заявки: 2925975:8669817472\nКод блока: rec917339299\nhttps://moscowbanket.ru/vip#menuu\n-----",
         "event_date": "2026-10-05",
         "event_date_raw": "05-10-2026",
-        "event_type": "",
+        "event_type": "Юбилей",
         "form_submit_timestamp": null,
         "guests_count": 10,
         "guests_raw": "10п.",
@@ -13948,7 +13967,7 @@
       "sender_user_id": 265299531,
       "sender_username": "TildaFormsBot",
       "source": "САЙТ ТИЛЬДА",
-      "status": "PENDING",
+      "status": "OK",
       "telegram": {
         "chat_id": -1001645768111,
         "message_ids": [
@@ -13956,6 +13975,83 @@
         ],
         "update_ids": [
           185608334
+        ]
+      },
+      "violations": []
+    },
+    {
+      "category": "САЙТ ТИЛЬДА",
+      "channel": "TELEGRAM",
+      "crm": {
+        "ambiguity_count": 0,
+        "created_at": null,
+        "entity_id": null,
+        "entity_type": null,
+        "event_type": null,
+        "found": false,
+        "responsible_user_id": null,
+        "responsible_user_name": null,
+        "updated_at": null
+      },
+      "crm_created_at": null,
+      "crm_found": false,
+      "crm_required": true,
+      "crm_responsible": null,
+      "deadline_msk_ts": 1789390800,
+      "fields": {
+        "category": "САЙТ ТИЛЬДА",
+        "description": "Содержание заявки:\nName: Гоар\nPhone: +79687878697\nInput: 35\nCheckbox: yes\n\nДополнительная информация:\nКод заявки: 2925975:8671102653\nКод блока: rec940366316\nhttps://moscowbanket.ru/page66576519.html#rec940366306\n-----",
+        "event_date": "2026-10-16",
+        "event_date_raw": "16-10-2026",
+        "event_type": "",
+        "form_submit_timestamp": null,
+        "guests_count": 35,
+        "metrika_client_id": "",
+        "name": "Гоар",
+        "phone_digits": "79687878697",
+        "phone_raw": "+79687878697",
+        "source": "САЙТ ТИЛЬДА",
+        "telegram_username": "",
+        "yclid": ""
+      },
+      "first_seen_at": "2026-09-13T23:06:49+03:00",
+      "first_seen_ts": 1789330009,
+      "id": "47289045c96b1cea",
+      "identifier": {
+        "type": "phone",
+        "value": "79687878697"
+      },
+      "last_seen_at": "2026-09-13T23:08:27+03:00",
+      "last_seen_ts": 1789330107,
+      "manager_reaction": {
+        "name": "Олеся",
+        "reacted_at": "2026-09-14T07:35:08+03:00",
+        "reacted_ts": 1789360508,
+        "reaction": [
+          {
+            "emoji": "❤",
+            "type": "emoji"
+          }
+        ],
+        "update_id": 185608338,
+        "user_id": 328611361,
+        "username": "Olesyagozhina"
+      },
+      "received_at": "2026-09-13T23:06:49+03:00",
+      "sender_name": "TildaForms",
+      "sender_user_id": 265299531,
+      "sender_username": "TildaFormsBot",
+      "source": "САЙТ ТИЛЬДА",
+      "status": "PENDING",
+      "telegram": {
+        "chat_id": -1001645768111,
+        "message_ids": [
+          5881,
+          5882
+        ],
+        "update_ids": [
+          185608335,
+          185608336
         ]
       },
       "violations": []
@@ -43371,27 +43467,43 @@
       "channel": "MAX",
       "crm": {
         "ambiguity_count": 0,
-        "created_at": null,
-        "entity_id": null,
-        "entity_type": null,
-        "event_type": null,
-        "found": false,
-        "responsible_user_id": null,
-        "responsible_user_name": null,
-        "updated_at": null
+        "created_at": 1789363403,
+        "entity_id": 48542343,
+        "entity_type": "lead",
+        "event_type": "Свадьба",
+        "found": true,
+        "guests": "10",
+        "guests_source": "CRM",
+        "responsible_user_id": 13009530,
+        "responsible_user_name": "Олеся",
+        "updated_at": 1789363411
       },
-      "crm_created_at": null,
-      "crm_found": false,
+      "crm_created_at": 1789363403,
+      "crm_feedback": {
+        "crm_lead_id": 48542343,
+        "excluded": true,
+        "first_activity_at": null,
+        "lead_created_at": 1789363403,
+        "pipeline_id": 10081590,
+        "responsible_user_id": 13009530,
+        "rule_version": 6,
+        "state": "EXCLUDED",
+        "status_id": 143,
+        "status_name": "Закрыто и не реализовано"
+      },
+      "crm_found": true,
       "crm_required": true,
-      "crm_responsible": null,
+      "crm_responsible": 13009530,
       "deadline_msk_ts": 1789073999,
       "event_date": "2026-09-23",
+      "event_type": "Свадьба",
+      "event_type_source": "CRM",
       "fields": {
         "category": "HOST",
         "email": "",
         "event_date": "2026-09-23",
         "event_date_raw": "23.09",
-        "event_type": "",
+        "event_type": "Свадьба",
         "guests_count": 11,
         "guests_max": null,
         "guests_min": null,
@@ -43432,10 +43544,10 @@
       "sender_name": "Елена",
       "sender_user_id": 121513620,
       "source": "Заявки хост",
-      "status": "ALARM_NO_CRM",
+      "status": "LATE_CRM",
       "username": "",
       "violations": [
-        "ALARM_NO_CRM"
+        "LATE_CRM"
       ]
     },
     {
@@ -43890,16 +44002,15 @@
       "crm_created_at": 1789134191,
       "crm_feedback": {
         "crm_lead_id": 48480075,
-        "deadline_at": 1789419600,
-        "excluded": false,
+        "excluded": true,
         "first_activity_at": null,
         "lead_created_at": 1789134191,
         "pipeline_id": 10081590,
         "responsible_user_id": 12982830,
         "rule_version": 6,
-        "state": "WAITING",
-        "status_id": 79927034,
-        "status_name": "Первичный контакт"
+        "state": "EXCLUDED",
+        "status_id": 143,
+        "status_name": "Закрыто и не реализовано"
       },
       "crm_found": true,
       "crm_required": true,
@@ -44694,9 +44805,11 @@
       "sender_name": "Алёна",
       "sender_user_id": 432412696,
       "source": "Заявки хост",
-      "status": "PENDING",
+      "status": "ALARM_NO_CRM",
       "username": "",
-      "violations": []
+      "violations": [
+        "ALARM_NO_CRM"
+      ]
     }
   ],
   "schema_version": 1

@@ -1,9 +1,9 @@
 {
-  "alarm_no_crm": 1,
+  "alarm_no_crm": 2,
   "by_manager": {
     "no_manager_reaction": 438,
     "Максим": 47,
-    "Олеся": 49
+    "Олеся": 50
   },
   "by_source": {
     "MARQUIZ": 31,
@@ -14,12 +14,12 @@
     "Заявка сайт": 3,
     "Заявки хост": 275,
     "С улицы": 2,
-    "САЙТ ТИЛЬДА": 134,
+    "САЙТ ТИЛЬДА": 135,
     "Тильда Веранда": 45,
     "ТоМесто": 1
   },
   "event_types": {
-    "unknown": 104,
+    "unknown": 103,
     "Бизнес мероприятие": 17,
     "Выпускной": 4,
     "ДР": 1,
@@ -27,21 +27,39 @@
     "Детский праздник": 5,
     "Корпоратив": 134,
     "Поминки": 1,
-    "Свадьба": 166,
+    "Свадьба": 167,
     "Съемки": 1,
     "Съёмки": 1,
-    "Юбилей": 99
+    "Юбилей": 100
   },
   "guest_ranges": {
     "1-20": 168,
     "101-150": 36,
     "151+": 21,
-    "21-50": 153,
+    "21-50": 154,
     "51-100": 73,
     "unknown": 83
   },
-  "late_crm": 113,
+  "late_crm": 114,
   "latest_leads": [
+    {
+      "created_at": "2026-09-13T23:06:49+03:00",
+      "crm_entity_id": null,
+      "crm_entity_type": null,
+      "crm_found": false,
+      "event_date": "2026-10-16",
+      "event_type": "",
+      "guests_count": 35,
+      "identifier": "7********97",
+      "identifier_type": "phone",
+      "lead_id": "47289045c96b1cea",
+      "manager": "Олеся",
+      "manager_username": "Olesyagozhina",
+      "name": "Гоар",
+      "source": "САЙТ ТИЛЬДА",
+      "status": "PENDING",
+      "violations": []
+    },
     {
       "created_at": "2026-09-13T13:48:56+03:00",
       "crm_entity_id": null,
@@ -57,16 +75,18 @@
       "manager_username": "",
       "name": "Николай",
       "source": "Заявки хост",
-      "status": "PENDING",
-      "violations": []
+      "status": "ALARM_NO_CRM",
+      "violations": [
+        "ALARM_NO_CRM"
+      ]
     },
     {
       "created_at": "2026-09-13T11:28:51+03:00",
-      "crm_entity_id": null,
-      "crm_entity_type": null,
-      "crm_found": false,
+      "crm_entity_id": 48537395,
+      "crm_entity_type": "lead",
+      "crm_found": true,
       "event_date": "2026-10-05",
-      "event_type": "",
+      "event_type": "Юбилей",
       "guests_count": 10,
       "identifier": "7********11",
       "identifier_type": "phone",
@@ -75,7 +95,7 @@
       "manager_username": "Olesyagozhina",
       "name": "Владимир",
       "source": "САЙТ ТИЛЬДА",
-      "status": "PENDING",
+      "status": "OK",
       "violations": []
     },
     {
@@ -93,8 +113,10 @@
       "manager_username": "Olesyagozhina",
       "name": "А",
       "source": "САЙТ ТИЛЬДА",
-      "status": "PENDING",
-      "violations": []
+      "status": "ALARM_NO_CRM",
+      "violations": [
+        "ALARM_NO_CRM"
+      ]
     },
     {
       "created_at": "2026-09-12T19:51:10+03:00",
@@ -350,11 +372,11 @@
     },
     {
       "created_at": "2026-09-10T16:27:24+03:00",
-      "crm_entity_id": null,
-      "crm_entity_type": null,
-      "crm_found": false,
+      "crm_entity_id": 48542343,
+      "crm_entity_type": "lead",
+      "crm_found": true,
       "event_date": "2026-09-23",
-      "event_type": "",
+      "event_type": "Свадьба",
       "guests_count": 11,
       "identifier": "7********33",
       "identifier_type": "phone",
@@ -363,9 +385,9 @@
       "manager_username": "",
       "name": "Элина",
       "source": "Заявки хост",
-      "status": "ALARM_NO_CRM",
+      "status": "LATE_CRM",
       "violations": [
-        "ALARM_NO_CRM"
+        "LATE_CRM"
       ]
     },
     {
@@ -385,29 +407,11 @@
       "source": "Заявки хост",
       "status": "OK",
       "violations": []
-    },
-    {
-      "created_at": "2026-09-10T14:32:53+03:00",
-      "crm_entity_id": 48433985,
-      "crm_entity_type": "lead",
-      "crm_found": true,
-      "event_date": "2026-12-17",
-      "event_type": "Корпоратив",
-      "guests_count": 70,
-      "identifier": "7********96",
-      "identifier_type": "phone",
-      "lead_id": "04a62fde30e31eda",
-      "manager": "",
-      "manager_username": "",
-      "name": "Сергей",
-      "source": "Заявки хост",
-      "status": "OK",
-      "violations": []
     }
   ],
   "needs_review": 87,
   "no_reaction": 0,
-  "ok": 368,
-  "total_leads": 534,
-  "updated_at": "2026-09-13T15:27:12+03:00"
+  "ok": 369,
+  "total_leads": 535,
+  "updated_at": "2026-09-14T10:03:10+03:00"
 }
