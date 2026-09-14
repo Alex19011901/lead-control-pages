@@ -10,21 +10,22 @@ GUEST_BUCKETS = ("1-20", "21-50", "51-100", "101-150", "151+", "unknown")
 
 
 def build_report(leads: list[dict[str, Any]], updated_at: str | None, needs_review_count: int = 0) -> dict[str, Any]:
-    status_counts = Counter(lead.get("status", "PENDING") for lead in leads)
+    counted_leads = [lead for lead in leads if not lead.get("is_duplicate")]
+    status_counts = Counter(lead.get("status", "PENDING") for lead in counted_leads)
     violation_counts = Counter(
         violation
-        for lead in leads
+        for lead in counted_leads
         for violation in lead.get("violations", [])
     )
 
-    by_source = Counter(lead.get("source") or "unknown" for lead in leads)
-    by_manager = Counter(_manager_key(lead) for lead in leads)
-    event_types = Counter((lead.get("fields") or {}).get("event_type") or "unknown" for lead in leads)
-    guest_ranges = Counter(guest_bucket((lead.get("fields") or {}).get("guests_count")) for lead in leads)
+    by_source = Counter(lead.get("source") or "unknown" for lead in counted_leads)
+    by_manager = Counter(_manager_key(lead) for lead in counted_leads)
+    event_types = Counter((lead.get("fields") or {}).get("event_type") or "unknown" for lead in counted_leads)
+    guest_ranges = Counter(guest_bucket((lead.get("fields") or {}).get("guests_count")) for lead in counted_leads)
 
     return {
         "updated_at": updated_at,
-        "total_leads": len(leads),
+        "total_leads": len(counted_leads),
         "needs_review": needs_review_count,
         "ok": status_counts["OK"],
         "late_crm": violation_counts["LATE_CRM"],
@@ -34,7 +35,7 @@ def build_report(leads: list[dict[str, Any]], updated_at: str | None, needs_revi
         "by_manager": dict(sorted(by_manager.items())),
         "event_types": dict(sorted(event_types.items())),
         "guest_ranges": {bucket: guest_ranges[bucket] for bucket in GUEST_BUCKETS},
-        "latest_leads": [_report_lead(lead) for lead in _latest(leads)],
+        "latest_leads": [_report_lead(lead) for lead in _latest(counted_leads)],
     }
 
 
