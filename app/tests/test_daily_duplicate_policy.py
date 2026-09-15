@@ -145,7 +145,7 @@ class DailyDuplicatePolicyTests(unittest.TestCase):
         apply_crm_day_status_policy(leads, now_ts=_ts(14, 14, 0))
         self.assertEqual([lead["status"] for lead in sep14[1:]], ["DUPLICATE", "DUPLICATE"])
 
-    def test_daily_repeat_crm_rule_does_not_rewrite_history_before_sep14(self) -> None:
+    def test_daily_repeat_may_reuse_existing_crm_deal_from_prior_day(self) -> None:
         historical_source_ts = int(datetime(2026, 8, 17, 20, 36, tzinfo=MOSCOW_TZ).timestamp())
         historical_crm_ts = int(datetime(2026, 8, 14, 13, 30, tzinfo=MOSCOW_TZ).timestamp())
         historical_lead = {
@@ -162,7 +162,7 @@ class DailyDuplicatePolicyTests(unittest.TestCase):
             "first_seen_ts": _ts(14, 13, 6),
         }
         prior_day_crm = {"created_at": _ts(13, 11, 28)}
-        self.assertFalse(_crm_match_is_current_for_lead(current_lead, prior_day_crm))
+        self.assertTrue(_crm_match_is_current_for_lead(current_lead, prior_day_crm))
 
 
 if __name__ == "__main__":
