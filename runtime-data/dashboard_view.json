@@ -5,8 +5,8 @@
       "end": "2026-09-15",
       "total": 22,
       "status": {
-        "OK": 17,
-        "PENDING": 5
+        "OK": 18,
+        "PENDING": 4
       },
       "source": {
         "САЙТ ТИЛЬДА": 5,
@@ -26,11 +26,10 @@
       },
       "event": {
         "Свадьба": 3,
-        "Юбилей": 6,
+        "Юбилей": 7,
         "Корпоратив": 6,
         "Презентация": 1,
         "Бизнес мероприятие": 1,
-        "Семейный ужин": 1,
         "Фуршет": 1,
         "Не определено": 3
       },
@@ -79,10 +78,10 @@
       "end": "2026-09-15",
       "total": 72,
       "status": {
-        "OK": 55,
+        "OK": 56,
         "LATE_CRM": 10,
         "-": 2,
-        "PENDING": 5
+        "PENDING": 4
       },
       "source": {
         "САЙТ ТИЛЬДА": 17,
@@ -107,12 +106,11 @@
       "event": {
         "Свадьба": 18,
         "Корпоратив": 23,
-        "Юбилей": 20,
+        "Юбилей": 21,
         "Выпускной": 1,
         "Не определено": 4,
         "Презентация": 1,
         "Бизнес мероприятие": 1,
-        "Семейный ужин": 1,
         "Фуршет": 1
       },
       "days": [
@@ -151,10 +149,10 @@
       "end": "2026-09-15",
       "total": 259,
       "status": {
-        "OK": 207,
+        "OK": 208,
         "LATE_CRM": 34,
         "-": 13,
-        "PENDING": 5
+        "PENDING": 4
       },
       "source": {
         "САЙТ ТИЛЬДА": 63,
@@ -183,13 +181,12 @@
       "event": {
         "Корпоратив": 91,
         "Свадьба": 78,
-        "Юбилей": 48,
+        "Юбилей": 49,
         "Не определено": 15,
         "Бизнес мероприятие": 6,
         "Детский праздник": 2,
         "Выпускной": 3,
         "Презентация": 1,
-        "Семейный ужин": 1,
         "Фуршет": 1
       },
       "days": [
@@ -317,9 +314,9 @@
       "total": 576,
       "status": {
         "LATE_CRM": 122,
-        "OK": 399,
+        "OK": 400,
         "-": 50,
-        "PENDING": 5
+        "PENDING": 4
       },
       "source": {
         "САЙТ ТИЛЬДА": 147,
@@ -347,7 +344,7 @@
         "Не указано": 10
       },
       "event": {
-        "Юбилей": 115,
+        "Юбилей": 116,
         "Корпоратив": 145,
         "Свадьба": 177,
         "Не определено": 61,
@@ -357,7 +354,6 @@
         "Поминки": 1,
         "Выпускной": 3,
         "Презентация": 1,
-        "Семейный ужин": 1,
         "Фуршет": 1
       },
       "days": [
@@ -674,7 +670,7 @@
       "guest_range": "10",
       "guests": "10",
       "event_type": "unknown",
-      "name": "с 12 до 15. София",
+      "name": "София",
       "identifier": "79097762056",
       "manager": "Максим"
     },
@@ -687,7 +683,7 @@
       "guest_range": "150",
       "guests": "150",
       "event_type": "Фуршет",
-      "name": "",
+      "name": "Anastasia Ivanova",
       "identifier": "79150362370",
       "manager": ""
     },
@@ -747,14 +743,14 @@
       "date": "2026-09-15",
       "ts": "2026-09-15T16:29:31+03:00",
       "source": "Заявки хост",
-      "status": "PENDING",
+      "status": "OK",
       "channel": "MAX",
-      "guest_range": "11-12",
-      "guests": "11-12",
-      "event_type": "Семейный ужин",
+      "guest_range": "12",
+      "guests": "12",
+      "event_type": "Юбилей",
       "name": "Тарас Семенович",
       "identifier": "79859969210",
-      "manager": ""
+      "manager": "Максим"
     },
     {
       "date": "2026-09-15",
@@ -1447,7 +1443,7 @@
     }
   ],
   "not_entered": [],
-  "snapshot_generated_at": "2026-09-15T18:56:58Z",
+  "snapshot_generated_at": "2026-09-15T19:53:49Z",
   "snapshot_at": "2026-09-15T20:19:36+03:00",
   "min_date": "2026-07-01",
   "max_date": "2026-09-15",
@@ -1473,7 +1469,7 @@
       "crm_status": "Выслано предложение",
       "first_activity_at": "",
       "first_activity_ts": null,
-      "age_seconds": 370693,
+      "age_seconds": 374103,
       "feedback_state": "NO_FEEDBACK"
     },
     {
@@ -1489,7 +1485,7 @@
       "crm_status": "Выслано предложение",
       "first_activity_at": "",
       "first_activity_ts": null,
-      "age_seconds": 371143,
+      "age_seconds": 374553,
       "feedback_state": "NO_FEEDBACK"
     },
     {
@@ -1505,7 +1501,7 @@
       "crm_status": "Выслано предложение",
       "first_activity_at": "",
       "first_activity_ts": null,
-      "age_seconds": 265855,
+      "age_seconds": 269265,
       "feedback_state": "WAITING_BLUE"
     },
     {
@@ -1521,7 +1517,7 @@
       "crm_status": "Выслано предложение",
       "first_activity_at": "",
       "first_activity_ts": null,
-      "age_seconds": 266033,
+      "age_seconds": 269443,
       "feedback_state": "WAITING_BLUE"
     },
     {
@@ -1537,7 +1533,7 @@
       "crm_status": "Выслано предложение",
       "first_activity_at": "",
       "first_activity_ts": null,
-      "age_seconds": 289425,
+      "age_seconds": 292835,
       "feedback_state": "WAITING_BLUE"
     },
     {
@@ -1553,7 +1549,7 @@
       "crm_status": "Предбронь",
       "first_activity_at": "",
       "first_activity_ts": null,
-      "age_seconds": 169885,
+      "age_seconds": 173295,
       "feedback_state": "WAITING_YELLOW"
     },
     {
@@ -1569,11 +1565,23 @@
       "crm_status": "Предбронь",
       "first_activity_at": "",
       "first_activity_ts": null,
-      "age_seconds": 169885,
+      "age_seconds": 173295,
       "feedback_state": "WAITING_YELLOW"
     }
   ],
   "waiting_stage": [
+    {
+      "crm_lead_id": 48611937,
+      "created_at": "2026-09-15T22:04:41+03:00",
+      "created_ts": 1789499081,
+      "source": "Заявки хост",
+      "name": "Тарас Семенович",
+      "identifier": "79859969210",
+      "guests": "12",
+      "event_type": "Юбилей",
+      "manager": "Максим",
+      "crm_status": "ЖДУНЫ"
+    },
     {
       "crm_lead_id": 48423691,
       "created_at": "2026-09-10T11:46:04+03:00",
