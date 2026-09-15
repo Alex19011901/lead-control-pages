@@ -18,7 +18,9 @@ _GREETING_NAMES = {
     "приветствую",
 }
 
-_NAME = r"([А-ЯЁ][а-яё-]+(?:\s+[А-ЯЁ][а-яё-]+)?)"
+_CYRILLIC_NAME = r"[А-ЯЁ][а-яё-]+"
+_LATIN_NAME = r"[A-Z][a-z-]+"
+_NAME = rf"(({_CYRILLIC_NAME})(?:\s+{_CYRILLIC_NAME})?|({_LATIN_NAME})(?:\s+{_LATIN_NAME}){{0,2}})"
 _EXPLICIT_NAME_PATTERNS = (
     rf"(?i:\bменя\s+зовут\s*[:\-—]?\s*){_NAME}\b",
     rf"(?i:\b(?:мо[её]\s+имя)\s*[:\-—]?\s*){_NAME}\b",
@@ -26,14 +28,24 @@ _EXPLICIT_NAME_PATTERNS = (
     rf"(?i:(?:^|[.!?]\s*|\n\s*)с\s+вами\s*[:\-—]?\s*){_NAME}\b",
     rf"(?i:(?:^|[.!?]\s*|\n\s*)я\s*[:\-—]?\s*){_NAME}\b(?=\s*[,.;!?]|\s*$)",
 )
+_LABELED_REQUEST_NAME = re.compile(
+    rf"(?im)^\s*заявка\s*:?\s*$\n\s*{_NAME}\s*:\s*$"
+)
+_TIME_PREFIX = re.compile(
+    r"(?i)^\s*с\s+\d{1,2}(?:[:.]\d{2})?\s+до\s+\d{1,2}(?:[:.]\d{2})?\s*[.,;:\-—]*\s*"
+)
+_PLAIN_NAME = re.compile(
+    rf"^(?:{_CYRILLIC_NAME})(?:\s+{_CYRILLIC_NAME})?$|^(?:{_LATIN_NAME})(?:\s+{_LATIN_NAME}){{0,2}}$"
+)
 
 
 def apply_explicit_client_names(leads: list[dict[str, Any]], events: list[dict[str, Any]]) -> None:
-    """Prefer explicit client self-introductions over guessed MAX names.
+    """Prefer explicit client names over guessed MAX names.
 
     This is intentionally narrow: it only applies to MAX messages from the new
-    policy date onward. If there is no explicit self-introduction, obvious
-    greeting words are removed rather than kept as a client name.
+    policy date onward. Explicit self-introductions and an explicit name line
+    immediately after a ``Заявка:`` header win over parser guesses. A leading
+    time window accidentally captured into a structured name is stripped.
     """
     max_events_by_message_id = {
         str(event.get("message_id")): event
@@ -75,6 +87,13 @@ def apply_explicit_client_names(leads: list[dict[str, Any]], events: list[dict[s
             continue
 
         current_name = str(lead.get("name") or fields.get("name") or "").strip()
+        cleaned_name = _strip_time_prefix(current_name)
+        if cleaned_name != current_name and _looks_like_plain_name(cleaned_name):
+            fields["name"] = cleaned_name
+            lead["name"] = cleaned_name
+            lead["name_source"] = "MESSAGE_NAME_CLEANUP"
+            continue
+
         if _looks_like_greeting_name(current_name):
             fields["name"] = ""
             lead["name"] = ""
@@ -89,7 +108,21 @@ def extract_explicit_client_name(text: str) -> str:
         candidate = match.group(1).strip()
         if candidate and not _looks_like_greeting_name(candidate):
             return candidate
+
+    labeled = _LABELED_REQUEST_NAME.search(text)
+    if labeled:
+        candidate = labeled.group(1).strip()
+        if candidate and not _looks_like_greeting_name(candidate):
+            return candidate
     return ""
+
+
+def _strip_time_prefix(value: str) -> str:
+    return _TIME_PREFIX.sub("", str(value or "").strip()).strip(" .,:;-—")
+
+
+def _looks_like_plain_name(value: str) -> bool:
+    return bool(_PLAIN_NAME.fullmatch(str(value or "").strip()))
 
 
 def _event_ts(event: dict[str, Any]) -> int:
