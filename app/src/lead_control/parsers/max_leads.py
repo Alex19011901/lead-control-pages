@@ -1175,16 +1175,17 @@ def _extract_probable_name(text: str, phone_raw: str) -> str:
     if not phone_raw:
         return ""
 
-    # An explicit self-introduction is stronger evidence than generic words
-    # elsewhere in the request. This prevents phrases like "Добрый день.
-    # Меня зовут Юлия" from being reduced to the false name "Добрый" when
-    # the phone is on a separate line.
-    explicit_name = re.search(
+    # Explicit self-introductions always outrank generic capitalized words.
+    # Keep the name capture case-sensitive so ordinary lower-case words after
+    # "это" / "я" cannot be mistaken for a person.
+    explicit_patterns = (
         r"(?i:\bменя\s+зовут\s*[:\-—]?\s*)([А-ЯЁ][а-яё-]+(?:\s+[А-ЯЁ][а-яё-]+)?)\b",
-        text,
+        r"(?:^|[.!?\n]\s*)(?i:это|я|с\s+вами|мо[её]\s+имя)\s*[:\-—]?\s*([А-ЯЁ][а-яё-]+(?:\s+[А-ЯЁ][а-яё-]+)?)\b",
     )
-    if explicit_name:
-        return explicit_name.group(1).strip()
+    for pattern in explicit_patterns:
+        explicit_name = re.search(pattern, text)
+        if explicit_name:
+            return explicit_name.group(1).strip()
 
     stop_words = {
         "заявка",
@@ -1207,6 +1208,19 @@ def _extract_probable_name(text: str, phone_raw: str) -> str:
         "конец",
         "начало",
         "середина",
+        "добрый",
+        "доброе",
+        "здравствуйте",
+        "привет",
+        "день",
+        "вечер",
+        "утро",
+        "коллеги",
+        "уважаемые",
+        "это",
+        "я",
+        "с",
+        "вами",
         "весна",
         "весной",
         "лето",
