@@ -191,6 +191,68 @@ class LeadEnrichmentTests(unittest.TestCase):
                 apply_explicit_client_names(leads, events)
                 self.assertEqual(leads[0]["name"], expected)
 
+    def test_latin_name_line_after_request_header_is_explicit(self) -> None:
+        message_id = "mid.test-anastasia"
+        leads = [
+            {
+                "channel": "MAX",
+                "source": "Заявки хост",
+                "message_id": message_id,
+                "name": "",
+                "fields": {"name": "", "phone_digits": "79150362370"},
+                "identifier": {"type": "phone", "value": "79150362370"},
+                "max": {"message_ids": [message_id]},
+            }
+        ]
+        events = [
+            {
+                "type": "max_message_created",
+                "message_id": message_id,
+                "timestamp": 1789488506881,
+                "text": (
+                    "Заявка:\n"
+                    "Anastasia Ivanova:\n"
+                    "Свободен ли ресторан 14 или 15 декабря? 150 человек фуршет или банкет. "
+                    "Пока выбираем формат, не могли бы сориентировать по условиям, оплата по безналку\n\n"
+                    "+79150362370"
+                ),
+            }
+        ]
+
+        apply_explicit_client_names(leads, events)
+
+        self.assertEqual(leads[0]["fields"]["name"], "Anastasia Ivanova")
+        self.assertEqual(leads[0]["name"], "Anastasia Ivanova")
+        self.assertEqual(leads[0]["name_source"], "MESSAGE_EXPLICIT")
+
+    def test_time_window_is_removed_from_structured_client_name(self) -> None:
+        message_id = "mid.test-sofia-time"
+        leads = [
+            {
+                "channel": "MAX",
+                "source": "Заявки хост",
+                "message_id": message_id,
+                "name": "с 12 до 15. София",
+                "fields": {"name": "с 12 до 15. София", "phone_digits": "79097762056"},
+                "identifier": {"type": "phone", "value": "79097762056"},
+                "max": {"message_ids": [message_id]},
+            }
+        ]
+        events = [
+            {
+                "type": "max_message_created",
+                "message_id": message_id,
+                "timestamp": 1789492776383,
+                "text": "ЗАЯВКА. 24.09. 10-15п. с 12 до 15. София. 89097762056",
+            }
+        ]
+
+        apply_explicit_client_names(leads, events)
+
+        self.assertEqual(leads[0]["fields"]["name"], "София")
+        self.assertEqual(leads[0]["name"], "София")
+        self.assertEqual(leads[0]["name_source"], "MESSAGE_NAME_CLEANUP")
+
 
 if __name__ == "__main__":
     unittest.main()
