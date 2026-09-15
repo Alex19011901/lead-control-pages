@@ -125,6 +125,67 @@ class LeadEnrichmentTests(unittest.TestCase):
         self.assertEqual(leads[0]["fields"]["event_type"], "Корпоратив")
         self.assertNotIn("event_type_source", leads[0])
 
+    def test_eto_name_overrides_greeting_guess(self) -> None:
+        message_id = "mid.test-elena"
+        leads = [
+            {
+                "channel": "MAX",
+                "source": "Заявка с ТГ",
+                "message_id": message_id,
+                "name": "Добрый",
+                "fields": {"name": "Добрый", "phone_digits": "79067177838"},
+                "identifier": {"type": "phone", "value": "79067177838"},
+                "max": {"message_ids": [message_id]},
+            }
+        ]
+        events = [
+            {
+                "type": "max_message_created",
+                "message_id": message_id,
+                "text": (
+                    "ЗАЯВКА\n\nДобрый день!\n"
+                    "Это Елена, клуб Мафия Драйв и компания КорпИгра.\n"
+                    "Есть запрос: 23 или 24 декабря, 200-220 человек.\n"
+                    "+79067177838\n@elenamalanyina"
+                ),
+            }
+        ]
+
+        enrich_leads_from_events(leads, events)
+
+        self.assertEqual(leads[0]["fields"]["name"], "Елена")
+        self.assertEqual(leads[0]["name"], "Елена")
+        self.assertEqual(leads[0]["name_source"], "MESSAGE_EXPLICIT")
+
+    def test_common_self_introduction_forms_are_preferred(self) -> None:
+        examples = (
+            ("Меня зовут Юлия.", "Юлия"),
+            ("Я Мария, организатор мероприятия.", "Мария"),
+            ("С вами Анна. Ищем площадку.", "Анна"),
+        )
+        for index, (intro, expected) in enumerate(examples):
+            with self.subTest(intro=intro):
+                message_id = f"mid.intro-{index}"
+                leads = [
+                    {
+                        "channel": "MAX",
+                        "source": "Заявка с ТГ",
+                        "message_id": message_id,
+                        "name": "Добрый",
+                        "fields": {"name": "Добрый"},
+                        "max": {"message_ids": [message_id]},
+                    }
+                ]
+                events = [
+                    {
+                        "type": "max_message_created",
+                        "message_id": message_id,
+                        "text": f"ЗАЯВКА\nДобрый день! {intro}\nНужен зал на 50 гостей.",
+                    }
+                ]
+                enrich_leads_from_events(leads, events)
+                self.assertEqual(leads[0]["name"], expected)
+
 
 if __name__ == "__main__":
     unittest.main()
