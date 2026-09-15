@@ -7,6 +7,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
+from lead_control.explicit_client_name import apply_explicit_client_names
 from lead_control.lead_enrichment import enrich_leads_from_events
 
 
@@ -142,6 +143,7 @@ class LeadEnrichmentTests(unittest.TestCase):
             {
                 "type": "max_message_created",
                 "message_id": message_id,
+                "timestamp": 1789473374804,
                 "text": (
                     "ЗАЯВКА\n\nДобрый день!\n"
                     "Это Елена, клуб Мафия Драйв и компания КорпИгра.\n"
@@ -152,6 +154,7 @@ class LeadEnrichmentTests(unittest.TestCase):
         ]
 
         enrich_leads_from_events(leads, events)
+        apply_explicit_client_names(leads, events)
 
         self.assertEqual(leads[0]["fields"]["name"], "Елена")
         self.assertEqual(leads[0]["name"], "Елена")
@@ -180,10 +183,12 @@ class LeadEnrichmentTests(unittest.TestCase):
                     {
                         "type": "max_message_created",
                         "message_id": message_id,
+                        "timestamp": 1789473374804,
                         "text": f"ЗАЯВКА\nДобрый день! {intro}\nНужен зал на 50 гостей.",
                     }
                 ]
                 enrich_leads_from_events(leads, events)
+                apply_explicit_client_names(leads, events)
                 self.assertEqual(leads[0]["name"], expected)
 
 
