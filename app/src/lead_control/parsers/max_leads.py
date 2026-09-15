@@ -1221,6 +1221,13 @@ def _extract_probable_name(text: str, phone_raw: str) -> str:
         "я",
         "с",
         "вами",
+        "есть",
+        "запрос",
+        "нужен",
+        "нужна",
+        "нужно",
+        "ищем",
+        "ищу",
         "весна",
         "весной",
         "лето",
@@ -1264,29 +1271,39 @@ def _extract_probable_name(text: str, phone_raw: str) -> str:
                 return word.strip()
         return ""
 
-    # When a phone and a client name share a line, prefer the text immediately
-    # after the phone. This covers formats like "8968... Оксана" and avoids
-    # mistaking period words in "Конец декабрь, 150чел.8968... Оксана" for names.
-    # If there is no name after the phone, fall back to the text before it so
-    # formats like "Ксения 8916..." keep working.
-    for line in _nonempty_lines(text):
+    def whole_line_human_name(line: str) -> str:
+        cleaned = line.strip(" .,:;!?()[]{}")
+        if not re.fullmatch(r"[А-ЯЁ][а-яё-]+(?:\s+[А-ЯЁ][а-яё-]+){0,2}", cleaned):
+            return ""
+        tokens = [token.casefold() for token in cleaned.split()]
+        if any(token in stop_words for token in tokens):
+            return ""
+        return cleaned
+
+    lines = _nonempty_lines(text)
+    phone_index = None
+    for index, line in enumerate(lines):
         if phone_raw not in line:
             continue
+        phone_index = index
         before_phone, _, after_phone = line.partition(phone_raw)
         for fragment in (after_phone, before_phone):
             name = first_human_name(fragment)
             if name:
                 return name
+        break
 
-    # Fallback for older host formats where the name is not on the phone line.
-    compact = _normalize_space(text)
-    before, _, after = compact.partition(phone_raw)
-    for candidate in (after, before):
-        words = re.findall(r"[А-ЯЁ][а-яё]+(?:\s+[А-ЯЁ][а-яё]+)?", candidate)
-        for word in words:
-            tokens = [token.casefold() for token in word.split()]
-            if tokens and all(token not in stop_words for token in tokens):
-                return word.strip()
+    # For older formats where the name is on its own line, only accept a line
+    # that is entirely name-shaped. This deliberately avoids guessing from
+    # greetings, sentence starts, company names, or event descriptions.
+    if phone_index is not None:
+        candidate_indexes = list(range(phone_index + 1, len(lines))) + list(range(phone_index - 1, -1, -1))
+    else:
+        candidate_indexes = list(range(len(lines)))
+    for index in candidate_indexes:
+        name = whole_line_human_name(lines[index])
+        if name:
+            return name
     return ""
 
 
