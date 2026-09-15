@@ -5,8 +5,8 @@
       "end": "2026-09-15",
       "total": 13,
       "status": {
-        "OK": 6,
-        "PENDING": 7
+        "OK": 8,
+        "PENDING": 5
       },
       "source": {
         "САЙТ ТИЛЬДА": 1,
@@ -25,12 +25,12 @@
         "21-50": 3
       },
       "event": {
-        "Свадьба": 1,
-        "Корпоратив": 2,
+        "Свадьба": 2,
+        "Корпоратив": 3,
         "Юбилей": 2,
         "Презентация": 1,
         "Бизнес мероприятие": 1,
-        "Не определено": 6
+        "Не определено": 4
       },
       "days": [
         [
@@ -77,10 +77,10 @@
       "end": "2026-09-15",
       "total": 63,
       "status": {
-        "OK": 44,
+        "OK": 46,
         "LATE_CRM": 10,
         "-": 2,
-        "PENDING": 7
+        "PENDING": 5
       },
       "source": {
         "САЙТ ТИЛЬДА": 13,
@@ -103,11 +103,11 @@
         "1-20": 23
       },
       "event": {
-        "Свадьба": 16,
-        "Корпоратив": 19,
+        "Свадьба": 17,
+        "Корпоратив": 20,
         "Юбилей": 16,
         "Выпускной": 1,
-        "Не определено": 7,
+        "Не определено": 5,
         "Презентация": 1,
         "Бизнес мероприятие": 1
       },
@@ -147,10 +147,10 @@
       "end": "2026-09-15",
       "total": 250,
       "status": {
-        "OK": 196,
+        "OK": 198,
         "LATE_CRM": 34,
         "-": 13,
-        "PENDING": 7
+        "PENDING": 5
       },
       "source": {
         "САЙТ ТИЛЬДА": 59,
@@ -177,10 +177,10 @@
         "Не указано": 3
       },
       "event": {
-        "Корпоратив": 87,
-        "Свадьба": 76,
+        "Корпоратив": 88,
+        "Свадьба": 77,
         "Юбилей": 44,
-        "Не определено": 18,
+        "Не определено": 16,
         "Бизнес мероприятие": 6,
         "Детский праздник": 2,
         "Выпускной": 3,
@@ -311,9 +311,9 @@
       "total": 567,
       "status": {
         "LATE_CRM": 122,
-        "OK": 388,
+        "OK": 390,
         "-": 50,
-        "PENDING": 7
+        "PENDING": 5
       },
       "source": {
         "САЙТ ТИЛЬДА": 143,
@@ -342,9 +342,9 @@
       },
       "event": {
         "Юбилей": 111,
-        "Корпоратив": 141,
-        "Свадьба": 175,
-        "Не определено": 64,
+        "Корпоратив": 142,
+        "Свадьба": 176,
+        "Не определено": 62,
         "Бизнес мероприятие": 18,
         "Детский праздник": 5,
         "Съёмки": 2,
@@ -674,14 +674,14 @@
       "date": "2026-09-15",
       "ts": "2026-09-15T14:55:37+03:00",
       "source": "Заявки хост",
-      "status": "PENDING",
+      "status": "OK",
       "channel": "MAX",
       "guest_range": "50",
       "guests": "50",
-      "event_type": "unknown",
+      "event_type": "Свадьба",
       "name": "Анна",
       "identifier": "79960317802",
-      "manager": ""
+      "manager": "Максим"
     },
     {
       "date": "2026-09-15",
@@ -713,14 +713,14 @@
       "date": "2026-09-15",
       "ts": "2026-09-15T14:02:22+03:00",
       "source": "Заявки хост",
-      "status": "PENDING",
+      "status": "OK",
       "channel": "MAX",
       "guest_range": "70",
       "guests": "70",
-      "event_type": "unknown",
+      "event_type": "Корпоратив",
       "name": "Юлия",
       "identifier": "74951090014",
-      "manager": ""
+      "manager": "Максим"
     },
     {
       "date": "2026-09-15",
@@ -1439,14 +1439,14 @@
     }
   ],
   "not_entered": [],
-  "snapshot_generated_at": "2026-09-15T12:12:50Z",
+  "snapshot_generated_at": "2026-09-15T12:23:52Z",
   "snapshot_at": "2026-09-15T14:56:14+03:00",
   "min_date": "2026-07-01",
   "max_date": "2026-09-15",
   "feedback_summary": {
     "total": 8,
     "no_feedback": 3,
-    "waiting": 17,
+    "waiting": 18,
     "waiting_blue": 3,
     "waiting_yellow": 2,
     "clear": 52
@@ -1465,7 +1465,7 @@
       "crm_status": "Выслано предложение",
       "first_activity_at": "",
       "first_activity_ts": null,
-      "age_seconds": 346445,
+      "age_seconds": 347106,
       "feedback_state": "NO_FEEDBACK"
     },
     {
@@ -1481,7 +1481,7 @@
       "crm_status": "Выслано предложение",
       "first_activity_at": "",
       "first_activity_ts": null,
-      "age_seconds": 346895,
+      "age_seconds": 347556,
       "feedback_state": "NO_FEEDBACK"
     },
     {
@@ -1497,7 +1497,7 @@
       "crm_status": "Выслано предложение",
       "first_activity_at": "",
       "first_activity_ts": null,
-      "age_seconds": 438617,
+      "age_seconds": 439278,
       "feedback_state": "NO_FEEDBACK"
     },
     {
@@ -1513,7 +1513,7 @@
       "crm_status": "Выслано предложение",
       "first_activity_at": "",
       "first_activity_ts": null,
-      "age_seconds": 241607,
+      "age_seconds": 242268,
       "feedback_state": "WAITING_BLUE"
     },
     {
@@ -1529,7 +1529,7 @@
       "crm_status": "Выслано предложение",
       "first_activity_at": "",
       "first_activity_ts": null,
-      "age_seconds": 241785,
+      "age_seconds": 242446,
       "feedback_state": "WAITING_BLUE"
     },
     {
@@ -1545,7 +1545,7 @@
       "crm_status": "Выслано предложение",
       "first_activity_at": "",
       "first_activity_ts": null,
-      "age_seconds": 265177,
+      "age_seconds": 265838,
       "feedback_state": "WAITING_BLUE"
     },
     {
@@ -1561,7 +1561,7 @@
       "crm_status": "Предбронь",
       "first_activity_at": "",
       "first_activity_ts": null,
-      "age_seconds": 145637,
+      "age_seconds": 146298,
       "feedback_state": "WAITING_YELLOW"
     },
     {
@@ -1577,7 +1577,7 @@
       "crm_status": "Предбронь",
       "first_activity_at": "",
       "first_activity_ts": null,
-      "age_seconds": 145637,
+      "age_seconds": 146298,
       "feedback_state": "WAITING_YELLOW"
     }
   ],
