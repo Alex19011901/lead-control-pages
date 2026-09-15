@@ -9,9 +9,6 @@ from .processor import _update_status
 
 
 AGGREGATOR_PRE_EVENT_GRACE_SECONDS = 30 * 60
-# Daily same-phone semantics were introduced on 2026-09-14. Keep CRM matches
-# for older history exactly as they were before this policy existed.
-DAILY_REPEAT_PHONE_POLICY_START_TS = 1789333200  # 2026-09-14 00:00:00 MSK
 
 
 def apply_crm(
@@ -99,15 +96,21 @@ def _crm_match_is_current_for_lead(
     lead: dict[str, Any],
     crm_payload: dict[str, Any],
 ) -> bool:
-    """Reject an old same-contact deal only for requests covered by new-policy rules.
+    """Validate whether a found CRM deal may satisfy this source lead.
 
-    Aggregator messages keep their established distinct-request behaviour.
-    Daily same-phone leads use the new-day rule only from 2026-09-14 onward;
-    older history keeps its previously accepted CRM matches unchanged.
+    A first same-phone request on a new Moscow day is a new lead in the
+    dashboard, but it may reuse an already existing amoCRM deal for that phone.
+    Same-day duplicates never reach this function because `crm_required=False`.
+
+    Aggregator requests remain distinct and therefore still require a CRM deal
+    created close to the source request time.
     """
     is_aggregator = lead.get("category") in {RESTORAN_CAFE, TO_MESTO}
     is_daily_repeat = bool(lead.get("daily_repeat_phone"))
-    if not is_aggregator and not is_daily_repeat:
+
+    if is_daily_repeat and not is_aggregator:
+        return True
+    if not is_aggregator:
         return True
 
     try:
@@ -117,9 +120,6 @@ def _crm_match_is_current_for_lead(
         return True
 
     if source_ts <= 0 or crm_created_at <= 0:
-        return True
-
-    if is_daily_repeat and not is_aggregator and source_ts < DAILY_REPEAT_PHONE_POLICY_START_TS:
         return True
 
     return crm_created_at >= source_ts - AGGREGATOR_PRE_EVENT_GRACE_SECONDS
