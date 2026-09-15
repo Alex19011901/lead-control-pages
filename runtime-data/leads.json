@@ -11676,6 +11676,8 @@
       "crm_required": true,
       "crm_responsible": 13009530,
       "deadline_msk_ts": 1788296399,
+      "event_date": "2026-09-02",
+      "event_type": "",
       "fields": {
         "category": "САЙТ ТИЛЬДА",
         "description": "Содержание заявки:\nName: Елена\nPhone: +79610651556\nколичество_гостей: 2\nDate: 02/09/2026\nCheckbox: yes\n\nДополнительная информация:\nКод заявки: 2925975:8642500203\nКод блока: rec917743534\nhttps://moscowbanket.ru/\nUTM source: yandex_direct\nUTM medium: cpc\nUTM campaign: Bankety_konverii_RSYA\nUTM term: адреса банкетов\n-----",
@@ -11691,6 +11693,8 @@
       },
       "first_seen_at": "2026-09-01T11:28:33+03:00",
       "first_seen_ts": 1788251313,
+      "guests": 2,
+      "guests_raw": "",
       "id": "a0dfcae6b6f2ab6f",
       "identifier": {
         "type": "phone",
@@ -11698,20 +11702,9 @@
       },
       "last_seen_at": "2026-09-01T11:28:33+03:00",
       "last_seen_ts": 1788251313,
-      "manager_reaction": {
-        "name": "Олеся",
-        "reacted_at": "2026-09-01T11:58:05+03:00",
-        "reacted_ts": 1788253085,
-        "reaction": [
-          {
-            "emoji": "❤",
-            "type": "emoji"
-          }
-        ],
-        "update_id": 185608102,
-        "user_id": 328611361,
-        "username": "Olesyagozhina"
-      },
+      "manager_reaction": null,
+      "name": "Елена",
+      "phone": "+79610651556",
       "received_at": "2026-09-01T11:28:33+03:00",
       "sender_name": "TildaForms",
       "sender_user_id": 265299531,
@@ -11727,6 +11720,73 @@
           185608100
         ]
       },
+      "violations": []
+    },
+    {
+      "category": "САЙТ ТИЛЬДА",
+      "channel": "MAX",
+      "crm": {
+        "found": false,
+        "required": false
+      },
+      "crm_check_status": "NOT_REQUIRED",
+      "crm_created_at": null,
+      "crm_found": false,
+      "crm_required": false,
+      "crm_responsible": null,
+      "deadline_msk_ts": 1788296399,
+      "duplicate_of": "a0dfcae6b6f2ab6f",
+      "event_date": "2026-09-02",
+      "event_type": "",
+      "fields": {
+        "category": "САЙТ ТИЛЬДА",
+        "email": "",
+        "event_date": "2026-09-02",
+        "event_date_raw": "02/09/2026",
+        "event_type": "",
+        "guests_count": null,
+        "guests_max": null,
+        "guests_min": null,
+        "guests_raw": "",
+        "name": "",
+        "phone_digits": "79610651556",
+        "phone_raw": "+79610651556",
+        "source": "САЙТ ТИЛЬДА",
+        "telegram_username": ""
+      },
+      "first_seen_at": "2026-09-01T11:58:45+03:00",
+      "first_seen_ts": 1788253125,
+      "guests": null,
+      "guests_max": null,
+      "guests_min": null,
+      "guests_raw": "",
+      "id": "503557c6397c83b5",
+      "identifier": {
+        "type": "phone",
+        "value": "79610651556"
+      },
+      "is_duplicate": true,
+      "last_seen_at": "2026-09-01T11:58:45+03:00",
+      "last_seen_ts": 1788253125,
+      "manager_reaction": null,
+      "max": {
+        "chat_id": -71704692523093,
+        "message_ids": [
+          "mid.ffffbec8f345ffab01a05c313ab53d72"
+        ],
+        "sender_name": "Олеся",
+        "sender_user_id": 48906491,
+        "sender_username": null
+      },
+      "message_id": "mid.ffffbec8f345ffab01a05c313ab53d72",
+      "name": "",
+      "phone": "+79610651556",
+      "received_at": "2026-09-01T11:58:45+03:00",
+      "sender_name": "TildaForms",
+      "sender_user_id": 265299531,
+      "sender_username": "TildaFormsBot",
+      "source": "САЙТ ТИЛЬДА",
+      "status": "DUPLICATE",
       "violations": []
     },
     {
@@ -22009,7 +22069,7 @@
         "guests_max": null,
         "guests_min": null,
         "guests_raw": "150 персон",
-        "name": "Спортсмены",
+        "name": "Алексей",
         "phone_digits": "79162821953",
         "phone_raw": "8-916-282-19-53",
         "source": "Заявки хост",
@@ -22039,7 +22099,7 @@
         "sender_username": null
       },
       "message_id": "mid.ffffbec8f345ffab019f616c74424cc3",
-      "name": "Спортсмены",
+      "name": "Алексей",
       "phone": "8-916-282-19-53",
       "received_at": "2026-07-14T19:18:45+03:00",
       "sender_name": "Алёна",
@@ -29216,7 +29276,7 @@
         "guests_max": null,
         "guests_min": null,
         "guests_raw": "",
-        "name": "Добрый",
+        "name": "",
         "phone_digits": "79850709528",
         "phone_raw": "+79850709528",
         "source": "Заявка с ТГ",
@@ -29246,7 +29306,7 @@
         "sender_username": null
       },
       "message_id": "mid.ffffbec8f345ffab019fc78f3fa45654",
-      "name": "Добрый",
+      "name": "",
       "phone": "+79850709528",
       "received_at": "2026-08-03T15:18:01+03:00",
       "sender_name": "Олеся",
@@ -30619,7 +30679,7 @@
         "guests_max": 120,
         "guests_min": 100,
         "guests_raw": "100-120п.",
-        "name": "Не",
+        "name": "Татьяна",
         "phone_digits": "79032970329",
         "phone_raw": "8903-297-03-29",
         "source": "Заявки хост",
@@ -30649,7 +30709,7 @@
         "sender_username": null
       },
       "message_id": "mid.ffffbec8f345ffab019fd7b7eeca7c70",
-      "name": "Не",
+      "name": "Татьяна",
       "phone": "8903-297-03-29",
       "received_at": "2026-08-06T18:36:23+03:00",
       "sender_name": "Алёна",
@@ -32043,7 +32103,7 @@
         "guests_max": 40,
         "guests_min": 30,
         "guests_raw": "30-40 человек",
-        "name": "Здравствуйте",
+        "name": "",
         "phone_digits": "79104708514",
         "phone_raw": "+79104708514",
         "source": "Заявки хост",
@@ -32073,7 +32133,7 @@
         "sender_username": null
       },
       "message_id": "mid.ffffbec8f345ffab019feb6c15411587",
-      "name": "Здравствуйте",
+      "name": "",
       "phone": "+79104708514",
       "received_at": "2026-08-10T14:25:56+03:00",
       "sender_name": "Олеся",
@@ -41475,72 +41535,6 @@
       "violations": []
     },
     {
-      "category": "TG_LEAD",
-      "channel": "MAX",
-      "crm": {
-        "found": false,
-        "required": false
-      },
-      "crm_check_status": "NOT_REQUIRED",
-      "crm_created_at": null,
-      "crm_found": false,
-      "crm_required": false,
-      "crm_responsible": null,
-      "deadline_msk_ts": 1788296399,
-      "duplicate_of": "a0dfcae6b6f2ab6f",
-      "event_date": "2026-09-02",
-      "fields": {
-        "category": "TG_LEAD",
-        "email": "",
-        "event_date": "2026-09-02",
-        "event_date_raw": "02/09/2026",
-        "event_type": "",
-        "guests_count": null,
-        "guests_max": null,
-        "guests_min": null,
-        "guests_raw": "",
-        "name": "Дополнительная",
-        "phone_digits": "79610651556",
-        "phone_raw": "+79610651556",
-        "source": "Заявка с ТГ",
-        "telegram_username": ""
-      },
-      "first_seen_at": "2026-09-01T11:58:45+03:00",
-      "first_seen_ts": 1788253125,
-      "guests": null,
-      "guests_max": null,
-      "guests_min": null,
-      "guests_raw": "",
-      "id": "503557c6397c83b5",
-      "identifier": {
-        "type": "phone",
-        "value": "79610651556"
-      },
-      "is_duplicate": true,
-      "last_seen_at": "2026-09-01T11:58:45+03:00",
-      "last_seen_ts": 1788253125,
-      "manager_reaction": null,
-      "max": {
-        "chat_id": -71704692523093,
-        "message_ids": [
-          "mid.ffffbec8f345ffab01a05c313ab53d72"
-        ],
-        "sender_name": "Олеся",
-        "sender_user_id": 48906491,
-        "sender_username": null
-      },
-      "message_id": "mid.ffffbec8f345ffab01a05c313ab53d72",
-      "name": "Дополнительная",
-      "phone": "+79610651556",
-      "received_at": "2026-09-01T11:58:45+03:00",
-      "sender_name": "Олеся",
-      "sender_user_id": 48906491,
-      "source": "Заявка с ТГ",
-      "status": "DUPLICATE",
-      "username": "",
-      "violations": []
-    },
-    {
       "category": "HOST",
       "channel": "MAX",
       "crm": {
@@ -44397,7 +44391,7 @@
         "guests_max": 60,
         "guests_min": 50,
         "guests_raw": "50-60п.",
-        "name": "Ирина",
+        "name": "",
         "phone_digits": "79036846253",
         "phone_raw": "89036846253",
         "source": "Заявки хост",
@@ -44427,7 +44421,7 @@
         "sender_username": null
       },
       "message_id": "mid.ffffbec8f345ffab01a076de0fcd4537",
-      "name": "Ирина",
+      "name": "",
       "phone": "89036846253",
       "received_at": "2026-09-06T16:17:39+03:00",
       "sender_name": "Максим",
@@ -44483,7 +44477,7 @@
         "guests_max": null,
         "guests_min": null,
         "guests_raw": "35п.",
-        "name": "Леонид",
+        "name": "",
         "phone_digits": "79163784480",
         "phone_raw": "89163784480",
         "source": "Заявки хост",
@@ -44513,7 +44507,7 @@
         "sender_username": null
       },
       "message_id": "mid.ffffbec8f345ffab01a077e5ab264403",
-      "name": "Леонид",
+      "name": "",
       "phone": "89163784480",
       "received_at": "2026-09-06T21:05:35+03:00",
       "sender_name": "Максим",
@@ -45887,7 +45881,7 @@
         "guests_max": 150,
         "guests_min": 100,
         "guests_raw": "100-150п.",
-        "name": "Ангелина",
+        "name": "",
         "phone_digits": "79228790303",
         "phone_raw": "8 922 879 03 03",
         "source": "Заявки хост",
@@ -45917,7 +45911,7 @@
         "sender_username": null
       },
       "message_id": "mid.ffffbec8f345ffab01a086bd14a34dff",
-      "name": "Ангелина",
+      "name": "",
       "phone": "8 922 879 03 03",
       "received_at": "2026-09-09T18:15:33+03:00",
       "sender_name": "Алёна",
@@ -47206,7 +47200,7 @@
         "guests_max": null,
         "guests_min": null,
         "guests_raw": "",
-        "name": "Это Евгения",
+        "name": "Евгения",
         "phone_digits": "79654148831",
         "phone_raw": "+79654148831",
         "source": "Заявки хост",
@@ -47236,7 +47230,7 @@
         "sender_username": null
       },
       "message_id": "mid.ffffbec8f345ffab01a0951960881e44",
-      "name": "Это Евгения",
+      "name": "Евгения",
       "phone": "+79654148831",
       "received_at": "2026-09-12T13:11:03+03:00",
       "sender_name": "Олеся",
@@ -49742,7 +49736,7 @@
         "guests_max": null,
         "guests_min": null,
         "guests_raw": "150 человек",
-        "name": "Свободен",
+        "name": "",
         "phone_digits": "79150362370",
         "phone_raw": "+79150362370",
         "source": "Заявки хост",
@@ -49772,7 +49766,7 @@
         "sender_username": null
       },
       "message_id": "mid.ffffbec8f345ffab01a0a5d3a801072a",
-      "name": "Свободен",
+      "name": "",
       "phone": "+79150362370",
       "received_at": "2026-09-15T19:08:26+03:00",
       "sender_name": "SV",
