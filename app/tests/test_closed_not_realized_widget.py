@@ -16,6 +16,8 @@ class ClosedNotRealizedWidgetTests(unittest.TestCase):
         self.assertIn("C=view.closed_not_realized||[]", rendered)
         self.assertIn("renderClosedNotRealized()", rendered)
         self.assertIn("Закрыто и не реализовано — 5 дней", rendered)
+        self.assertIn("Последний комментарий", rendered)
+        self.assertIn("x.last_comment", rendered)
 
     def test_injection_is_idempotent(self):
         source = Path("dashboard/pageshare/index.html").read_text(encoding="utf-8")
