@@ -48470,21 +48470,38 @@
       "channel": "MAX",
       "crm": {
         "ambiguity_count": 0,
-        "created_at": null,
-        "entity_id": null,
-        "entity_type": null,
-        "event_type": null,
-        "found": false,
-        "responsible_user_id": null,
-        "responsible_user_name": null,
-        "updated_at": null
+        "created_at": 1789460266,
+        "entity_id": 48586565,
+        "entity_type": "lead",
+        "event_type": "Корпоратив",
+        "found": true,
+        "guests": "135",
+        "guests_source": "CRM",
+        "responsible_user_id": 12982830,
+        "responsible_user_name": "Максим",
+        "updated_at": 1789530178
       },
-      "crm_created_at": null,
-      "crm_found": false,
+      "crm_created_at": 1789460266,
+      "crm_feedback": {
+        "crm_lead_id": 48586565,
+        "deadline_at": 1789765200,
+        "excluded": false,
+        "first_activity_at": null,
+        "lead_created_at": 1789460266,
+        "pipeline_id": 10081590,
+        "responsible_user_id": 12982830,
+        "rule_version": 6,
+        "state": "WAITING",
+        "status_id": 79927034,
+        "status_name": "Первичный контакт"
+      },
+      "crm_found": true,
       "crm_required": true,
-      "crm_responsible": null,
+      "crm_responsible": 12982830,
       "deadline_msk_ts": 1789505999,
       "event_date": "",
+      "event_type": "Корпоратив",
+      "event_type_source": "CRM",
       "fields": {
         "attachment_message_id": "mid.ffffbec8f345ffab01a0a41a05487635",
         "attachment_ocr_text": "11:05 % a TAY | 76% а\nМероприятие 25.12.26.\nАртемьева Любовь ху\n15 сент. 2026, 10:19 ® 1% *\"\nДобрый день!\nПланируем в этом году проведение нг\nкорпоратива 25.12.26г. банкет на 135\nчел. Интресует основной зал.\nСкажие, пожалуйста, дата свободна?\nС уважением,\nАртемьева Любовь\nМенеджер по рекламе\n141400, Московская область,\nг. Химки, Вашутинское шоссе, 36\nтел.: (495) 787-71-48\n(495) 787-73-27 доб.1787\nфакс: (495)_787-71-48\nмоб. тел. (925) 033-56-37\nWwww.duim.ru\n“a D> Q WwW ee\nОтветить Переслать Важное — Удалить Ещё",
@@ -48535,11 +48552,9 @@
       "sender_name": "Al",
       "sender_user_id": 74336871,
       "source": "ЗАЯВКА ПОЧТА",
-      "status": "ALARM_NO_CRM",
+      "status": "OK",
       "username": "",
-      "violations": [
-        "ALARM_NO_CRM"
-      ]
+      "violations": []
     },
     {
       "category": "HOST",
@@ -48889,19 +48904,34 @@
       "channel": "MAX",
       "crm": {
         "ambiguity_count": 0,
-        "created_at": null,
-        "entity_id": null,
-        "entity_type": null,
+        "created_at": 1789529903,
+        "entity_id": 48617353,
+        "entity_type": "lead",
         "event_type": null,
-        "found": false,
-        "responsible_user_id": null,
-        "responsible_user_name": null,
-        "updated_at": null
+        "found": true,
+        "guests": "5",
+        "guests_source": "CRM",
+        "responsible_user_id": 12982830,
+        "responsible_user_name": "Максим",
+        "updated_at": 1789529969
       },
-      "crm_created_at": null,
-      "crm_found": false,
+      "crm_created_at": 1789529903,
+      "crm_feedback": {
+        "crm_lead_id": 48617353,
+        "deadline_at": 1789851600,
+        "excluded": false,
+        "first_activity_at": null,
+        "lead_created_at": 1789529903,
+        "pipeline_id": 10081590,
+        "responsible_user_id": 12982830,
+        "rule_version": 6,
+        "state": "WAITING",
+        "status_id": 79927034,
+        "status_name": "Первичный контакт"
+      },
+      "crm_found": true,
       "crm_required": true,
-      "crm_responsible": null,
+      "crm_responsible": 12982830,
       "deadline_msk_ts": 1789505999,
       "event_date": "2026-09-18",
       "fields": {
@@ -48950,10 +48980,10 @@
       "sender_name": "Алёна",
       "sender_user_id": 432412696,
       "source": "Заявки хост",
-      "status": "ALARM_NO_CRM",
+      "status": "LATE_CRM",
       "username": "",
       "violations": [
-        "ALARM_NO_CRM"
+        "LATE_CRM"
       ]
     },
     {
@@ -48961,21 +48991,38 @@
       "channel": "MAX",
       "crm": {
         "ambiguity_count": 0,
-        "created_at": null,
-        "entity_id": null,
-        "entity_type": null,
-        "event_type": null,
-        "found": false,
-        "responsible_user_id": null,
-        "responsible_user_name": null,
-        "updated_at": null
+        "created_at": 1789529651,
+        "entity_id": 48617285,
+        "entity_type": "lead",
+        "event_type": "Корпоратив",
+        "found": true,
+        "guests": "60",
+        "guests_source": "CRM",
+        "responsible_user_id": 12982830,
+        "responsible_user_name": "Максим",
+        "updated_at": 1789530140
       },
-      "crm_created_at": null,
-      "crm_found": false,
+      "crm_created_at": 1789529651,
+      "crm_feedback": {
+        "crm_lead_id": 48617285,
+        "deadline_at": 1789851600,
+        "excluded": false,
+        "first_activity_at": null,
+        "lead_created_at": 1789529651,
+        "pipeline_id": 10081590,
+        "responsible_user_id": 12982830,
+        "rule_version": 6,
+        "state": "WAITING",
+        "status_id": 79927034,
+        "status_name": "Первичный контакт"
+      },
+      "crm_found": true,
       "crm_required": true,
-      "crm_responsible": null,
+      "crm_responsible": 12982830,
       "deadline_msk_ts": 1789505999,
       "event_date": "",
+      "event_type": "Корпоратив",
+      "event_type_source": "CRM",
       "fields": {
         "attachment_message_id": "mid.ffffbec8f345ffab01a0a4a7e5105501",
         "attachment_ocr_text": "13:40 3% Oo # 42 ll 82 ull 76% @\n< Nn “Vv\nМероприятие го инвест\ng Alexander Yudenkov Ко:\n~ 15сент.2026, 13:21 ® 1% **\nТЗ_запрос_площа\nдки_Го_Инвест....\n32,75 КиБ\n@ Сохранить наДиск 1 файл, 32,75 КиБ\nДобрый день!\nМеня зовут Александр, я представляю\nкомпанию «Режиссёрская версия».\nМы готовим церемонию награждения\n«Го Инвест» примерно на 60 гостей и\nрассматриваем вашу площадку для\nпроведения мероприятия с\nфуршетом.\nПодскажите, пожалуйста, доступнали\nплощадка на планируемые даты и\nможете ли вы направить\nпрезентацию, условия аренды и\nпредварительное КП с ответами Ha\nвопросы из файла?\nАлександр Юденков\nEvent- продюсер\nРежиссёрская версия\n127018, г.Москва,\nСущевский вал, 49\n+7-926-909-20-09\nayu@dcagency.ru\nwww.dcagency.ru\n(http://www.deagency.ru/),\nОтветить Переслать Важное — Удалить Ещё",
@@ -48984,7 +49031,7 @@
         "email": "ayu@dcagency.ru",
         "event_date": "",
         "event_date_raw": "20-09",
-        "event_type": "Презентация",
+        "event_type": "Корпоратив",
         "guests_count": 60,
         "guests_max": null,
         "guests_min": null,
@@ -49026,10 +49073,10 @@
       "sender_name": "Al",
       "sender_user_id": 74336871,
       "source": "ЗАЯВКА ПОЧТА",
-      "status": "ALARM_NO_CRM",
+      "status": "LATE_CRM",
       "username": "",
       "violations": [
-        "ALARM_NO_CRM"
+        "LATE_CRM"
       ]
     },
     {
@@ -49731,27 +49778,44 @@
       "channel": "MAX",
       "crm": {
         "ambiguity_count": 0,
-        "created_at": null,
-        "entity_id": null,
-        "entity_type": null,
-        "event_type": null,
-        "found": false,
-        "responsible_user_id": null,
-        "responsible_user_name": null,
-        "updated_at": null
+        "created_at": 1789529175,
+        "entity_id": 48617161,
+        "entity_type": "lead",
+        "event_type": "Корпоратив",
+        "found": true,
+        "guests": "150",
+        "guests_source": "CRM",
+        "responsible_user_id": 12982830,
+        "responsible_user_name": "Максим",
+        "updated_at": 1789529176
       },
-      "crm_created_at": null,
-      "crm_found": false,
+      "crm_created_at": 1789529175,
+      "crm_feedback": {
+        "crm_lead_id": 48617161,
+        "deadline_at": 1789851600,
+        "excluded": false,
+        "first_activity_at": null,
+        "lead_created_at": 1789529175,
+        "pipeline_id": 10081590,
+        "responsible_user_id": 12982830,
+        "rule_version": 6,
+        "state": "WAITING",
+        "status_id": 79927038,
+        "status_name": "Выслано предложение"
+      },
+      "crm_found": true,
       "crm_required": true,
-      "crm_responsible": null,
+      "crm_responsible": 12982830,
       "deadline_msk_ts": 1789505999,
       "event_date": "2026-12-15",
+      "event_type": "Корпоратив",
+      "event_type_source": "CRM",
       "fields": {
         "category": "HOST",
         "email": "",
         "event_date": "2026-12-15",
         "event_date_raw": "15 декабря",
-        "event_type": "Фуршет",
+        "event_type": "Корпоратив",
         "guests_count": 150,
         "guests_max": null,
         "guests_min": null,
@@ -49793,10 +49857,10 @@
       "sender_name": "SV",
       "sender_user_id": 205529129,
       "source": "Заявки хост",
-      "status": "ALARM_NO_CRM",
+      "status": "LATE_CRM",
       "username": "",
       "violations": [
-        "ALARM_NO_CRM"
+        "LATE_CRM"
       ]
     },
     {

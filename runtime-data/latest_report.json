@@ -1,5 +1,5 @@
 {
-  "alarm_no_crm": 4,
+  "alarm_no_crm": 0,
   "by_manager": {
     "no_manager_reaction": 490,
     "Максим": 45,
@@ -24,13 +24,11 @@
     "Выпускной": 3,
     "ДР": 1,
     "Детский праздник": 5,
-    "Корпоратив": 145,
+    "Корпоратив": 147,
     "Поминки": 1,
-    "Презентация": 1,
     "Свадьба": 177,
     "Съемки": 1,
     "Съёмки": 1,
-    "Фуршет": 1,
     "Юбилей": 115
   },
   "guest_ranges": {
@@ -41,7 +39,7 @@
     "51-100": 79,
     "unknown": 96
   },
-  "late_crm": 122,
+  "late_crm": 125,
   "latest_leads": [
     {
       "created_at": "2026-09-15T20:19:36+03:00",
@@ -63,11 +61,11 @@
     },
     {
       "created_at": "2026-09-15T19:08:26+03:00",
-      "crm_entity_id": null,
-      "crm_entity_type": null,
-      "crm_found": false,
+      "crm_entity_id": 48617161,
+      "crm_entity_type": "lead",
+      "crm_found": true,
       "event_date": "2026-12-15",
-      "event_type": "Фуршет",
+      "event_type": "Корпоратив",
       "guests_count": 150,
       "identifier": "7********70",
       "identifier_type": "phone",
@@ -76,9 +74,9 @@
       "manager_username": "",
       "name": "Anastasia Ivanova",
       "source": "Заявки хост",
-      "status": "ALARM_NO_CRM",
+      "status": "LATE_CRM",
       "violations": [
-        "ALARM_NO_CRM"
+        "LATE_CRM"
       ]
     },
     {
@@ -299,11 +297,11 @@
     },
     {
       "created_at": "2026-09-15T13:40:59+03:00",
-      "crm_entity_id": null,
-      "crm_entity_type": null,
-      "crm_found": false,
+      "crm_entity_id": 48617285,
+      "crm_entity_type": "lead",
+      "crm_found": true,
       "event_date": "",
-      "event_type": "Презентация",
+      "event_type": "Корпоратив",
       "guests_count": 60,
       "identifier": "7********09",
       "identifier_type": "phone",
@@ -312,16 +310,16 @@
       "manager_username": "",
       "name": "Александр Юденков",
       "source": "ЗАЯВКА ПОЧТА",
-      "status": "ALARM_NO_CRM",
+      "status": "LATE_CRM",
       "violations": [
-        "ALARM_NO_CRM"
+        "LATE_CRM"
       ]
     },
     {
       "created_at": "2026-09-15T13:25:29+03:00",
-      "crm_entity_id": null,
-      "crm_entity_type": null,
-      "crm_found": false,
+      "crm_entity_id": 48617353,
+      "crm_entity_type": "lead",
+      "crm_found": true,
       "event_date": "2026-09-18",
       "event_type": "",
       "guests_count": 5,
@@ -332,9 +330,9 @@
       "manager_username": "",
       "name": "Ольга",
       "source": "Заявки хост",
-      "status": "ALARM_NO_CRM",
+      "status": "LATE_CRM",
       "violations": [
-        "ALARM_NO_CRM"
+        "LATE_CRM"
       ]
     },
     {
@@ -412,7 +410,7 @@
   ],
   "needs_review": 94,
   "no_reaction": 0,
-  "ok": 400,
+  "ok": 401,
   "total_leads": 576,
-  "updated_at": "2026-09-16T06:08:56+03:00"
+  "updated_at": "2026-09-16T06:50:42+03:00"
 }
