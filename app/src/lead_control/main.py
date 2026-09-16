@@ -11,6 +11,7 @@ from .daily_duplicates import apply_daily_phone_duplicate_policy
 from .data_branch import commit_data_if_changed, prepare_data_worktree
 from .explicit_client_name import apply_explicit_client_names
 from .lead_enrichment import enrich_leads_from_events
+from .linked_contact_followup import remove_linked_contact_followup_leads
 from .manual_history import missing_manual_history_events
 from .manual_review_fields import enrich_manual_review_fields
 from .max_attachment_ocr import enrich_max_mail_attachments
@@ -162,6 +163,9 @@ def main() -> None:
         old_needs_review_payload.get("items", []),
         review_overrides_payload.get("items", []),
     )
+    removed_contact_followups = remove_linked_contact_followup_leads(leads, events)
+    if removed_contact_followups:
+        LOG.info("Linked MAX contact follow-up false leads removed: %s", removed_contact_followups)
     normalize_lead_sources(leads)
     apply_max_mail_leads(leads, events)
     enrich_leads_from_events(leads, events)
