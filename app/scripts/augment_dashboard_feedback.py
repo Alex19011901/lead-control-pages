@@ -94,6 +94,33 @@ def compact_feedback_lead(lead: dict, now_ts: int) -> dict | None:
     }
 
 
+def compact_closed_not_realized_lead(lead: dict) -> dict | None:
+    crm = lead.get("crm") or {}
+    closed = lead.get("closed_not_realized") or {}
+    if not crm.get("found") or crm.get("entity_type") != "lead" or not closed:
+        return None
+
+    try:
+        closed_at = int(closed.get("closed_at") or 0)
+    except (TypeError, ValueError):
+        closed_at = 0
+    if not closed_at:
+        return None
+
+    fields = lead.get("fields") or {}
+    return {
+        "crm_lead_id": int(closed.get("crm_lead_id") or crm.get("entity_id") or 0),
+        "closed_at": iso_moscow(closed_at),
+        "closed_ts": closed_at,
+        "source": source_for_lead(lead),
+        "name": lead.get("name") or fields.get("name") or "",
+        "identifier": identifier_value(lead),
+        "guests": exact_guest_display(lead),
+        "event_type": event_type_for_lead(lead),
+        "manager": crm_manager_name(lead),
+        "reason": str(closed.get("loss_reason_name") or "").strip() or "Не указана",
+    }
+
 
 def compact_waiting_stage_lead(lead: dict) -> dict | None:
     crm = lead.get("crm") or {}
@@ -131,6 +158,7 @@ def augment(leads_path: Path, view_path: Path, now_ts: int | None = None) -> Non
 
     rows = []
     waiting_stage_rows = []
+    closed_not_realized_rows = []
     tracked_counts = {state: 0 for state in TRACKED_STATES}
     display_counts = {"WAITING_YELLOW": 0, "WAITING_BLUE": 0}
     for lead in leads:
@@ -143,6 +171,10 @@ def augment(leads_path: Path, view_path: Path, now_ts: int | None = None) -> Non
         waiting_stage_row = compact_waiting_stage_lead(lead)
         if waiting_stage_row is not None:
             waiting_stage_rows.append(waiting_stage_row)
+
+        closed_row = compact_closed_not_realized_lead(lead)
+        if closed_row is not None:
+            closed_not_realized_rows.append(closed_row)
 
         row = compact_feedback_lead(lead, current_ts)
         if row is not None:
@@ -167,8 +199,11 @@ def augment(leads_path: Path, view_path: Path, now_ts: int | None = None) -> Non
         "clear": tracked_counts["CLEAR"],
     }
     waiting_stage_rows.sort(key=lambda row: -int(row.get("created_ts") or 0))
+    closed_not_realized_rows.sort(key=lambda row: -int(row.get("closed_ts") or 0))
     view["feedback"] = rows
     view["waiting_stage"] = waiting_stage_rows
+    view["closed_not_realized"] = closed_not_realized_rows
+    view["closed_not_realized_summary"] = {"total": len(closed_not_realized_rows), "days": 5}
     view_path.write_text(json.dumps(view, ensure_ascii=False, indent=2), encoding="utf-8")
 
 
