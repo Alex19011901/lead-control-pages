@@ -4,6 +4,7 @@ import logging
 from pathlib import Path
 
 from .amocrm_client import AmoCRMClient
+from .closed_not_realized import apply_closed_not_realized_history
 from .config import load_config
 from .crm_apply import apply_crm
 from .crm_feedback import apply_crm_feedback_tracking
@@ -192,6 +193,7 @@ def main() -> None:
             previous_leads=previous_leads,
             reuse_stable=config.fast_refresh,
         )
+        apply_closed_not_realized_history(leads_payload["leads"], amocrm)
     apply_crm_day_status_policy(leads_payload["leads"])
 
     leads_changed = stable_json(leads_payload) != old_leads_json
