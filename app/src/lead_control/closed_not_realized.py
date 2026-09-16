@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import logging
 import time
 from datetime import datetime, timedelta
 from typing import Any
@@ -8,6 +9,7 @@ from zoneinfo import ZoneInfo
 from .amocrm_client import AmoCRMClient
 
 
+LOG = logging.getLogger(__name__)
 CLOSED_NOT_REALIZED_STATUS_ID = 143
 HISTORY_DAYS = 5
 MOSCOW_TZ = ZoneInfo("Europe/Moscow")
@@ -37,19 +39,56 @@ def _loss_reason(payload: dict[str, Any]) -> tuple[int | None, str]:
     return reason_id, str(item.get("name") or "").strip()
 
 
+def _latest_common_comment(client: AmoCRMClient, crm_lead_id: int) -> tuple[str, int | None]:
+    latest_text = ""
+    latest_at: int | None = None
+    page = 1
+    while True:
+        payload = client._request_json(
+            "/api/v4/leads/notes",
+            {
+                "filter[entity_id][0]": crm_lead_id,
+                "filter[note_type]": "common",
+                "limit": 250,
+                "page": page,
+            },
+        )
+        notes = list(((payload.get("_embedded") or {}).get("notes")) or [])
+        for note in notes:
+            try:
+                entity_id = int(note.get("entity_id") or 0)
+                created_at = int(note.get("created_at") or 0)
+            except (TypeError, ValueError):
+                continue
+            if entity_id != crm_lead_id or not created_at:
+                continue
+            if str(note.get("note_type") or "").strip().casefold() != "common":
+                continue
+            params = note.get("params") or {}
+            text = str(params.get("text") or "").strip() if isinstance(params, dict) else ""
+            if not text:
+                continue
+            if latest_at is None or created_at > latest_at:
+                latest_at = created_at
+                latest_text = text
+
+        links = payload.get("_links") or {}
+        if not links.get("next") or not notes:
+            break
+        page += 1
+        if page > 50:
+            LOG.warning("CRM closed-lead notes pagination stopped lead_id=%s after 50 pages", crm_lead_id)
+            break
+
+    return latest_text, latest_at
+
+
 def apply_closed_not_realized_history(
     leads: list[dict[str, Any]],
     client: AmoCRMClient,
     now_ts: int | None = None,
 ) -> None:
-    """Attach exact recent amoCRM closed/lost metadata to tracked leads.
-
-    The current lead card has already been loaded by CRM feedback tracking in
-    the same process, so the first entity lookup normally hits the shared
-    AmoCRMClient cache. A second request with `with=loss_reason` is made only
-    for deals that are currently "Закрыто и не реализовано" and whose
-    `closed_at` falls within the last five Moscow calendar dates.
-    """
+    """Attach exact recent amoCRM closed/lost metadata to tracked leads."""
     current_ts = int(now_ts if now_ts is not None else time.time())
     today = _moscow_date(current_ts)
     first_day = today - timedelta(days=HISTORY_DAYS - 1)
@@ -92,9 +131,18 @@ def apply_closed_not_realized_history(
         ) or full_lead
         reason_id, reason_name = _loss_reason(detailed)
 
+        last_comment = ""
+        last_comment_at: int | None = None
+        try:
+            last_comment, last_comment_at = _latest_common_comment(client, crm_lead_id)
+        except RuntimeError as exc:
+            LOG.warning("CRM closed-lead comment lookup failed lead_id=%s error=%s", crm_lead_id, exc)
+
         lead["closed_not_realized"] = {
             "crm_lead_id": crm_lead_id,
             "closed_at": closed_at,
             "loss_reason_id": reason_id,
             "loss_reason_name": reason_name,
+            "last_comment": last_comment,
+            "last_comment_at": last_comment_at,
         }
