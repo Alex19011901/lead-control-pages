@@ -119,6 +119,7 @@ def compact_closed_not_realized_lead(lead: dict) -> dict | None:
         "event_type": event_type_for_lead(lead),
         "manager": crm_manager_name(lead),
         "reason": str(closed.get("loss_reason_name") or "").strip() or "Не указана",
+        "last_comment": str(closed.get("last_comment") or "").strip(),
     }
 
 
