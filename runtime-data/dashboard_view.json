@@ -3,39 +3,41 @@
     "today": {
       "start": "2026-09-16",
       "end": "2026-09-16",
-      "total": 10,
+      "total": 12,
       "status": {
-        "OK": 9,
-        "PENDING": 1
+        "OK": 10,
+        "PENDING": 2
       },
       "source": {
-        "САЙТ ТИЛЬДА": 3,
+        "САЙТ ТИЛЬДА": 4,
         "MARQUIZ": 1,
         "Заявки хост": 5,
-        "WedWed": 1
+        "WedWed": 1,
+        "Заявка с ТГ": 1
       },
       "channel": {
-        "TELEGRAM": 4,
-        "MAX": 6
+        "TELEGRAM": 5,
+        "MAX": 7
       },
       "guest": {
         "51-100": 2,
         "21-50": 3,
         "101-150": 1,
+        "151+": 2,
         "1-20": 3,
-        "151+": 1
+        "Не указано": 1
       },
       "event": {
-        "Корпоратив": 4,
+        "Корпоратив": 5,
         "Свадьба": 2,
         "Юбилей": 2,
         "Бизнес мероприятие": 1,
-        "Не определено": 1
+        "Не определено": 2
       },
       "days": [
         [
           "2026-09-16",
-          10
+          12
         ]
       ]
     },
@@ -80,39 +82,40 @@
     "7": {
       "start": "2026-09-10",
       "end": "2026-09-16",
-      "total": 72,
+      "total": 74,
       "status": {
-        "OK": 60,
+        "OK": 61,
         "LATE_CRM": 10,
         "-": 1,
-        "PENDING": 1
+        "PENDING": 2
       },
       "source": {
         "MARQUIZ": 3,
-        "САЙТ ТИЛЬДА": 18,
+        "САЙТ ТИЛЬДА": 19,
         "Заявки хост": 44,
         "Тильда Веранда": 1,
         "WedWed": 2,
-        "Заявка с ТГ": 2,
+        "Заявка с ТГ": 3,
         "ЗАЯВКА ПОЧТА": 2
       },
       "channel": {
-        "TELEGRAM": 21,
-        "MAX": 51
+        "TELEGRAM": 22,
+        "MAX": 52
       },
       "guest": {
         "101-150": 8,
         "21-50": 27,
-        "151+": 2,
+        "151+": 3,
         "51-100": 16,
-        "1-20": 25
+        "1-20": 25,
+        "Не указано": 1
       },
       "event": {
-        "Корпоратив": 25,
+        "Корпоратив": 26,
         "Юбилей": 21,
         "Свадьба": 17,
         "Выпускной": 1,
-        "Не определено": 5,
+        "Не определено": 6,
         "Бизнес мероприятие": 2
       },
       "days": [
@@ -142,26 +145,26 @@
         ],
         [
           "2026-09-16",
-          10
+          12
         ]
       ]
     },
     "30": {
       "start": "2026-08-18",
       "end": "2026-09-16",
-      "total": 259,
+      "total": 261,
       "status": {
-        "OK": 213,
+        "OK": 214,
         "LATE_CRM": 32,
         "-": 13,
-        "PENDING": 1
+        "PENDING": 2
       },
       "source": {
         "MARQUIZ": 16,
-        "САЙТ ТИЛЬДА": 64,
+        "САЙТ ТИЛЬДА": 65,
         "Заявки хост": 133,
         "С улицы": 1,
-        "Заявка с ТГ": 13,
+        "Заявка с ТГ": 14,
         "Тильда Веранда": 13,
         "WedWed": 6,
         "Restoran.Cafe": 2,
@@ -169,22 +172,22 @@
         "ЗАЯВКА ПОЧТА": 10
       },
       "channel": {
-        "TELEGRAM": 81,
-        "MAX": 178
+        "TELEGRAM": 82,
+        "MAX": 179
       },
       "guest": {
         "51-100": 57,
         "21-50": 91,
         "101-150": 27,
-        "151+": 15,
+        "151+": 16,
         "1-20": 83,
-        "Не указано": 3
+        "Не указано": 4
       },
       "event": {
         "Свадьба": 77,
-        "Корпоратив": 91,
+        "Корпоратив": 92,
         "Юбилей": 50,
-        "Не определено": 16,
+        "Не определено": 17,
         "Бизнес мероприятие": 7,
         "Детский праздник": 2,
         "Выпускной": 3
@@ -304,25 +307,25 @@
         ],
         [
           "2026-09-16",
-          10
+          12
         ]
       ]
     },
     "all": {
       "start": "2026-07-01",
       "end": "2026-09-16",
-      "total": 586,
+      "total": 588,
       "status": {
         "LATE_CRM": 125,
-        "OK": 410,
+        "OK": 411,
         "-": 50,
-        "PENDING": 1
+        "PENDING": 2
       },
       "source": {
-        "САЙТ ТИЛЬДА": 150,
+        "САЙТ ТИЛЬДА": 151,
         "Тильда Веранда": 46,
         "Заявки хост": 305,
-        "Заявка с ТГ": 23,
+        "Заявка с ТГ": 24,
         "WedWed": 11,
         "С улицы": 2,
         "Заявка сайт": 3,
@@ -332,22 +335,22 @@
         "ЗАЯВКА ПОЧТА": 11
       },
       "channel": {
-        "TELEGRAM": 184,
-        "MAX": 402
+        "TELEGRAM": 185,
+        "MAX": 403
       },
       "guest": {
         "51-100": 98,
         "21-50": 214,
         "1-20": 216,
         "101-150": 54,
-        "151+": 23,
-        "Не указано": 10
+        "151+": 24,
+        "Не указано": 11
       },
       "event": {
         "Юбилей": 118,
-        "Корпоратив": 151,
+        "Корпоратив": 152,
         "Свадьба": 179,
-        "Не определено": 62,
+        "Не определено": 63,
         "Бизнес мероприятие": 19,
         "Детский праздник": 5,
         "Съёмки": 2,
@@ -657,7 +660,7 @@
         ],
         [
           "2026-09-16",
-          10
+          12
         ]
       ]
     }
@@ -665,16 +668,42 @@
   "latest": [
     {
       "date": "2026-09-16",
+      "ts": "2026-09-16T18:39:59+03:00",
+      "source": "Заявка с ТГ",
+      "status": "PENDING",
+      "channel": "MAX",
+      "guest_range": "unknown",
+      "guests": "",
+      "event_type": "unknown",
+      "name": "",
+      "identifier": "79104341885",
+      "manager": ""
+    },
+    {
+      "date": "2026-09-16",
+      "ts": "2026-09-16T18:28:20+03:00",
+      "source": "САЙТ ТИЛЬДА",
+      "status": "PENDING",
+      "channel": "TELEGRAM",
+      "guest_range": "170",
+      "guests": "170",
+      "event_type": "unknown",
+      "name": "Алла",
+      "identifier": "79166669053",
+      "manager": ""
+    },
+    {
+      "date": "2026-09-16",
       "ts": "2026-09-16T17:30:09+03:00",
       "source": "WedWed",
-      "status": "PENDING",
+      "status": "OK",
       "channel": "MAX",
       "guest_range": "70",
       "guests": "70",
-      "event_type": "unknown",
+      "event_type": "Корпоратив",
       "name": "Александра",
       "identifier": "79106282647",
-      "manager": ""
+      "manager": "Максим"
     },
     {
       "date": "2026-09-16",
@@ -1416,37 +1445,11 @@
       "name": "Евгения",
       "identifier": "79654148831",
       "manager": "Максим"
-    },
-    {
-      "date": "2026-09-11",
-      "ts": "2026-09-11T18:50:53+03:00",
-      "source": "Тильда Веранда",
-      "status": "-",
-      "channel": "MAX",
-      "guest_range": "4",
-      "guests": "4",
-      "event_type": "unknown",
-      "name": "Татьяна",
-      "identifier": "79161508987",
-      "manager": ""
-    },
-    {
-      "date": "2026-09-11",
-      "ts": "2026-09-11T18:48:28+03:00",
-      "source": "Заявки хост",
-      "status": "OK",
-      "channel": "MAX",
-      "guest_range": "20",
-      "guests": "20",
-      "event_type": "unknown",
-      "name": "Александр",
-      "identifier": "79164668235",
-      "manager": "Максим"
     }
   ],
   "not_entered": [],
-  "snapshot_generated_at": "2026-09-16T15:17:23Z",
-  "snapshot_at": "2026-09-16T17:30:09+03:00",
+  "snapshot_generated_at": "2026-09-16T16:01:21Z",
+  "snapshot_at": "2026-09-16T18:39:59+03:00",
   "min_date": "2026-07-01",
   "max_date": "2026-09-16",
   "feedback_summary": {
@@ -1455,7 +1458,7 @@
     "waiting": 27,
     "waiting_blue": 2,
     "waiting_yellow": 6,
-    "clear": 58
+    "clear": 59
   },
   "feedback": [
     {
@@ -1471,7 +1474,7 @@
       "crm_status": "Предбронь",
       "first_activity_at": "",
       "first_activity_ts": null,
-      "age_seconds": 243109,
+      "age_seconds": 245748,
       "feedback_state": "WAITING_BLUE"
     },
     {
@@ -1487,7 +1490,7 @@
       "crm_status": "Предбронь",
       "first_activity_at": "",
       "first_activity_ts": null,
-      "age_seconds": 243109,
+      "age_seconds": 245748,
       "feedback_state": "WAITING_BLUE"
     },
     {
@@ -1503,7 +1506,7 @@
       "crm_status": "Выслано предложение",
       "first_activity_at": "",
       "first_activity_ts": null,
-      "age_seconds": 170233,
+      "age_seconds": 172872,
       "feedback_state": "WAITING_YELLOW"
     },
     {
@@ -1519,7 +1522,7 @@
       "crm_status": "Выслано предложение",
       "first_activity_at": "",
       "first_activity_ts": null,
-      "age_seconds": 170315,
+      "age_seconds": 172954,
       "feedback_state": "WAITING_YELLOW"
     },
     {
@@ -1535,7 +1538,7 @@
       "crm_status": "Первичный контакт",
       "first_activity_at": "",
       "first_activity_ts": null,
-      "age_seconds": 180329,
+      "age_seconds": 182968,
       "feedback_state": "WAITING_YELLOW"
     },
     {
@@ -1551,7 +1554,7 @@
       "crm_status": "Выслано предложение",
       "first_activity_at": "",
       "first_activity_ts": null,
-      "age_seconds": 182620,
+      "age_seconds": 185259,
       "feedback_state": "WAITING_YELLOW"
     },
     {
@@ -1567,7 +1570,7 @@
       "crm_status": "Выслано предложение",
       "first_activity_at": "",
       "first_activity_ts": null,
-      "age_seconds": 193936,
+      "age_seconds": 196575,
       "feedback_state": "WAITING_YELLOW"
     },
     {
@@ -1583,7 +1586,7 @@
       "crm_status": "Выслано предложение",
       "first_activity_at": "",
       "first_activity_ts": null,
-      "age_seconds": 194185,
+      "age_seconds": 196824,
       "feedback_state": "WAITING_YELLOW"
     }
   ],
@@ -1756,7 +1759,8 @@
       "guests": "122",
       "event_type": "Свадьба",
       "manager": "Максим",
-      "reason": "Не указана"
+      "reason": "Не указана",
+      "last_comment": ""
     },
     {
       "crm_lead_id": 48646455,
@@ -1768,7 +1772,8 @@
       "guests": "35",
       "event_type": "Корпоратив",
       "manager": "Максим",
-      "reason": "Не указана"
+      "reason": "Не указана",
+      "last_comment": ""
     },
     {
       "crm_lead_id": 48639607,
@@ -1780,7 +1785,8 @@
       "guests": "30",
       "event_type": "Юбилей",
       "manager": "Максим",
-      "reason": "Дата занята"
+      "reason": "Дата занята",
+      "last_comment": ""
     },
     {
       "crm_lead_id": 48638529,
@@ -1792,7 +1798,8 @@
       "guests": "100",
       "event_type": "Корпоратив",
       "manager": "Максим",
-      "reason": "Не указана"
+      "reason": "Не указана",
+      "last_comment": "ответил муж - не ост заявку"
     },
     {
       "crm_lead_id": 48638131,
@@ -1804,7 +1811,8 @@
       "guests": "8",
       "event_type": "Корпоратив",
       "manager": "Максим",
-      "reason": "Дата занята"
+      "reason": "Дата занята",
+      "last_comment": ""
     },
     {
       "crm_lead_id": 48476351,
@@ -1816,7 +1824,8 @@
       "guests": "15",
       "event_type": "Свадьба",
       "manager": "Максим",
-      "reason": "Пропала потребность"
+      "reason": "Пропала потребность",
+      "last_comment": "не берет"
     },
     {
       "crm_lead_id": 48605805,
@@ -1828,7 +1837,8 @@
       "guests": "8",
       "event_type": "Юбилей",
       "manager": "Максим",
-      "reason": "Не устроили условия"
+      "reason": "Не устроили условия",
+      "last_comment": ""
     },
     {
       "crm_lead_id": 48600829,
@@ -1840,7 +1850,8 @@
       "guests": "120",
       "event_type": "Корпоратив",
       "manager": "Максим",
-      "reason": "Не указана"
+      "reason": "Не указана",
+      "last_comment": ""
     },
     {
       "crm_lead_id": 48596345,
@@ -1852,7 +1863,8 @@
       "guests": "100",
       "event_type": "Корпоратив",
       "manager": "Максим",
-      "reason": "Дата занята"
+      "reason": "Дата занята",
+      "last_comment": ""
     },
     {
       "crm_lead_id": 48596265,
@@ -1864,7 +1876,8 @@
       "guests": "70",
       "event_type": "Корпоратив",
       "manager": "Максим",
-      "reason": "Слишком дорого"
+      "reason": "Слишком дорого",
+      "last_comment": ""
     },
     {
       "crm_lead_id": 48590895,
@@ -1876,7 +1889,8 @@
       "guests": "70",
       "event_type": "Юбилей",
       "manager": "Максим",
-      "reason": "Слишком дорого"
+      "reason": "Слишком дорого",
+      "last_comment": ""
     },
     {
       "crm_lead_id": 48587451,
@@ -1888,7 +1902,8 @@
       "guests": "80",
       "event_type": "Свадьба",
       "manager": "Максим",
-      "reason": "Не указана"
+      "reason": "Не указана",
+      "last_comment": "номер в сети не зарег"
     },
     {
       "crm_lead_id": 48586329,
@@ -1900,7 +1915,8 @@
       "guests": "15",
       "event_type": "Свадьба",
       "manager": "Олеся",
-      "reason": "Слишком дорого"
+      "reason": "Слишком дорого",
+      "last_comment": ""
     },
     {
       "crm_lead_id": 47963727,
@@ -1912,7 +1928,8 @@
       "guests": "75",
       "event_type": "Корпоратив",
       "manager": "Максим",
-      "reason": "Дата занята"
+      "reason": "Дата занята",
+      "last_comment": ""
     },
     {
       "crm_lead_id": 47958655,
@@ -1924,7 +1941,8 @@
       "guests": "100",
       "event_type": "Выпускной",
       "manager": "Максим",
-      "reason": "Слишком дорого"
+      "reason": "Слишком дорого",
+      "last_comment": ""
     },
     {
       "crm_lead_id": 48565963,
@@ -1936,7 +1954,8 @@
       "guests": "15",
       "event_type": "Корпоратив",
       "manager": "Олеся",
-      "reason": "Не устроили условия"
+      "reason": "Не устроили условия",
+      "last_comment": ""
     },
     {
       "crm_lead_id": 48565367,
@@ -1948,7 +1967,8 @@
       "guests": "20",
       "event_type": "Юбилей",
       "manager": "Олеся",
-      "reason": "Дата занята"
+      "reason": "Дата занята",
+      "last_comment": ""
     },
     {
       "crm_lead_id": 48400029,
@@ -1960,7 +1980,8 @@
       "guests": "80",
       "event_type": "Свадьба",
       "manager": "Олеся",
-      "reason": "Не указана"
+      "reason": "Не указана",
+      "last_comment": ""
     },
     {
       "crm_lead_id": 48562425,
@@ -1972,7 +1993,8 @@
       "guests": "16",
       "event_type": "Свадьба",
       "manager": "Олеся",
-      "reason": "Дата занята"
+      "reason": "Дата занята",
+      "last_comment": ""
     },
     {
       "crm_lead_id": 48561179,
@@ -1984,7 +2006,8 @@
       "guests": "26",
       "event_type": "Юбилей",
       "manager": "Олеся",
-      "reason": "Дата занята"
+      "reason": "Дата занята",
+      "last_comment": ""
     },
     {
       "crm_lead_id": 48542343,
@@ -1996,7 +2019,8 @@
       "guests": "10",
       "event_type": "Свадьба",
       "manager": "Олеся",
-      "reason": "Не устроили условия"
+      "reason": "Не устроили условия",
+      "last_comment": ""
     },
     {
       "crm_lead_id": 48480075,
@@ -2008,7 +2032,8 @@
       "guests": "40",
       "event_type": "Юбилей",
       "manager": "Максим",
-      "reason": "Выбрали других"
+      "reason": "Выбрали других",
+      "last_comment": "жду ответ от Олеси по 22.10."
     },
     {
       "crm_lead_id": 48358685,
@@ -2020,7 +2045,8 @@
       "guests": "50",
       "event_type": "Корпоратив",
       "manager": "Максим",
-      "reason": "Пропала потребность"
+      "reason": "Пропала потребность",
+      "last_comment": ""
     },
     {
       "crm_lead_id": 48364665,
@@ -2032,7 +2058,8 @@
       "guests": "21",
       "event_type": "Юбилей",
       "manager": "Максим",
-      "reason": "Выбрали других"
+      "reason": "Выбрали других",
+      "last_comment": "скинул"
     },
     {
       "crm_lead_id": 48256203,
@@ -2044,7 +2071,8 @@
       "guests": "30",
       "event_type": "Свадьба",
       "manager": "Максим",
-      "reason": "Не указана"
+      "reason": "Не указана",
+      "last_comment": ""
     },
     {
       "crm_lead_id": 48328499,
@@ -2056,7 +2084,8 @@
       "guests": "10",
       "event_type": "Юбилей",
       "manager": "Максим",
-      "reason": "Не указана"
+      "reason": "Не указана",
+      "last_comment": ""
     },
     {
       "crm_lead_id": 48335145,
@@ -2068,7 +2097,8 @@
       "guests": "150",
       "event_type": "Корпоратив",
       "manager": "Максим",
-      "reason": "Не указана"
+      "reason": "Не указана",
+      "last_comment": ""
     },
     {
       "crm_lead_id": 48336037,
@@ -2080,7 +2110,8 @@
       "guests": "40",
       "event_type": "Свадьба",
       "manager": "Максим",
-      "reason": "Не указана"
+      "reason": "Не указана",
+      "last_comment": ""
     },
     {
       "crm_lead_id": 48507661,
@@ -2092,7 +2123,8 @@
       "guests": "40",
       "event_type": "Свадьба",
       "manager": "Максим",
-      "reason": "Слишком дорого"
+      "reason": "Слишком дорого",
+      "last_comment": ""
     },
     {
       "crm_lead_id": 48505409,
@@ -2104,7 +2136,8 @@
       "guests": "27",
       "event_type": "Свадьба",
       "manager": "Максим",
-      "reason": "Дата занята"
+      "reason": "Дата занята",
+      "last_comment": ""
     },
     {
       "crm_lead_id": 48502665,
@@ -2116,7 +2149,8 @@
       "guests": "14",
       "event_type": "Юбилей",
       "manager": "Максим",
-      "reason": "Не указана"
+      "reason": "Не указана",
+      "last_comment": ""
     },
     {
       "crm_lead_id": 48484343,
@@ -2128,7 +2162,8 @@
       "guests": "20",
       "event_type": "unknown",
       "manager": "Максим",
-      "reason": "Слишком дорого"
+      "reason": "Слишком дорого",
+      "last_comment": "созвон завтра 11:00"
     },
     {
       "crm_lead_id": 47733639,
@@ -2140,7 +2175,8 @@
       "guests": "120",
       "event_type": "Корпоратив",
       "manager": "Максим",
-      "reason": "Выбрали других"
+      "reason": "Выбрали других",
+      "last_comment": "мах"
     }
   ],
   "closed_not_realized_summary": {

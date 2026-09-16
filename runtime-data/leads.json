@@ -13138,6 +13138,8 @@
       "closed_not_realized": {
         "closed_at": 1789229311,
         "crm_lead_id": 48328499,
+        "last_comment": "",
+        "last_comment_at": null,
         "loss_reason_id": null,
         "loss_reason_name": ""
       },
@@ -13504,6 +13506,8 @@
       "closed_not_realized": {
         "closed_at": 1789228877,
         "crm_lead_id": 48336037,
+        "last_comment": "",
+        "last_comment_at": null,
         "loss_reason_id": null,
         "loss_reason_name": ""
       },
@@ -14022,6 +14026,8 @@
       "closed_not_realized": {
         "closed_at": 1789229927,
         "crm_lead_id": 48364665,
+        "last_comment": "скинул",
+        "last_comment_at": 1788870346,
         "loss_reason_id": 21779746,
         "loss_reason_name": "Выбрали других"
       },
@@ -14119,6 +14125,8 @@
       "closed_not_realized": {
         "closed_at": 1789392187,
         "crm_lead_id": 48400029,
+        "last_comment": "",
+        "last_comment_at": null,
         "loss_reason_id": null,
         "loss_reason_name": ""
       },
@@ -15605,6 +15613,8 @@
       "closed_not_realized": {
         "closed_at": 1789387339,
         "crm_lead_id": 48561179,
+        "last_comment": "",
+        "last_comment_at": null,
         "loss_reason_id": 21780202,
         "loss_reason_name": "Дата занята"
       },
@@ -15794,6 +15804,8 @@
       "closed_not_realized": {
         "closed_at": 1789461596,
         "crm_lead_id": 48587451,
+        "last_comment": "номер в сети не зарег",
+        "last_comment_at": 1789461597,
         "loss_reason_id": null,
         "loss_reason_name": ""
       },
@@ -15983,6 +15995,8 @@
       "closed_not_realized": {
         "closed_at": 1789481821,
         "crm_lead_id": 48600829,
+        "last_comment": "",
+        "last_comment_at": null,
         "loss_reason_id": null,
         "loss_reason_name": ""
       },
@@ -16078,6 +16092,8 @@
       "closed_not_realized": {
         "closed_at": 1789486176,
         "crm_lead_id": 48605805,
+        "last_comment": "",
+        "last_comment_at": null,
         "loss_reason_id": 21779742,
         "loss_reason_name": "Не устроили условия"
       },
@@ -16265,6 +16281,8 @@
       "closed_not_realized": {
         "closed_at": 1789556996,
         "crm_lead_id": 48638529,
+        "last_comment": "ответил муж - не ост заявку",
+        "last_comment_at": 1789556997,
         "loss_reason_id": null,
         "loss_reason_name": ""
       },
@@ -16452,6 +16470,8 @@
       "closed_not_realized": {
         "closed_at": 1789565477,
         "crm_lead_id": 48646455,
+        "last_comment": "",
+        "last_comment_at": null,
         "loss_reason_id": null,
         "loss_reason_name": ""
       },
@@ -16548,6 +16568,8 @@
       "closed_not_realized": {
         "closed_at": 1789565651,
         "crm_lead_id": 48646531,
+        "last_comment": "",
+        "last_comment_at": null,
         "loss_reason_id": null,
         "loss_reason_name": ""
       },
@@ -16633,6 +16655,68 @@
         ],
         "update_ids": [
           185608405
+        ]
+      },
+      "violations": []
+    },
+    {
+      "category": "САЙТ ТИЛЬДА",
+      "channel": "TELEGRAM",
+      "crm": {
+        "ambiguity_count": 0,
+        "created_at": null,
+        "entity_id": null,
+        "entity_type": null,
+        "event_type": null,
+        "found": false,
+        "responsible_user_id": null,
+        "responsible_user_name": null,
+        "updated_at": null
+      },
+      "crm_created_at": null,
+      "crm_found": false,
+      "crm_required": true,
+      "crm_responsible": null,
+      "deadline_msk_ts": 1789592399,
+      "fields": {
+        "category": "САЙТ ТИЛЬДА",
+        "description": "Содержание заявки:\nName: Алла\nPhone: +79166669053\nколичество_гостей: 170\nDate: 05/12/2026\nCheckbox: yes\n\nДополнительная информация:\nКод заявки: 2925975:8678276962\nКод блока: rec1191803796\nhttps://moscowbanket.ru/#rec917519779\n-----",
+        "event_date": "2026-12-05",
+        "event_date_raw": "05/12/2026",
+        "event_type": "",
+        "form_submit_timestamp": null,
+        "guests_count": 170,
+        "metrika_client_id": "",
+        "name": "Алла",
+        "phone_digits": "79166669053",
+        "phone_raw": "+79166669053",
+        "source": "САЙТ ТИЛЬДА",
+        "telegram_username": "",
+        "yclid": ""
+      },
+      "first_seen_at": "2026-09-16T18:28:20+03:00",
+      "first_seen_ts": 1789572500,
+      "id": "b55ce3f1c4b9b899",
+      "identifier": {
+        "type": "phone",
+        "value": "79166669053"
+      },
+      "last_seen_at": "2026-09-16T18:28:20+03:00",
+      "last_seen_ts": 1789572500,
+      "manager_reaction": null,
+      "received_at": "2026-09-16T18:28:20+03:00",
+      "sender_name": "TildaForms",
+      "sender_user_id": 265299531,
+      "sender_username": "TildaFormsBot",
+      "source": "САЙТ ТИЛЬДА",
+      "status": "PENDING",
+      "telegram": {
+        "chat_id": -1001645768111,
+        "message_ids": [
+          5931
+        ],
+        "update_ids": [
+          185608412
         ]
       },
       "violations": []
@@ -36229,6 +36313,8 @@
       "closed_not_realized": {
         "closed_at": 1789195474,
         "crm_lead_id": 47733639,
+        "last_comment": "мах",
+        "last_comment_at": 1787147603,
         "loss_reason_id": 21779746,
         "loss_reason_name": "Выбрали других"
       },
@@ -39294,6 +39380,8 @@
       "closed_not_realized": {
         "closed_at": 1789397931,
         "crm_lead_id": 47958655,
+        "last_comment": "",
+        "last_comment_at": null,
         "loss_reason_id": 21779734,
         "loss_reason_name": "Слишком дорого"
       },
@@ -39389,6 +39477,8 @@
       "closed_not_realized": {
         "closed_at": 1789398026,
         "crm_lead_id": 47963727,
+        "last_comment": "",
+        "last_comment_at": null,
         "loss_reason_id": 21780202,
         "loss_reason_name": "Дата занята"
       },
@@ -44530,6 +44620,8 @@
       "closed_not_realized": {
         "closed_at": 1789229354,
         "crm_lead_id": 48256203,
+        "last_comment": "",
+        "last_comment_at": null,
         "loss_reason_id": null,
         "loss_reason_name": ""
       },
@@ -45060,6 +45152,8 @@
       "closed_not_realized": {
         "closed_at": 1789229193,
         "crm_lead_id": 48335145,
+        "last_comment": "",
+        "last_comment_at": null,
         "loss_reason_id": null,
         "loss_reason_name": ""
       },
@@ -45418,6 +45512,8 @@
       "closed_not_realized": {
         "closed_at": 1789230692,
         "crm_lead_id": 48358685,
+        "last_comment": "",
+        "last_comment_at": null,
         "loss_reason_id": 21779738,
         "loss_reason_name": "Пропала потребность"
       },
@@ -46799,6 +46895,8 @@
       "closed_not_realized": {
         "closed_at": 1789363410,
         "crm_lead_id": 48542343,
+        "last_comment": "",
+        "last_comment_at": null,
         "loss_reason_id": 21779742,
         "loss_reason_name": "Не устроили условия"
       },
@@ -47306,6 +47404,8 @@
       "closed_not_realized": {
         "closed_at": 1789540476,
         "crm_lead_id": 48476351,
+        "last_comment": "не берет",
+        "last_comment_at": 1789127927,
         "loss_reason_id": 21779738,
         "loss_reason_name": "Пропала потребность"
       },
@@ -47398,6 +47498,8 @@
       "closed_not_realized": {
         "closed_at": 1789313578,
         "crm_lead_id": 48480075,
+        "last_comment": "жду ответ от Олеси по 22.10.",
+        "last_comment_at": 1789134192,
         "loss_reason_id": 21779746,
         "loss_reason_name": "Выбрали других"
       },
@@ -47490,6 +47592,8 @@
       "closed_not_realized": {
         "closed_at": 1789200622,
         "crm_lead_id": 48484343,
+        "last_comment": "созвон завтра 11:00",
+        "last_comment_at": 1789142964,
         "loss_reason_id": 21779734,
         "loss_reason_name": "Слишком дорого"
       },
@@ -47731,6 +47835,8 @@
       "closed_not_realized": {
         "closed_at": 1789211618,
         "crm_lead_id": 48502665,
+        "last_comment": "",
+        "last_comment_at": null,
         "loss_reason_id": null,
         "loss_reason_name": ""
       },
@@ -47824,6 +47930,8 @@
       "closed_not_realized": {
         "closed_at": 1789218087,
         "crm_lead_id": 48505409,
+        "last_comment": "",
+        "last_comment_at": null,
         "loss_reason_id": 21780202,
         "loss_reason_name": "Дата занята"
       },
@@ -47916,6 +48024,8 @@
       "closed_not_realized": {
         "closed_at": 1789223883,
         "crm_lead_id": 48507661,
+        "last_comment": "",
+        "last_comment_at": null,
         "loss_reason_id": 21779734,
         "loss_reason_name": "Слишком дорого"
       },
@@ -48185,6 +48295,8 @@
       "closed_not_realized": {
         "closed_at": 1789389413,
         "crm_lead_id": 48562425,
+        "last_comment": "",
+        "last_comment_at": null,
         "loss_reason_id": 21780202,
         "loss_reason_name": "Дата занята"
       },
@@ -48457,6 +48569,8 @@
       "closed_not_realized": {
         "closed_at": 1789459953,
         "crm_lead_id": 48586329,
+        "last_comment": "",
+        "last_comment_at": null,
         "loss_reason_id": 21779734,
         "loss_reason_name": "Слишком дорого"
       },
@@ -48638,6 +48752,8 @@
       "closed_not_realized": {
         "closed_at": 1789395050,
         "crm_lead_id": 48565963,
+        "last_comment": "",
+        "last_comment_at": null,
         "loss_reason_id": 21779742,
         "loss_reason_name": "Не устроили условия"
       },
@@ -48730,6 +48846,8 @@
       "closed_not_realized": {
         "closed_at": 1789393969,
         "crm_lead_id": 48565367,
+        "last_comment": "",
+        "last_comment_at": null,
         "loss_reason_id": 21780202,
         "loss_reason_name": "Дата занята"
       },
@@ -49191,12 +49309,12 @@
         "crm_lead_id": 48589443,
         "deadline_at": 1789765200,
         "excluded": false,
-        "first_activity_at": null,
+        "first_activity_at": 1789573063,
         "lead_created_at": 1789463840,
         "pipeline_id": 10081590,
         "responsible_user_id": 12982830,
         "rule_version": 6,
-        "state": "WAITING",
+        "state": "CLEAR",
         "status_id": 79927042,
         "status_name": "Принимают решение"
       },
@@ -49348,6 +49466,8 @@
       "closed_not_realized": {
         "closed_at": 1789466067,
         "crm_lead_id": 48590895,
+        "last_comment": "",
+        "last_comment_at": null,
         "loss_reason_id": 21779734,
         "loss_reason_name": "Слишком дорого"
       },
@@ -49618,6 +49738,8 @@
       "closed_not_realized": {
         "closed_at": 1789474272,
         "crm_lead_id": 48596265,
+        "last_comment": "",
+        "last_comment_at": null,
         "loss_reason_id": 21779734,
         "loss_reason_name": "Слишком дорого"
       },
@@ -49710,6 +49832,8 @@
       "closed_not_realized": {
         "closed_at": 1789474457,
         "crm_lead_id": 48596345,
+        "last_comment": "",
+        "last_comment_at": null,
         "loss_reason_id": 21780202,
         "loss_reason_name": "Дата занята"
       },
@@ -50672,6 +50796,8 @@
       "closed_not_realized": {
         "closed_at": 1789556538,
         "crm_lead_id": 48638131,
+        "last_comment": "",
+        "last_comment_at": null,
         "loss_reason_id": 21780202,
         "loss_reason_name": "Дата занята"
       },
@@ -50850,6 +50976,8 @@
       "closed_not_realized": {
         "closed_at": 1789558808,
         "crm_lead_id": 48639607,
+        "last_comment": "",
+        "last_comment_at": null,
         "loss_reason_id": 21780202,
         "loss_reason_name": "Дата занята"
       },
@@ -50941,28 +51069,45 @@
       "channel": "MAX",
       "crm": {
         "ambiguity_count": 0,
-        "created_at": null,
-        "entity_id": null,
-        "entity_type": null,
-        "event_type": null,
-        "found": false,
-        "responsible_user_id": null,
-        "responsible_user_name": null,
-        "updated_at": null
+        "created_at": 1789573029,
+        "entity_id": 48650561,
+        "entity_type": "lead",
+        "event_type": "Корпоратив",
+        "found": true,
+        "guests": "70",
+        "guests_source": "CRM",
+        "responsible_user_id": 12982830,
+        "responsible_user_name": "Максим",
+        "updated_at": 1789573579
       },
       "crm_check_status": "PENDING",
-      "crm_created_at": null,
-      "crm_found": false,
+      "crm_created_at": 1789573029,
+      "crm_feedback": {
+        "crm_lead_id": 48650561,
+        "deadline_at": 1789851600,
+        "excluded": false,
+        "first_activity_at": null,
+        "lead_created_at": 1789573029,
+        "pipeline_id": 10081590,
+        "responsible_user_id": 12982830,
+        "rule_version": 6,
+        "state": "WAITING",
+        "status_id": 79927034,
+        "status_name": "Первичный контакт"
+      },
+      "crm_found": true,
       "crm_required": true,
-      "crm_responsible": null,
+      "crm_responsible": 12982830,
       "deadline_msk_ts": 1789592399,
       "event_date": "2026-12-25",
+      "event_type": "Корпоратив",
+      "event_type_source": "CRM",
       "fields": {
         "category": "WEDWED",
         "email": "",
         "event_date": "2026-12-25",
         "event_date_raw": "25.12.2026",
-        "event_type": "",
+        "event_type": "Корпоратив",
         "guests_count": 70,
         "guests_max": null,
         "guests_min": null,
@@ -51004,10 +51149,80 @@
       "sender_name": "Олеся",
       "sender_user_id": 48906491,
       "source": "WedWed",
-      "status": "PENDING",
+      "status": "OK",
       "username": "",
       "violations": [],
       "wedwed_url": "https://wedwed.ru/l/3MRyMpX"
+    },
+    {
+      "category": "TG_LEAD",
+      "channel": "MAX",
+      "crm": {
+        "ambiguity_count": 0,
+        "created_at": null,
+        "entity_id": null,
+        "entity_type": null,
+        "event_type": null,
+        "found": false,
+        "responsible_user_id": null,
+        "responsible_user_name": null,
+        "updated_at": null
+      },
+      "crm_created_at": null,
+      "crm_found": false,
+      "crm_required": true,
+      "crm_responsible": null,
+      "deadline_msk_ts": 1789592399,
+      "event_date": "2026-10-01",
+      "fields": {
+        "category": "TG_LEAD",
+        "email": "",
+        "event_date": "2026-10-01",
+        "event_date_raw": "1 октября",
+        "event_type": "",
+        "guests_count": null,
+        "guests_max": null,
+        "guests_min": null,
+        "guests_raw": "",
+        "name": "",
+        "phone_digits": "79104341885",
+        "phone_raw": "+79104341885",
+        "source": "Заявка с ТГ",
+        "telegram_username": ""
+      },
+      "first_seen_at": "2026-09-16T18:39:59+03:00",
+      "first_seen_ts": 1789573199,
+      "guests": null,
+      "guests_max": null,
+      "guests_min": null,
+      "guests_raw": "",
+      "id": "3d94fb2793cdcf90",
+      "identifier": {
+        "type": "phone",
+        "value": "79104341885"
+      },
+      "last_seen_at": "2026-09-16T18:39:59+03:00",
+      "last_seen_ts": 1789573199,
+      "manager_reaction": null,
+      "max": {
+        "chat_id": -71704692523093,
+        "message_ids": [
+          "mid.ffffbec8f345ffab01a0aadff7463cf3"
+        ],
+        "sender_name": "Олеся",
+        "sender_user_id": 48906491,
+        "sender_username": null
+      },
+      "message_id": "mid.ffffbec8f345ffab01a0aadff7463cf3",
+      "name": "",
+      "phone": "+79104341885",
+      "received_at": "2026-09-16T18:39:59+03:00",
+      "sender_name": "Олеся",
+      "sender_user_id": 48906491,
+      "source": "Заявка с ТГ",
+      "status": "PENDING",
+      "username": "",
+      "violations": []
     }
   ],
   "schema_version": 1
