@@ -1,5 +1,5 @@
 {
-  "alarm_no_crm": 0,
+  "alarm_no_crm": 4,
   "by_manager": {
     "no_manager_reaction": 490,
     "Максим": 45,
@@ -76,8 +76,10 @@
       "manager_username": "",
       "name": "Anastasia Ivanova",
       "source": "Заявки хост",
-      "status": "PENDING",
-      "violations": []
+      "status": "ALARM_NO_CRM",
+      "violations": [
+        "ALARM_NO_CRM"
+      ]
     },
     {
       "created_at": "2026-09-15T18:58:50+03:00",
@@ -310,8 +312,10 @@
       "manager_username": "",
       "name": "Александр Юденков",
       "source": "ЗАЯВКА ПОЧТА",
-      "status": "PENDING",
-      "violations": []
+      "status": "ALARM_NO_CRM",
+      "violations": [
+        "ALARM_NO_CRM"
+      ]
     },
     {
       "created_at": "2026-09-15T13:25:29+03:00",
@@ -328,8 +332,10 @@
       "manager_username": "",
       "name": "Ольга",
       "source": "Заявки хост",
-      "status": "PENDING",
-      "violations": []
+      "status": "ALARM_NO_CRM",
+      "violations": [
+        "ALARM_NO_CRM"
+      ]
     },
     {
       "created_at": "2026-09-15T12:41:37+03:00",
@@ -408,5 +414,5 @@
   "no_reaction": 0,
   "ok": 400,
   "total_leads": 576,
-  "updated_at": "2026-09-15T22:53:49+03:00"
+  "updated_at": "2026-09-16T06:08:56+03:00"
 }

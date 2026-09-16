@@ -47179,7 +47179,7 @@
         "pipeline_id": 10081590,
         "responsible_user_id": 12982830,
         "rule_version": 6,
-        "state": "WAITING",
+        "state": "NO_FEEDBACK",
         "status_id": 79927038,
         "status_name": "Выслано предложение"
       },
@@ -47525,7 +47525,7 @@
         "pipeline_id": 10081590,
         "responsible_user_id": 12982830,
         "rule_version": 6,
-        "state": "WAITING",
+        "state": "NO_FEEDBACK",
         "status_id": 79927038,
         "status_name": "Выслано предложение"
       },
@@ -47613,7 +47613,7 @@
         "pipeline_id": 10081590,
         "responsible_user_id": 12982830,
         "rule_version": 6,
-        "state": "WAITING",
+        "state": "NO_FEEDBACK",
         "status_id": 79927038,
         "status_name": "Выслано предложение"
       },
@@ -48535,9 +48535,11 @@
       "sender_name": "Al",
       "sender_user_id": 74336871,
       "source": "ЗАЯВКА ПОЧТА",
-      "status": "PENDING",
+      "status": "ALARM_NO_CRM",
       "username": "",
-      "violations": []
+      "violations": [
+        "ALARM_NO_CRM"
+      ]
     },
     {
       "category": "HOST",
@@ -48948,9 +48950,11 @@
       "sender_name": "Алёна",
       "sender_user_id": 432412696,
       "source": "Заявки хост",
-      "status": "PENDING",
+      "status": "ALARM_NO_CRM",
       "username": "",
-      "violations": []
+      "violations": [
+        "ALARM_NO_CRM"
+      ]
     },
     {
       "category": "ЗАЯВКА ПОЧТА",
@@ -49022,9 +49026,11 @@
       "sender_name": "Al",
       "sender_user_id": 74336871,
       "source": "ЗАЯВКА ПОЧТА",
-      "status": "PENDING",
+      "status": "ALARM_NO_CRM",
       "username": "",
-      "violations": []
+      "violations": [
+        "ALARM_NO_CRM"
+      ]
     },
     {
       "category": "HOST",
@@ -49787,9 +49793,11 @@
       "sender_name": "SV",
       "sender_user_id": 205529129,
       "source": "Заявки хост",
-      "status": "PENDING",
+      "status": "ALARM_NO_CRM",
       "username": "",
-      "violations": []
+      "violations": [
+        "ALARM_NO_CRM"
+      ]
     },
     {
       "category": "HOST",
