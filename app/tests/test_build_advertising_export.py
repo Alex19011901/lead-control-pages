@@ -66,7 +66,7 @@ class AdvertisingExportTests(unittest.TestCase):
             )
             result = json.loads(output.read_text(encoding="utf-8"))
 
-        self.assertEqual(result["schema_version"], 4)
+        self.assertEqual(result["schema_version"], 5)
         self.assertEqual(result["lead_count"], 1)
         item = result["leads"][0]
         self.assertEqual(item["lead_id"], "newhash")
@@ -78,6 +78,8 @@ class AdvertisingExportTests(unittest.TestCase):
         self.assertEqual(item["campaign_id"], "707720217")
         self.assertEqual(item["group_id"], "5724131407")
         self.assertEqual(item["ad_id"], "17630916799")
+        self.assertEqual(item["advertising_id_source"], "utm_content")
+        self.assertFalse(item["has_callibri"])
         self.assertEqual(item["utm_campaign"], "Search_Main")
         serialized = json.dumps(result, ensure_ascii=False)
         self.assertNotIn("79265350168", serialized)
@@ -87,6 +89,50 @@ class AdvertisingExportTests(unittest.TestCase):
         self.assertNotIn(client_id, serialized)
         self.assertNotIn('"name"', serialized)
         self.assertNotIn('"identifier"', serialized)
+
+    def test_export_parses_callibri_ids_without_raw_payload(self) -> None:
+        payload = {
+            "schema_version": 1,
+            "leads": [
+                {
+                    "id": "callibri-lead",
+                    "first_seen_at": "2026-09-05T16:10:00+03:00",
+                    "first_seen_ts": 1788617400,
+                    "source": "MARQUIZ",
+                    "channel": "WEB",
+                    "fields": {
+                        "description": (
+                            "https://example.test/?callibri=yd_c:712849433_gb:5773918659_"
+                            "ad:1915822986185365500_ph:205773918659_st:search"
+                            "&utm_source=yandex_direct&utm_medium=cpc&utm_campaign=Bankety_poisk_quiz"
+                            "&keyword=%D1%80%D0%B5%D1%81%D1%82%D0%BE%D1%80%D0%B0%D0%BD"
+                        ),
+                    },
+                },
+            ],
+        }
+        with tempfile.TemporaryDirectory() as tmp:
+            source = Path(tmp) / "leads.json"
+            output = Path(tmp) / "advertising_leads.json"
+            source.write_text(json.dumps(payload, ensure_ascii=False), encoding="utf-8")
+            subprocess.run(
+                [sys.executable, str(SCRIPT), "--input", str(source), "--output", str(output), "--start-date", "2026-09-05"],
+                check=True,
+            )
+            result = json.loads(output.read_text(encoding="utf-8"))
+
+        item = result["leads"][0]
+        self.assertTrue(item["has_callibri"])
+        self.assertEqual(item["advertising_id_source"], "callibri")
+        self.assertEqual(item["campaign_id"], "712849433")
+        self.assertEqual(item["group_id"], "5773918659")
+        self.assertEqual(item["ad_id"], "1915822986185365500")
+        self.assertEqual(item["utm_source"], "yandex_direct")
+        self.assertEqual(item["utm_medium"], "cpc")
+        self.assertEqual(item["utm_campaign"], "Bankety_poisk_quiz")
+        serialized = json.dumps(result, ensure_ascii=False)
+        self.assertNotIn("205773918659", serialized)
+        self.assertNotIn("ресторан", serialized)
 
     def test_export_accepts_client_id_alias_from_fields_and_description(self) -> None:
         payload = {

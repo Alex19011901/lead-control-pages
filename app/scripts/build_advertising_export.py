@@ -8,6 +8,7 @@ import re
 from datetime import date
 from pathlib import Path
 from typing import Any
+from urllib.parse import unquote_plus
 
 
 def parse_args() -> argparse.Namespace:
@@ -54,12 +55,41 @@ def first_text_value(text: str, labels: tuple[str, ...]) -> str:
     return ""
 
 
-def attribution_fields(fields: dict[str, Any]) -> dict[str, str]:
+def query_values_from_text(text: str) -> dict[str, str]:
+    result: dict[str, str] = {}
+    for candidate in (text, unquote_plus(text)):
+        for match in re.finditer(r"(?:^|[?&\s])([a-zA-Z][a-zA-Z0-9_]*?)=([^&\s]+)", candidate):
+            key = match.group(1).strip()
+            value = unquote_plus(match.group(2).strip())
+            if key and value and key not in result:
+                result[key] = value
+    return result
+
+
+def callibri_value(fields: dict[str, Any], description: str) -> str:
+    direct = str(fields.get("callibri") or fields.get("callibri_id") or fields.get("callibri_uid") or "").strip()
+    if direct:
+        return unquote_plus(direct)
+    return query_values_from_text(description).get("callibri", "")
+
+
+def callibri_ids(value: str) -> dict[str, str]:
+    decoded = unquote_plus(str(value or ""))
+    result: dict[str, str] = {}
+    for marker, key in (("yd_c", "campaign_id"), ("gb", "group_id"), ("ad", "ad_id")):
+        match = re.search(rf"(?:^|_){re.escape(marker)}:([0-9]+)(?:_|$)", decoded, flags=re.I)
+        if match:
+            result[key] = match.group(1)
+    return result
+
+
+def attribution_fields(fields: dict[str, Any]) -> dict[str, Any]:
     description = str(fields.get("description") or "")
-    utm_source = str(fields.get("utm_source") or text_value(description, "UTM source"))
-    utm_medium = str(fields.get("utm_medium") or text_value(description, "UTM medium"))
-    utm_campaign = str(fields.get("utm_campaign") or text_value(description, "UTM campaign"))
-    utm_content = str(fields.get("utm_content") or text_value(description, "UTM content"))
+    query_values = query_values_from_text(description)
+    utm_source = str(fields.get("utm_source") or text_value(description, "UTM source") or query_values.get("utm_source") or "")
+    utm_medium = str(fields.get("utm_medium") or text_value(description, "UTM medium") or query_values.get("utm_medium") or "")
+    utm_campaign = str(fields.get("utm_campaign") or text_value(description, "UTM campaign") or query_values.get("utm_campaign") or "")
+    utm_content = str(fields.get("utm_content") or text_value(description, "UTM content") or query_values.get("utm_content") or "")
     result = {
         "utm_source": utm_source,
         "utm_medium": utm_medium,
@@ -67,12 +97,25 @@ def attribution_fields(fields: dict[str, Any]) -> dict[str, str]:
         "campaign_id": "",
         "group_id": "",
         "ad_id": "",
+        "has_callibri": False,
+        "advertising_id_source": "",
     }
     for marker, key in (("cid", "campaign_id"), ("gid", "group_id"), ("aid", "ad_id")):
         match = re.search(rf"(?:^|\|){marker}\|([0-9]+)(?:\||$)", utm_content, flags=re.I)
         if not match:
             match = re.search(rf"(?:^|[;,_-]){marker}(?:[:=_-])([0-9]+)(?:$|[;,_-])", utm_content, flags=re.I)
-        result[key] = match.group(1) if match else ""
+        if match:
+            result[key] = match.group(1)
+            result["advertising_id_source"] = "utm_content"
+
+    callibri_raw = callibri_value(fields, description)
+    ids_from_callibri = callibri_ids(callibri_raw)
+    if callibri_raw:
+        result["has_callibri"] = True
+    for key, value in ids_from_callibri.items():
+        if not result.get(key):
+            result[key] = value
+            result["advertising_id_source"] = "callibri"
     return result
 
 
@@ -165,7 +208,7 @@ def main() -> int:
 
     exported.sort(key=lambda item: (item.get("created_ts") or 0, item.get("lead_id") or ""))
     output = {
-        "schema_version": 4,
+        "schema_version": 5,
         "start_date": args.start_date,
         "lead_count": len(exported),
         "leads": exported,
