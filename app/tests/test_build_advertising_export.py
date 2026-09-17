@@ -255,6 +255,66 @@ class AdvertisingExportTests(unittest.TestCase):
         self.assertEqual(item["campaign_id"], "")
         self.assertEqual(item["advertising_id_source"], "")
 
+    def test_hostess_lead_does_not_attribute_unconfirmed_callibri_tracking(self) -> None:
+        payload = {
+            "schema_version": 1,
+            "leads": [
+                {
+                    "id": "host-call",
+                    "first_seen_at": "2026-09-17T14:11:49+03:00",
+                    "first_seen_ts": 1790000000,
+                    "source": "Заявки хост",
+                    "identifier": {"type": "phone", "value": "79054025777"},
+                    "fields": {"phone_raw": "89054025777"},
+                },
+            ],
+        }
+        callibri = {
+            "schema_version": 1,
+            "status": "ok",
+            "calls": [
+                {
+                    "started_at": "2026-09-17T14:05:00+03:00",
+                    "phone_sha256": hashlib.sha256("79054025777".encode()).hexdigest(),
+                    "tracking_accurate": False,
+                    "campaign_id": "712849433",
+                    "group_id": "5773918677",
+                    "ad_id": "1915822986185365518",
+                },
+            ],
+        }
+        with tempfile.TemporaryDirectory() as tmp:
+            source = Path(tmp) / "leads.json"
+            calls = Path(tmp) / "callibri_calls.json"
+            output = Path(tmp) / "advertising_leads.json"
+            source.write_text(json.dumps(payload, ensure_ascii=False), encoding="utf-8")
+            calls.write_text(json.dumps(callibri, ensure_ascii=False), encoding="utf-8")
+            subprocess.run(
+                [
+                    sys.executable,
+                    str(SCRIPT),
+                    "--input",
+                    str(source),
+                    "--output",
+                    str(output),
+                    "--start-date",
+                    "2026-09-05",
+                    "--callibri-calls",
+                    str(calls),
+                ],
+                check=True,
+            )
+            result = json.loads(output.read_text(encoding="utf-8"))
+
+        item = result["leads"][0]
+        self.assertTrue(item["has_callibri"])
+        self.assertEqual(item["callibri_match_status"], "matched_unconfirmed_tracking")
+        self.assertIs(item["callibri_tracking_accurate"], False)
+        self.assertEqual(item["campaign_id"], "")
+        self.assertEqual(item["group_id"], "")
+        self.assertEqual(item["ad_id"], "")
+        self.assertEqual(item["advertising_id_source"], "")
+
     def test_import_callibri_calls_accepts_csv_and_hashes_phone(self) -> None:
         csv_text = (
             "phone;started_at;callibri;utm_source;utm_medium;utm_campaign;duration\n"
@@ -292,6 +352,70 @@ class AdvertisingExportTests(unittest.TestCase):
         serialized = json.dumps(result, ensure_ascii=False)
         self.assertNotIn("79054025777", serialized)
         self.assertNotIn("+7 905", serialized)
+
+    def test_import_callibri_calls_accepts_official_statistics_payload(self) -> None:
+        payload = {
+            "channels_statistics": [
+                {
+                    "name_channel": "Динамический коллтрекинг",
+                    "number": "+74950000000",
+                    "calls": [
+                        {
+                            "id": "call-1",
+                            "date": "17.09.2026 14:05",
+                            "phone": "+7 905 402-57-77",
+                            "status": "Лид",
+                            "call_status": "Успешный звонок",
+                            "accurately": "да",
+                            "source": "yandex_direct",
+                            "query": "банкетный зал",
+                            "metrika_client_id": "12345678901234567890",
+                            "utm_source": "yandex_direct",
+                            "utm_medium": "cpc",
+                            "utm_campaign": "Bankety_poisk_quiz",
+                            "utm_content": "search|cid|712849433|gid|5773918677|aid|1915822986185365518",
+                        },
+                    ],
+                },
+            ],
+        }
+        with tempfile.TemporaryDirectory() as tmp:
+            source = Path(tmp) / "callibri.json"
+            output = Path(tmp) / "callibri_calls.json"
+            source.write_text(json.dumps(payload, ensure_ascii=False), encoding="utf-8")
+            subprocess.run(
+                [
+                    sys.executable,
+                    str(CALLIBRI_IMPORT_SCRIPT),
+                    "--input",
+                    str(source),
+                    "--output",
+                    str(output),
+                    "--date-from",
+                    "2026-09-05",
+                ],
+                check=True,
+            )
+            result = json.loads(output.read_text(encoding="utf-8"))
+
+        self.assertEqual(result["status"], "ok")
+        self.assertEqual(result["call_count"], 1)
+        item = result["calls"][0]
+        self.assertEqual(item["call_id_sha256"], hashlib.sha256("call-1".encode()).hexdigest())
+        self.assertEqual(item["phone_sha256"], hashlib.sha256("79054025777".encode()).hexdigest())
+        self.assertEqual(item["metrika_client_id_sha256"], hashlib.sha256("12345678901234567890".encode()).hexdigest())
+        self.assertIs(item["tracking_accurate"], True)
+        self.assertEqual(item["utm_source"], "yandex_direct")
+        self.assertEqual(item["utm_medium"], "cpc")
+        self.assertEqual(item["utm_campaign"], "Bankety_poisk_quiz")
+        self.assertEqual(item["utm_term"], "банкетный зал")
+        self.assertEqual(item["campaign_id"], "712849433")
+        self.assertEqual(item["group_id"], "5773918677")
+        self.assertEqual(item["ad_id"], "1915822986185365518")
+        serialized = json.dumps(result, ensure_ascii=False)
+        self.assertNotIn("79054025777", serialized)
+        self.assertNotIn("+7 905", serialized)
+        self.assertNotIn("12345678901234567890", serialized)
 
     def test_export_accepts_client_id_alias_from_fields_and_description(self) -> None:
         payload = {

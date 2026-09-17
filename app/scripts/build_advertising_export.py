@@ -190,6 +190,10 @@ def call_has_ad_ids(call: dict[str, Any]) -> bool:
     return bool(str(call.get("ad_id") or call.get("group_id") or call.get("campaign_id") or "").strip())
 
 
+def call_tracking_is_confirmed(call: dict[str, Any]) -> bool:
+    return call.get("tracking_accurate") is not False
+
+
 def apply_callibri_phone_match(item: dict[str, Any], lead: dict[str, Any], calls_by_phone: dict[str, list[dict[str, Any]]]) -> None:
     if not is_hostess_lead(lead):
         return
@@ -217,6 +221,11 @@ def apply_callibri_phone_match(item: dict[str, Any], lead: dict[str, Any], calls
     item["callibri_call_id_sha256"] = str(call.get("call_id_sha256") or "")
     item["callibri_call_started_at"] = call_time.isoformat()
     item["callibri_match_delta_seconds"] = int((lead_time - call_time).total_seconds())
+    if "tracking_accurate" in call:
+        item["callibri_tracking_accurate"] = call.get("tracking_accurate")
+    if not call_tracking_is_confirmed(call):
+        item["callibri_match_status"] = "matched_unconfirmed_tracking"
+        return
     for key in ("utm_source", "utm_medium", "utm_campaign"):
         if not item.get(key) and call.get(key):
             item[key] = str(call.get(key) or "")
