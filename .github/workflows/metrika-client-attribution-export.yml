@@ -41,11 +41,18 @@ jobs:
           YANDEX_METRIKA_READ_TOKEN: ${{ secrets.YANDEX_METRIKA_READ_TOKEN }}
         run: python app/scripts/metrika_client_attribution_export.py --counter-id 112267492 --output runtime-data/metrika_attribution_map.json --poll-seconds 2 --max-polls 60
 
+      - name: Export Advertising Control Metrika attribution map
+        env:
+          YANDEX_METRIKA_READ_TOKEN: ${{ secrets.YANDEX_METRIKA_READ_TOKEN }}
+        run: |
+          yesterday="$(TZ=Europe/Moscow date -d 'yesterday' +%F)"
+          python app/scripts/metrika_client_attribution_export.py --counter-id 52597240 --date1 2026-09-05 --date2 "$yesterday" --output runtime-data/metrika_attribution_map_52597240.json --poll-seconds 2 --max-polls 90
+
       - name: Save safe attribution map
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add runtime-data/metrika_attribution_map.json
+          git add runtime-data/metrika_attribution_map.json runtime-data/metrika_attribution_map_52597240.json
           if git diff --cached --quiet; then
             echo "No Metrika attribution changes"
           else
