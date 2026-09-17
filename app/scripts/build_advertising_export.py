@@ -86,6 +86,11 @@ def metrika_client_id(fields: dict[str, Any]) -> str:
         or fields.get("client_id")
         or fields.get("clientid")
         or fields.get("ym_client_id")
+        or fields.get("ym_clientid")
+        or fields.get("ym_uid")
+        or fields.get("_ym_uid")
+        or fields.get("yandex_client_id")
+        or fields.get("ya_client_id")
         or ""
     ).strip()
     if direct:
@@ -101,6 +106,17 @@ def metrika_client_id(fields: dict[str, Any]) -> str:
             "ClientID",
             "client_id",
             "ym_client_id",
+            "ym_clientid",
+            "ym_uid",
+            "_ym_uid",
+            "Yandex ClientID",
+            "Yandex Client ID",
+            "yandex_client_id",
+            "Ya ClientID",
+            "ya_client_id",
+            "Метрика ClientID",
+            "Метрика Client ID",
+            "Яндекс Метрика ClientID",
         ),
     )
 

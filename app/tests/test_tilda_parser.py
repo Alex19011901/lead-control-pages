@@ -140,6 +140,29 @@ class TildaParserTests(unittest.TestCase):
         assert lead is not None
         self.assertEqual(lead["metrika_client_id"], "998877665544332211")
 
+    def test_tilda_accepts_common_yandex_client_id_aliases(self) -> None:
+        cases = {
+            "Yandex Client ID": "111222333444555666",
+            "ym_uid": "222333444555666777",
+            "_ym_uid": "333444555666777888",
+            "Метрика ClientID": "444555666777888999",
+        }
+        for label, expected in cases.items():
+            with self.subTest(label=label):
+                message = {
+                    "from": {"username": "TildaFormsBot", "first_name": "TildaForms"},
+                    "text": (
+                        "Содержание заявки:\n"
+                        "Name: Alias Check\n"
+                        "Phone: +79265350168\n"
+                        f"{label}: {expected}\n"
+                    ),
+                }
+                lead = parse_tilda_message(message)
+                self.assertIsNotNone(lead)
+                assert lead is not None
+                self.assertEqual(lead["metrika_client_id"], expected)
+
     def test_tilda_form_submit_timestamp_is_unix_utc_seconds(self) -> None:
         message = {
             "from": {"username": "TildaFormsBot", "first_name": "TildaForms"},

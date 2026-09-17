@@ -88,6 +88,51 @@ class AdvertisingExportTests(unittest.TestCase):
         self.assertNotIn('"name"', serialized)
         self.assertNotIn('"identifier"', serialized)
 
+    def test_export_accepts_client_id_alias_from_fields_and_description(self) -> None:
+        payload = {
+            "schema_version": 1,
+            "leads": [
+                {
+                    "id": "ymuid-field",
+                    "first_seen_at": "2026-09-05T14:53:52+03:00",
+                    "first_seen_ts": 1788612832,
+                    "source": "САЙТ ТИЛЬДА",
+                    "fields": {"_ym_uid": "111222333444555666", "phone_raw": "+79265350168"},
+                },
+                {
+                    "id": "yandex-description",
+                    "first_seen_at": "2026-09-05T15:53:52+03:00",
+                    "first_seen_ts": 1788616432,
+                    "source": "САЙТ ТИЛЬДА",
+                    "fields": {
+                        "phone_raw": "+79265350169",
+                        "description": "Yandex Client ID: 777888999000111222\n",
+                    },
+                },
+            ],
+        }
+        with tempfile.TemporaryDirectory() as tmp:
+            source = Path(tmp) / "leads.json"
+            output = Path(tmp) / "advertising_leads.json"
+            source.write_text(json.dumps(payload, ensure_ascii=False), encoding="utf-8")
+            subprocess.run(
+                [sys.executable, str(SCRIPT), "--input", str(source), "--output", str(output), "--start-date", "2026-09-05"],
+                check=True,
+            )
+            result = json.loads(output.read_text(encoding="utf-8"))
+
+        by_id = {item["lead_id"]: item for item in result["leads"]}
+        self.assertTrue(by_id["ymuid-field"]["has_metrika_client_id"])
+        self.assertEqual(
+            by_id["ymuid-field"]["metrika_client_id_sha256"],
+            hashlib.sha256("111222333444555666".encode()).hexdigest(),
+        )
+        self.assertTrue(by_id["yandex-description"]["has_metrika_client_id"])
+        self.assertEqual(
+            by_id["yandex-description"]["metrika_client_id_sha256"],
+            hashlib.sha256("777888999000111222".encode()).hexdigest(),
+        )
+
 
 if __name__ == "__main__":
     unittest.main()
