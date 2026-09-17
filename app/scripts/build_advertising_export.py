@@ -5,10 +5,14 @@ import argparse
 import hashlib
 import json
 import re
-from datetime import date
+from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
 from typing import Any
 from urllib.parse import unquote_plus
+
+MOSCOW = timezone(timedelta(hours=3))
+HOSTESS_CALL_MATCH_BEFORE_MINUTES = 12 * 60
+HOSTESS_CALL_MATCH_AFTER_MINUTES = 30
 
 
 def parse_args() -> argparse.Namespace:
@@ -16,6 +20,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--input", required=True)
     parser.add_argument("--output", required=True)
     parser.add_argument("--start-date", default="2026-09-05")
+    parser.add_argument("--callibri-calls", default="")
     return parser.parse_args()
 
 
@@ -26,6 +31,17 @@ def load_json(path: Path) -> dict[str, Any]:
 def date_part(value: Any) -> str:
     text = str(value or "")
     return text[:10] if len(text) >= 10 else ""
+
+
+def parse_datetime(value: Any) -> datetime | None:
+    text = str(value or "").strip()
+    if not text:
+        return None
+    try:
+        parsed = datetime.fromisoformat(text.replace("Z", "+00:00"))
+    except ValueError:
+        return None
+    return parsed.astimezone(MOSCOW) if parsed.tzinfo else parsed.replace(tzinfo=MOSCOW)
 
 
 def crm_status_name(lead: dict[str, Any]) -> str:
@@ -83,6 +99,13 @@ def callibri_ids(value: str) -> dict[str, str]:
     return result
 
 
+def normalize_phone(value: Any) -> str:
+    digits = re.sub(r"\D+", "", str(value or ""))
+    if len(digits) == 11 and digits.startswith("8"):
+        return f"7{digits[1:]}"
+    return digits
+
+
 def attribution_fields(fields: dict[str, Any]) -> dict[str, Any]:
     description = str(fields.get("description") or "")
     query_values = query_values_from_text(description)
@@ -121,6 +144,88 @@ def attribution_fields(fields: dict[str, Any]) -> dict[str, Any]:
 
 def hash_value(value: str) -> str:
     return hashlib.sha256(value.encode("utf-8")).hexdigest() if value else ""
+
+
+def is_hostess_lead(lead: dict[str, Any]) -> bool:
+    return "заявки хост" in str(lead.get("source") or "").casefold()
+
+
+def lead_phone_hash(lead: dict[str, Any]) -> str:
+    identifier = lead.get("identifier") or {}
+    fields = lead.get("fields") or {}
+    if identifier.get("type") == "phone":
+        phone = normalize_phone(identifier.get("value"))
+    else:
+        phone = normalize_phone(fields.get("phone_digits") or fields.get("phone_raw") or lead.get("phone"))
+    return hash_value(phone)
+
+
+def load_callibri_calls(path_text: str) -> dict[str, list[dict[str, Any]]]:
+    if not path_text:
+        return {}
+    path = Path(path_text)
+    if not path.exists():
+        return {}
+    try:
+        payload = json.loads(path.read_text(encoding="utf-8"))
+    except json.JSONDecodeError:
+        return {}
+    calls = payload.get("calls") if isinstance(payload, dict) else []
+    if not isinstance(calls, list):
+        return {}
+    by_phone: dict[str, list[dict[str, Any]]] = {}
+    for call in calls:
+        if not isinstance(call, dict):
+            continue
+        phone_hash = str(call.get("phone_sha256") or "").strip()
+        if not phone_hash:
+            continue
+        by_phone.setdefault(phone_hash, []).append(call)
+    for items in by_phone.values():
+        items.sort(key=lambda item: parse_datetime(item.get("started_at")) or datetime.min.replace(tzinfo=MOSCOW))
+    return by_phone
+
+
+def call_has_ad_ids(call: dict[str, Any]) -> bool:
+    return bool(str(call.get("ad_id") or call.get("group_id") or call.get("campaign_id") or "").strip())
+
+
+def apply_callibri_phone_match(item: dict[str, Any], lead: dict[str, Any], calls_by_phone: dict[str, list[dict[str, Any]]]) -> None:
+    if not is_hostess_lead(lead):
+        return
+    lead_time = parse_datetime(lead.get("first_seen_at") or lead.get("received_at"))
+    phone_hash = lead_phone_hash(lead)
+    if not lead_time or not phone_hash:
+        item["callibri_match_status"] = "no_phone_or_time"
+        return
+    start = lead_time - timedelta(minutes=HOSTESS_CALL_MATCH_BEFORE_MINUTES)
+    end = lead_time + timedelta(minutes=HOSTESS_CALL_MATCH_AFTER_MINUTES)
+    candidates = []
+    for call in calls_by_phone.get(phone_hash, []):
+        call_time = parse_datetime(call.get("started_at"))
+        if call_time and start <= call_time <= end:
+            candidates.append((call_time, call))
+    if not candidates:
+        item["callibri_match_status"] = "no_callibri_call"
+        return
+    if len(candidates) > 1:
+        item["callibri_match_status"] = "ambiguous_callibri_calls"
+        return
+    call_time, call = candidates[0]
+    item["has_callibri"] = True
+    item["callibri_match_status"] = "matched" if call_has_ad_ids(call) else "matched_without_ad_ids"
+    item["callibri_call_id_sha256"] = str(call.get("call_id_sha256") or "")
+    item["callibri_call_started_at"] = call_time.isoformat()
+    item["callibri_match_delta_seconds"] = int((lead_time - call_time).total_seconds())
+    for key in ("utm_source", "utm_medium", "utm_campaign"):
+        if not item.get(key) and call.get(key):
+            item[key] = str(call.get(key) or "")
+    if call.get("utm_term"):
+        item["utm_term"] = str(call.get("utm_term") or "")
+    for key in ("campaign_id", "group_id", "ad_id"):
+        if not item.get(key) and call.get(key):
+            item[key] = str(call.get(key) or "")
+            item["advertising_id_source"] = "callibri_phone_time_match"
 
 
 def metrika_client_id(fields: dict[str, Any]) -> str:
@@ -164,7 +269,7 @@ def metrika_client_id(fields: dict[str, Any]) -> str:
     )
 
 
-def safe_lead(lead: dict[str, Any]) -> dict[str, Any]:
+def safe_lead(lead: dict[str, Any], calls_by_phone: dict[str, list[dict[str, Any]]] | None = None) -> dict[str, Any]:
     fields = lead.get("fields") or {}
     yclid = str(fields.get("yclid") or lead.get("yclid") or "").strip()
     client_id = metrika_client_id(fields)
@@ -184,6 +289,7 @@ def safe_lead(lead: dict[str, Any]) -> dict[str, Any]:
         "crm_status": crm_status_name(lead),
     }
     item.update(attribution_fields(fields))
+    apply_callibri_phone_match(item, lead, calls_by_phone or {})
     return item
 
 
@@ -191,6 +297,7 @@ def main() -> int:
     args = parse_args()
     start = date.fromisoformat(args.start_date)
     payload = load_json(Path(args.input))
+    calls_by_phone = load_callibri_calls(args.callibri_calls)
     exported = []
     for lead in payload.get("leads", []):
         if lead.get("is_duplicate") or lead.get("status") == "DUPLICATE":
@@ -204,13 +311,14 @@ def main() -> int:
             continue
         if created_date < start:
             continue
-        exported.append(safe_lead(lead))
+        exported.append(safe_lead(lead, calls_by_phone))
 
     exported.sort(key=lambda item: (item.get("created_ts") or 0, item.get("lead_id") or ""))
     output = {
-        "schema_version": 5,
+        "schema_version": 6,
         "start_date": args.start_date,
         "lead_count": len(exported),
+        "callibri_calls_loaded": sum(len(items) for items in calls_by_phone.values()),
         "leads": exported,
     }
     out = Path(args.output)

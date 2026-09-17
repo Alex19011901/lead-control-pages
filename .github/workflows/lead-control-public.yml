@@ -65,6 +65,10 @@ jobs:
       - name: Rebuild dashboard
         env:
           PUBLIC_REFRESH_TOKEN: ${{ secrets.PUBLIC_REFRESH_TOKEN }}
+          CALLIBRI_CALLS_URL: ${{ secrets.CALLIBRI_CALLS_URL }}
+          CALLIBRI_TOKEN: ${{ secrets.CALLIBRI_TOKEN }}
+          CALLIBRI_AUTH_HEADER: ${{ secrets.CALLIBRI_AUTH_HEADER }}
+          CALLIBRI_AUTH_VALUE: ${{ secrets.CALLIBRI_AUTH_VALUE }}
         run: |
           python app/scripts/build_dashboard_snapshot.py --input runtime-data/leads.json --output runtime-data/dashboard_daily.json
           python app/scripts/exclude_dashboard_duplicate_stats.py --leads runtime-data/leads.json --snapshot runtime-data/dashboard_daily.json
@@ -72,7 +76,8 @@ jobs:
           python app/scripts/apply_dashboard_crm_guest_priority.py --leads runtime-data/leads.json --view runtime-data/dashboard_view.json
           python app/scripts/apply_dashboard_mail_source.py --view runtime-data/dashboard_view.json
           python app/scripts/augment_dashboard_feedback.py --leads runtime-data/leads.json --view runtime-data/dashboard_view.json
-          python app/scripts/build_advertising_export.py --input runtime-data/leads.json --output runtime-data/advertising_leads.json --start-date 2026-09-05
+          python app/scripts/import_callibri_calls.py --output runtime-data/callibri_calls.json --date-from 2026-09-05
+          python app/scripts/build_advertising_export.py --input runtime-data/leads.json --output runtime-data/advertising_leads.json --start-date 2026-09-05 --callibri-calls runtime-data/callibri_calls.json
           mkdir -p public-site
           python app/scripts/build_github_pages_mirror.py --input app/dashboard/pageshare/index.html --output public-site/index.html
           python app/scripts/inject_closed_not_realized_widget.py --path public-site/index.html

@@ -10,6 +10,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 SCRIPT = ROOT / "scripts" / "build_advertising_export.py"
+CALLIBRI_IMPORT_SCRIPT = ROOT / "scripts" / "import_callibri_calls.py"
 
 
 class AdvertisingExportTests(unittest.TestCase):
@@ -66,7 +67,7 @@ class AdvertisingExportTests(unittest.TestCase):
             )
             result = json.loads(output.read_text(encoding="utf-8"))
 
-        self.assertEqual(result["schema_version"], 5)
+        self.assertEqual(result["schema_version"], 6)
         self.assertEqual(result["lead_count"], 1)
         item = result["leads"][0]
         self.assertEqual(item["lead_id"], "newhash")
@@ -133,6 +134,164 @@ class AdvertisingExportTests(unittest.TestCase):
         serialized = json.dumps(result, ensure_ascii=False)
         self.assertNotIn("205773918659", serialized)
         self.assertNotIn("ресторан", serialized)
+
+    def test_hostess_lead_matches_single_callibri_call_by_phone_and_time(self) -> None:
+        payload = {
+            "schema_version": 1,
+            "leads": [
+                {
+                    "id": "host-call",
+                    "first_seen_at": "2026-09-17T14:11:49+03:00",
+                    "first_seen_ts": 1790000000,
+                    "source": "Заявки хост",
+                    "channel": "MAX",
+                    "identifier": {"type": "phone", "value": "79054025777"},
+                    "fields": {"phone_raw": "89054025777", "event_type": "Корпоратив"},
+                },
+            ],
+        }
+        callibri = {
+            "schema_version": 1,
+            "status": "ok",
+            "calls": [
+                {
+                    "call_id_sha256": hashlib.sha256("call-1".encode()).hexdigest(),
+                    "started_at": "2026-09-17T14:05:00+03:00",
+                    "phone_sha256": hashlib.sha256("79054025777".encode()).hexdigest(),
+                    "utm_source": "yandex_direct",
+                    "utm_medium": "cpc",
+                    "utm_campaign": "Bankety_poisk_quiz",
+                    "utm_term": "банкетный зал",
+                    "campaign_id": "712849433",
+                    "group_id": "5773918677",
+                    "ad_id": "1915822986185365518",
+                }
+            ],
+        }
+        with tempfile.TemporaryDirectory() as tmp:
+            source = Path(tmp) / "leads.json"
+            calls = Path(tmp) / "callibri_calls.json"
+            output = Path(tmp) / "advertising_leads.json"
+            source.write_text(json.dumps(payload, ensure_ascii=False), encoding="utf-8")
+            calls.write_text(json.dumps(callibri, ensure_ascii=False), encoding="utf-8")
+            subprocess.run(
+                [
+                    sys.executable,
+                    str(SCRIPT),
+                    "--input",
+                    str(source),
+                    "--output",
+                    str(output),
+                    "--start-date",
+                    "2026-09-05",
+                    "--callibri-calls",
+                    str(calls),
+                ],
+                check=True,
+            )
+            result = json.loads(output.read_text(encoding="utf-8"))
+
+        item = result["leads"][0]
+        self.assertEqual(result["callibri_calls_loaded"], 1)
+        self.assertTrue(item["has_callibri"])
+        self.assertEqual(item["callibri_match_status"], "matched")
+        self.assertEqual(item["advertising_id_source"], "callibri_phone_time_match")
+        self.assertEqual(item["campaign_id"], "712849433")
+        self.assertEqual(item["group_id"], "5773918677")
+        self.assertEqual(item["ad_id"], "1915822986185365518")
+        self.assertEqual(item["utm_term"], "банкетный зал")
+        serialized = json.dumps(result, ensure_ascii=False)
+        self.assertNotIn("79054025777", serialized)
+        self.assertNotIn("89054025777", serialized)
+
+    def test_hostess_lead_does_not_guess_ambiguous_callibri_calls(self) -> None:
+        payload = {
+            "schema_version": 1,
+            "leads": [
+                {
+                    "id": "host-call",
+                    "first_seen_at": "2026-09-17T14:11:49+03:00",
+                    "first_seen_ts": 1790000000,
+                    "source": "Заявки хост",
+                    "identifier": {"type": "phone", "value": "79054025777"},
+                    "fields": {"phone_raw": "89054025777"},
+                },
+            ],
+        }
+        phone_hash = hashlib.sha256("79054025777".encode()).hexdigest()
+        callibri = {
+            "schema_version": 1,
+            "status": "ok",
+            "calls": [
+                {"started_at": "2026-09-17T14:01:00+03:00", "phone_sha256": phone_hash, "campaign_id": "1"},
+                {"started_at": "2026-09-17T14:05:00+03:00", "phone_sha256": phone_hash, "campaign_id": "2"},
+            ],
+        }
+        with tempfile.TemporaryDirectory() as tmp:
+            source = Path(tmp) / "leads.json"
+            calls = Path(tmp) / "callibri_calls.json"
+            output = Path(tmp) / "advertising_leads.json"
+            source.write_text(json.dumps(payload, ensure_ascii=False), encoding="utf-8")
+            calls.write_text(json.dumps(callibri, ensure_ascii=False), encoding="utf-8")
+            subprocess.run(
+                [
+                    sys.executable,
+                    str(SCRIPT),
+                    "--input",
+                    str(source),
+                    "--output",
+                    str(output),
+                    "--start-date",
+                    "2026-09-05",
+                    "--callibri-calls",
+                    str(calls),
+                ],
+                check=True,
+            )
+            result = json.loads(output.read_text(encoding="utf-8"))
+
+        item = result["leads"][0]
+        self.assertEqual(item["callibri_match_status"], "ambiguous_callibri_calls")
+        self.assertEqual(item["campaign_id"], "")
+        self.assertEqual(item["advertising_id_source"], "")
+
+    def test_import_callibri_calls_accepts_csv_and_hashes_phone(self) -> None:
+        csv_text = (
+            "phone;started_at;callibri;utm_source;utm_medium;utm_campaign;duration\n"
+            "+7 905 402-57-77;2026-09-17 14:05:00;"
+            "yd_c:712849433_gb:5773918677_ad:1915822986185365518_ph:111;"
+            "yandex_direct;cpc;Bankety_poisk_quiz;01:12\n"
+        )
+        with tempfile.TemporaryDirectory() as tmp:
+            source = Path(tmp) / "callibri.csv"
+            output = Path(tmp) / "callibri_calls.json"
+            source.write_text(csv_text, encoding="utf-8")
+            subprocess.run(
+                [
+                    sys.executable,
+                    str(CALLIBRI_IMPORT_SCRIPT),
+                    "--input",
+                    str(source),
+                    "--output",
+                    str(output),
+                    "--date-from",
+                    "2026-09-05",
+                ],
+                check=True,
+            )
+            result = json.loads(output.read_text(encoding="utf-8"))
+
+        self.assertEqual(result["status"], "ok")
+        self.assertEqual(result["call_count"], 1)
+        item = result["calls"][0]
+        self.assertEqual(item["phone_sha256"], hashlib.sha256("79054025777".encode()).hexdigest())
+        self.assertEqual(item["campaign_id"], "712849433")
+        self.assertEqual(item["group_id"], "5773918677")
+        self.assertEqual(item["ad_id"], "1915822986185365518")
+        self.assertEqual(item["duration_seconds"], 72)
+        serialized = json.dumps(result, ensure_ascii=False)
+        self.assertNotIn("79054025777", serialized)
+        self.assertNotIn("+7 905", serialized)
 
     def test_export_accepts_client_id_alias_from_fields_and_description(self) -> None:
         payload = {
