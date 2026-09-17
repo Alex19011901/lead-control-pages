@@ -19,7 +19,7 @@ from metrika_logs_readonly import (
     parse_tsv,
 )
 
-FIELDS = (
+LAST_FIELDS = (
     "ym:s:visitID",
     "ym:s:dateTime",
     "ym:s:dateTimeUTC",
@@ -40,17 +40,89 @@ FIELDS = (
     "ym:s:lastUTMContent",
 )
 
-DIRECT_ID_FIELDS = (
+LAST_DIRECT_ID_FIELDS = (
     "ym:s:lastDirectClickOrder",
     "ym:s:lastDirectBannerGroup",
     "ym:s:lastDirectClickBanner",
 )
-UTM_FIELDS = (
+LAST_UTM_FIELDS = (
     "ym:s:lastUTMSource",
     "ym:s:lastUTMMedium",
     "ym:s:lastUTMCampaign",
     "ym:s:lastUTMContent",
 )
+
+AUTOMATIC_FIELDS = (
+    "ym:s:visitID",
+    "ym:s:dateTime",
+    "ym:s:dateTimeUTC",
+    "ym:s:visitDuration",
+    "ym:s:clientID",
+    "ym:s:automaticDirectClickOrder",
+    "ym:s:automaticDirectBannerGroup",
+    "ym:s:automaticDirectClickBanner",
+    "ym:s:automaticDirectClickOrderName",
+    "ym:s:automaticClickBannerGroupName",
+    "ym:s:automaticDirectClickBannerName",
+    "ym:s:automaticDirectPhraseOrCond",
+    "ym:s:automaticDirectPlatformType",
+    "ym:s:automaticDirectPlatform",
+    "ym:s:automaticUTMSource",
+    "ym:s:automaticUTMMedium",
+    "ym:s:automaticUTMCampaign",
+    "ym:s:automaticUTMContent",
+)
+
+AUTOMATIC_DIRECT_ID_FIELDS = (
+    "ym:s:automaticDirectClickOrder",
+    "ym:s:automaticDirectBannerGroup",
+    "ym:s:automaticDirectClickBanner",
+)
+AUTOMATIC_UTM_FIELDS = (
+    "ym:s:automaticUTMSource",
+    "ym:s:automaticUTMMedium",
+    "ym:s:automaticUTMCampaign",
+    "ym:s:automaticUTMContent",
+)
+
+FIELD_SETS = {
+    "LAST_YANDEX_DIRECT_CLICK": {
+        "fields": LAST_FIELDS,
+        "direct_id_fields": LAST_DIRECT_ID_FIELDS,
+        "utm_fields": LAST_UTM_FIELDS,
+        "campaign_id": "ym:s:lastDirectClickOrder",
+        "group_id": "ym:s:lastDirectBannerGroup",
+        "ad_id": "ym:s:lastDirectClickBanner",
+        "campaign_name": "ym:s:lastDirectClickOrderName",
+        "group_name": "ym:s:lastClickBannerGroupName",
+        "ad_name": "ym:s:lastDirectClickBannerName",
+        "phrase_or_condition": "ym:s:lastDirectPhraseOrCond",
+        "platform_type": "ym:s:lastDirectPlatformType",
+        "platform": "ym:s:lastDirectPlatform",
+        "utm_source": "ym:s:lastUTMSource",
+        "utm_medium": "ym:s:lastUTMMedium",
+        "utm_campaign": "ym:s:lastUTMCampaign",
+        "utm_content": "ym:s:lastUTMContent",
+    },
+    "AUTOMATIC": {
+        "fields": AUTOMATIC_FIELDS,
+        "direct_id_fields": AUTOMATIC_DIRECT_ID_FIELDS,
+        "utm_fields": AUTOMATIC_UTM_FIELDS,
+        "campaign_id": "ym:s:automaticDirectClickOrder",
+        "group_id": "ym:s:automaticDirectBannerGroup",
+        "ad_id": "ym:s:automaticDirectClickBanner",
+        "campaign_name": "ym:s:automaticDirectClickOrderName",
+        "group_name": "ym:s:automaticClickBannerGroupName",
+        "ad_name": "ym:s:automaticDirectClickBannerName",
+        "phrase_or_condition": "ym:s:automaticDirectPhraseOrCond",
+        "platform_type": "ym:s:automaticDirectPlatformType",
+        "platform": "ym:s:automaticDirectPlatform",
+        "utm_source": "ym:s:automaticUTMSource",
+        "utm_medium": "ym:s:automaticUTMMedium",
+        "utm_campaign": "ym:s:automaticUTMCampaign",
+        "utm_content": "ym:s:automaticUTMContent",
+    },
+}
 
 
 def sha256_text(value: str) -> str:
@@ -97,17 +169,25 @@ def sample_distinct(rows: list[dict[str, str]], field: str, limit: int = 20) -> 
     return values
 
 
-def safe_rows(rows: list[dict[str, str]]) -> list[dict[str, Any]]:
+def field_set_for_attribution(attribution: str) -> dict[str, Any]:
+    key = str(attribution or DEFAULT_ATTRIBUTION).strip().upper()
+    if key not in FIELD_SETS:
+        raise ValueError(f"unsupported attribution: {attribution}")
+    return FIELD_SETS[key]
+
+
+def safe_rows(rows: list[dict[str, str]], *, attribution: str = DEFAULT_ATTRIBUTION) -> list[dict[str, Any]]:
+    field_set = field_set_for_attribution(attribution)
     exported: list[dict[str, Any]] = []
     for row in rows:
         client_id = str(row.get("ym:s:clientID") or "").strip()
         if not client_id:
             continue
-        utm_campaign = str(row.get("ym:s:lastUTMCampaign") or "").strip()
-        campaign_id = normalize_id(row.get("ym:s:lastDirectClickOrder"))
-        group_id = normalize_id(row.get("ym:s:lastDirectBannerGroup"))
-        ad_id = normalize_id(row.get("ym:s:lastDirectClickBanner"))
-        ids_from_utm = parse_tracking_ids(str(row.get("ym:s:lastUTMContent") or ""), utm_campaign)
+        utm_campaign = str(row.get(str(field_set["utm_campaign"])) or "").strip()
+        campaign_id = normalize_id(row.get(str(field_set["campaign_id"])))
+        group_id = normalize_id(row.get(str(field_set["group_id"])))
+        ad_id = normalize_id(row.get(str(field_set["ad_id"])))
+        ids_from_utm = parse_tracking_ids(str(row.get(str(field_set["utm_content"])) or ""), utm_campaign)
         campaign_id = campaign_id or ids_from_utm["campaign_id"]
         group_id = group_id or ids_from_utm["group_id"]
         ad_id = ad_id or ids_from_utm["ad_id"]
@@ -118,7 +198,7 @@ def safe_rows(rows: list[dict[str, str]]) -> list[dict[str, Any]]:
             duration = max(0, int(float(duration_raw)))
         except ValueError:
             duration = 0
-        has_direct_ids = any(normalize_id(row.get(field)) for field in DIRECT_ID_FIELDS)
+        has_direct_ids = any(normalize_id(row.get(field)) for field in field_set["direct_id_fields"])
         has_utm_ids = any(ids_from_utm.values())
         exported.append(
             {
@@ -129,14 +209,15 @@ def safe_rows(rows: list[dict[str, str]]) -> list[dict[str, Any]]:
                 "campaign_id": campaign_id,
                 "group_id": group_id,
                 "ad_id": ad_id,
-                "utm_source": str(row.get("ym:s:lastUTMSource") or ""),
-                "utm_medium": str(row.get("ym:s:lastUTMMedium") or ""),
+                "utm_source": str(row.get(str(field_set["utm_source"])) or ""),
+                "utm_medium": str(row.get(str(field_set["utm_medium"])) or ""),
                 "utm_campaign": utm_campaign,
-                "campaign_name": str(row.get("ym:s:lastDirectClickOrderName") or ""),
-                "group_name": str(row.get("ym:s:lastClickBannerGroupName") or ""),
-                "ad_name": str(row.get("ym:s:lastDirectClickBannerName") or ""),
-                "platform_type": str(row.get("ym:s:lastDirectPlatformType") or ""),
-                "platform": str(row.get("ym:s:lastDirectPlatform") or ""),
+                "campaign_name": str(row.get(str(field_set["campaign_name"])) or ""),
+                "group_name": str(row.get(str(field_set["group_name"])) or ""),
+                "ad_name": str(row.get(str(field_set["ad_name"])) or ""),
+                "phrase_or_condition": str(row.get(str(field_set["phrase_or_condition"])) or ""),
+                "platform_type": str(row.get(str(field_set["platform_type"])) or ""),
+                "platform": str(row.get(str(field_set["platform"])) or ""),
                 "id_source": "direct_fields" if has_direct_ids else ("utm_ids" if has_utm_ids else "utm_campaign_label"),
             }
         )
@@ -144,9 +225,19 @@ def safe_rows(rows: list[dict[str, str]]) -> list[dict[str, Any]]:
     return exported
 
 
-def collect(client: MetrikaLogsReadOnlyClient, *, date1: str, date2: str, poll_seconds: float, max_polls: int) -> dict[str, Any]:
-    client.evaluate(date1=date1, date2=date2, fields=FIELDS, attribution=DEFAULT_ATTRIBUTION, source="visits")
-    request = client.create_export(date1=date1, date2=date2, fields=FIELDS, attribution=DEFAULT_ATTRIBUTION, source="visits")
+def collect(
+    client: MetrikaLogsReadOnlyClient,
+    *,
+    date1: str,
+    date2: str,
+    poll_seconds: float,
+    max_polls: int,
+    attribution: str = DEFAULT_ATTRIBUTION,
+) -> dict[str, Any]:
+    field_set = field_set_for_attribution(attribution)
+    fields = field_set["fields"]
+    client.evaluate(date1=date1, date2=date2, fields=fields, attribution=attribution, source="visits")
+    request = client.create_export(date1=date1, date2=date2, fields=fields, attribution=attribution, source="visits")
     current = request
     for _ in range(max_polls + 1):
         if current.status == "processed":
@@ -162,20 +253,20 @@ def collect(client: MetrikaLogsReadOnlyClient, *, date1: str, date2: str, poll_s
     rows: list[dict[str, str]] = []
     for part_number in current.parts:
         rows.extend(parse_tsv(client.download_part(current.request_id, part_number)))
-    mapped = safe_rows(rows)
+    mapped = safe_rows(rows, attribution=attribution)
     return {
         "schema_version": 3,
         "counter_id": client.counter_id,
         "date1": date1,
         "date2": date2,
-        "attribution": DEFAULT_ATTRIBUTION,
+        "attribution": attribution,
         "request_id": current.request_id,
         "rows_total": len(rows),
         "rows_with_client_id": sum(1 for row in rows if str(row.get("ym:s:clientID") or "").strip()),
-        "direct_id_nonempty_counts": nonempty_counts(rows, DIRECT_ID_FIELDS),
-        "utm_nonempty_counts": nonempty_counts(rows, UTM_FIELDS),
-        "utm_campaign_samples": sample_distinct(rows, "ym:s:lastUTMCampaign"),
-        "utm_content_samples": sample_distinct(rows, "ym:s:lastUTMContent", limit=10),
+        "direct_id_nonempty_counts": nonempty_counts(rows, field_set["direct_id_fields"]),
+        "utm_nonempty_counts": nonempty_counts(rows, field_set["utm_fields"]),
+        "utm_campaign_samples": sample_distinct(rows, str(field_set["utm_campaign"])),
+        "utm_content_samples": sample_distinct(rows, str(field_set["utm_content"]), limit=10),
         "mapped_rows": len(mapped),
         "mapped_from_direct_fields": sum(1 for item in mapped if item.get("id_source") == "direct_fields"),
         "mapped_from_utm_ids": sum(1 for item in mapped if item.get("id_source") == "utm_ids"),
@@ -195,6 +286,7 @@ def main() -> int:
     parser.add_argument("--date1", default=default_date())
     parser.add_argument("--date2", default="")
     parser.add_argument("--output", default="runtime-data/metrika_attribution_map.json")
+    parser.add_argument("--attribution", default=DEFAULT_ATTRIBUTION, choices=sorted(FIELD_SETS))
     parser.add_argument("--poll-seconds", type=float, default=2.0)
     parser.add_argument("--max-polls", type=int, default=60)
     args = parser.parse_args()
@@ -203,7 +295,14 @@ def main() -> int:
     if not token:
         raise SystemExit("YANDEX_METRIKA_READ_TOKEN is required")
     client = MetrikaLogsReadOnlyClient(token, counter_id=args.counter_id)
-    payload = collect(client, date1=args.date1, date2=date2, poll_seconds=args.poll_seconds, max_polls=args.max_polls)
+    payload = collect(
+        client,
+        date1=args.date1,
+        date2=date2,
+        poll_seconds=args.poll_seconds,
+        max_polls=args.max_polls,
+        attribution=args.attribution,
+    )
     output = Path(args.output)
     output.parent.mkdir(parents=True, exist_ok=True)
     output.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
