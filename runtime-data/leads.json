@@ -10338,8 +10338,8 @@
         "responsible_user_id": 12982830,
         "rule_version": 6,
         "state": "EXCLUDED",
-        "status_id": 79927046,
-        "status_name": "Согласование договора"
+        "status_id": 84995274,
+        "status_name": "Внесена п/о идет текущая работа"
       },
       "crm_found": true,
       "crm_required": true,
@@ -34899,6 +34899,14 @@
     {
       "category": "HOST",
       "channel": "MAX",
+      "closed_not_realized": {
+        "closed_at": 1789725522,
+        "crm_lead_id": 47530577,
+        "last_comment": "",
+        "last_comment_at": null,
+        "loss_reason_id": 21779746,
+        "loss_reason_name": "Выбрали других"
+      },
       "crm": {
         "ambiguity_count": 0,
         "created_at": 1786717871,
@@ -34922,8 +34930,8 @@
         "responsible_user_id": 12982830,
         "rule_version": 6,
         "state": "EXCLUDED",
-        "status_id": 86372998,
-        "status_name": "ЖДУНЫ"
+        "status_id": 143,
+        "status_name": "Закрыто и не реализовано"
       },
       "crm_found": true,
       "crm_required": true,
@@ -36370,8 +36378,8 @@
         "responsible_user_id": 12982830,
         "rule_version": 6,
         "state": "EXCLUDED",
-        "status_id": 79927046,
-        "status_name": "Согласование договора"
+        "status_id": 84995274,
+        "status_name": "Внесена п/о идет текущая работа"
       },
       "crm_found": true,
       "crm_required": true,
@@ -51567,6 +51575,14 @@
     {
       "category": "WEDWED",
       "channel": "MAX",
+      "closed_not_realized": {
+        "closed_at": 1789729169,
+        "crm_lead_id": 48650561,
+        "last_comment": "дата занято запросил альт",
+        "last_comment_at": 1789573030,
+        "loss_reason_id": 21780202,
+        "loss_reason_name": "Дата занята"
+      },
       "crm": {
         "ambiguity_count": 0,
         "created_at": 1789573029,
@@ -51584,16 +51600,15 @@
       "crm_created_at": 1789573029,
       "crm_feedback": {
         "crm_lead_id": 48650561,
-        "deadline_at": 1789851600,
-        "excluded": false,
+        "excluded": true,
         "first_activity_at": null,
         "lead_created_at": 1789573029,
         "pipeline_id": 10081590,
         "responsible_user_id": 12982830,
         "rule_version": 6,
-        "state": "WAITING",
-        "status_id": 79927034,
-        "status_name": "Первичный контакт"
+        "state": "EXCLUDED",
+        "status_id": 143,
+        "status_name": "Закрыто и не реализовано"
       },
       "crm_found": true,
       "crm_required": true,
@@ -52599,6 +52614,216 @@
       "name": "Сергей",
       "phone": "89055454774",
       "received_at": "2026-09-18T12:06:59+03:00",
+      "sender_name": "Елена",
+      "sender_user_id": 121513620,
+      "source": "Заявки хост",
+      "status": "PENDING",
+      "username": "",
+      "violations": []
+    },
+    {
+      "category": "HOST",
+      "channel": "MAX",
+      "crm": {
+        "ambiguity_count": 0,
+        "created_at": null,
+        "entity_id": null,
+        "entity_type": null,
+        "event_type": null,
+        "found": false,
+        "responsible_user_id": null,
+        "responsible_user_name": null,
+        "updated_at": null
+      },
+      "crm_created_at": null,
+      "crm_found": false,
+      "crm_required": true,
+      "crm_responsible": null,
+      "deadline_msk_ts": 1789765199,
+      "event_date": "2026-12-31",
+      "fields": {
+        "category": "HOST",
+        "email": "",
+        "event_date": "2026-12-31",
+        "event_date_raw": "31.12",
+        "event_type": "",
+        "guests_count": 35,
+        "guests_max": null,
+        "guests_min": null,
+        "guests_raw": "35п.",
+        "name": "Алина",
+        "phone_digits": "79037817891",
+        "phone_raw": "89037817891",
+        "source": "Заявки хост",
+        "telegram_username": ""
+      },
+      "first_seen_at": "2026-09-18T12:27:52+03:00",
+      "first_seen_ts": 1789723672,
+      "guests": 35,
+      "guests_max": null,
+      "guests_min": null,
+      "guests_raw": "35п.",
+      "id": "d2edef24721fb4e7",
+      "identifier": {
+        "type": "phone",
+        "value": "79037817891"
+      },
+      "last_seen_at": "2026-09-18T12:27:52+03:00",
+      "last_seen_ts": 1789723672,
+      "manager_reaction": null,
+      "max": {
+        "chat_id": -71704692523093,
+        "message_ids": [
+          "mid.ffffbec8f345ffab01a0b3d801010704"
+        ],
+        "sender_name": "Елена",
+        "sender_user_id": 121513620,
+        "sender_username": null
+      },
+      "message_id": "mid.ffffbec8f345ffab01a0b3d801010704",
+      "name": "Алина",
+      "phone": "89037817891",
+      "received_at": "2026-09-18T12:27:52+03:00",
+      "sender_name": "Елена",
+      "sender_user_id": 121513620,
+      "source": "Заявки хост",
+      "status": "PENDING",
+      "username": "",
+      "violations": []
+    },
+    {
+      "category": "HOST",
+      "channel": "MAX",
+      "crm": {
+        "ambiguity_count": 0,
+        "created_at": null,
+        "entity_id": null,
+        "entity_type": null,
+        "event_type": null,
+        "found": false,
+        "responsible_user_id": null,
+        "responsible_user_name": null,
+        "updated_at": null
+      },
+      "crm_created_at": null,
+      "crm_found": false,
+      "crm_required": true,
+      "crm_responsible": null,
+      "deadline_msk_ts": 1789765199,
+      "event_date": "2026-12-18",
+      "fields": {
+        "category": "HOST",
+        "email": "",
+        "event_date": "2026-12-18",
+        "event_date_raw": "18.12",
+        "event_type": "на почту она тоже запрос отправила",
+        "guests_count": 100,
+        "guests_max": null,
+        "guests_min": null,
+        "guests_raw": "100п.",
+        "name": "Екатерина",
+        "phone_digits": "79169782415",
+        "phone_raw": "89169782415",
+        "source": "Заявки хост",
+        "telegram_username": ""
+      },
+      "first_seen_at": "2026-09-18T12:37:54+03:00",
+      "first_seen_ts": 1789724274,
+      "guests": 100,
+      "guests_max": null,
+      "guests_min": null,
+      "guests_raw": "100п.",
+      "id": "318b074b067fabbd",
+      "identifier": {
+        "type": "phone",
+        "value": "79169782415"
+      },
+      "last_seen_at": "2026-09-18T12:37:54+03:00",
+      "last_seen_ts": 1789724274,
+      "manager_reaction": null,
+      "max": {
+        "chat_id": -71704692523093,
+        "message_ids": [
+          "mid.ffffbec8f345ffab01a0b3e12f1c1ae9"
+        ],
+        "sender_name": "Елена",
+        "sender_user_id": 121513620,
+        "sender_username": null
+      },
+      "message_id": "mid.ffffbec8f345ffab01a0b3e12f1c1ae9",
+      "name": "Екатерина",
+      "phone": "89169782415",
+      "received_at": "2026-09-18T12:37:54+03:00",
+      "sender_name": "Елена",
+      "sender_user_id": 121513620,
+      "source": "Заявки хост",
+      "status": "PENDING",
+      "username": "",
+      "violations": []
+    },
+    {
+      "category": "HOST",
+      "channel": "MAX",
+      "crm": {
+        "ambiguity_count": 0,
+        "created_at": null,
+        "entity_id": null,
+        "entity_type": null,
+        "event_type": null,
+        "found": false,
+        "responsible_user_id": null,
+        "responsible_user_name": null,
+        "updated_at": null
+      },
+      "crm_created_at": null,
+      "crm_found": false,
+      "crm_required": true,
+      "crm_responsible": null,
+      "deadline_msk_ts": 1789765199,
+      "event_date": "2026-11-02",
+      "fields": {
+        "category": "HOST",
+        "email": "",
+        "event_date": "2026-11-02",
+        "event_date_raw": "2.11",
+        "event_type": "",
+        "guests_count": null,
+        "guests_max": 50,
+        "guests_min": null,
+        "guests_raw": "До 50п.",
+        "name": "Александр",
+        "phone_digits": "79100840060",
+        "phone_raw": "89100840060",
+        "source": "Заявки хост",
+        "telegram_username": ""
+      },
+      "first_seen_at": "2026-09-18T12:52:42+03:00",
+      "first_seen_ts": 1789725162,
+      "guests": null,
+      "guests_max": 50,
+      "guests_min": null,
+      "guests_raw": "До 50п.",
+      "id": "f1ec90b79adff7b2",
+      "identifier": {
+        "type": "phone",
+        "value": "79100840060"
+      },
+      "last_seen_at": "2026-09-18T12:52:42+03:00",
+      "last_seen_ts": 1789725162,
+      "manager_reaction": null,
+      "max": {
+        "chat_id": -71704692523093,
+        "message_ids": [
+          "mid.ffffbec8f345ffab01a0b3eebcb50cc3"
+        ],
+        "sender_name": "Елена",
+        "sender_user_id": 121513620,
+        "sender_username": null
+      },
+      "message_id": "mid.ffffbec8f345ffab01a0b3eebcb50cc3",
+      "name": "Александр",
+      "phone": "89100840060",
+      "received_at": "2026-09-18T12:52:42+03:00",
       "sender_name": "Елена",
       "sender_user_id": 121513620,
       "source": "Заявки хост",
