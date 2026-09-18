@@ -1,7 +1,10 @@
 from __future__ import annotations
 
+import json
 import logging
+import re
 from pathlib import Path
+from typing import Any
 
 from .amocrm_client import AmoCRMClient
 from .closed_not_realized import apply_closed_not_realized_history
@@ -20,7 +23,7 @@ from .max_client import MaxClient, filter_new_max_events, normalize_max_updates
 from .max_edits import apply_max_message_edits
 from .max_forwarded import enrich_incomplete_forwarded_messages
 from .max_mail_lead_apply import apply_max_mail_leads
-from .normalize import now_moscow_iso
+from .normalize import now_moscow_iso, unix_to_moscow_iso
 from .processor import collect_known_manager_ids, normalize_updates, rebuild_leads_and_needs_review
 from .report import build_report
 from .source_categories import (
@@ -109,6 +112,17 @@ def main() -> None:
         append_events(events_path, new_events)
         events.extend(new_events)
     LOG.info("Telegram updates: %s; new events: %s", len(updates), len(new_events))
+    skipped_updates = _telegram_skipped_update_summaries(
+        updates,
+        expected_chat_id=config.telegram_chat_id,
+        existing_update_ids=existing_update_ids,
+        new_events=new_events,
+    )
+    if skipped_updates:
+        LOG.warning(
+            "Telegram skipped updates: %s",
+            json.dumps(skipped_updates, ensure_ascii=False, sort_keys=True),
+        )
 
     offset_changed = False
     if max_update_id is not None:
@@ -240,6 +254,79 @@ def main() -> None:
             LOG.info("Local data files updated")
         else:
             LOG.info("No data changes")
+
+
+def _telegram_skipped_update_summaries(
+    updates: list[dict[str, Any]],
+    *,
+    expected_chat_id: int,
+    existing_update_ids: set[int],
+    new_events: list[dict[str, Any]],
+) -> list[dict[str, Any]]:
+    processed_update_ids = {
+        int(event["update_id"])
+        for event in new_events
+        if "update_id" in event
+    }
+    summaries: list[dict[str, Any]] = []
+    for update in updates:
+        update_id = int(update.get("update_id") or 0)
+        if update_id in existing_update_ids or update_id in processed_update_ids:
+            continue
+        summaries.append(_telegram_update_summary(update, expected_chat_id))
+    return summaries
+
+
+def _telegram_update_summary(update: dict[str, Any], expected_chat_id: int) -> dict[str, Any]:
+    update_id = int(update.get("update_id") or 0)
+    if "message" in update:
+        kind = "message"
+        payload = update.get("message") or {}
+    elif "message_reaction" in update:
+        kind = "message_reaction"
+        payload = update.get("message_reaction") or {}
+    else:
+        kind = "other"
+        payload = {}
+
+    chat = payload.get("chat") if isinstance(payload, dict) else {}
+    sender = (
+        payload.get("from")
+        or payload.get("user")
+        or {}
+        if isinstance(payload, dict)
+        else {}
+    )
+    text = str(payload.get("text") or payload.get("caption") or "") if isinstance(payload, dict) else ""
+    date_value = payload.get("date") if isinstance(payload, dict) else None
+    date_msk = ""
+    if isinstance(date_value, int):
+        date_msk = unix_to_moscow_iso(date_value)
+
+    chat_id = chat.get("id") if isinstance(chat, dict) else None
+    return {
+        "update_id": update_id,
+        "kind": kind,
+        "chat_id": chat_id,
+        "expected_chat_id": expected_chat_id,
+        "chat_matches_expected": chat_id == expected_chat_id,
+        "message_id": payload.get("message_id") if isinstance(payload, dict) else None,
+        "date_msk": date_msk,
+        "sender_username": str(sender.get("username") or "") if isinstance(sender, dict) else "",
+        "sender_is_bot": bool(sender.get("is_bot")) if isinstance(sender, dict) else False,
+        "text_flags": _telegram_text_flags(text),
+    }
+
+
+def _telegram_text_flags(text: str) -> dict[str, bool]:
+    lowered = text.casefold()
+    return {
+        "has_text": bool(text.strip()),
+        "has_phone_like": bool(re.search(r"\+?\d[\d\s().-]{8,}\d", text)),
+        "has_tildaforms": "tildaforms" in lowered or "tilda forms" in lowered,
+        "has_metrika_client_id": "metrika_client_id" in lowered or "metrika client id" in lowered,
+        "has_ym_client_id": "ym_client_id" in lowered or "ym client id" in lowered,
+    }
 
 
 if __name__ == "__main__":
