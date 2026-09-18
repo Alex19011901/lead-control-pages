@@ -14908,7 +14908,7 @@
         "pipeline_id": 10081590,
         "responsible_user_id": 13009530,
         "rule_version": 6,
-        "state": "WAITING",
+        "state": "NO_FEEDBACK",
         "status_id": 79927034,
         "status_name": "Первичный контакт"
       },
@@ -15369,7 +15369,7 @@
         "pipeline_id": 10081590,
         "responsible_user_id": 13009530,
         "rule_version": 6,
-        "state": "WAITING",
+        "state": "NO_FEEDBACK",
         "status_id": 79927038,
         "status_name": "Выслано предложение"
       },
@@ -15517,7 +15517,7 @@
         "pipeline_id": 10081590,
         "responsible_user_id": 13009530,
         "rule_version": 6,
-        "state": "WAITING",
+        "state": "NO_FEEDBACK",
         "status_id": 79927038,
         "status_name": "Выслано предложение"
       },
@@ -15708,7 +15708,7 @@
         "pipeline_id": 10081590,
         "responsible_user_id": 13009530,
         "rule_version": 6,
-        "state": "WAITING",
+        "state": "NO_FEEDBACK",
         "status_id": 79927038,
         "status_name": "Выслано предложение"
       },
@@ -47945,14 +47945,6 @@
     {
       "category": "HOST",
       "channel": "MAX",
-      "closed_not_realized": {
-        "closed_at": 1789313578,
-        "crm_lead_id": 48480075,
-        "last_comment": "жду ответ от Олеси по 22.10.",
-        "last_comment_at": 1789134192,
-        "loss_reason_id": 21779746,
-        "loss_reason_name": "Выбрали других"
-      },
       "crm": {
         "ambiguity_count": 0,
         "created_at": 1789134191,
@@ -49110,7 +49102,7 @@
         "pipeline_id": 10081590,
         "responsible_user_id": 13009530,
         "rule_version": 6,
-        "state": "WAITING",
+        "state": "NO_FEEDBACK",
         "status_id": 79927038,
         "status_name": "Выслано предложение"
       },
@@ -49385,7 +49377,7 @@
         "pipeline_id": 10081590,
         "responsible_user_id": 13009530,
         "rule_version": 6,
-        "state": "WAITING",
+        "state": "NO_FEEDBACK",
         "status_id": 79927038,
         "status_name": "Выслано предложение"
       },
@@ -49556,12 +49548,12 @@
         "crm_lead_id": 48586565,
         "deadline_at": 1789765200,
         "excluded": false,
-        "first_activity_at": null,
+        "first_activity_at": 1789713258,
         "lead_created_at": 1789460266,
         "pipeline_id": 10081590,
         "responsible_user_id": 12982830,
         "rule_version": 6,
-        "state": "WAITING",
+        "state": "CLEAR",
         "status_id": 79927034,
         "status_name": "Первичный контакт"
       },
