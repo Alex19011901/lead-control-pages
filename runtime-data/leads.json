@@ -31447,6 +31447,14 @@
     {
       "category": "HOST",
       "channel": "MAX",
+      "closed_not_realized": {
+        "closed_at": 1789715595,
+        "crm_lead_id": 47245035,
+        "last_comment": "тг",
+        "last_comment_at": 1786044317,
+        "loss_reason_id": 24466294,
+        "loss_reason_name": "Нет обратной связи"
+      },
       "crm": {
         "ambiguity_count": 0,
         "created_at": 1786044315,
@@ -31463,16 +31471,15 @@
       "crm_created_at": 1786044315,
       "crm_feedback": {
         "crm_lead_id": 47245035,
-        "deadline_at": 1786309200,
-        "excluded": false,
-        "first_activity_at": 1786960789,
+        "excluded": true,
+        "first_activity_at": null,
         "lead_created_at": 1786044315,
         "pipeline_id": 10081590,
         "responsible_user_id": 12982830,
         "rule_version": 6,
-        "state": "CLEAR",
-        "status_id": 79927034,
-        "status_name": "Первичный контакт"
+        "state": "EXCLUDED",
+        "status_id": 143,
+        "status_name": "Закрыто и не реализовано"
       },
       "crm_found": true,
       "crm_required": true,
