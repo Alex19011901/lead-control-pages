@@ -77,9 +77,10 @@ WORD_NUMBERS = {
     "десять": 10,
 }
 
-TEST_PHONES = {"79999999999"}
+TEST_PHONES = {"79269999999", "79999999999"}
 TEST_YCLIDS = {"TEST_YCLID_20260903"}
 TEST_PHRASES = {"TEST LEAD CONTROL", "ТЕСТ РЕАКЦИИ"}
+TEST_NAMES = {"test", "тест", "test lead", "тестовая заявка"}
 
 
 def parse_tilda_message(message: dict[str, Any]) -> dict[str, Any] | None:
@@ -120,6 +121,8 @@ def test_lead_reason(lead: dict[str, Any], text: str) -> str:
         return "test_phone"
     if lead.get("yclid") in TEST_YCLIDS:
         return "test_yclid"
+    if str(lead.get("name") or "").strip().casefold() in TEST_NAMES:
+        return "test_name"
 
     upper_lines = {line.strip().upper() for line in text.splitlines() if line.strip()}
     if "TEST" in upper_lines or "ТЕСТ" in upper_lines:

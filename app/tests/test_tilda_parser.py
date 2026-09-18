@@ -107,6 +107,46 @@ class TildaParserTests(unittest.TestCase):
         self.assertEqual(lead["ignored_reason"], "test_yclid")
         self.assertIn("yclid: TEST_YCLID_20260903", lead["description"])
 
+    def test_tilda_lowercase_test_name_is_ignored(self) -> None:
+        message = {
+            "from": {"username": "TildaFormsBot", "first_name": "TildaForms"},
+            "text": (
+                "Содержание заявки:\n"
+                "Name: тест\n"
+                "Phone: +79261234567\n"
+                "количество_гостей: 11\n"
+                "Date: 19/09/2026\n"
+                "Checkbox: yes\n"
+                "metrika_client_id: 1789046905748977238\n"
+            ),
+        }
+
+        lead = parse_tilda_message(message)
+
+        self.assertIsNotNone(lead)
+        assert lead is not None
+        self.assertEqual(lead["ignored_reason"], "test_name")
+        self.assertEqual(lead["metrika_client_id"], "1789046905748977238")
+
+    def test_tilda_control_phone_is_ignored(self) -> None:
+        message = {
+            "from": {"username": "TildaFormsBot", "first_name": "TildaForms"},
+            "text": (
+                "Содержание заявки:\n"
+                "Name: Контроль\n"
+                "Phone: +79269999999\n"
+                "количество_гостей: 11\n"
+                "Date: 19/09/2026\n"
+                "Checkbox: yes\n"
+            ),
+        }
+
+        lead = parse_tilda_message(message)
+
+        self.assertIsNotNone(lead)
+        assert lead is not None
+        self.assertEqual(lead["ignored_reason"], "test_phone")
+
     def test_tilda_metrika_client_id_is_parsed_as_string(self) -> None:
         message = {
             "from": {"username": "TildaFormsBot", "first_name": "TildaForms"},
