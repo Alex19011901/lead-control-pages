@@ -11207,6 +11207,14 @@
     {
       "category": "САЙТ ТИЛЬДА",
       "channel": "TELEGRAM",
+      "closed_not_realized": {
+        "closed_at": 1789715709,
+        "crm_lead_id": 48089307,
+        "last_comment": "",
+        "last_comment_at": null,
+        "loss_reason_id": 24466294,
+        "loss_reason_name": "Нет обратной связи"
+      },
       "crm": {
         "ambiguity_count": 0,
         "created_at": 1788116565,
@@ -11223,16 +11231,15 @@
       "crm_created_at": 1788116565,
       "crm_feedback": {
         "crm_lead_id": 48089307,
-        "deadline_at": 1788382800,
-        "excluded": false,
-        "first_activity_at": 1788158052,
+        "excluded": true,
+        "first_activity_at": null,
         "lead_created_at": 1788116565,
         "pipeline_id": 10081590,
         "responsible_user_id": 12982830,
         "rule_version": 6,
-        "state": "CLEAR",
-        "status_id": 79927034,
-        "status_name": "Первичный контакт"
+        "state": "EXCLUDED",
+        "status_id": 143,
+        "status_name": "Закрыто и не реализовано"
       },
       "crm_found": true,
       "crm_required": true,
