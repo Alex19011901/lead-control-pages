@@ -17205,6 +17205,68 @@
       "violations": []
     },
     {
+      "category": "САЙТ ТИЛЬДА",
+      "channel": "TELEGRAM",
+      "crm": {
+        "ambiguity_count": 0,
+        "created_at": null,
+        "entity_id": null,
+        "entity_type": null,
+        "event_type": null,
+        "found": false,
+        "responsible_user_id": null,
+        "responsible_user_name": null,
+        "updated_at": null
+      },
+      "crm_created_at": null,
+      "crm_found": false,
+      "crm_required": true,
+      "crm_responsible": null,
+      "deadline_msk_ts": 1789765199,
+      "fields": {
+        "category": "САЙТ ТИЛЬДА",
+        "description": "Содержание заявки:\nName: Екатерина Иванова\nPhone: +79267249477\nInput: 80\nCheckbox: yes\npage_url: https://moscowbanket.ru/corporate#contact\npage_referrer: https://moscowbanket.ru/osnovnoizal\nform_submit_timestamp: 1789722367\nmetrika_client_id: 1789720252953912352\n\nДополнительная информация:\nКод заявки: 2925975:8682151263\nКод блока: rec2244692421\nhttps://moscowbanket.ru/corporate#contact\n-----",
+        "event_date": "",
+        "event_date_raw": "",
+        "event_type": "Корпоратив",
+        "form_submit_timestamp": 1789722367,
+        "guests_count": 80,
+        "metrika_client_id": "1789720252953912352",
+        "name": "Екатерина Иванова",
+        "phone_digits": "79267249477",
+        "phone_raw": "+79267249477",
+        "source": "САЙТ ТИЛЬДА",
+        "telegram_username": "",
+        "yclid": ""
+      },
+      "first_seen_at": "2026-09-18T12:06:07+03:00",
+      "first_seen_ts": 1789722367,
+      "id": "ef370f78d0b254cf",
+      "identifier": {
+        "type": "phone",
+        "value": "79267249477"
+      },
+      "last_seen_at": "2026-09-18T12:06:07+03:00",
+      "last_seen_ts": 1789722367,
+      "manager_reaction": null,
+      "received_at": "2026-09-18T12:06:07+03:00",
+      "sender_name": "TildaForms",
+      "sender_user_id": 265299531,
+      "sender_username": "TildaFormsBot",
+      "source": "САЙТ ТИЛЬДА",
+      "status": "PENDING",
+      "telegram": {
+        "chat_id": -1001645768111,
+        "message_ids": [
+          5941
+        ],
+        "update_ids": [
+          185608433
+        ]
+      },
+      "violations": []
+    },
+    {
       "category": "TG_LEAD",
       "channel": "TELEGRAM",
       "crm": {
@@ -52471,6 +52533,76 @@
       "sender_user_id": 121513620,
       "source": "Заявки хост",
       "status": "OK",
+      "username": "",
+      "violations": []
+    },
+    {
+      "category": "HOST",
+      "channel": "MAX",
+      "crm": {
+        "ambiguity_count": 0,
+        "created_at": null,
+        "entity_id": null,
+        "entity_type": null,
+        "event_type": null,
+        "found": false,
+        "responsible_user_id": null,
+        "responsible_user_name": null,
+        "updated_at": null
+      },
+      "crm_created_at": null,
+      "crm_found": false,
+      "crm_required": true,
+      "crm_responsible": null,
+      "deadline_msk_ts": 1789765199,
+      "event_date": "2026-10-31",
+      "fields": {
+        "category": "HOST",
+        "email": "",
+        "event_date": "2026-10-31",
+        "event_date_raw": "31.10",
+        "event_type": "Юбилей",
+        "guests_count": 35,
+        "guests_max": null,
+        "guests_min": null,
+        "guests_raw": "35п.",
+        "name": "Сергей",
+        "phone_digits": "79055454774",
+        "phone_raw": "89055454774",
+        "source": "Заявки хост",
+        "telegram_username": ""
+      },
+      "first_seen_at": "2026-09-18T12:06:59+03:00",
+      "first_seen_ts": 1789722419,
+      "guests": 35,
+      "guests_max": null,
+      "guests_min": null,
+      "guests_raw": "35п.",
+      "id": "5fee4bb44cce76aa",
+      "identifier": {
+        "type": "phone",
+        "value": "79055454774"
+      },
+      "last_seen_at": "2026-09-18T12:06:59+03:00",
+      "last_seen_ts": 1789722419,
+      "manager_reaction": null,
+      "max": {
+        "chat_id": -71704692523093,
+        "message_ids": [
+          "mid.ffffbec8f345ffab01a0b3c4e0644940"
+        ],
+        "sender_name": "Елена",
+        "sender_user_id": 121513620,
+        "sender_username": null
+      },
+      "message_id": "mid.ffffbec8f345ffab01a0b3c4e0644940",
+      "name": "Сергей",
+      "phone": "89055454774",
+      "received_at": "2026-09-18T12:06:59+03:00",
+      "sender_name": "Елена",
+      "sender_user_id": 121513620,
+      "source": "Заявки хост",
+      "status": "PENDING",
       "username": "",
       "violations": []
     }
