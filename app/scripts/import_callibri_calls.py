@@ -66,17 +66,25 @@ TEXT_KEYS = (
 )
 
 
+def env_value(*names: str, default: str = "") -> str:
+    for name in names:
+        value = os.getenv(name, "").strip()
+        if value:
+            return value
+    return default
+
+
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--input", default=os.getenv("CALLIBRI_CALLS_FILE", ""))
-    parser.add_argument("--url", default=os.getenv("CALLIBRI_CALLS_URL", ""))
+    parser.add_argument("--input", default=env_value("CALLIBRI_CALLS_FILE", "CALIBRI_CALLS_FILE"))
+    parser.add_argument("--url", default=env_value("CALLIBRI_CALLS_URL", "CALIBRI_CALLS_URL"))
     parser.add_argument("--output", required=True)
-    parser.add_argument("--date-from", default=os.getenv("CALLIBRI_DATE_FROM", "2026-09-05"))
-    parser.add_argument("--date-to", default=os.getenv("CALLIBRI_DATE_TO", ""))
-    parser.add_argument("--api-base-url", default=os.getenv("CALLIBRI_API_BASE_URL", ""))
-    parser.add_argument("--site-id", default=os.getenv("CALLIBRI_SITE_ID", ""))
-    parser.add_argument("--site-domain", default=os.getenv("CALLIBRI_SITE_DOMAIN", ""))
-    parser.add_argument("--site-name", default=os.getenv("CALLIBRI_SITE_NAME", ""))
+    parser.add_argument("--date-from", default=env_value("CALLIBRI_DATE_FROM", "CALIBRI_DATE_FROM", default="2026-09-05"))
+    parser.add_argument("--date-to", default=env_value("CALLIBRI_DATE_TO", "CALIBRI_DATE_TO"))
+    parser.add_argument("--api-base-url", default=env_value("CALLIBRI_API_BASE_URL", "CALIBRI_API_BASE_URL"))
+    parser.add_argument("--site-id", default=env_value("CALLIBRI_SITE_ID", "CALIBRI_SITE_ID"))
+    parser.add_argument("--site-domain", default=env_value("CALLIBRI_SITE_DOMAIN", "CALIBRI_SITE_DOMAIN"))
+    parser.add_argument("--site-name", default=env_value("CALLIBRI_SITE_NAME", "CALIBRI_SITE_NAME"))
     return parser.parse_args()
 
 
@@ -199,10 +207,10 @@ def parse_tracking_accurate(row: dict[str, Any]) -> bool | None:
 
 def request_text(url: str) -> str:
     headers = {"User-Agent": "lead-control-callibri-import"}
-    token = os.getenv("CALLIBRI_TOKEN", "").strip()
+    token = env_value("CALLIBRI_TOKEN", "CALIBRI_TOKEN")
     if token:
-        header_name = os.getenv("CALLIBRI_AUTH_HEADER", "Authorization").strip() or "Authorization"
-        header_value = os.getenv("CALLIBRI_AUTH_VALUE", "").strip() or f"Bearer {token}"
+        header_name = env_value("CALLIBRI_AUTH_HEADER", "CALIBRI_AUTH_HEADER", default="Authorization")
+        header_value = env_value("CALLIBRI_AUTH_VALUE", "CALIBRI_AUTH_VALUE") or f"Bearer {token}"
         headers[header_name] = header_value
     request = Request(url, headers=headers)
     with urlopen(request, timeout=45, context=ssl.create_default_context()) as response:
@@ -222,12 +230,12 @@ def redact_url(url: str) -> str:
 
 
 def api_auth_params() -> list[tuple[str, str]]:
-    result = parse_qsl(os.getenv("CALLIBRI_API_AUTH_QUERY", "").strip().lstrip("?"), keep_blank_values=False)
+    result = parse_qsl(env_value("CALLIBRI_API_AUTH_QUERY", "CALIBRI_API_AUTH_QUERY").lstrip("?"), keep_blank_values=False)
     existing_keys = {key for key, _ in result}
-    email = os.getenv("CALLIBRI_API_EMAIL", "").strip() or os.getenv("CALLIBRI_EMAIL", "").strip()
-    token = os.getenv("CALLIBRI_API_TOKEN", "").strip() or os.getenv("CALLIBRI_TOKEN", "").strip()
-    email_key = os.getenv("CALLIBRI_EMAIL_PARAM", "email").strip() or "email"
-    token_key = os.getenv("CALLIBRI_TOKEN_PARAM", "token").strip() or "token"
+    email = env_value("CALLIBRI_API_EMAIL", "CALIBRI_API_EMAIL", "CALLIBRI_EMAIL", "CALIBRI_EMAIL")
+    token = env_value("CALLIBRI_API_TOKEN", "CALIBRI_API_TOKEN", "CALLIBRI_TOKEN", "CALIBRI_TOKEN")
+    email_key = env_value("CALLIBRI_EMAIL_PARAM", "CALIBRI_EMAIL_PARAM", default="email")
+    token_key = env_value("CALLIBRI_TOKEN_PARAM", "CALIBRI_TOKEN_PARAM", default="token")
     if email and email_key not in existing_keys:
         result.append((email_key, email))
     if token and token_key not in existing_keys:

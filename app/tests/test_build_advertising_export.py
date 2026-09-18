@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import os
 import subprocess
 import sys
 import tempfile
@@ -352,6 +353,37 @@ class AdvertisingExportTests(unittest.TestCase):
         serialized = json.dumps(result, ensure_ascii=False)
         self.assertNotIn("79054025777", serialized)
         self.assertNotIn("+7 905", serialized)
+
+    def test_import_callibri_calls_accepts_single_l_env_alias(self) -> None:
+        csv_text = (
+            "phone;started_at;callibri\n"
+            "+7 905 402-57-77;2026-09-17 14:05:00;"
+            "yd_c:712849433_gb:5773918677_ad:1915822986185365518\n"
+        )
+        with tempfile.TemporaryDirectory() as tmp:
+            source = Path(tmp) / "callibri.csv"
+            output = Path(tmp) / "callibri_calls.json"
+            source.write_text(csv_text, encoding="utf-8")
+            env = dict(os.environ)
+            env.pop("CALLIBRI_CALLS_FILE", None)
+            env["CALIBRI_CALLS_FILE"] = str(source)
+            subprocess.run(
+                [
+                    sys.executable,
+                    str(CALLIBRI_IMPORT_SCRIPT),
+                    "--output",
+                    str(output),
+                    "--date-from",
+                    "2026-09-05",
+                ],
+                check=True,
+                env=env,
+            )
+            result = json.loads(output.read_text(encoding="utf-8"))
+
+        self.assertEqual(result["status"], "ok")
+        self.assertEqual(result["call_count"], 1)
+        self.assertEqual(result["calls"][0]["campaign_id"], "712849433")
 
     def test_import_callibri_calls_accepts_official_statistics_payload(self) -> None:
         payload = {

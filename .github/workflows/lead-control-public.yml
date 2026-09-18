@@ -65,19 +65,19 @@ jobs:
       - name: Rebuild dashboard
         env:
           PUBLIC_REFRESH_TOKEN: ${{ secrets.PUBLIC_REFRESH_TOKEN }}
-          CALLIBRI_CALLS_URL: ${{ secrets.CALLIBRI_CALLS_URL }}
-          CALLIBRI_TOKEN: ${{ secrets.CALLIBRI_TOKEN }}
-          CALLIBRI_AUTH_HEADER: ${{ secrets.CALLIBRI_AUTH_HEADER }}
-          CALLIBRI_AUTH_VALUE: ${{ secrets.CALLIBRI_AUTH_VALUE }}
-          CALLIBRI_API_BASE_URL: ${{ secrets.CALLIBRI_API_BASE_URL }}
-          CALLIBRI_API_AUTH_QUERY: ${{ secrets.CALLIBRI_API_AUTH_QUERY }}
-          CALLIBRI_API_EMAIL: ${{ secrets.CALLIBRI_API_EMAIL }}
-          CALLIBRI_API_TOKEN: ${{ secrets.CALLIBRI_API_TOKEN }}
-          CALLIBRI_EMAIL_PARAM: ${{ secrets.CALLIBRI_EMAIL_PARAM }}
-          CALLIBRI_TOKEN_PARAM: ${{ secrets.CALLIBRI_TOKEN_PARAM }}
-          CALLIBRI_SITE_ID: ${{ secrets.CALLIBRI_SITE_ID }}
-          CALLIBRI_SITE_DOMAIN: ${{ secrets.CALLIBRI_SITE_DOMAIN }}
-          CALLIBRI_SITE_NAME: ${{ secrets.CALLIBRI_SITE_NAME }}
+          CALLIBRI_CALLS_URL: ${{ secrets.CALLIBRI_CALLS_URL || secrets.CALIBRI_CALLS_URL }}
+          CALLIBRI_TOKEN: ${{ secrets.CALLIBRI_TOKEN || secrets.CALIBRI_TOKEN }}
+          CALLIBRI_AUTH_HEADER: ${{ secrets.CALLIBRI_AUTH_HEADER || secrets.CALIBRI_AUTH_HEADER }}
+          CALLIBRI_AUTH_VALUE: ${{ secrets.CALLIBRI_AUTH_VALUE || secrets.CALIBRI_AUTH_VALUE }}
+          CALLIBRI_API_BASE_URL: ${{ secrets.CALLIBRI_API_BASE_URL || secrets.CALIBRI_API_BASE_URL }}
+          CALLIBRI_API_AUTH_QUERY: ${{ secrets.CALLIBRI_API_AUTH_QUERY || secrets.CALIBRI_API_AUTH_QUERY }}
+          CALLIBRI_API_EMAIL: ${{ secrets.CALLIBRI_API_EMAIL || secrets.CALIBRI_API_EMAIL }}
+          CALLIBRI_API_TOKEN: ${{ secrets.CALLIBRI_API_TOKEN || secrets.CALIBRI_API_TOKEN }}
+          CALLIBRI_EMAIL_PARAM: ${{ secrets.CALLIBRI_EMAIL_PARAM || secrets.CALIBRI_EMAIL_PARAM }}
+          CALLIBRI_TOKEN_PARAM: ${{ secrets.CALLIBRI_TOKEN_PARAM || secrets.CALIBRI_TOKEN_PARAM }}
+          CALLIBRI_SITE_ID: ${{ secrets.CALLIBRI_SITE_ID || secrets.CALIBRI_SITE_ID }}
+          CALLIBRI_SITE_DOMAIN: ${{ secrets.CALLIBRI_SITE_DOMAIN || secrets.CALIBRI_SITE_DOMAIN }}
+          CALLIBRI_SITE_NAME: ${{ secrets.CALLIBRI_SITE_NAME || secrets.CALIBRI_SITE_NAME }}
         run: |
           python app/scripts/build_dashboard_snapshot.py --input runtime-data/leads.json --output runtime-data/dashboard_daily.json
           python app/scripts/exclude_dashboard_duplicate_stats.py --leads runtime-data/leads.json --snapshot runtime-data/dashboard_daily.json
