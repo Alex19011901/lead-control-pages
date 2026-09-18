@@ -17192,7 +17192,7 @@
       "sender_user_id": 265299531,
       "sender_username": "TildaFormsBot",
       "source": "САЙТ ТИЛЬДА",
-      "status": "PENDING",
+      "status": "ALARM_NO_CRM",
       "telegram": {
         "chat_id": -1001645768111,
         "message_ids": [
@@ -17202,7 +17202,9 @@
           185608423
         ]
       },
-      "violations": []
+      "violations": [
+        "ALARM_NO_CRM"
+      ]
     },
     {
       "category": "САЙТ ТИЛЬДА",
@@ -17248,7 +17250,20 @@
       },
       "last_seen_at": "2026-09-18T12:06:07+03:00",
       "last_seen_ts": 1789722367,
-      "manager_reaction": null,
+      "manager_reaction": {
+        "name": "Олеся",
+        "reacted_at": "2026-09-18T15:58:48+03:00",
+        "reacted_ts": 1789736328,
+        "reaction": [
+          {
+            "emoji": "❤",
+            "type": "emoji"
+          }
+        ],
+        "update_id": 185608436,
+        "user_id": 328611361,
+        "username": "Olesyagozhina"
+      },
       "received_at": "2026-09-18T12:06:07+03:00",
       "sender_name": "TildaForms",
       "sender_user_id": 265299531,
@@ -52554,23 +52569,47 @@
     {
       "category": "HOST",
       "channel": "MAX",
+      "closed_not_realized": {
+        "closed_at": 1789736306,
+        "crm_lead_id": 48713697,
+        "last_comment": "",
+        "last_comment_at": null,
+        "loss_reason_id": 21780202,
+        "loss_reason_name": "Дата занята"
+      },
       "crm": {
         "ambiguity_count": 0,
-        "created_at": null,
-        "entity_id": null,
-        "entity_type": null,
-        "event_type": null,
-        "found": false,
-        "responsible_user_id": null,
-        "responsible_user_name": null,
-        "updated_at": null
+        "created_at": 1789736237,
+        "entity_id": 48713697,
+        "entity_type": "lead",
+        "event_type": "Юбилей",
+        "found": true,
+        "guests": "35",
+        "guests_source": "CRM",
+        "responsible_user_id": 13009530,
+        "responsible_user_name": "Олеся",
+        "updated_at": 1789736306
       },
-      "crm_created_at": null,
-      "crm_found": false,
+      "crm_created_at": 1789736237,
+      "crm_feedback": {
+        "crm_lead_id": 48713697,
+        "excluded": true,
+        "first_activity_at": null,
+        "lead_created_at": 1789736237,
+        "pipeline_id": 10081590,
+        "responsible_user_id": 13009530,
+        "rule_version": 6,
+        "state": "EXCLUDED",
+        "status_id": 143,
+        "status_name": "Закрыто и не реализовано"
+      },
+      "crm_found": true,
       "crm_required": true,
-      "crm_responsible": null,
+      "crm_responsible": 13009530,
       "deadline_msk_ts": 1789765199,
       "event_date": "2026-10-31",
+      "event_type": "Юбилей",
+      "event_type_source": "CRM",
       "fields": {
         "category": "HOST",
         "email": "",
@@ -52617,28 +52656,50 @@
       "sender_name": "Елена",
       "sender_user_id": 121513620,
       "source": "Заявки хост",
-      "status": "PENDING",
+      "status": "OK",
       "username": "",
       "violations": []
     },
     {
       "category": "HOST",
       "channel": "MAX",
+      "closed_not_realized": {
+        "closed_at": 1789735958,
+        "crm_lead_id": 48713323,
+        "last_comment": "",
+        "last_comment_at": null,
+        "loss_reason_id": 21779742,
+        "loss_reason_name": "Не устроили условия"
+      },
       "crm": {
         "ambiguity_count": 0,
-        "created_at": null,
-        "entity_id": null,
-        "entity_type": null,
+        "created_at": 1789735951,
+        "entity_id": 48713323,
+        "entity_type": "lead",
         "event_type": null,
-        "found": false,
-        "responsible_user_id": null,
-        "responsible_user_name": null,
-        "updated_at": null
+        "found": true,
+        "guests": "30",
+        "guests_source": "CRM",
+        "responsible_user_id": 13009530,
+        "responsible_user_name": "Олеся",
+        "updated_at": 1789735958
       },
-      "crm_created_at": null,
-      "crm_found": false,
+      "crm_created_at": 1789735951,
+      "crm_feedback": {
+        "crm_lead_id": 48713323,
+        "excluded": true,
+        "first_activity_at": null,
+        "lead_created_at": 1789735951,
+        "pipeline_id": 10081590,
+        "responsible_user_id": 13009530,
+        "rule_version": 6,
+        "state": "EXCLUDED",
+        "status_id": 143,
+        "status_name": "Закрыто и не реализовано"
+      },
+      "crm_found": true,
       "crm_required": true,
-      "crm_responsible": null,
+      "crm_responsible": 13009530,
       "deadline_msk_ts": 1789765199,
       "event_date": "2026-12-31",
       "fields": {
@@ -52687,7 +52748,7 @@
       "sender_name": "Елена",
       "sender_user_id": 121513620,
       "source": "Заявки хост",
-      "status": "PENDING",
+      "status": "OK",
       "username": "",
       "violations": []
     },
@@ -52956,6 +53017,76 @@
       "sender_user_id": 121513620,
       "source": "Заявки хост",
       "status": "OK",
+      "username": "",
+      "violations": []
+    },
+    {
+      "category": "HOST",
+      "channel": "MAX",
+      "crm": {
+        "ambiguity_count": 0,
+        "created_at": null,
+        "entity_id": null,
+        "entity_type": null,
+        "event_type": null,
+        "found": false,
+        "responsible_user_id": null,
+        "responsible_user_name": null,
+        "updated_at": null
+      },
+      "crm_created_at": null,
+      "crm_found": false,
+      "crm_required": true,
+      "crm_responsible": null,
+      "deadline_msk_ts": 1789765199,
+      "event_date": "2026-10-31",
+      "fields": {
+        "category": "HOST",
+        "email": "",
+        "event_date": "2026-10-31",
+        "event_date_raw": "31.10",
+        "event_type": "",
+        "guests_count": null,
+        "guests_max": 35,
+        "guests_min": 30,
+        "guests_raw": "30-35п.",
+        "name": "Юрий",
+        "phone_digits": "79255071006",
+        "phone_raw": "89255071006",
+        "source": "Заявки хост",
+        "telegram_username": ""
+      },
+      "first_seen_at": "2026-09-18T16:19:39+03:00",
+      "first_seen_ts": 1789737579,
+      "guests": null,
+      "guests_max": 35,
+      "guests_min": 30,
+      "guests_raw": "30-35п.",
+      "id": "35882f050206b145",
+      "identifier": {
+        "type": "phone",
+        "value": "79255071006"
+      },
+      "last_seen_at": "2026-09-18T16:19:39+03:00",
+      "last_seen_ts": 1789737579,
+      "manager_reaction": null,
+      "max": {
+        "chat_id": -71704692523093,
+        "message_ids": [
+          "mid.ffffbec8f345ffab01a0b4ac32f13b4d"
+        ],
+        "sender_name": "Елена",
+        "sender_user_id": 121513620,
+        "sender_username": null
+      },
+      "message_id": "mid.ffffbec8f345ffab01a0b4ac32f13b4d",
+      "name": "Юрий",
+      "phone": "89255071006",
+      "received_at": "2026-09-18T16:19:39+03:00",
+      "sender_name": "Елена",
+      "sender_user_id": 121513620,
+      "source": "Заявки хост",
+      "status": "PENDING",
       "username": "",
       "violations": []
     }
