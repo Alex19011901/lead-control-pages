@@ -202,18 +202,30 @@ def apply_callibri_phone_match(item: dict[str, Any], lead: dict[str, Any], calls
     if not lead_time or not phone_hash:
         item["callibri_match_status"] = "no_phone_or_time"
         return
+    phone_calls = calls_by_phone.get(phone_hash, [])
+    if not phone_calls:
+        item["callibri_match_status"] = "no_callibri_phone_match"
+        return
     start = lead_time - timedelta(minutes=HOSTESS_CALL_MATCH_BEFORE_MINUTES)
     end = lead_time + timedelta(minutes=HOSTESS_CALL_MATCH_AFTER_MINUTES)
     candidates = []
-    for call in calls_by_phone.get(phone_hash, []):
+    nearest_delta_seconds: int | None = None
+    for call in phone_calls:
         call_time = parse_datetime(call.get("started_at"))
         if call_time and start <= call_time <= end:
             candidates.append((call_time, call))
+        if call_time:
+            delta = int((lead_time - call_time).total_seconds())
+            if nearest_delta_seconds is None or abs(delta) < abs(nearest_delta_seconds):
+                nearest_delta_seconds = delta
     if not candidates:
-        item["callibri_match_status"] = "no_callibri_call"
+        item["callibri_match_status"] = "nearest_call_outside_window"
+        if nearest_delta_seconds is not None:
+            item["callibri_nearest_delta_seconds"] = nearest_delta_seconds
         return
     if len(candidates) > 1:
         item["callibri_match_status"] = "ambiguous_callibri_calls"
+        item["callibri_candidate_count"] = len(candidates)
         return
     call_time, call = candidates[0]
     item["has_callibri"] = True

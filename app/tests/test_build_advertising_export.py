@@ -253,8 +253,108 @@ class AdvertisingExportTests(unittest.TestCase):
 
         item = result["leads"][0]
         self.assertEqual(item["callibri_match_status"], "ambiguous_callibri_calls")
+        self.assertEqual(item["callibri_candidate_count"], 2)
         self.assertEqual(item["campaign_id"], "")
         self.assertEqual(item["advertising_id_source"], "")
+
+    def test_hostess_lead_reports_phone_missing_from_callibri(self) -> None:
+        payload = {
+            "schema_version": 1,
+            "leads": [
+                {
+                    "id": "host-call",
+                    "first_seen_at": "2026-09-17T14:11:49+03:00",
+                    "first_seen_ts": 1790000000,
+                    "source": "Заявки хост",
+                    "identifier": {"type": "phone", "value": "79054025777"},
+                    "fields": {"phone_raw": "89054025777"},
+                },
+            ],
+        }
+        other_phone_hash = hashlib.sha256("79160000000".encode()).hexdigest()
+        callibri = {
+            "schema_version": 1,
+            "status": "ok",
+            "calls": [
+                {"started_at": "2026-09-17T14:05:00+03:00", "phone_sha256": other_phone_hash, "campaign_id": "1"},
+            ],
+        }
+        with tempfile.TemporaryDirectory() as tmp:
+            source = Path(tmp) / "leads.json"
+            calls = Path(tmp) / "callibri_calls.json"
+            output = Path(tmp) / "advertising_leads.json"
+            source.write_text(json.dumps(payload, ensure_ascii=False), encoding="utf-8")
+            calls.write_text(json.dumps(callibri, ensure_ascii=False), encoding="utf-8")
+            subprocess.run(
+                [
+                    sys.executable,
+                    str(SCRIPT),
+                    "--input",
+                    str(source),
+                    "--output",
+                    str(output),
+                    "--start-date",
+                    "2026-09-05",
+                    "--callibri-calls",
+                    str(calls),
+                ],
+                check=True,
+            )
+            result = json.loads(output.read_text(encoding="utf-8"))
+
+        self.assertEqual(result["leads"][0]["callibri_match_status"], "no_callibri_phone_match")
+
+    def test_hostess_lead_reports_nearest_callibri_call_outside_window(self) -> None:
+        payload = {
+            "schema_version": 1,
+            "leads": [
+                {
+                    "id": "host-call",
+                    "first_seen_at": "2026-09-17T14:11:49+03:00",
+                    "first_seen_ts": 1790000000,
+                    "source": "Заявки хост",
+                    "identifier": {"type": "phone", "value": "79054025777"},
+                    "fields": {"phone_raw": "89054025777"},
+                },
+            ],
+        }
+        callibri = {
+            "schema_version": 1,
+            "status": "ok",
+            "calls": [
+                {
+                    "started_at": "2026-09-17T01:00:00+03:00",
+                    "phone_sha256": hashlib.sha256("79054025777".encode()).hexdigest(),
+                    "campaign_id": "1",
+                },
+            ],
+        }
+        with tempfile.TemporaryDirectory() as tmp:
+            source = Path(tmp) / "leads.json"
+            calls = Path(tmp) / "callibri_calls.json"
+            output = Path(tmp) / "advertising_leads.json"
+            source.write_text(json.dumps(payload, ensure_ascii=False), encoding="utf-8")
+            calls.write_text(json.dumps(callibri, ensure_ascii=False), encoding="utf-8")
+            subprocess.run(
+                [
+                    sys.executable,
+                    str(SCRIPT),
+                    "--input",
+                    str(source),
+                    "--output",
+                    str(output),
+                    "--start-date",
+                    "2026-09-05",
+                    "--callibri-calls",
+                    str(calls),
+                ],
+                check=True,
+            )
+            result = json.loads(output.read_text(encoding="utf-8"))
+
+        item = result["leads"][0]
+        self.assertEqual(item["callibri_match_status"], "nearest_call_outside_window")
+        self.assertGreater(item["callibri_nearest_delta_seconds"], 12 * 3600)
 
     def test_hostess_lead_does_not_attribute_unconfirmed_callibri_tracking(self) -> None:
         payload = {
