@@ -19,18 +19,17 @@
     "ТоМесто": 1
   },
   "event_types": {
-    "unknown": 110,
+    "unknown": 109,
     "Бизнес мероприятие": 19,
     "Выпускной": 3,
     "ДР": 2,
     "Детский праздник": 5,
-    "Корпоратив": 161,
+    "Корпоратив": 162,
     "Поминки": 1,
     "Свадьба": 184,
     "Съемки": 1,
     "Съёмки": 1,
-    "Юбилей": 119,
-    "на почту она тоже запрос отправила": 1
+    "Юбилей": 120
   },
   "guest_ranges": {
     "1-20": 180,
@@ -44,9 +43,9 @@
   "latest_leads": [
     {
       "created_at": "2026-09-18T15:37:09+03:00",
-      "crm_entity_id": null,
-      "crm_entity_type": null,
-      "crm_found": false,
+      "crm_entity_id": 48713037,
+      "crm_entity_type": "lead",
+      "crm_found": true,
       "event_date": "",
       "event_type": "Корпоратив",
       "guests_count": 100,
@@ -57,16 +56,16 @@
       "manager_username": "",
       "name": "Сергей",
       "source": "Заявки хост",
-      "status": "PENDING",
+      "status": "OK",
       "violations": []
     },
     {
       "created_at": "2026-09-18T12:52:42+03:00",
-      "crm_entity_id": null,
-      "crm_entity_type": null,
-      "crm_found": false,
+      "crm_entity_id": 48713073,
+      "crm_entity_type": "lead",
+      "crm_found": true,
       "event_date": "2026-11-02",
-      "event_type": "",
+      "event_type": "Юбилей",
       "guests_count": null,
       "identifier": "7********60",
       "identifier_type": "phone",
@@ -75,16 +74,16 @@
       "manager_username": "",
       "name": "Александр",
       "source": "Заявки хост",
-      "status": "PENDING",
+      "status": "OK",
       "violations": []
     },
     {
       "created_at": "2026-09-18T12:37:54+03:00",
-      "crm_entity_id": null,
-      "crm_entity_type": null,
-      "crm_found": false,
+      "crm_entity_id": 48713219,
+      "crm_entity_type": "lead",
+      "crm_found": true,
       "event_date": "2026-12-18",
-      "event_type": "на почту она тоже запрос отправила",
+      "event_type": "Корпоратив",
       "guests_count": 100,
       "identifier": "7********15",
       "identifier_type": "phone",
@@ -93,7 +92,7 @@
       "manager_username": "",
       "name": "Екатерина",
       "source": "Заявки хост",
-      "status": "PENDING",
+      "status": "OK",
       "violations": []
     },
     {
@@ -405,7 +404,7 @@
   ],
   "needs_review": 97,
   "no_reaction": 0,
-  "ok": 425,
+  "ok": 428,
   "total_leads": 607,
-  "updated_at": "2026-09-18T15:48:25+03:00"
+  "updated_at": "2026-09-18T15:59:40+03:00"
 }
