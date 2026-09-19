@@ -1,7 +1,7 @@
 {
   "schema_version": 6,
   "start_date": "2026-09-05",
-  "lead_count": 134,
+  "lead_count": 135,
   "callibri_calls_loaded": 26,
   "leads": [
     {
@@ -2998,8 +2998,8 @@
       "has_metrika_client_id": true,
       "metrika_client_id_sha256": "37f82e7a5730c5765294940e60855fa021415d3bc94295c482f31fedcd4d4201",
       "event_type": "Корпоратив",
-      "status": "PENDING",
-      "crm_found": false,
+      "status": "OK",
+      "crm_found": true,
       "crm_status": "",
       "utm_source": "",
       "utm_medium": "",
@@ -3189,8 +3189,8 @@
       "has_metrika_client_id": true,
       "metrika_client_id_sha256": "9ffe0ba58cc2e96ce1b830bea61fe246e458ac500e5063c1acf108a7412ca31c",
       "event_type": "Свадьба",
-      "status": "PENDING",
-      "crm_found": false,
+      "status": "OK",
+      "crm_found": true,
       "crm_status": "",
       "utm_source": "yandex_direct",
       "utm_medium": "cpc",
@@ -3200,6 +3200,29 @@
       "ad_id": "16902921521",
       "has_callibri": true,
       "advertising_id_source": "callibri"
+    },
+    {
+      "lead_id": "c8caf871eb3fcd1d",
+      "created_at": "2026-09-19T11:35:46+03:00",
+      "created_ts": 1789806946,
+      "source": "Заявка с ТГ",
+      "channel": "MAX",
+      "has_yclid": false,
+      "yclid_sha256": "",
+      "has_metrika_client_id": false,
+      "metrika_client_id_sha256": "",
+      "event_type": "Корпоратив",
+      "status": "OK",
+      "crm_found": true,
+      "crm_status": "",
+      "utm_source": "",
+      "utm_medium": "",
+      "utm_campaign": "",
+      "campaign_id": "",
+      "group_id": "",
+      "ad_id": "",
+      "has_callibri": false,
+      "advertising_id_source": ""
     }
   ]
 }
