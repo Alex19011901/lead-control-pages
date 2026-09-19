@@ -42,6 +42,7 @@ class AdvertisingExportTests(unittest.TestCase):
                         "phone_raw": "+79265350168",
                         "yclid": yclid,
                         "metrika_client_id": client_id,
+                        "form_submit_timestamp": 1788612830,
                         "event_type": "Свадьба",
                         "description": (
                             "private text\n"
@@ -68,7 +69,7 @@ class AdvertisingExportTests(unittest.TestCase):
             )
             result = json.loads(output.read_text(encoding="utf-8"))
 
-        self.assertEqual(result["schema_version"], 6)
+        self.assertEqual(result["schema_version"], 7)
         self.assertEqual(result["lead_count"], 1)
         item = result["leads"][0]
         self.assertEqual(item["lead_id"], "newhash")
@@ -76,6 +77,7 @@ class AdvertisingExportTests(unittest.TestCase):
         self.assertEqual(item["yclid_sha256"], hashlib.sha256(yclid.encode()).hexdigest())
         self.assertTrue(item["has_metrika_client_id"])
         self.assertEqual(item["metrika_client_id_sha256"], hashlib.sha256(client_id.encode()).hexdigest())
+        self.assertEqual(item["form_submit_timestamp"], 1788612830)
         self.assertEqual(item["crm_status"], "Первичный контакт")
         self.assertEqual(item["campaign_id"], "707720217")
         self.assertEqual(item["group_id"], "5724131407")

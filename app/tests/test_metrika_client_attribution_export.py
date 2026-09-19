@@ -10,6 +10,7 @@ sys.path.insert(0, str(ROOT / "scripts"))
 
 from metrika_client_attribution_export import collect
 from metrika_client_attribution_export import safe_rows
+from metrika_client_attribution_export import safe_submit_events
 
 
 class MetrikaClientAttributionExportTests(unittest.TestCase):
@@ -18,6 +19,7 @@ class MetrikaClientAttributionExportTests(unittest.TestCase):
         rows = [{
             "ym:s:clientID": client_id,
             "ym:s:dateTime": "2026-09-06 12:20:00",
+            "ym:s:visitID": "visit-1",
             "ym:s:dateTimeUTC": "2026-09-06 12:20:00",
             "ym:s:visitDuration": "900",
             "ym:s:lastDirectClickOrder": "118776779",
@@ -33,6 +35,7 @@ class MetrikaClientAttributionExportTests(unittest.TestCase):
         self.assertEqual(len(result), 1)
         item = result[0]
         self.assertEqual(item["client_id_sha256"], hashlib.sha256(client_id.encode()).hexdigest())
+        self.assertEqual(item["visit_id"], "visit-1")
         self.assertEqual(item["campaign_id"], "118776779")
         self.assertEqual(item["group_id"], "5552984252")
         self.assertEqual(item["ad_id"], "16902921501")
@@ -87,6 +90,26 @@ class MetrikaClientAttributionExportTests(unittest.TestCase):
         rows = [{"ym:s:clientID": "123", "ym:s:lastDirectClickOrder": "0", "ym:s:lastDirectBannerGroup": "0", "ym:s:lastDirectClickBanner": ""}]
         self.assertEqual(safe_rows(rows), [])
 
+    def test_safe_submit_events_keep_only_tilda_submitted_without_raw_url(self) -> None:
+        result = safe_submit_events([
+            {
+                "ym:pv:visitID": "200",
+                "ym:pv:clientID": "1234567890",
+                "ym:pv:dateTime": "2026-09-18 12:06:05",
+                "ym:pv:URL": "https://moscowbanket.ru/tilda/form123/submitted?phone=secret",
+            },
+            {
+                "ym:pv:visitID": "201",
+                "ym:pv:clientID": "1234567890",
+                "ym:pv:dateTime": "2026-09-18 12:06:10",
+                "ym:pv:URL": "https://moscowbanket.ru/ordinary",
+            },
+        ])
+        self.assertEqual(len(result), 1)
+        self.assertEqual(result[0]["visit_id"], "200")
+        self.assertEqual(result[0]["event_path"], "/tilda/form123/submitted")
+        self.assertNotIn("secret", str(result))
+
     def test_collect_records_requested_attribution(self) -> None:
         class FakeClient:
             counter_id = 52597240
@@ -94,34 +117,49 @@ class MetrikaClientAttributionExportTests(unittest.TestCase):
             def __init__(self) -> None:
                 self.evaluate_attribution = ""
                 self.export_attribution = ""
+                self.sources: list[str] = []
+                self.fields_by_source: dict[str, tuple[str, ...]] = {}
 
             def evaluate(self, **kwargs: object) -> None:
                 self.evaluate_attribution = str(kwargs["attribution"])
-                self.fields = tuple(kwargs["fields"])  # type: ignore[arg-type]
+                source = str(kwargs["source"])
+                self.fields_by_source[source] = tuple(kwargs["fields"])  # type: ignore[arg-type]
+                self.sources.append(source)
 
             def create_export(self, **kwargs: object):
                 self.export_attribution = str(kwargs["attribution"])
+                source = str(kwargs["source"])
 
                 class Request:
-                    request_id = 7
+                    request_id = 8 if source == "hits" else 7
                     status = "processed"
                     parts = (0,)
 
                 return Request()
 
-            def download_part(self, _request_id: int, _part_number: int) -> str:
+            def download_part(self, request_id: int, _part_number: int) -> str:
+                if request_id == 8:
+                    return (
+                        "ym:pv:visitID\tym:pv:clientID\tym:pv:dateTime\tym:pv:URL\n"
+                        "visit-1\t456\t2026-09-14 13:19:00\thttps://moscowbanket.ru/tilda/form123/submitted?x=1\n"
+                    )
                 return (
-                    "ym:s:clientID\tym:s:dateTime\tym:s:automaticDirectClickOrder\n"
-                    "456\t2026-09-14 13:18:50\t709907560\n"
+                    "ym:s:visitID\tym:s:clientID\tym:s:dateTime\tym:s:automaticDirectClickOrder\n"
+                    "visit-1\t456\t2026-09-14 13:18:50\t709907560\n"
                 )
 
         client = FakeClient()
         payload = collect(client, date1="2026-09-14", date2="2026-09-14", poll_seconds=0, max_polls=0, attribution="AUTOMATIC")
         self.assertEqual(client.evaluate_attribution, "AUTOMATIC")
         self.assertEqual(client.export_attribution, "AUTOMATIC")
-        self.assertIn("ym:s:automaticDirectClickOrder", client.fields)
+        self.assertEqual(client.sources, ["visits", "hits"])
+        self.assertIn("ym:s:automaticDirectClickOrder", client.fields_by_source["visits"])
+        self.assertIn("ym:pv:visitID", client.fields_by_source["hits"])
         self.assertEqual(payload["attribution"], "AUTOMATIC")
         self.assertEqual(payload["mapped_rows"], 1)
+        self.assertEqual(payload["hits_total"], 1)
+        self.assertEqual(payload["submit_events_total"], 1)
+        self.assertEqual(payload["submit_events"][0]["visit_id"], "visit-1")
 
 
 if __name__ == "__main__":

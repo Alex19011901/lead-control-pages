@@ -7,6 +7,7 @@ import json
 import os
 import re
 import time
+import urllib.parse
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from typing import Any
@@ -85,6 +86,13 @@ AUTOMATIC_UTM_FIELDS = (
     "ym:s:automaticUTMContent",
 )
 
+HIT_FIELDS = (
+    "ym:pv:visitID",
+    "ym:pv:clientID",
+    "ym:pv:dateTime",
+    "ym:pv:URL",
+)
+
 FIELD_SETS = {
     "LAST_YANDEX_DIRECT_CLICK": {
         "fields": LAST_FIELDS,
@@ -153,6 +161,46 @@ def parse_tracking_ids(content: str, campaign: str = "") -> dict[str, str]:
     return result
 
 
+def safe_submit_path(url: str) -> str:
+    text = str(url or "").strip()
+    if not text:
+        return ""
+    try:
+        parsed = urllib.parse.urlsplit(text)
+        if parsed.scheme or parsed.netloc:
+            return parsed.path or "/"
+    except ValueError:
+        pass
+    return text.split("?", 1)[0].split("#", 1)[0]
+
+
+def is_tilda_submit(url: str) -> bool:
+    text = str(url or "").casefold()
+    return "tilda/form" in text and "submitted" in text
+
+
+def safe_submit_events(rows: list[dict[str, str]]) -> list[dict[str, str]]:
+    result: list[dict[str, str]] = []
+    for row in rows:
+        url = str(row.get("ym:pv:URL") or "")
+        if not is_tilda_submit(url):
+            continue
+        client_id = str(row.get("ym:pv:clientID") or "").strip()
+        visit_id = normalize_id(row.get("ym:pv:visitID"))
+        if not client_id or not visit_id:
+            continue
+        result.append(
+            {
+                "client_id_sha256": sha256_text(client_id),
+                "visit_id": visit_id,
+                "event_datetime": str(row.get("ym:pv:dateTime") or ""),
+                "event_path": safe_submit_path(url),
+            }
+        )
+    result.sort(key=lambda item: (item["event_datetime"], item["visit_id"]))
+    return result
+
+
 def nonempty_counts(rows: list[dict[str, str]], fields: tuple[str, ...]) -> dict[str, int]:
     return {field: sum(1 for row in rows if normalize_id(row.get(field))) for field in fields}
 
@@ -203,6 +251,7 @@ def safe_rows(rows: list[dict[str, str]], *, attribution: str = DEFAULT_ATTRIBUT
         exported.append(
             {
                 "client_id_sha256": sha256_text(client_id),
+                "visit_id": normalize_id(row.get("ym:s:visitID")),
                 "visit_datetime": str(row.get("ym:s:dateTime") or ""),
                 "visit_datetime_utc": str(row.get("ym:s:dateTimeUTC") or ""),
                 "visit_duration_seconds": duration,
@@ -225,19 +274,19 @@ def safe_rows(rows: list[dict[str, str]], *, attribution: str = DEFAULT_ATTRIBUT
     return exported
 
 
-def collect(
+def export_log(
     client: MetrikaLogsReadOnlyClient,
     *,
     date1: str,
     date2: str,
+    fields: tuple[str, ...],
+    source: str,
+    attribution: str,
     poll_seconds: float,
     max_polls: int,
-    attribution: str = DEFAULT_ATTRIBUTION,
-) -> dict[str, Any]:
-    field_set = field_set_for_attribution(attribution)
-    fields = field_set["fields"]
-    client.evaluate(date1=date1, date2=date2, fields=fields, attribution=attribution, source="visits")
-    request = client.create_export(date1=date1, date2=date2, fields=fields, attribution=attribution, source="visits")
+) -> tuple[int, list[dict[str, str]]]:
+    client.evaluate(date1=date1, date2=date2, fields=fields, attribution=attribution, source=source)
+    request = client.create_export(date1=date1, date2=date2, fields=fields, attribution=attribution, source=source)
     current = request
     for _ in range(max_polls + 1):
         if current.status == "processed":
@@ -253,15 +302,52 @@ def collect(
     rows: list[dict[str, str]] = []
     for part_number in current.parts:
         rows.extend(parse_tsv(client.download_part(current.request_id, part_number)))
+    return int(current.request_id), rows
+
+
+def collect(
+    client: MetrikaLogsReadOnlyClient,
+    *,
+    date1: str,
+    date2: str,
+    poll_seconds: float,
+    max_polls: int,
+    attribution: str = DEFAULT_ATTRIBUTION,
+) -> dict[str, Any]:
+    field_set = field_set_for_attribution(attribution)
+    fields = field_set["fields"]
+    visit_request_id, rows = export_log(
+        client,
+        date1=date1,
+        date2=date2,
+        fields=fields,
+        source="visits",
+        attribution=attribution,
+        poll_seconds=poll_seconds,
+        max_polls=max_polls,
+    )
+    hit_request_id, hit_rows = export_log(
+        client,
+        date1=date1,
+        date2=date2,
+        fields=HIT_FIELDS,
+        source="hits",
+        attribution=attribution,
+        poll_seconds=poll_seconds,
+        max_polls=max_polls,
+    )
     mapped = safe_rows(rows, attribution=attribution)
+    submit_events = safe_submit_events(hit_rows)
     return {
-        "schema_version": 3,
+        "schema_version": 4,
         "counter_id": client.counter_id,
         "date1": date1,
         "date2": date2,
         "attribution": attribution,
-        "request_id": current.request_id,
+        "request_id": visit_request_id,
+        "hit_request_id": hit_request_id,
         "rows_total": len(rows),
+        "hits_total": len(hit_rows),
         "rows_with_client_id": sum(1 for row in rows if str(row.get("ym:s:clientID") or "").strip()),
         "direct_id_nonempty_counts": nonempty_counts(rows, field_set["direct_id_fields"]),
         "utm_nonempty_counts": nonempty_counts(rows, field_set["utm_fields"]),
@@ -271,6 +357,8 @@ def collect(
         "mapped_from_direct_fields": sum(1 for item in mapped if item.get("id_source") == "direct_fields"),
         "mapped_from_utm_ids": sum(1 for item in mapped if item.get("id_source") == "utm_ids"),
         "mapped_from_utm_campaign_label": sum(1 for item in mapped if item.get("id_source") == "utm_campaign_label"),
+        "submit_events": submit_events,
+        "submit_events_total": len(submit_events),
         "rows": mapped,
     }
 

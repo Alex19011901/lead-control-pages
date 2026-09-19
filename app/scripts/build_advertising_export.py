@@ -290,6 +290,17 @@ def metrika_client_id(fields: dict[str, Any]) -> str:
     )
 
 
+def form_submit_timestamp(fields: dict[str, Any]) -> int | None:
+    value = fields.get("form_submit_timestamp")
+    if value is None:
+        description = str(fields.get("description") or "")
+        value = first_text_value(description, ("form_submit_timestamp",))
+    try:
+        return int(float(str(value).strip()))
+    except (TypeError, ValueError):
+        return None
+
+
 def safe_lead(lead: dict[str, Any], calls_by_phone: dict[str, list[dict[str, Any]]] | None = None) -> dict[str, Any]:
     fields = lead.get("fields") or {}
     yclid = str(fields.get("yclid") or lead.get("yclid") or "").strip()
@@ -304,6 +315,7 @@ def safe_lead(lead: dict[str, Any], calls_by_phone: dict[str, list[dict[str, Any
         "yclid_sha256": hash_value(yclid),
         "has_metrika_client_id": bool(client_id),
         "metrika_client_id_sha256": hash_value(client_id),
+        "form_submit_timestamp": form_submit_timestamp(fields),
         "event_type": str(fields.get("event_type") or lead.get("event_type") or ""),
         "status": str(lead.get("status") or ""),
         "crm_found": bool(lead.get("crm_found") or (lead.get("crm") or {}).get("found")),
@@ -336,7 +348,7 @@ def main() -> int:
 
     exported.sort(key=lambda item: (item.get("created_ts") or 0, item.get("lead_id") or ""))
     output = {
-        "schema_version": 6,
+        "schema_version": 7,
         "start_date": args.start_date,
         "lead_count": len(exported),
         "callibri_calls_loaded": sum(len(items) for items in calls_by_phone.values()),
