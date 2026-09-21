@@ -82,8 +82,18 @@ class ClosedNotRealizedTests(unittest.TestCase):
         )
         self.assertEqual(leads[0]["closed_not_realized"]["last_comment_at"], _ts(16, 9))
         self.assertNotIn("closed_not_realized", leads[1])
+        self.assertEqual(leads[0]["crm_outcome"]["result"], "LOST")
+        self.assertEqual(leads[0]["crm_outcome"]["loss_reason_name"], "Не устроила цена")
+        self.assertEqual(leads[1]["crm_outcome"]["result"], "LOST")
+        self.assertEqual(leads[1]["crm_outcome"]["loss_reason_name"], "Не устроила цена")
         reason_calls = [call for call in client.calls if call[1] == (("with", "loss_reason"),)]
-        self.assertEqual(reason_calls, [(101, (("with", "loss_reason"),))])
+        self.assertEqual(
+            reason_calls,
+            [
+                (101, (("with", "loss_reason"),)),
+                (102, (("with", "loss_reason"),)),
+            ],
+        )
         self.assertEqual(len(client.request_calls), 1)
 
     def test_non_closed_status_is_ignored(self):
@@ -97,6 +107,8 @@ class ClosedNotRealizedTests(unittest.TestCase):
         apply_closed_not_realized_history(leads, client, now_ts=_ts(16, 18))
 
         self.assertNotIn("closed_not_realized", leads[0])
+        self.assertEqual(leads[0]["crm_outcome"]["result"], "SUCCESS")
+        self.assertEqual(leads[0]["crm_outcome"]["status_name"], "Успешно реализовано")
         self.assertEqual(client.calls, [])
         self.assertEqual(client.request_calls, [])
 
