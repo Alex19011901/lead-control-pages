@@ -1,0 +1,258 @@
+from __future__ import annotations
+
+import sys
+import unittest
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / "src"))
+
+from lead_control.explicit_client_name import apply_explicit_client_names
+from lead_control.lead_enrichment import enrich_leads_from_events
+
+
+class LeadEnrichmentTests(unittest.TestCase):
+    def test_street_name_is_taken_from_same_line_after_phone(self) -> None:
+        message_id = "mid.test-street-name"
+        leads = [
+            {
+                "channel": "MAX",
+                "source": "С улицы",
+                "identifier": {"type": "phone", "value": "79852815965"},
+                "fields": {
+                    "name": "Ждут инфу",
+                    "phone_digits": "79852815965",
+                    "phone_raw": "89852815965",
+                },
+                "max": {"message_ids": [message_id]},
+            }
+        ]
+        events = [
+            {
+                "type": "max_message_created",
+                "message_id": message_id,
+                "text": (
+                    "Гости пришли на просмотр, зал показал 2.10.26, "
+                    "70чел.тел.89852815965 София\nЖдут инфу."
+                ),
+            }
+        ]
+
+        enrich_leads_from_events(leads, events)
+
+        self.assertEqual(leads[0]["fields"]["name"], "София")
+        self.assertEqual(leads[0]["name"], "София")
+        self.assertEqual(leads[0]["name_source"], "MESSAGE")
+
+    def test_valid_existing_name_is_not_overwritten(self) -> None:
+        leads = [
+            {
+                "channel": "MAX",
+                "source": "С улицы",
+                "identifier": {"type": "phone", "value": "79850000000"},
+                "fields": {"name": "Анна"},
+                "max": {"message_ids": ["mid.1"]},
+            }
+        ]
+        events = [
+            {
+                "type": "max_message_created",
+                "message_id": "mid.1",
+                "text": "70чел. тел. 89850000000 София",
+            }
+        ]
+
+        enrich_leads_from_events(leads, events)
+
+        self.assertEqual(leads[0]["fields"]["name"], "Анна")
+        self.assertNotIn("name_source", leads[0])
+
+    def test_event_type_is_inferred_from_original_max_text(self) -> None:
+        message_id = "mid.ffffbec8f345ffab01a029858d50628d"
+        leads = [
+            {
+                "channel": "MAX",
+                "source": "Заявка с ТГ",
+                "message_id": message_id,
+                "fields": {
+                    "telegram_username": "gelk_a",
+                    "guests_count": 25,
+                    "event_type": "",
+                },
+                "max": {"message_ids": [message_id]},
+            }
+        ]
+        events = [
+            {
+                "type": "max_message_created",
+                "message_id": message_id,
+                "text": (
+                    "ЗАЯВКА\n\n"
+                    "Добрый день! Планируем свадьбу на 15.05.2027, "
+                    "количество персон 25 человек\n"
+                    "Интересует полная информация по условиям\n\n"
+                    "@gelk_a"
+                ),
+            }
+        ]
+
+        enrich_leads_from_events(leads, events)
+
+        self.assertEqual(leads[0]["fields"]["event_type"], "Свадьба")
+        self.assertEqual(leads[0]["event_type"], "Свадьба")
+        self.assertEqual(leads[0]["event_type_source"], "MESSAGE")
+
+    def test_existing_event_type_is_not_overwritten_by_message_inference(self) -> None:
+        leads = [
+            {
+                "channel": "MAX",
+                "source": "Заявки хост",
+                "event_type": "Корпоратив",
+                "fields": {"event_type": "Корпоратив"},
+                "max": {"message_ids": ["mid.2"]},
+            }
+        ]
+        events = [
+            {
+                "type": "max_message_created",
+                "message_id": "mid.2",
+                "text": "В тексте случайно упомянута свадьба, но тип уже определён",
+            }
+        ]
+
+        enrich_leads_from_events(leads, events)
+
+        self.assertEqual(leads[0]["event_type"], "Корпоратив")
+        self.assertEqual(leads[0]["fields"]["event_type"], "Корпоратив")
+        self.assertNotIn("event_type_source", leads[0])
+
+    def test_eto_name_overrides_greeting_guess(self) -> None:
+        message_id = "mid.test-elena"
+        leads = [
+            {
+                "channel": "MAX",
+                "source": "Заявка с ТГ",
+                "message_id": message_id,
+                "name": "Добрый",
+                "fields": {"name": "Добрый", "phone_digits": "79067177838"},
+                "identifier": {"type": "phone", "value": "79067177838"},
+                "max": {"message_ids": [message_id]},
+            }
+        ]
+        events = [
+            {
+                "type": "max_message_created",
+                "message_id": message_id,
+                "timestamp": 1789473374804,
+                "text": (
+                    "ЗАЯВКА\n\nДобрый день!\n"
+                    "Это Елена, клуб Мафия Драйв и компания КорпИгра.\n"
+                    "Есть запрос: 23 или 24 декабря, 200-220 человек.\n"
+                    "+79067177838\n@elenamalanyina"
+                ),
+            }
+        ]
+
+        enrich_leads_from_events(leads, events)
+        apply_explicit_client_names(leads, events)
+
+        self.assertEqual(leads[0]["fields"]["name"], "Елена")
+        self.assertEqual(leads[0]["name"], "Елена")
+        self.assertEqual(leads[0]["name_source"], "MESSAGE_EXPLICIT")
+
+    def test_common_self_introduction_forms_are_preferred(self) -> None:
+        examples = (
+            ("Меня зовут Юлия.", "Юлия"),
+            ("Я Мария, организатор мероприятия.", "Мария"),
+            ("С вами Анна. Ищем площадку.", "Анна"),
+        )
+        for index, (intro, expected) in enumerate(examples):
+            with self.subTest(intro=intro):
+                message_id = f"mid.intro-{index}"
+                leads = [
+                    {
+                        "channel": "MAX",
+                        "source": "Заявка с ТГ",
+                        "message_id": message_id,
+                        "name": "Добрый",
+                        "fields": {"name": "Добрый"},
+                        "max": {"message_ids": [message_id]},
+                    }
+                ]
+                events = [
+                    {
+                        "type": "max_message_created",
+                        "message_id": message_id,
+                        "timestamp": 1789473374804,
+                        "text": f"ЗАЯВКА\nДобрый день! {intro}\nНужен зал на 50 гостей.",
+                    }
+                ]
+                enrich_leads_from_events(leads, events)
+                apply_explicit_client_names(leads, events)
+                self.assertEqual(leads[0]["name"], expected)
+
+    def test_latin_name_line_after_request_header_is_explicit(self) -> None:
+        message_id = "mid.test-anastasia"
+        leads = [
+            {
+                "channel": "MAX",
+                "source": "Заявки хост",
+                "message_id": message_id,
+                "name": "",
+                "fields": {"name": "", "phone_digits": "79150362370"},
+                "identifier": {"type": "phone", "value": "79150362370"},
+                "max": {"message_ids": [message_id]},
+            }
+        ]
+        events = [
+            {
+                "type": "max_message_created",
+                "message_id": message_id,
+                "timestamp": 1789488506881,
+                "text": (
+                    "Заявка:\n"
+                    "Anastasia Ivanova:\n"
+                    "Свободен ли ресторан 14 или 15 декабря? 150 человек фуршет или банкет. "
+                    "Пока выбираем формат, не могли бы сориентировать по условиям, оплата по безналку\n\n"
+                    "+79150362370"
+                ),
+            }
+        ]
+
+        apply_explicit_client_names(leads, events)
+
+        self.assertEqual(leads[0]["fields"]["name"], "Anastasia Ivanova")
+        self.assertEqual(leads[0]["name"], "Anastasia Ivanova")
+        self.assertEqual(leads[0]["name_source"], "MESSAGE_EXPLICIT")
+
+    def test_time_window_is_removed_from_structured_client_name(self) -> None:
+        message_id = "mid.test-sofia-time"
+        leads = [
+            {
+                "channel": "MAX",
+                "source": "Заявки хост",
+                "message_id": message_id,
+                "name": "с 12 до 15. София",
+                "fields": {"name": "с 12 до 15. София", "phone_digits": "79097762056"},
+                "identifier": {"type": "phone", "value": "79097762056"},
+                "max": {"message_ids": [message_id]},
+            }
+        ]
+        events = [
+            {
+                "type": "max_message_created",
+                "message_id": message_id,
+                "timestamp": 1789492776383,
+                "text": "ЗАЯВКА. 24.09. 10-15п. с 12 до 15. София. 89097762056",
+            }
+        ]
+
+        apply_explicit_client_names(leads, events)
+
+        self.assertEqual(leads[0]["fields"]["name"], "София")
+        self.assertEqual(leads[0]["name"], "София")
+        self.assertEqual(leads[0]["name_source"], "MESSAGE_NAME_CLEANUP")
+
+
+if __name__ == "__main__":
+    unittest.main()

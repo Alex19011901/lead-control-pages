@@ -1,0 +1,52 @@
+name: Telegram Webhook Safe Reset
+
+# rerun: 2026-09-21
+on:
+  push:
+    branches:
+      - "diagnostic/telegram-webhook-20260920"
+    paths:
+      - ".github/workflows/telegram-webhook-readonly.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  reset:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Delete webhook without dropping pending updates and verify
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+        run: |
+          python - <<'PY'
+          import json
+          import os
+          import urllib.request
+
+          token = os.environ["TELEGRAM_BOT_TOKEN"].strip()
+          base = f"https://api.telegram.org/bot{token}"
+
+          req = urllib.request.Request(
+              base + "/deleteWebhook",
+              data=json.dumps({"drop_pending_updates": False}).encode("utf-8"),
+              headers={"Content-Type": "application/json"},
+              method="POST",
+          )
+          with urllib.request.urlopen(req, timeout=20) as r:
+              deleted = json.load(r)
+
+          with urllib.request.urlopen(base + "/getWebhookInfo", timeout=20) as r:
+              info = json.load(r)
+
+          result = info.get("result") or {}
+          safe = {
+              "delete_ok": bool(deleted.get("ok")),
+              "delete_result": bool(deleted.get("result")),
+              "webhook_set_after": bool(str(result.get("url") or "").strip()),
+              "pending_update_count_after": result.get("pending_update_count"),
+          }
+          print(json.dumps(safe, ensure_ascii=False, sort_keys=True))
+          if not safe["delete_ok"] or safe["webhook_set_after"]:
+              raise SystemExit("Webhook reset verification failed")
+          PY

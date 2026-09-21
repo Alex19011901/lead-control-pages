@@ -1,0 +1,135 @@
+name: Lead Control Public Runner
+# manual-refresh: closed-not-realized-last-comment-20260916
+on:
+  schedule:
+    - cron: "50 6 * * *"
+  workflow_dispatch:
+  push:
+    paths:
+      - ".github/workflows/lead-control-public.yml"
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: lead-control-production
+  cancel-in-progress: false
+
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout public repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Test Lead Control parsers and advertising export
+        working-directory: app
+        run: PYTHONPATH=. python -m unittest tests.test_tilda_parser tests.test_build_advertising_export tests.test_metrika_client_attribution_export tests.test_max_forwarded_wedwed tests.test_wedwed_enrichment tests.test_phone_deduplication tests.test_daily_lead_regressions tests.test_daily_duplicate_policy tests.test_lead_enrichment tests.test_max_explicit_client_name tests.test_linked_contact_followup tests.test_closed_not_realized tests.test_closed_not_realized_widget -v
+
+      - name: Install OCR
+        run: |
+          # Chrome is preinstalled and its APT source is unrelated to Lead Control OCR.
+          # Disable that third-party source to prevent transient index hash mismatches.
+          if [ -f /etc/apt/sources.list.d/google-chrome.list ]; then
+            sudo mv /etc/apt/sources.list.d/google-chrome.list /etc/apt/sources.list.d/google-chrome.list.disabled
+          fi
+          if [ -f /etc/apt/sources.list.d/google-chrome.sources ]; then
+            sudo mv /etc/apt/sources.list.d/google-chrome.sources /etc/apt/sources.list.d/google-chrome.sources.disabled
+          fi
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq tesseract-ocr tesseract-ocr-rus
+
+      - name: Collect Telegram MAX and amoCRM
+        working-directory: app
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          MAX_BOT_TOKEN: ${{ secrets.MAX_BOT_TOKEN }}
+          AMOCRM_TOKEN: ${{ secrets.AMOCRM_TOKEN }}
+          AMOCRM_DOMAIN: https://alex1901yaru.amocrm.ru
+          TELEGRAM_CHAT_ID: "-1001645768111"
+          MAX_CHAT_ID: "-71704692523093"
+          LEAD_CONTROL_USE_DATA_BRANCH: "0"
+          LEAD_CONTROL_DATA_DIR: ../runtime-data
+          LEAD_CONTROL_FAST_REFRESH: "1"
+        run: PYTHONPATH=src python -m lead_control.main
+
+      - name: Rebuild dashboard
+        env:
+          PUBLIC_REFRESH_TOKEN: ${{ secrets.PUBLIC_REFRESH_TOKEN }}
+          CALLIBRI_CALLS_URL: ${{ secrets.CALLIBRI_CALLS_URL || secrets.CALIBRI_CALLS_URL }}
+          CALLIBRI_TOKEN: ${{ secrets.CALLIBRI_TOKEN || secrets.CALIBRI_TOKEN }}
+          CALLIBRI_AUTH_HEADER: ${{ secrets.CALLIBRI_AUTH_HEADER || secrets.CALIBRI_AUTH_HEADER }}
+          CALLIBRI_AUTH_VALUE: ${{ secrets.CALLIBRI_AUTH_VALUE || secrets.CALIBRI_AUTH_VALUE }}
+          CALLIBRI_API_BASE_URL: ${{ secrets.CALLIBRI_API_BASE_URL || secrets.CALIBRI_API_BASE_URL }}
+          CALLIBRI_API_AUTH_QUERY: ${{ secrets.CALLIBRI_API_AUTH_QUERY || secrets.CALIBRI_API_AUTH_QUERY }}
+          CALLIBRI_API_EMAIL: ${{ secrets.CALLIBRI_API_EMAIL || secrets.CALIBRI_API_EMAIL }}
+          CALLIBRI_API_TOKEN: ${{ secrets.CALLIBRI_API_TOKEN || secrets.CALIBRI_API_TOKEN }}
+          CALLIBRI_EMAIL_PARAM: ${{ secrets.CALLIBRI_EMAIL_PARAM || secrets.CALIBRI_EMAIL_PARAM }}
+          CALLIBRI_TOKEN_PARAM: ${{ secrets.CALLIBRI_TOKEN_PARAM || secrets.CALIBRI_TOKEN_PARAM }}
+          CALLIBRI_SITE_ID: ${{ secrets.CALLIBRI_SITE_ID || secrets.CALIBRI_SITE_ID }}
+          CALLIBRI_SITE_DOMAIN: ${{ secrets.CALLIBRI_SITE_DOMAIN || secrets.CALIBRI_SITE_DOMAIN }}
+          CALLIBRI_SITE_NAME: ${{ secrets.CALLIBRI_SITE_NAME || secrets.CALIBRI_SITE_NAME }}
+        run: |
+          python app/scripts/build_dashboard_snapshot.py --input runtime-data/leads.json --output runtime-data/dashboard_daily.json
+          python app/scripts/exclude_dashboard_duplicate_stats.py --leads runtime-data/leads.json --snapshot runtime-data/dashboard_daily.json
+          python app/scripts/build_dashboard_view.py --input runtime-data/dashboard_daily.json --output runtime-data/dashboard_view.json
+          python app/scripts/apply_dashboard_crm_guest_priority.py --leads runtime-data/leads.json --view runtime-data/dashboard_view.json
+          python app/scripts/apply_dashboard_mail_source.py --view runtime-data/dashboard_view.json
+          python app/scripts/augment_dashboard_feedback.py --leads runtime-data/leads.json --view runtime-data/dashboard_view.json
+          python app/scripts/import_callibri_calls.py --output runtime-data/callibri_calls.json --date-from 2026-09-05
+          python app/scripts/build_advertising_export.py --input runtime-data/leads.json --output runtime-data/advertising_leads.json --start-date 2026-09-05 --callibri-calls runtime-data/callibri_calls.json
+          mkdir -p public-site
+          python app/scripts/build_github_pages_mirror.py --input app/dashboard/pageshare/index.html --output public-site/index.html
+          python app/scripts/inject_closed_not_realized_widget.py --path public-site/index.html
+          python app/scripts/apply_dashboard_duplicate_badge.py --path public-site/index.html
+          python - <<'PY'
+          import os
+          from pathlib import Path
+
+          output = Path("public-site/index.html")
+          token = os.environ.get("PUBLIC_REFRESH_TOKEN", "").strip()
+          if not token:
+              raise SystemExit("PUBLIC_REFRESH_TOKEN is not configured")
+          html = output.read_text(encoding="utf-8")
+          placeholder = "__PUBLIC_REFRESH_TOKEN__"
+          if placeholder not in html:
+              raise SystemExit("PUBLIC_REFRESH_TOKEN placeholder was not found")
+          output.write_text(html.replace(placeholder, token), encoding="utf-8")
+          PY
+          cp runtime-data/dashboard_view.json dashboard_view.json
+          cp dashboard_view.json public-site/dashboard_view.json
+          cp runtime-data/advertising_leads.json public-site/advertising_leads.json
+
+      - name: Save refreshed data
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add runtime-data dashboard_view.json
+          if git diff --cached --quiet; then
+            echo "No changes"
+          else
+            git commit -m "Refresh Lead Control data"
+            git pull --rebase --autostash origin main
+            git push origin main
+          fi
+
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: public-site
+
+      - name: Deploy Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

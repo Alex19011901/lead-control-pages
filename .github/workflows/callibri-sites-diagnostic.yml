@@ -1,0 +1,58 @@
+name: Callibri Sites Diagnostic
+
+on:
+  workflow_dispatch:
+    inputs:
+      date_from:
+        description: "Start date for Callibri search"
+        required: false
+        default: "2026-09-17"
+      date_to:
+        description: "End date for Callibri search"
+        required: false
+        default: "2026-09-20"
+      target:
+        description: "Which hostess leads to search"
+        required: false
+        default: "late"
+        type: choice
+        options:
+          - late
+          - all-unmatched
+
+permissions:
+  contents: read
+
+jobs:
+  diagnose:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout public repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Diagnose Callibri sites
+        working-directory: app
+        env:
+          CALLIBRI_API_BASE_URL: ${{ secrets.CALLIBRI_API_BASE_URL || secrets.CALIBRI_API_BASE_URL }}
+          CALLIBRI_API_AUTH_QUERY: ${{ secrets.CALLIBRI_API_AUTH_QUERY || secrets.CALIBRI_API_AUTH_QUERY }}
+          CALLIBRI_API_EMAIL: ${{ secrets.CALLIBRI_API_EMAIL || secrets.CALIBRI_API_EMAIL }}
+          CALLIBRI_API_TOKEN: ${{ secrets.CALLIBRI_API_TOKEN || secrets.CALIBRI_API_TOKEN }}
+          CALLIBRI_EMAIL_PARAM: ${{ secrets.CALLIBRI_EMAIL_PARAM || secrets.CALIBRI_EMAIL_PARAM }}
+          CALLIBRI_TOKEN_PARAM: ${{ secrets.CALLIBRI_TOKEN_PARAM || secrets.CALIBRI_TOKEN_PARAM }}
+        run: |
+          python scripts/diagnose_callibri_sites.py \
+            --date-from "${{ inputs.date_from }}" \
+            --date-to "${{ inputs.date_to }}" \
+            --target "${{ inputs.target }}" \
+            --output ../runtime-data/callibri_sites_diagnostic.json
+
+      - name: Upload sanitized diagnostic artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: callibri-sites-diagnostic
+          path: runtime-data/callibri_sites_diagnostic.json
