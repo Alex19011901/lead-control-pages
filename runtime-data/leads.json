@@ -48959,6 +48959,14 @@
     {
       "category": "HOST",
       "channel": "MAX",
+      "closed_not_realized": {
+        "closed_at": 1789979347,
+        "crm_lead_id": 48586655,
+        "last_comment": "",
+        "last_comment_at": null,
+        "loss_reason_id": 24466294,
+        "loss_reason_name": "Нет обратной связи"
+      },
       "crm": {
         "ambiguity_count": 0,
         "created_at": 1789460440,
@@ -48975,16 +48983,15 @@
       "crm_created_at": 1789460440,
       "crm_feedback": {
         "crm_lead_id": 48586655,
-        "deadline_at": 1789765200,
-        "excluded": false,
+        "excluded": true,
         "first_activity_at": null,
         "lead_created_at": 1789460440,
         "pipeline_id": 10081590,
         "responsible_user_id": 13009530,
         "rule_version": 6,
-        "state": "NO_FEEDBACK",
-        "status_id": 79927038,
-        "status_name": "Выслано предложение"
+        "state": "EXCLUDED",
+        "status_id": 143,
+        "status_name": "Закрыто и не реализовано"
       },
       "crm_found": true,
       "crm_required": true,
@@ -49066,14 +49073,14 @@
         "crm_lead_id": 48586505,
         "deadline_at": 1789765200,
         "excluded": false,
-        "first_activity_at": null,
+        "first_activity_at": 1789979071,
         "lead_created_at": 1789460183,
         "pipeline_id": 10081590,
         "responsible_user_id": 13009530,
         "rule_version": 6,
-        "state": "NO_FEEDBACK",
-        "status_id": 79927038,
-        "status_name": "Выслано предложение"
+        "state": "CLEAR",
+        "status_id": 79927042,
+        "status_name": "Принимают решение"
       },
       "crm_found": true,
       "crm_required": true,
@@ -50115,6 +50122,14 @@
     {
       "category": "HOST",
       "channel": "MAX",
+      "closed_not_realized": {
+        "closed_at": 1789978949,
+        "crm_lead_id": 48617353,
+        "last_comment": "связаться",
+        "last_comment_at": 1789529903,
+        "loss_reason_id": 21779746,
+        "loss_reason_name": "Выбрали других"
+      },
       "crm": {
         "ambiguity_count": 0,
         "created_at": 1789529903,
@@ -50131,16 +50146,15 @@
       "crm_created_at": 1789529903,
       "crm_feedback": {
         "crm_lead_id": 48617353,
-        "deadline_at": 1789851600,
-        "excluded": false,
+        "excluded": true,
         "first_activity_at": null,
         "lead_created_at": 1789529903,
         "pipeline_id": 10081590,
         "responsible_user_id": 12982830,
         "rule_version": 6,
-        "state": "NO_FEEDBACK",
-        "status_id": 79927034,
-        "status_name": "Первичный контакт"
+        "state": "EXCLUDED",
+        "status_id": 143,
+        "status_name": "Закрыто и не реализовано"
       },
       "crm_found": true,
       "crm_required": true,
@@ -51021,12 +51035,12 @@
         "crm_lead_id": 48617161,
         "deadline_at": 1789851600,
         "excluded": false,
-        "first_activity_at": null,
+        "first_activity_at": 1789978921,
         "lead_created_at": 1789529175,
         "pipeline_id": 10081590,
         "responsible_user_id": 12982830,
         "rule_version": 6,
-        "state": "NO_FEEDBACK",
+        "state": "CLEAR",
         "status_id": 79927042,
         "status_name": "Принимают решение"
       },
@@ -51204,12 +51218,12 @@
         "crm_lead_id": 48629353,
         "deadline_at": 1789851600,
         "excluded": false,
-        "first_activity_at": null,
+        "first_activity_at": 1789979096,
         "lead_created_at": 1789546368,
         "pipeline_id": 10081590,
         "responsible_user_id": 12982830,
         "rule_version": 6,
-        "state": "NO_FEEDBACK",
+        "state": "CLEAR",
         "status_id": 79927034,
         "status_name": "Первичный контакт"
       },
