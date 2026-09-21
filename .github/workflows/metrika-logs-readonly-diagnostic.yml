@@ -1,0 +1,69 @@
+name: Metrika Logs Read-Only Diagnostic
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - ".github/workflows/metrika-logs-readonly-diagnostic.yml"
+      - "app/scripts/metrika_logs_readonly.py"
+      - "app/scripts/metrika_starturl_diagnostic.py"
+      - "app/scripts/metrika_hits_url_diagnostic.py"
+      - "app/scripts/metrika_visit_time_diagnostic.py"
+      - "app/tests/test_metrika_logs_readonly.py"
+
+permissions:
+  contents: read
+
+jobs:
+  diagnostic:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Run isolated tests
+        working-directory: app
+        run: PYTHONPATH=. python -m unittest tests.test_metrika_logs_readonly -v
+
+      - name: Run Metrika startURL read-export diagnostic
+        env:
+          YANDEX_METRIKA_READ_TOKEN: ${{ secrets.YANDEX_METRIKA_READ_TOKEN }}
+        run: >-
+          PYTHONPATH=app python app/scripts/metrika_starturl_diagnostic.py
+          --counter-id 52597240
+          --date1 2026-09-05
+          --date2 2026-09-06
+          --sample-limit 12
+
+      - name: Run Metrika hits URL read-export diagnostic
+        env:
+          YANDEX_METRIKA_READ_TOKEN: ${{ secrets.YANDEX_METRIKA_READ_TOKEN }}
+        run: >-
+          PYTHONPATH=app python app/scripts/metrika_hits_url_diagnostic.py
+          --counter-id 52597240
+          --yclid 5288069203188252671
+          --date1 2026-09-05
+          --date2 2026-09-06
+          --sample-limit 12
+
+      - name: Run Metrika visit time read-export diagnostic
+        env:
+          YANDEX_METRIKA_READ_TOKEN: ${{ secrets.YANDEX_METRIKA_READ_TOKEN }}
+        run: >-
+          PYTHONPATH=app python app/scripts/metrika_visit_time_diagnostic.py
+          --counter-id 52597240
+          --lead-timestamp-utc 1788443371
+          --date1 2026-09-05
+          --date2 2026-09-06
+          --window-minutes 120
+          --sample-limit 20
+          --utm-source yandex_direct
+          --utm-medium cpc
+          --utm-campaign Bankety_poisk_konversii
+          --utm-term=---autotargeting

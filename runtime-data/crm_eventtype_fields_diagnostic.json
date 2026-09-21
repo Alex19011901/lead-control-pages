@@ -1,0 +1,356 @@
+{
+  "leads": [
+    {
+      "id": 851997,
+      "name": "utm_content",
+      "type": "tracking_data",
+      "code": "UTM_CONTENT",
+      "enums": []
+    },
+    {
+      "id": 851999,
+      "name": "utm_medium",
+      "type": "tracking_data",
+      "code": "UTM_MEDIUM",
+      "enums": []
+    },
+    {
+      "id": 852001,
+      "name": "utm_campaign",
+      "type": "tracking_data",
+      "code": "UTM_CAMPAIGN",
+      "enums": []
+    },
+    {
+      "id": 852003,
+      "name": "utm_source",
+      "type": "tracking_data",
+      "code": "UTM_SOURCE",
+      "enums": []
+    },
+    {
+      "id": 852005,
+      "name": "utm_term",
+      "type": "tracking_data",
+      "code": "UTM_TERM",
+      "enums": []
+    },
+    {
+      "id": 852007,
+      "name": "utm_referrer",
+      "type": "tracking_data",
+      "code": "UTM_REFERRER",
+      "enums": []
+    },
+    {
+      "id": 852009,
+      "name": "roistat",
+      "type": "tracking_data",
+      "code": "ROISTAT",
+      "enums": []
+    },
+    {
+      "id": 852011,
+      "name": "referrer",
+      "type": "tracking_data",
+      "code": "REFERRER",
+      "enums": []
+    },
+    {
+      "id": 852013,
+      "name": "openstat_service",
+      "type": "tracking_data",
+      "code": "OPENSTAT_SERVICE",
+      "enums": []
+    },
+    {
+      "id": 852015,
+      "name": "openstat_campaign",
+      "type": "tracking_data",
+      "code": "OPENSTAT_CAMPAIGN",
+      "enums": []
+    },
+    {
+      "id": 852017,
+      "name": "openstat_ad",
+      "type": "tracking_data",
+      "code": "OPENSTAT_AD",
+      "enums": []
+    },
+    {
+      "id": 852019,
+      "name": "openstat_source",
+      "type": "tracking_data",
+      "code": "OPENSTAT_SOURCE",
+      "enums": []
+    },
+    {
+      "id": 852021,
+      "name": "from",
+      "type": "tracking_data",
+      "code": "FROM",
+      "enums": []
+    },
+    {
+      "id": 852023,
+      "name": "gclientid",
+      "type": "tracking_data",
+      "code": "GCLIENTID",
+      "enums": []
+    },
+    {
+      "id": 852025,
+      "name": "_ym_uid",
+      "type": "tracking_data",
+      "code": "_YM_UID",
+      "enums": []
+    },
+    {
+      "id": 852027,
+      "name": "_ym_counter",
+      "type": "tracking_data",
+      "code": "_YM_COUNTER",
+      "enums": []
+    },
+    {
+      "id": 852029,
+      "name": "gclid",
+      "type": "tracking_data",
+      "code": "GCLID",
+      "enums": []
+    },
+    {
+      "id": 852031,
+      "name": "yclid",
+      "type": "tracking_data",
+      "code": "YCLID",
+      "enums": []
+    },
+    {
+      "id": 852033,
+      "name": "fbclid",
+      "type": "tracking_data",
+      "code": "FBCLID",
+      "enums": []
+    },
+    {
+      "id": 852095,
+      "name": "Дата",
+      "type": "date",
+      "code": null,
+      "enums": []
+    },
+    {
+      "id": 852097,
+      "name": "Количество гостей",
+      "type": "numeric",
+      "code": null,
+      "enums": []
+    },
+    {
+      "id": 852099,
+      "name": "Место",
+      "type": "select",
+      "code": null,
+      "enums": [
+        {
+          "id": 709073,
+          "value": "Основной зал"
+        },
+        {
+          "id": 709075,
+          "value": "Основной зал+крыша"
+        },
+        {
+          "id": 709077,
+          "value": "Весь второй этаж"
+        },
+        {
+          "id": 709079,
+          "value": "Малый зал"
+        },
+        {
+          "id": 709081,
+          "value": "Весь ресторан"
+        },
+        {
+          "id": 717847,
+          "value": "Вип зал"
+        },
+        {
+          "id": 717849,
+          "value": "Каминный зал"
+        },
+        {
+          "id": 717851,
+          "value": "Полу-кабинет"
+        },
+        {
+          "id": 981239,
+          "value": "Веранда"
+        }
+      ]
+    },
+    {
+      "id": 852101,
+      "name": "Формат",
+      "type": "select",
+      "code": null,
+      "enums": [
+        {
+          "id": 709083,
+          "value": "Корпоратив"
+        },
+        {
+          "id": 709085,
+          "value": "Юбилей"
+        },
+        {
+          "id": 709087,
+          "value": "Детский праздник"
+        },
+        {
+          "id": 709089,
+          "value": "Свадьба"
+        },
+        {
+          "id": 709091,
+          "value": "Бизнес мероприятие"
+        },
+        {
+          "id": 726591,
+          "value": "Съемки"
+        },
+        {
+          "id": 741287,
+          "value": "Выпускной"
+        }
+      ]
+    },
+    {
+      "id": 852105,
+      "name": "еще даты",
+      "type": "text",
+      "code": null,
+      "enums": []
+    },
+    {
+      "id": 852109,
+      "name": "Откуда",
+      "type": "select",
+      "code": null,
+      "enums": [
+        {
+          "id": 709093,
+          "value": "Звонок в ресторан"
+        },
+        {
+          "id": 709095,
+          "value": "Почта"
+        },
+        {
+          "id": 709097,
+          "value": "Ватсапп"
+        },
+        {
+          "id": 709099,
+          "value": "Телеграмм"
+        },
+        {
+          "id": 709101,
+          "value": "Личное"
+        },
+        {
+          "id": 709103,
+          "value": "Пришли с улицы"
+        },
+        {
+          "id": 1061439,
+          "value": "Квиз"
+        }
+      ]
+    },
+    {
+      "id": 852111,
+      "name": "От какого партнера",
+      "type": "text",
+      "code": null,
+      "enums": []
+    },
+    {
+      "id": 867869,
+      "name": "Агент?",
+      "type": "checkbox",
+      "code": null,
+      "enums": []
+    }
+  ],
+  "contacts": [
+    {
+      "id": 851987,
+      "name": "Должность",
+      "type": "text",
+      "code": "POSITION",
+      "enums": []
+    },
+    {
+      "id": 851989,
+      "name": "Телефон",
+      "type": "multitext",
+      "code": "PHONE",
+      "enums": [
+        {
+          "id": 709009,
+          "value": "WORK"
+        },
+        {
+          "id": 709011,
+          "value": "WORKDD"
+        },
+        {
+          "id": 709013,
+          "value": "MOB"
+        },
+        {
+          "id": 709015,
+          "value": "FAX"
+        },
+        {
+          "id": 709017,
+          "value": "HOME"
+        },
+        {
+          "id": 709019,
+          "value": "OTHER"
+        }
+      ]
+    },
+    {
+      "id": 851991,
+      "name": "Email",
+      "type": "multitext",
+      "code": "EMAIL",
+      "enums": [
+        {
+          "id": 709021,
+          "value": "WORK"
+        },
+        {
+          "id": 709023,
+          "value": "PRIV"
+        },
+        {
+          "id": 709025,
+          "value": "OTHER"
+        }
+      ]
+    },
+    {
+      "id": 852093,
+      "name": "Пользовательское соглашение",
+      "type": "checkbox",
+      "code": "USER_AGREEMENT",
+      "enums": []
+    }
+  ]
+}

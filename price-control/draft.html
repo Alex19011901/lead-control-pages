@@ -1,0 +1,405 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Price Control Draft</title>
+<style>
+:root{
+  --bg:#08111d;
+  --panel:#101b2a;
+  --panel2:#0d1825;
+  --line:#263549;
+  --line2:#223146;
+  --text:#f5f7fb;
+  --muted:#9fb0c5;
+  --green:#36d16b;
+  --orange:#ffae42;
+  --red:#ff5f67;
+  --purple:#7d5cff;
+  --blue:#4ea1ff;
+}
+*{box-sizing:border-box}
+html{background:var(--bg)}
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--text);
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+}
+.wrap{max-width:1180px;margin:0 auto;padding:16px}
+header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:12px;
+  position:sticky;
+  top:0;
+  z-index:5;
+  padding:12px 0;
+  margin-bottom:0;
+  background:#08111df2;
+}
+h1{margin:0;font-size:24px;line-height:1.1}
+.subtitle{margin-top:3px;color:var(--muted);font-size:12px}
+.actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.actions button,
+.filters select,
+.filters input{
+  background:#111d2c;
+  color:#fff;
+  border:1px solid #2a3b50;
+  border-radius:10px;
+  padding:10px 12px;
+  font:inherit;
+  font-weight:600;
+  outline:none;
+}
+.actions button{cursor:pointer}
+.actions button:hover,
+.filters select:hover,
+.filters input:hover{border-color:#3b516c}
+.actions button:focus-visible,
+.filters select:focus-visible,
+.filters input:focus-visible{border-color:var(--purple);box-shadow:0 0 0 2px #7d5cff33}
+.actions button:disabled{opacity:.62;cursor:not-allowed}
+.state{font-size:12px;color:var(--muted);white-space:nowrap}
+.filters{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+  margin:12px 0;
+}
+.filters input{min-width:220px}
+.filters select option{background:#111d2c;color:#fff}
+
+.kpis{
+  display:grid;
+  grid-template-columns:repeat(6,1fr);
+  gap:10px;
+  margin:12px 0;
+}
+.card{
+  background:linear-gradient(180deg,#111d2b,#0d1825);
+  border:1px solid var(--line2);
+  border-radius:14px;
+}
+.kpi{padding:14px}
+.label{color:#c4cfdb;font-size:12px}
+.value{font-size:28px;font-weight:800;margin-top:8px;color:var(--text)}
+.red{color:var(--red)!important}
+.green{color:var(--green)!important}
+.amber{color:var(--orange)!important}
+
+.table-card{overflow:hidden}
+.panel-head{
+  padding:14px;
+  border-bottom:1px solid var(--line2);
+  display:flex;
+  justify-content:space-between;
+  gap:12px;
+  align-items:center;
+}
+.panel-head strong{font-size:16px}
+#shownCount{font-size:12px;color:var(--muted)}
+.table-wrap{overflow:auto;max-height:520px}
+table{width:100%;border-collapse:collapse;font-size:12px;background:transparent}
+th,td{
+  padding:10px 8px;
+  border-bottom:1px solid var(--line2);
+  text-align:right;
+  white-space:nowrap;
+  vertical-align:top;
+}
+th:first-child,td:first-child{text-align:left}
+th{
+  position:sticky;
+  top:0;
+  z-index:1;
+  background:#0f1a28;
+  color:#aebdd0;
+  font-weight:600;
+}
+tbody tr:hover{background:#ffffff05}
+
+.badge{
+  display:inline-block;
+  border-radius:8px;
+  padding:5px 8px;
+  font-size:11px;
+  font-weight:700;
+}
+.b-above{background:#ff5f6729;color:#ff7f86}
+.b-below{background:#36d16b26;color:#62e58c}
+.b-equal{background:#ffffff12;color:#c4cfdb}
+.b-unmatched{background:#ffae4229;color:#ffc36d}
+
+.index-card{margin-top:10px;padding:14px}
+.index-title{font-size:16px;font-weight:800;margin-bottom:10px}
+.index-grid{
+  display:grid;
+  grid-template-columns:1.2fr .8fr;
+  gap:10px;
+  align-items:stretch;
+}
+.chart-box{
+  background:#0d1825;
+  border:1px solid var(--line2);
+  border-radius:12px;
+  padding:12px;
+}
+#indexChart{display:block;width:100%;height:220px}
+.gridline{stroke:#263549;stroke-width:1;stroke-dasharray:4 4}
+.axis-label,.index-x-label{fill:#9fb0c5}
+.axis-label{font-size:12px}
+.index-x-label{font-size:11px}
+.index-line{fill:none;stroke:var(--purple);stroke-width:3;stroke-linejoin:round;stroke-linecap:round}
+.index-point{fill:#0d1825;stroke:#8d74ff;stroke-width:3}
+.index-point-label{fill:#f5f7fb;font-size:12px;font-weight:700}
+.index-note{font-size:12px;color:var(--muted);line-height:1.45;margin-top:8px}
+.index-legend{font-size:12px;color:var(--muted);display:flex;align-items:center;gap:7px;margin-top:8px}
+.dot{width:8px;height:8px;background:var(--purple);border-radius:50%;display:inline-block}
+.index-stats{display:grid;gap:10px}
+.index-stat{
+  background:#0d1825;
+  border:1px solid var(--line2);
+  border-radius:12px;
+  padding:14px;
+}
+.index-value{font-size:28px;font-weight:800;margin-top:6px}
+.hint{color:var(--muted);font-size:12px;margin-top:4px}
+
+@media(max-width:900px){
+  .wrap{padding:10px}
+  header{align-items:flex-start;flex-direction:column}
+  .actions{width:100%}
+  .filters{overflow-x:auto;flex-wrap:nowrap;width:100%}
+  .filters input{min-width:180px}
+  .kpis{grid-template-columns:repeat(2,1fr)}
+  .index-grid{grid-template-columns:1fr}
+  .table-wrap{max-height:480px}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div>
+      <h1>Price Control</h1>
+      <div class="subtitle">Парадис Экзотика · накопительная проверка закупочных цен</div>
+    </div>
+    <div class="actions">
+      <button id="refreshBtn" type="button">Обновить данные</button>
+      <span id="refreshState" class="state"></span>
+    </div>
+  </header>
+
+  <div class="filters">
+    <select id="weekFilter" aria-label="Период прайса"></select>
+    <select id="invoiceFilter" aria-label="Накладная"><option value="">Все накладные</option></select>
+    <select id="statusFilter" aria-label="Статус">
+      <option value="">Все статусы</option>
+      <option value="ABOVE">Выше прайса</option>
+      <option value="BELOW">Ниже прайса</option>
+      <option value="EQUAL">Равно</option>
+      <option value="UNMATCHED">Не сопоставлено</option>
+    </select>
+    <input id="searchFilter" type="text" placeholder="Поиск товара" aria-label="Поиск товара">
+  </div>
+
+  <div class="kpis">
+    <div class="card kpi"><div class="label">Документов</div><div class="value" id="docsKpi">0</div></div>
+    <div class="card kpi"><div class="label">Товарных строк</div><div class="value" id="rowsKpi">0</div></div>
+    <div class="card kpi"><div class="label">Выше прайса</div><div class="value red" id="aboveKpi">0</div></div>
+    <div class="card kpi"><div class="label">Ниже прайса</div><div class="value green" id="belowKpi">0</div></div>
+    <div class="card kpi"><div class="label">Не сопоставлено</div><div class="value amber" id="unmatchedKpi">0</div></div>
+    <div class="card kpi"><div class="label">Переплата по красным</div><div class="value red" id="overpayKpi">0 ₽</div></div>
+  </div>
+
+  <section class="card table-card">
+    <div class="panel-head">
+      <strong id="periodTitle">Проверка</strong>
+      <span id="shownCount">Показано: 0</span>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Товар</th><th>Дата</th><th>Накладная</th><th>Кол-во</th><th>Ед.</th>
+            <th>Прайс</th><th>Факт</th><th>Δ/ед.</th><th>Влияние ₽</th><th>Статус</th>
+          </tr>
+        </thead>
+        <tbody id="rowsBody"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="card index-card">
+    <div class="index-title">Индекс закупочных цен</div>
+    <div class="index-grid">
+      <div class="chart-box">
+        <svg id="indexChart" viewBox="0 0 760 220" role="img" aria-label="Индекс закупочных цен">
+          <line id="index100Line" x1="54" y1="164" x2="716" y2="164" class="gridline"/>
+          <text id="index100Label" x="18" y="169" class="axis-label">100</text>
+          <polyline id="indexLine" class="index-line" points=""/>
+          <g id="indexPoints"></g>
+        </svg>
+        <div class="index-note">Индекс строится только по товарам одного поставщика, которые есть в сравниваемых неделях. Новые и исчезнувшие товары не искажают линию; базовая неделя поставщика остаётся равной 100.</div>
+        <div class="index-legend"><span class="dot"></span><span id="indexLegend">—</span></div>
+      </div>
+      <div class="index-stats">
+        <div class="index-stat"><div class="label">Текущий индекс</div><div class="index-value" id="currentIndex">—</div><div class="hint" id="currentIndexHint">—</div></div>
+        <div class="index-stat"><div class="label">Изменение к прошлой неделе</div><div class="index-value green" id="prevChange">—</div><div class="hint">К предыдущей неделе</div></div>
+        <div class="index-stat"><div class="label">Изменение за весь период</div><div class="index-value green" id="periodChange">—</div><div class="hint">От первой недели</div></div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<script>
+(function(){
+  const FULL_RAW='https://raw.githubusercontent.com/Alex19011901/lead-control-pages/main/price-control/full.json';
+  const TRIGGER='https://alex19011901.github.io/lead-control-pages/price-control-trigger.html';
+  let model=null,currentKey='',inFlight=false,triggerWindow=null;
+
+  function id(x){return document.getElementById(x)}
+  function esc(v){return String(v==null?'':v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+  function fmt(v){if(v===null||v===undefined||v==='')return '—';return Number(v).toLocaleString('ru-RU',{minimumFractionDigits:0,maximumFractionDigits:2})}
+  function money(v){return Number(v||0).toLocaleString('ru-RU',{minimumFractionDigits:2,maximumFractionDigits:2})+' ₽'}
+  function signed(v){if(v===null||v===undefined)return '—';const n=Number(v);return (n>0?'+':'')+fmt(n)}
+  function pct(v){if(v===null||v===undefined)return '—';const n=Number(v);return (n>0?'+':'')+n.toLocaleString('ru-RU',{minimumFractionDigits:1,maximumFractionDigits:1})+'%'}
+  function badge(s){
+    if(s==='ABOVE')return '<span class="badge b-above">ВЫШЕ ПРАЙСА</span>';
+    if(s==='BELOW')return '<span class="badge b-below">НИЖЕ ПРАЙСА</span>';
+    if(s==='EQUAL')return '<span class="badge b-equal">РАВНО</span>';
+    return '<span class="badge b-unmatched">НЕ СОПОСТАВЛЕНО</span>';
+  }
+  function period(){return model&&model.periods?model.periods.find(p=>p.key===currentKey):null}
+
+  function populatePeriods(){
+    const sel=id('weekFilter');
+    sel.innerHTML=(model.periods||[]).map(p=>'<option value="'+esc(p.key)+'">'+esc(p.label)+'</option>').join('');
+    currentKey=model.currentKey||((model.periods||[])[0]||{}).key||'';
+    sel.value=currentKey;
+  }
+
+  function populateInvoices(w){
+    const sel=id('invoiceFilter'),prev=sel.value;
+    const vals=[...new Set((w.rowsData||[]).map(r=>r[2]))];
+    sel.innerHTML='<option value="">Все накладные</option>'+vals.map(v=>'<option value="'+esc(v)+'">'+esc(v)+'</option>').join('');
+    if(vals.includes(prev))sel.value=prev;
+  }
+
+  function renderRows(){
+    const w=period();if(!w)return;
+    const inv=id('invoiceFilter').value,st=id('statusFilter').value,q=id('searchFilter').value.trim().toLowerCase();
+    const rows=(w.rowsData||[]).filter(r=>(!inv||r[2]===inv)&&(!st||r[9]===st)&&(!q||String(r[0]).toLowerCase().includes(q)));
+    id('rowsBody').innerHTML=rows.map(r=>'<tr>'+
+      '<td>'+esc(r[0])+'</td><td>'+esc(r[1])+'</td><td>'+esc(r[2])+'</td>'+
+      '<td>'+fmt(r[3])+'</td><td>'+esc(r[4])+'</td><td>'+fmt(r[5])+'</td>'+
+      '<td>'+fmt(r[6])+'</td><td>'+signed(r[7])+'</td><td>'+signed(r[8])+'</td><td>'+badge(r[9])+'</td></tr>').join('');
+    id('shownCount').textContent='Показано: '+rows.length;
+  }
+
+  function renderIndex(w){
+    const g=(model.indexGroups||{})[w.indexGroup]||null;
+    if(!g){
+      id('indexLine').setAttribute('points','');id('indexPoints').innerHTML='';
+      id('currentIndex').textContent=id('prevChange').textContent=id('periodChange').textContent='—';
+      id('indexLegend').textContent='—';id('currentIndexHint').textContent='—';return;
+    }
+    const pts=g.points||[];
+    id('currentIndex').textContent=fmt(g.current);
+    id('prevChange').textContent=pct(g.prevChange);
+    id('periodChange').textContent=pct(g.periodChange);
+    id('indexLegend').textContent=(g.baseLabel||'База')+' = 100';
+    id('currentIndexHint').textContent=(pts[pts.length-1]||{}).label||'—';
+
+    if(!pts.length){id('indexLine').setAttribute('points','');id('indexPoints').innerHTML='';return}
+    const min=Math.min(98,...pts.map(p=>Number(p.value))),max=Math.max(110,...pts.map(p=>Number(p.value)));
+    const x0=72,x1=700,yTop=28,yBottom=164,span=Math.max(1,max-min);
+    const step=pts.length===1?0:(x1-x0)/(pts.length-1);
+    const xy=pts.map((p,i)=>{
+      const x=pts.length===1?(x0+x1)/2:x0+step*i;
+      const y=yBottom-(Number(p.value)-min)/span*(yBottom-yTop);
+      return {x,y,p};
+    });
+    id('indexLine').setAttribute('points',xy.map(o=>o.x.toFixed(1)+','+o.y.toFixed(1)).join(' '));
+    id('indexPoints').innerHTML=xy.map(o=>
+      '<circle class="index-point" cx="'+o.x.toFixed(1)+'" cy="'+o.y.toFixed(1)+'" r="5"/>'+
+      '<text class="index-point-label" x="'+o.x.toFixed(1)+'" y="'+(o.y-12).toFixed(1)+'" text-anchor="middle">'+esc(fmt(o.p.value))+'</text>'+
+      '<text class="index-x-label" x="'+o.x.toFixed(1)+'" y="194" text-anchor="middle">'+esc(o.p.label)+'</text>'
+    ).join('');
+  }
+
+  function render(){
+    const w=period();if(!w)return;
+    id('periodTitle').textContent=(w.label||'Проверка')+' · '+(w.supplier||'');
+    id('docsKpi').textContent=w.docs||0;
+    id('rowsKpi').textContent=w.rows||0;
+    id('aboveKpi').textContent=w.above||0;
+    id('belowKpi').textContent=w.below||0;
+    id('unmatchedKpi').textContent=w.unmatched||0;
+    id('overpayKpi').textContent=money(w.overpay||0);
+    populateInvoices(w);renderRows();renderIndex(w);
+  }
+
+  async function load(){
+    const r=await fetch(FULL_RAW+'?cb='+Date.now(),{cache:'no-store'});
+    if(!r.ok)throw new Error('load_'+r.status);
+    model=await r.json();
+    populatePeriods();render();
+  }
+
+  function setState(s,error){id('refreshState').textContent=s||'';id('refreshState').style.color=error?'#b42318':'#667085'}
+  function finish(s,error){
+    inFlight=false;id('refreshBtn').disabled=false;id('refreshBtn').textContent='Обновить данные';setState(s,error);
+    if(triggerWindow && !triggerWindow.closed){try{triggerWindow.close()}catch(e){}}triggerWindow=null
+  }
+  function refresh(){
+    if(inFlight)return;
+    inFlight=true;id('refreshBtn').disabled=true;id('refreshBtn').textContent='Обновление…';setState('Подготовка…');
+    triggerWindow=window.open(
+      TRIGGER+'?popup=1&cb='+Date.now(),
+      'priceControlRefresh',
+      'popup=yes,width=420,height=260'
+    );
+    if(!triggerWindow){
+      finish('Разрешите всплывающее окно',true);
+      return;
+    }
+  }
+
+  window.addEventListener('message',e=>{
+    const d=e.data||{};if(d.source!=='price-control-refresh')return;
+    if(d.status==='dispatched'){setState('Workflow запущен…');return}
+    if(d.status==='running'){setState('Workflow выполняется…');return}
+    if(d.status==='saving'){setState('Загрузка новых данных…');return}
+    if(d.status==='completed'){
+      if(!d.payload||!d.payload.week||!model){finish('Ошибка данных',true);return}
+      const w=d.payload.week;
+      const i=model.periods.findIndex(p=>p.key===w.key);
+      if(i>=0)model.periods[i]=w;else model.periods.unshift(w);
+      model.generatedAt=d.payload.generatedAt||model.generatedAt;
+      model.currentKey=w.key;
+      currentKey=w.key;
+      populatePeriods();id('weekFilter').value=currentKey;render();
+      const ts=new Date(d.payload.generatedAt||Date.now()).toLocaleTimeString('ru-RU',{timeZone:'Europe/Moscow',hour:'2-digit',minute:'2-digit'});
+      finish('Обновлено '+ts,false);
+      document.body.dataset.lastAppliedGeneratedAt=String(d.payload.generatedAt||'');
+      return;
+    }
+    if(d.status==='error')finish('Ошибка обновления',true);
+  });
+
+  id('weekFilter').addEventListener('change',function(){currentKey=this.value;id('invoiceFilter').value='';id('statusFilter').value='';id('searchFilter').value='';render()});
+  id('invoiceFilter').addEventListener('change',renderRows);
+  id('statusFilter').addEventListener('change',renderRows);
+  id('searchFilter').addEventListener('input',renderRows);
+  id('refreshBtn').addEventListener('click',refresh);
+
+  load().catch(()=>setState('Ошибка загрузки данных',true));
+})();
+</script>
+</body>
+</html>
