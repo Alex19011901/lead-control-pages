@@ -123,6 +123,30 @@ def compact_closed_not_realized_lead(lead: dict) -> dict | None:
     }
 
 
+
+def compact_outcome_lead(lead: dict) -> dict | None:
+    outcome = lead.get("crm_outcome") or {}
+    result = str(outcome.get("result") or "").strip().upper()
+    if result not in {"SUCCESS", "LOST"}:
+        return None
+
+    ts = str(lead.get("received_at") or lead.get("first_seen_at") or "")
+    day = ts[:10]
+    if not day:
+        return None
+
+    reason = ""
+    if result == "LOST":
+        reason = str(outcome.get("loss_reason_name") or "").strip() or "Не указана"
+
+    return {
+        "date": day,
+        "ts": ts,
+        "manager": crm_manager_name(lead),
+        "result": result,
+        "reason": reason,
+    }
+
 def compact_waiting_stage_lead(lead: dict) -> dict | None:
     crm = lead.get("crm") or {}
     feedback = lead.get("crm_feedback") or {}
@@ -160,6 +184,7 @@ def augment(leads_path: Path, view_path: Path, now_ts: int | None = None) -> Non
     rows = []
     waiting_stage_rows = []
     closed_not_realized_rows = []
+    outcome_rows = []
     tracked_counts = {state: 0 for state in TRACKED_STATES}
     display_counts = {"WAITING_YELLOW": 0, "WAITING_BLUE": 0}
     for lead in leads:
@@ -176,6 +201,10 @@ def augment(leads_path: Path, view_path: Path, now_ts: int | None = None) -> Non
         closed_row = compact_closed_not_realized_lead(lead)
         if closed_row is not None:
             closed_not_realized_rows.append(closed_row)
+
+        outcome_row = compact_outcome_lead(lead)
+        if outcome_row is not None:
+            outcome_rows.append(outcome_row)
 
         row = compact_feedback_lead(lead, current_ts)
         if row is not None:
@@ -201,10 +230,12 @@ def augment(leads_path: Path, view_path: Path, now_ts: int | None = None) -> Non
     }
     waiting_stage_rows.sort(key=lambda row: -int(row.get("created_ts") or 0))
     closed_not_realized_rows.sort(key=lambda row: -int(row.get("closed_ts") or 0))
+    outcome_rows.sort(key=lambda row: str(row.get("ts") or ""), reverse=True)
     view["feedback"] = rows
     view["waiting_stage"] = waiting_stage_rows
     view["closed_not_realized"] = closed_not_realized_rows
     view["closed_not_realized_summary"] = {"total": len(closed_not_realized_rows), "days": 5}
+    view["outcomes"] = outcome_rows
     view_path.write_text(json.dumps(view, ensure_ascii=False, indent=2), encoding="utf-8")
 
 
