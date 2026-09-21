@@ -10,6 +10,7 @@ from .amocrm_client import AmoCRMClient
 
 
 LOG = logging.getLogger(__name__)
+SUCCESSFUL_STATUS_ID = 142
 CLOSED_NOT_REALIZED_STATUS_ID = 143
 HISTORY_DAYS = 5
 MOSCOW_TZ = ZoneInfo("Europe/Moscow")
@@ -88,13 +89,15 @@ def apply_closed_not_realized_history(
     client: AmoCRMClient,
     now_ts: int | None = None,
 ) -> None:
-    """Attach exact recent amoCRM closed/lost metadata to tracked leads."""
+    """Attach CRM outcome metadata and exact recent closed/lost details."""
     current_ts = int(now_ts if now_ts is not None else time.time())
     today = _moscow_date(current_ts)
     first_day = today - timedelta(days=HISTORY_DAYS - 1)
 
     for lead in leads:
         lead.pop("closed_not_realized", None)
+        lead.pop("crm_outcome", None)
+
         crm = lead.get("crm") or {}
         if not crm.get("found") or crm.get("entity_type") != "lead" or not crm.get("entity_id"):
             continue
@@ -104,32 +107,55 @@ def apply_closed_not_realized_history(
             status_id = int(feedback.get("status_id") or 0)
         except (TypeError, ValueError):
             status_id = 0
-        status_name = _status_key(feedback.get("status_name"))
-        if status_id != CLOSED_NOT_REALIZED_STATUS_ID and status_name not in {
+        status_name_raw = str(feedback.get("status_name") or "").strip()
+        status_name = _status_key(status_name_raw)
+
+        is_success = status_id == SUCCESSFUL_STATUS_ID or status_name == "успешно реализовано"
+        is_lost = status_id == CLOSED_NOT_REALIZED_STATUS_ID or status_name in {
             "закрыто и не реализовано",
             "закрыто и не реализованно",
-        }:
+        }
+
+        if is_success:
+            lead["crm_outcome"] = {
+                "result": "SUCCESS",
+                "status_id": status_id or SUCCESSFUL_STATUS_ID,
+                "status_name": status_name_raw or "Успешно реализовано",
+            }
+            continue
+
+        if not is_lost:
             continue
 
         crm_lead_id = int(crm["entity_id"])
-        full_lead = client._get_entity("leads", crm_lead_id) or {}
+        detailed = client._get_entity(
+            "leads",
+            crm_lead_id,
+            params={"with": "loss_reason"},
+        ) or {}
+
         try:
-            closed_at = int(full_lead.get("closed_at") or 0)
+            closed_at = int(detailed.get("closed_at") or 0)
         except (TypeError, ValueError):
             closed_at = 0
+        reason_id, reason_name = _loss_reason(detailed)
+        reason_name = reason_name or "Не указана"
+
+        lead["crm_outcome"] = {
+            "result": "LOST",
+            "status_id": status_id or CLOSED_NOT_REALIZED_STATUS_ID,
+            "status_name": status_name_raw or "Закрыто и не реализовано",
+            "closed_at": closed_at or None,
+            "loss_reason_id": reason_id,
+            "loss_reason_name": reason_name,
+        }
+
         if not closed_at:
             continue
 
         closed_date = _moscow_date(closed_at)
         if closed_date < first_day or closed_date > today:
             continue
-
-        detailed = client._get_entity(
-            "leads",
-            crm_lead_id,
-            params={"with": "loss_reason"},
-        ) or full_lead
-        reason_id, reason_name = _loss_reason(detailed)
 
         last_comment = ""
         last_comment_at: int | None = None
