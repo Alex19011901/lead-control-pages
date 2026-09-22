@@ -18651,26 +18651,43 @@
       "channel": "TELEGRAM",
       "crm": {
         "ambiguity_count": 0,
-        "created_at": null,
-        "entity_id": null,
-        "entity_type": null,
-        "event_type": null,
-        "found": false,
-        "responsible_user_id": null,
-        "responsible_user_name": null,
-        "updated_at": null
+        "created_at": 1790018016,
+        "entity_id": 48813485,
+        "entity_type": "lead",
+        "event_type": "Юбилей",
+        "found": true,
+        "guests": "8",
+        "guests_source": "CRM",
+        "responsible_user_id": 13009530,
+        "responsible_user_name": "Олеся",
+        "updated_at": 1790022528
       },
-      "crm_created_at": null,
-      "crm_found": false,
+      "crm_created_at": 1790018016,
+      "crm_feedback": {
+        "crm_lead_id": 48813485,
+        "deadline_at": 1790283600,
+        "excluded": false,
+        "first_activity_at": null,
+        "lead_created_at": 1790018016,
+        "pipeline_id": 10081590,
+        "responsible_user_id": 13009530,
+        "rule_version": 6,
+        "state": "WAITING",
+        "status_id": 79927038,
+        "status_name": "Выслано предложение"
+      },
+      "crm_found": true,
       "crm_required": true,
-      "crm_responsible": null,
+      "crm_responsible": 13009530,
       "deadline_msk_ts": 1790024399,
+      "event_type": "Юбилей",
+      "event_type_source": "CRM",
       "fields": {
         "category": "САЙТ ТИЛЬДА",
         "description": "Содержание заявки:\nName: Дмитрий\nPhone: +79154068133\nДата: 26-09-2026\nКол-во_гостей: 8\nCheckbox: yes\npage_url: https://moscowbanket.ru/vip#dati\npage_referrer: https://moscowbanket.ru/\nform_submit_timestamp: 1790007143\n\nДополнительная информация:\nКод заявки: 2925975:8689237363\nКод блока: rec1193957381\nhttps://moscowbanket.ru/vip#dati\n-----",
         "event_date": "2026-09-26",
         "event_date_raw": "26-09-2026",
-        "event_type": "",
+        "event_type": "Юбилей",
         "form_submit_timestamp": 1790007143,
         "guests_count": 8,
         "metrika_client_id": "",
@@ -18709,7 +18726,7 @@
       "sender_user_id": 265299531,
       "sender_username": "TildaFormsBot",
       "source": "САЙТ ТИЛЬДА",
-      "status": "PENDING",
+      "status": "OK",
       "telegram": {
         "chat_id": -1001645768111,
         "message_ids": [
@@ -53370,14 +53387,6 @@
     {
       "category": "HOST",
       "channel": "MAX",
-      "closed_not_realized": {
-        "closed_at": 1789639629,
-        "crm_lead_id": 48589443,
-        "last_comment": "",
-        "last_comment_at": null,
-        "loss_reason_id": 21779746,
-        "loss_reason_name": "Выбрали других"
-      },
       "crm": {
         "ambiguity_count": 0,
         "created_at": 1789463840,
@@ -55961,14 +55970,6 @@
     {
       "category": "HOST",
       "channel": "MAX",
-      "closed_not_realized": {
-        "closed_at": 1789643297,
-        "crm_lead_id": 48677199,
-        "last_comment": "",
-        "last_comment_at": null,
-        "loss_reason_id": 21779742,
-        "loss_reason_name": "Не устроили условия"
-      },
       "crm": {
         "ambiguity_count": 0,
         "created_at": 1789643282,
@@ -56150,14 +56151,6 @@
     {
       "category": "HOST",
       "channel": "MAX",
-      "closed_not_realized": {
-        "closed_at": 1789662675,
-        "crm_lead_id": 48687203,
-        "last_comment": "",
-        "last_comment_at": null,
-        "loss_reason_id": 21780202,
-        "loss_reason_name": "Дата занята"
-      },
       "crm": {
         "ambiguity_count": 1,
         "created_at": 1789662662,
@@ -57515,9 +57508,11 @@
       "sender_name": "Al",
       "sender_user_id": 74336871,
       "source": "ЗАЯВКА ПОЧТА",
-      "status": "PENDING",
+      "status": "ALARM_NO_CRM",
       "username": "",
-      "violations": []
+      "violations": [
+        "ALARM_NO_CRM"
+      ]
     },
     {
       "category": "HOST",
@@ -57585,9 +57580,11 @@
       "sender_name": "Алёна",
       "sender_user_id": 432412696,
       "source": "Заявки хост",
-      "status": "PENDING",
+      "status": "ALARM_NO_CRM",
       "username": "",
-      "violations": []
+      "violations": [
+        "ALARM_NO_CRM"
+      ]
     },
     {
       "category": "HOST",
@@ -57655,9 +57652,11 @@
       "sender_name": "Алёна",
       "sender_user_id": 432412696,
       "source": "Заявки хост",
-      "status": "PENDING",
+      "status": "ALARM_NO_CRM",
       "username": "",
-      "violations": []
+      "violations": [
+        "ALARM_NO_CRM"
+      ]
     },
     {
       "category": "HOST",

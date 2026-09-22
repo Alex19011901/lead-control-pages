@@ -1,5 +1,5 @@
 {
-  "alarm_no_crm": 0,
+  "alarm_no_crm": 3,
   "by_manager": {
     "no_manager_reaction": 529,
     "Максим": 50,
@@ -19,7 +19,7 @@
     "ТоМесто": 1
   },
   "event_types": {
-    "unknown": 113,
+    "unknown": 112,
     "Бизнес мероприятие": 20,
     "Выпускной": 3,
     "ДР": 2,
@@ -30,7 +30,7 @@
     "Свадьба": 191,
     "Съемки": 1,
     "Съёмки": 1,
-    "Юбилей": 122
+    "Юбилей": 123
   },
   "guest_ranges": {
     "1-20": 185,
@@ -44,11 +44,11 @@
   "latest_leads": [
     {
       "created_at": "2026-09-21T19:12:24+03:00",
-      "crm_entity_id": null,
-      "crm_entity_type": null,
-      "crm_found": false,
+      "crm_entity_id": 48813485,
+      "crm_entity_type": "lead",
+      "crm_found": true,
       "event_date": "2026-09-26",
-      "event_type": "",
+      "event_type": "Юбилей",
       "guests_count": 8,
       "identifier": "7********33",
       "identifier_type": "phone",
@@ -57,7 +57,7 @@
       "manager_username": "Olesyagozhina",
       "name": "Дмитрий",
       "source": "САЙТ ТИЛЬДА",
-      "status": "PENDING",
+      "status": "OK",
       "violations": []
     },
     {
@@ -165,8 +165,10 @@
       "manager_username": "",
       "name": "Ольга",
       "source": "Заявки хост",
-      "status": "PENDING",
-      "violations": []
+      "status": "ALARM_NO_CRM",
+      "violations": [
+        "ALARM_NO_CRM"
+      ]
     },
     {
       "created_at": "2026-09-21T12:23:38+03:00",
@@ -183,8 +185,10 @@
       "manager_username": "",
       "name": "Божена",
       "source": "Заявки хост",
-      "status": "PENDING",
-      "violations": []
+      "status": "ALARM_NO_CRM",
+      "violations": [
+        "ALARM_NO_CRM"
+      ]
     },
     {
       "created_at": "2026-09-21T12:14:37+03:00",
@@ -201,8 +205,10 @@
       "manager_username": "",
       "name": "Собыленская Маргарита",
       "source": "ЗАЯВКА ПОЧТА",
-      "status": "PENDING",
-      "violations": []
+      "status": "ALARM_NO_CRM",
+      "violations": [
+        "ALARM_NO_CRM"
+      ]
     },
     {
       "created_at": "2026-09-20T19:52:49+03:00",
@@ -405,7 +411,7 @@
   ],
   "needs_review": 104,
   "no_reaction": 0,
-  "ok": 443,
+  "ok": 444,
   "total_leads": 625,
-  "updated_at": "2026-09-21T21:37:59+03:00"
+  "updated_at": "2026-09-22T08:50:47+03:00"
 }
