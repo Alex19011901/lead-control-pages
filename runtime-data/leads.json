@@ -12136,14 +12136,6 @@
     {
       "category": "САЙТ ТИЛЬДА",
       "channel": "TELEGRAM",
-      "closed_not_realized": {
-        "closed_at": 1789715709,
-        "crm_lead_id": 48089307,
-        "last_comment": "",
-        "last_comment_at": null,
-        "loss_reason_id": 24466294,
-        "loss_reason_name": "Нет обратной связи"
-      },
       "crm": {
         "ambiguity_count": 0,
         "created_at": 1788116565,
@@ -34113,14 +34105,6 @@
     {
       "category": "HOST",
       "channel": "MAX",
-      "closed_not_realized": {
-        "closed_at": 1789715595,
-        "crm_lead_id": 47245035,
-        "last_comment": "тг",
-        "last_comment_at": 1786044317,
-        "loss_reason_id": 24466294,
-        "loss_reason_name": "Нет обратной связи"
-      },
       "crm": {
         "ambiguity_count": 0,
         "created_at": 1786044315,
@@ -37743,14 +37727,6 @@
     {
       "category": "HOST",
       "channel": "MAX",
-      "closed_not_realized": {
-        "closed_at": 1789725522,
-        "crm_lead_id": 47530577,
-        "last_comment": "",
-        "last_comment_at": null,
-        "loss_reason_id": 21779746,
-        "loss_reason_name": "Выбрали других"
-      },
       "crm": {
         "ambiguity_count": 0,
         "created_at": 1786717871,
@@ -55397,14 +55373,6 @@
     {
       "category": "WEDWED",
       "channel": "MAX",
-      "closed_not_realized": {
-        "closed_at": 1789729169,
-        "crm_lead_id": 48650561,
-        "last_comment": "дата занято запросил альт",
-        "last_comment_at": 1789573030,
-        "loss_reason_id": 21780202,
-        "loss_reason_name": "Дата занята"
-      },
       "crm": {
         "ambiguity_count": 0,
         "created_at": 1789573029,
@@ -56384,14 +56352,6 @@
     {
       "category": "HOST",
       "channel": "MAX",
-      "closed_not_realized": {
-        "closed_at": 1789736306,
-        "crm_lead_id": 48713697,
-        "last_comment": "",
-        "last_comment_at": null,
-        "loss_reason_id": 21780202,
-        "loss_reason_name": "Дата занята"
-      },
       "crm": {
         "ambiguity_count": 0,
         "created_at": 1789736237,
@@ -56486,14 +56446,6 @@
     {
       "category": "HOST",
       "channel": "MAX",
-      "closed_not_realized": {
-        "closed_at": 1789735958,
-        "crm_lead_id": 48713323,
-        "last_comment": "",
-        "last_comment_at": null,
-        "loss_reason_id": 21779742,
-        "loss_reason_name": "Не устроили условия"
-      },
       "crm": {
         "ambiguity_count": 0,
         "created_at": 1789735951,
@@ -56586,14 +56538,6 @@
     {
       "category": "HOST",
       "channel": "MAX",
-      "closed_not_realized": {
-        "closed_at": 1789735768,
-        "crm_lead_id": 48713219,
-        "last_comment": "",
-        "last_comment_at": null,
-        "loss_reason_id": 21780202,
-        "loss_reason_name": "Дата занята"
-      },
       "crm": {
         "ambiguity_count": 0,
         "created_at": 1789735759,
@@ -58390,9 +58334,11 @@
       "sender_name": "Алёна",
       "sender_user_id": 432412696,
       "source": "Заявки хост",
-      "status": "PENDING",
+      "status": "ALARM_NO_CRM",
       "username": "",
-      "violations": []
+      "violations": [
+        "ALARM_NO_CRM"
+      ]
     },
     {
       "category": "HOST",
@@ -58932,9 +58878,11 @@
       "sender_user_id": 74336871,
       "sender_username": null,
       "source": "ЗАЯВКА ПОЧТА",
-      "status": "PENDING",
+      "status": "ALARM_NO_CRM",
       "username": "",
-      "violations": []
+      "violations": [
+        "ALARM_NO_CRM"
+      ]
     },
     {
       "category": "HOST",
@@ -59003,9 +58951,11 @@
       "sender_name": "SV",
       "sender_user_id": 205529129,
       "source": "Заявки хост",
-      "status": "PENDING",
+      "status": "ALARM_NO_CRM",
       "username": "",
-      "violations": []
+      "violations": [
+        "ALARM_NO_CRM"
+      ]
     }
   ],
   "schema_version": 1
