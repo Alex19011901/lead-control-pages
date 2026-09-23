@@ -19322,28 +19322,60 @@
     {
       "category": "САЙТ ТИЛЬДА",
       "channel": "TELEGRAM",
+      "closed_not_realized": {
+        "closed_at": 1790166501,
+        "crm_lead_id": 48880287,
+        "last_comment": "",
+        "last_comment_at": null,
+        "loss_reason_id": 21780202,
+        "loss_reason_name": "Дата занята"
+      },
       "crm": {
         "ambiguity_count": 0,
-        "created_at": null,
-        "entity_id": null,
-        "entity_type": null,
-        "event_type": null,
-        "found": false,
-        "responsible_user_id": null,
-        "responsible_user_name": null,
-        "updated_at": null
+        "created_at": 1790166501,
+        "entity_id": 48880287,
+        "entity_type": "lead",
+        "event_type": "Юбилей",
+        "found": true,
+        "guests": "35",
+        "guests_source": "CRM",
+        "responsible_user_id": 12982830,
+        "responsible_user_name": "Максим",
+        "updated_at": 1790166503
       },
-      "crm_created_at": null,
-      "crm_found": false,
+      "crm_created_at": 1790166501,
+      "crm_feedback": {
+        "crm_lead_id": 48880287,
+        "excluded": true,
+        "first_activity_at": null,
+        "lead_created_at": 1790166501,
+        "pipeline_id": 10081590,
+        "responsible_user_id": 12982830,
+        "rule_version": 6,
+        "state": "EXCLUDED",
+        "status_id": 143,
+        "status_name": "Закрыто и не реализовано"
+      },
+      "crm_found": true,
+      "crm_outcome": {
+        "closed_at": 1790166501,
+        "loss_reason_id": 21780202,
+        "loss_reason_name": "Дата занята",
+        "result": "LOST",
+        "status_id": 143,
+        "status_name": "Закрыто и не реализовано"
+      },
       "crm_required": true,
-      "crm_responsible": null,
+      "crm_responsible": 12982830,
       "deadline_msk_ts": 1790197199,
+      "event_type": "Юбилей",
+      "event_type_source": "CRM",
       "fields": {
         "category": "САЙТ ТИЛЬДА",
         "description": "Содержание заявки:\nName: Гюнай\nPhone: +79936262971\nДата: 10-10-2026\nКол-во_гостей: 35\nCheckbox: yes\nyclid: 7739765327750758399\nutm_source: yandex_direct\nutm_medium: cpc\nutm_campaign: Bankety_poisk_konversii\nutm_term: ---autotargeting\npage_url: https://moscowbanket.ru/maiizal#dati\npage_referrer: https://moscowbanket.ru/maiizal\nform_submit_timestamp: 1790165004\nmetrika_client_id: 1790159882497579626\nym_client_id: 1790159882497579626\nym_clientid: 1790159882497579626\nym_uid: 1790159882497579626\n_ym_uid: 1790159882497579626\nclient_id: 1790159882497579626\nclientid: 1790159882497579626\nyandex_client_id: 1790159882497579626\nya_client_id: 1790159882497579626\n\nДополнительная информация:\nКод заявки: 2925975:8694079543\nКод блока: rec1193957381\nhttps://moscowbanket.ru/maiizal#dati\nUTM source: yandex_direct\nUTM medium: cpc\nUTM campaign: bankety_poisk_konversii\nUTM term: ---autotargeting\n-----",
         "event_date": "2026-10-10",
         "event_date_raw": "10-10-2026",
-        "event_type": "",
+        "event_type": "Юбилей",
         "form_submit_timestamp": 1790165004,
         "guests_count": 35,
         "metrika_client_id": "1790159882497579626",
@@ -19382,7 +19414,7 @@
       "sender_user_id": 265299531,
       "sender_username": "TildaFormsBot",
       "source": "САЙТ ТИЛЬДА",
-      "status": "PENDING",
+      "status": "OK",
       "telegram": {
         "chat_id": -1001645768111,
         "message_ids": [
@@ -19390,6 +19422,97 @@
         ],
         "update_ids": [
           185608517
+        ]
+      },
+      "violations": []
+    },
+    {
+      "category": "MARQUIZ",
+      "channel": "TELEGRAM",
+      "crm": {
+        "ambiguity_count": 0,
+        "created_at": 1790167541,
+        "entity_id": 48883287,
+        "entity_type": "lead",
+        "event_type": "Корпоратив",
+        "found": true,
+        "guests": "51",
+        "guests_source": "CRM",
+        "responsible_user_id": 12982830,
+        "responsible_user_name": "Максим",
+        "updated_at": 1790178771
+      },
+      "crm_created_at": 1790167541,
+      "crm_feedback": {
+        "crm_lead_id": 48883287,
+        "deadline_at": 1790456400,
+        "excluded": false,
+        "first_activity_at": null,
+        "lead_created_at": 1790167541,
+        "pipeline_id": 10081590,
+        "responsible_user_id": 12982830,
+        "rule_version": 6,
+        "state": "WAITING",
+        "status_id": 79927034,
+        "status_name": "Первичный контакт"
+      },
+      "crm_found": true,
+      "crm_required": true,
+      "crm_responsible": 12982830,
+      "deadline_msk_ts": 1790197199,
+      "event_type": "Корпоратив",
+      "event_type_source": "CRM",
+      "fields": {
+        "category": "MARQUIZ",
+        "description": "🎯 Заявка на квиз \"Организуйте идеальное мероприятие в ресторане «Светлый».\"\n\nИмя: Наталья Сергеевна Ярославкина\nТелефон: +79912098464\n\nКакое мероприятие вы планируете?\nДеловое мероприятие\n\nСколько гостей ожидается?\n51\n\nУточните дату Вашего мероприятия?\n10.10.2026\n\nКакой формат мероприятия интересует?\nБанкет\n\nТовары:\n\nТовары не выбраны\n\n\nБонусы: Бесплатная дегустация, Без арендной платы\n\nМестоположение: Россия, Москва\nUTM-метки:\ncampaign: Bankety_poisk_quiz\nmedium: cpc\nsource: yandex_direct\n\nСтраница: https://mrqz.me/moscowbanket?callibri=yd_c:712849433_gb:5773918675_ad:1915822986185365516_ph:57675183343_st:search_s:yandex.ru_dt:mobile&utm_source=yandex_direct&utm_medium=cpc&utm_campaign=Bankety_poisk_quiz&type=search&source=yandex.ru&added=no&block=other&position=1&keyword=%D0%B7%D0%B0%D0%BB%20%D0%B1%D0%B0%D0%BD%D0%BA%D0%B5%D1%82%D0%B0%20%D0%BC%D0%BE%D1%81%D0%BA%D0%B2%D0%B5&etext=2202.0_HdbUmpjN9SBKhR467qGrHK9oNXSbSmepJPSJjou9z6tyZ-NsJ_OYt2tEySlpYbYnRxZXlleGhlanhpY2RpZg.4f0a2176c72ad33f2a3ed57a356d5bf8fb911b09&yclid=8153449129827368959&ybaip=1\n\nСогласия:\nЯ согласен на обработку персональных данных: Да",
+        "event_date": "2026-10-10",
+        "event_date_raw": "10.10.2026",
+        "event_format": "Банкет",
+        "event_type": "Корпоратив",
+        "guests_count": 51,
+        "guests_raw": "51",
+        "name": "Наталья Сергеевна Ярославкина",
+        "phone_digits": "79912098464",
+        "phone_raw": "+79912098464",
+        "source": "MARQUIZ",
+        "telegram_username": ""
+      },
+      "first_seen_at": "2026-09-23T15:34:05+03:00",
+      "first_seen_ts": 1790166845,
+      "id": "c5c513b6fc0b491a",
+      "identifier": {
+        "type": "phone",
+        "value": "79912098464"
+      },
+      "last_seen_at": "2026-09-23T15:34:05+03:00",
+      "last_seen_ts": 1790166845,
+      "manager_reaction": {
+        "name": "Максим",
+        "reacted_at": "2026-09-23T15:45:50+03:00",
+        "reacted_ts": 1790167550,
+        "reaction": [
+          {
+            "emoji": "👍",
+            "type": "emoji"
+          }
+        ],
+        "update_id": 185608520,
+        "user_id": 392177002,
+        "username": "empairbey"
+      },
+      "received_at": "2026-09-23T15:34:05+03:00",
+      "sender_name": "MarquizBot",
+      "sender_user_id": 446491725,
+      "sender_username": "MarquizBot",
+      "source": "MARQUIZ",
+      "status": "OK",
+      "telegram": {
+        "chat_id": -1001645768111,
+        "message_ids": [
+          5997
+        ],
+        "update_ids": [
+          185608519
         ]
       },
       "violations": []
@@ -59566,6 +59689,14 @@
     {
       "category": "HOST",
       "channel": "MAX",
+      "closed_not_realized": {
+        "closed_at": 1790169843,
+        "crm_lead_id": 48870123,
+        "last_comment": "",
+        "last_comment_at": null,
+        "loss_reason_id": 21779738,
+        "loss_reason_name": "Пропала потребность"
+      },
       "crm": {
         "ambiguity_count": 0,
         "created_at": 1790152751,
@@ -59582,18 +59713,25 @@
       "crm_created_at": 1790152751,
       "crm_feedback": {
         "crm_lead_id": 48870123,
-        "deadline_at": 1790456400,
-        "excluded": false,
+        "excluded": true,
         "first_activity_at": null,
         "lead_created_at": 1790152751,
         "pipeline_id": 10081590,
         "responsible_user_id": 12982830,
         "rule_version": 6,
-        "state": "WAITING",
-        "status_id": 79927038,
-        "status_name": "Выслано предложение"
+        "state": "EXCLUDED",
+        "status_id": 143,
+        "status_name": "Закрыто и не реализовано"
       },
       "crm_found": true,
+      "crm_outcome": {
+        "closed_at": 1790169843,
+        "loss_reason_id": 21779738,
+        "loss_reason_name": "Пропала потребность",
+        "result": "LOST",
+        "status_id": 143,
+        "status_name": "Закрыто и не реализовано"
+      },
       "crm_required": true,
       "crm_responsible": 12982830,
       "deadline_msk_ts": 1790197199,
@@ -59842,30 +59980,62 @@
     {
       "category": "WEDWED",
       "channel": "MAX",
+      "closed_not_realized": {
+        "closed_at": 1790167892,
+        "crm_lead_id": 48883515,
+        "last_comment": "",
+        "last_comment_at": null,
+        "loss_reason_id": 21779734,
+        "loss_reason_name": "Слишком дорого"
+      },
       "crm": {
         "ambiguity_count": 0,
-        "created_at": null,
-        "entity_id": null,
-        "entity_type": null,
-        "event_type": null,
-        "found": false,
-        "responsible_user_id": null,
-        "responsible_user_name": null,
-        "updated_at": null
+        "created_at": 1790167892,
+        "entity_id": 48883515,
+        "entity_type": "lead",
+        "event_type": "Корпоратив",
+        "found": true,
+        "guests": "50",
+        "guests_source": "CRM",
+        "responsible_user_id": 12982830,
+        "responsible_user_name": "Максим",
+        "updated_at": 1790167893
       },
       "crm_check_status": "PENDING",
-      "crm_created_at": null,
-      "crm_found": false,
+      "crm_created_at": 1790167892,
+      "crm_feedback": {
+        "crm_lead_id": 48883515,
+        "excluded": true,
+        "first_activity_at": null,
+        "lead_created_at": 1790167892,
+        "pipeline_id": 10081590,
+        "responsible_user_id": 12982830,
+        "rule_version": 6,
+        "state": "EXCLUDED",
+        "status_id": 143,
+        "status_name": "Закрыто и не реализовано"
+      },
+      "crm_found": true,
+      "crm_outcome": {
+        "closed_at": 1790167892,
+        "loss_reason_id": 21779734,
+        "loss_reason_name": "Слишком дорого",
+        "result": "LOST",
+        "status_id": 143,
+        "status_name": "Закрыто и не реализовано"
+      },
       "crm_required": true,
-      "crm_responsible": null,
+      "crm_responsible": 12982830,
       "deadline_msk_ts": 1790197199,
       "event_date": "2026-12-12",
+      "event_type": "Корпоратив",
+      "event_type_source": "CRM",
       "fields": {
         "category": "WEDWED",
         "email": "",
         "event_date": "2026-12-12",
         "event_date_raw": "12.12.2026",
-        "event_type": "",
+        "event_type": "Корпоратив",
         "guests_count": 50,
         "guests_max": null,
         "guests_min": null,
@@ -59907,10 +60077,168 @@
       "sender_name": "Олеся",
       "sender_user_id": 48906491,
       "source": "WedWed",
-      "status": "PENDING",
+      "status": "OK",
       "username": "",
       "violations": [],
       "wedwed_url": "https://wedwed.ru/l/4z3HaIi"
+    },
+    {
+      "category": "HOST",
+      "channel": "MAX",
+      "crm": {
+        "ambiguity_count": 0,
+        "created_at": null,
+        "entity_id": null,
+        "entity_type": null,
+        "event_type": null,
+        "found": false,
+        "responsible_user_id": null,
+        "responsible_user_name": null,
+        "updated_at": null
+      },
+      "crm_created_at": null,
+      "crm_found": false,
+      "crm_required": true,
+      "crm_responsible": null,
+      "deadline_msk_ts": 1790197199,
+      "event_date": "2026-10-02",
+      "fields": {
+        "category": "HOST",
+        "email": "",
+        "event_date": "2026-10-02",
+        "event_date_raw": "2.10",
+        "event_type": "Свадьба",
+        "guests_count": 30,
+        "guests_max": null,
+        "guests_min": null,
+        "guests_raw": "30п.",
+        "name": "",
+        "phone_digits": "79658987576",
+        "phone_raw": "89658987576",
+        "source": "Заявки хост",
+        "telegram_username": ""
+      },
+      "first_seen_at": "2026-09-23T15:20:08+03:00",
+      "first_seen_ts": 1790166008,
+      "guests": 30,
+      "guests_max": null,
+      "guests_min": null,
+      "guests_raw": "30п.",
+      "id": "54336c8097857474",
+      "identifier": {
+        "type": "phone",
+        "value": "79658987576"
+      },
+      "last_seen_at": "2026-09-23T15:20:08+03:00",
+      "last_seen_ts": 1790166008,
+      "manager_reaction": null,
+      "max": {
+        "chat_id": -71704692523093,
+        "message_ids": [
+          "mid.ffffbec8f345ffab01a0ce35810d6564"
+        ],
+        "sender_name": "Елена",
+        "sender_user_id": 121513620,
+        "sender_username": null
+      },
+      "message_id": "mid.ffffbec8f345ffab01a0ce35810d6564",
+      "name": "",
+      "phone": "89658987576",
+      "received_at": "2026-09-23T15:20:08+03:00",
+      "sender_name": "Елена",
+      "sender_user_id": 121513620,
+      "source": "Заявки хост",
+      "status": "PENDING",
+      "username": "",
+      "violations": []
+    },
+    {
+      "category": "HOST",
+      "channel": "MAX",
+      "crm": {
+        "ambiguity_count": 2,
+        "created_at": 1790173994,
+        "entity_id": 48889537,
+        "entity_type": "lead",
+        "event_type": "Корпоратив",
+        "found": true,
+        "guests": "120",
+        "guests_source": "CRM",
+        "responsible_user_id": 12982830,
+        "responsible_user_name": "Максим",
+        "updated_at": 1790178508
+      },
+      "crm_created_at": 1790173994,
+      "crm_feedback": {
+        "crm_lead_id": 48889537,
+        "deadline_at": 1790456400,
+        "excluded": false,
+        "first_activity_at": null,
+        "lead_created_at": 1790173994,
+        "pipeline_id": 10081590,
+        "responsible_user_id": 12982830,
+        "rule_version": 6,
+        "state": "WAITING",
+        "status_id": 79927038,
+        "status_name": "Выслано предложение"
+      },
+      "crm_found": true,
+      "crm_required": true,
+      "crm_responsible": 12982830,
+      "daily_repeat_phone": true,
+      "deadline_msk_ts": 1790197199,
+      "event_date": "2026-12-11",
+      "event_type": "Корпоратив",
+      "event_type_source": "CRM",
+      "fields": {
+        "category": "HOST",
+        "email": "",
+        "event_date": "2026-12-11",
+        "event_date_raw": "11.12",
+        "event_type": "Корпоратив",
+        "guests_count": 120,
+        "guests_max": null,
+        "guests_min": null,
+        "guests_raw": "120п.",
+        "name": "Анастасия",
+        "phone_digits": "79267006287",
+        "phone_raw": "89267006287",
+        "source": "Заявки хост",
+        "telegram_username": ""
+      },
+      "first_seen_at": "2026-09-23T17:03:23+03:00",
+      "first_seen_ts": 1790172203,
+      "guests": 120,
+      "guests_max": null,
+      "guests_min": null,
+      "guests_raw": "120п.",
+      "id": "700f8c08b3dcdeb2",
+      "identifier": {
+        "type": "phone",
+        "value": "79267006287"
+      },
+      "last_seen_at": "2026-09-23T17:03:23+03:00",
+      "last_seen_ts": 1790172203,
+      "manager_reaction": null,
+      "max": {
+        "chat_id": -71704692523093,
+        "message_ids": [
+          "mid.ffffbec8f345ffab01a0ce94086429f3"
+        ],
+        "sender_name": "Елена",
+        "sender_user_id": 121513620,
+        "sender_username": null
+      },
+      "message_id": "mid.ffffbec8f345ffab01a0ce94086429f3",
+      "name": "Анастасия",
+      "phone": "89267006287",
+      "received_at": "2026-09-23T17:03:23+03:00",
+      "sender_name": "Елена",
+      "sender_user_id": 121513620,
+      "source": "Заявки хост",
+      "status": "OK",
+      "username": "",
+      "violations": []
     }
   ],
   "schema_version": 1
