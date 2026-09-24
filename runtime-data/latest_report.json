@@ -1,5 +1,5 @@
 {
-  "alarm_no_crm": 0,
+  "alarm_no_crm": 1,
   "by_manager": {
     "no_manager_reaction": 543,
     "Максим": 57,
@@ -93,8 +93,10 @@
       "manager_username": "",
       "name": "",
       "source": "Заявки хост",
-      "status": "PENDING",
-      "violations": []
+      "status": "ALARM_NO_CRM",
+      "violations": [
+        "ALARM_NO_CRM"
+      ]
     },
     {
       "created_at": "2026-09-23T15:03:25+03:00",
@@ -411,5 +413,5 @@
   "no_reaction": 0,
   "ok": 463,
   "total_leads": 647,
-  "updated_at": "2026-09-23T20:52:36+03:00"
+  "updated_at": "2026-09-24T07:24:23+03:00"
 }
