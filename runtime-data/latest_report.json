@@ -1,7 +1,7 @@
 {
   "alarm_no_crm": 1,
   "by_manager": {
-    "no_manager_reaction": 543,
+    "no_manager_reaction": 545,
     "Максим": 57,
     "Олеся": 47
   },
@@ -10,16 +10,16 @@
     "Restoran.Cafe": 3,
     "WedWed": 12,
     "ЗАЯВКА ПОЧТА": 13,
-    "Заявка с ТГ": 27,
+    "Заявка с ТГ": 28,
     "Заявка сайт": 3,
     "Заявки хост": 341,
     "С улицы": 2,
-    "САЙТ ТИЛЬДА": 164,
+    "САЙТ ТИЛЬДА": 165,
     "Тильда Веранда": 48,
     "ТоМесто": 1
   },
   "event_types": {
-    "unknown": 114,
+    "unknown": 116,
     "Бизнес мероприятие": 22,
     "Выпускной": 3,
     "ДР": 2,
@@ -33,7 +33,7 @@
     "Юбилей": 125
   },
   "guest_ranges": {
-    "1-20": 190,
+    "1-20": 192,
     "101-150": 43,
     "151+": 23,
     "21-50": 183,
@@ -42,6 +42,42 @@
   },
   "late_crm": 131,
   "latest_leads": [
+    {
+      "created_at": "2026-09-24T09:34:21+03:00",
+      "crm_entity_id": null,
+      "crm_entity_type": null,
+      "crm_found": false,
+      "event_date": "2026-10-29",
+      "event_type": "",
+      "guests_count": 7,
+      "identifier": "7********29",
+      "identifier_type": "phone",
+      "lead_id": "04378573872e9513",
+      "manager": "",
+      "manager_username": "",
+      "name": "Павел",
+      "source": "САЙТ ТИЛЬДА",
+      "status": "PENDING",
+      "violations": []
+    },
+    {
+      "created_at": "2026-09-23T18:37:07+03:00",
+      "crm_entity_id": 48892711,
+      "crm_entity_type": "lead",
+      "crm_found": true,
+      "event_date": "",
+      "event_type": "",
+      "guests_count": 5,
+      "identifier": "@sashabramova",
+      "identifier_type": "telegram_username",
+      "lead_id": "653ec7df9d7c6272",
+      "manager": "",
+      "manager_username": "",
+      "name": "Александра",
+      "source": "Заявка с ТГ",
+      "status": "OK",
+      "violations": []
+    },
     {
       "created_at": "2026-09-23T17:03:23+03:00",
       "crm_entity_id": 48889537,
@@ -371,47 +407,11 @@
       "source": "Заявки хост",
       "status": "OK",
       "violations": []
-    },
-    {
-      "created_at": "2026-09-22T13:55:18+03:00",
-      "crm_entity_id": 48847937,
-      "crm_entity_type": "lead",
-      "crm_found": true,
-      "event_date": "2027-08-20",
-      "event_type": "Свадьба",
-      "guests_count": 42,
-      "identifier": "7********37",
-      "identifier_type": "phone",
-      "lead_id": "8aedf1ad1f489803",
-      "manager": "Олеся",
-      "manager_username": "Olesyagozhina",
-      "name": "анна",
-      "source": "САЙТ ТИЛЬДА",
-      "status": "OK",
-      "violations": []
-    },
-    {
-      "created_at": "2026-09-22T13:32:41+03:00",
-      "crm_entity_id": 34265909,
-      "crm_entity_type": "lead",
-      "crm_found": true,
-      "event_date": "2026-10-17",
-      "event_type": "Корпоратив",
-      "guests_count": 50,
-      "identifier": "7********73",
-      "identifier_type": "phone",
-      "lead_id": "149f052ad87dccec",
-      "manager": "",
-      "manager_username": "",
-      "name": "юбилей. Карина",
-      "source": "Заявки хост",
-      "status": "OK",
-      "violations": []
     }
   ],
   "needs_review": 112,
   "no_reaction": 0,
-  "ok": 463,
-  "total_leads": 647,
-  "updated_at": "2026-09-24T07:24:23+03:00"
+  "ok": 464,
+  "total_leads": 649,
+  "updated_at": "2026-09-24T10:04:50+03:00"
 }

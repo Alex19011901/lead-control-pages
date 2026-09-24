@@ -19518,6 +19518,68 @@
       "violations": []
     },
     {
+      "category": "САЙТ ТИЛЬДА",
+      "channel": "TELEGRAM",
+      "crm": {
+        "ambiguity_count": 0,
+        "created_at": null,
+        "entity_id": null,
+        "entity_type": null,
+        "event_type": null,
+        "found": false,
+        "responsible_user_id": null,
+        "responsible_user_name": null,
+        "updated_at": null
+      },
+      "crm_created_at": null,
+      "crm_found": false,
+      "crm_required": true,
+      "crm_responsible": null,
+      "deadline_msk_ts": 1790283599,
+      "fields": {
+        "category": "САЙТ ТИЛЬДА",
+        "description": "Содержание заявки:\nName: Павел\nPhone: +79998028729\nДата: 29-10-2026\nКол-во_гостей: 7\nCheckbox: yes\npage_url: https://moscowbanket.ru/#dati\npage_referrer: https://svetliy-moscow.ru/\nform_submit_timestamp: 1790231660\nmetrika_client_id: 1790230941224895510\nym_client_id: 1790230941224895510\nym_clientid: 1790230941224895510\nym_uid: 1790230941224895510\n_ym_uid: 1790230941224895510\nclient_id: 1790230941224895510\nclientid: 1790230941224895510\nyandex_client_id: 1790230941224895510\nya_client_id: 1790230941224895510\n\nДополнительная информация:\nКод заявки: 2925975:8695722142\nКод блока: rec1193957381\nhttps://moscowbanket.ru/#dati\n-----",
+        "event_date": "2026-10-29",
+        "event_date_raw": "29-10-2026",
+        "event_type": "",
+        "form_submit_timestamp": 1790231660,
+        "guests_count": 7,
+        "metrika_client_id": "1790230941224895510",
+        "name": "Павел",
+        "phone_digits": "79998028729",
+        "phone_raw": "+79998028729",
+        "source": "САЙТ ТИЛЬДА",
+        "telegram_username": "",
+        "yclid": ""
+      },
+      "first_seen_at": "2026-09-24T09:34:21+03:00",
+      "first_seen_ts": 1790231661,
+      "id": "04378573872e9513",
+      "identifier": {
+        "type": "phone",
+        "value": "79998028729"
+      },
+      "last_seen_at": "2026-09-24T09:34:21+03:00",
+      "last_seen_ts": 1790231661,
+      "manager_reaction": null,
+      "received_at": "2026-09-24T09:34:21+03:00",
+      "sender_name": "TildaForms",
+      "sender_user_id": 265299531,
+      "sender_username": "TildaFormsBot",
+      "source": "САЙТ ТИЛЬДА",
+      "status": "PENDING",
+      "telegram": {
+        "chat_id": -1001645768111,
+        "message_ids": [
+          6000
+        ],
+        "update_ids": [
+          185608524
+        ]
+      },
+      "violations": []
+    },
+    {
       "category": "TG_LEAD",
       "channel": "TELEGRAM",
       "crm": {
@@ -60240,6 +60302,98 @@
       "source": "Заявки хост",
       "status": "OK",
       "username": "",
+      "violations": []
+    },
+    {
+      "category": "TG_LEAD",
+      "channel": "MAX",
+      "crm": {
+        "ambiguity_count": 0,
+        "created_at": 1790179677,
+        "entity_id": 48892711,
+        "entity_type": "lead",
+        "event_type": null,
+        "found": true,
+        "guests": "5",
+        "guests_source": "CRM",
+        "responsible_user_id": 12982830,
+        "responsible_user_name": "Максим",
+        "updated_at": 1790190904
+      },
+      "crm_check_status": "PENDING",
+      "crm_created_at": 1790179677,
+      "crm_feedback": {
+        "crm_lead_id": 48892711,
+        "deadline_at": 1790456400,
+        "excluded": false,
+        "first_activity_at": null,
+        "lead_created_at": 1790179677,
+        "pipeline_id": 10081590,
+        "responsible_user_id": 12982830,
+        "rule_version": 6,
+        "state": "WAITING",
+        "status_id": 79927034,
+        "status_name": "Первичный контакт"
+      },
+      "crm_found": true,
+      "crm_required": true,
+      "crm_responsible": 12982830,
+      "deadline_msk_ts": 1790197199,
+      "event_date": "",
+      "fields": {
+        "category": "TG_LEAD",
+        "event_date": "",
+        "event_date_raw": "",
+        "event_type": "",
+        "guests_count": 5,
+        "guests_max": null,
+        "guests_min": null,
+        "guests_raw": "5 гостей",
+        "name": "Александра",
+        "phone_digits": "",
+        "phone_raw": "",
+        "source": "Заявка с ТГ",
+        "telegram_username": "sashabramova"
+      },
+      "first_seen_at": "2026-09-23T18:37:07+03:00",
+      "first_seen_ts": 1790177827,
+      "guests": 5,
+      "guests_max": null,
+      "guests_min": null,
+      "guests_raw": "5 гостей",
+      "id": "653ec7df9d7c6272",
+      "identifier": {
+        "type": "telegram_username",
+        "value": "sashabramova"
+      },
+      "last_seen_at": "2026-09-23T18:37:07+03:00",
+      "last_seen_ts": 1790177827,
+      "manager_reaction": null,
+      "manual_review": {
+        "decided_at": "2026-09-24T09:40:00+03:00",
+        "decision": "TG_LEAD",
+        "key": "MAX:-71704692523093:mid.ffffbec8f345ffab01a0cee9d9544023"
+      },
+      "max": {
+        "chat_id": -71704692523093,
+        "message_ids": [
+          "mid.ffffbec8f345ffab01a0cee9d9544023"
+        ],
+        "sender_name": "Олеся",
+        "sender_user_id": 48906491,
+        "sender_username": null
+      },
+      "message_id": "mid.ffffbec8f345ffab01a0cee9d9544023",
+      "name": "Александра",
+      "name_source": "MESSAGE_EXPLICIT",
+      "phone": "",
+      "received_at": "2026-09-23T18:37:07+03:00",
+      "sender_name": "Олеся",
+      "sender_user_id": 48906491,
+      "sender_username": null,
+      "source": "Заявка с ТГ",
+      "status": "OK",
+      "username": "sashabramova",
       "violations": []
     }
   ],
