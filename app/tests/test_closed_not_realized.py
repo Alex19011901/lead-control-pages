@@ -96,6 +96,29 @@ class ClosedNotRealizedTests(unittest.TestCase):
         )
         self.assertEqual(len(client.request_calls), 1)
 
+    def test_reuses_loss_metadata_from_feedback_without_second_lead_read(self):
+        leads = [
+            {
+                "crm": {"found": True, "entity_type": "lead", "entity_id": 101},
+                "crm_feedback": {
+                    "status_id": 143,
+                    "status_name": "Закрыто и не реализовано",
+                    "closed_at": _ts(16),
+                    "loss_reason_id": 501,
+                    "loss_reason_name": "Не устроила цена",
+                    "loss_reason_checked": True,
+                },
+            }
+        ]
+        client = FakeClient()
+
+        apply_closed_not_realized_history(leads, client, now_ts=_ts(16, 18))
+
+        self.assertEqual(client.calls, [])
+        self.assertEqual(len(client.request_calls), 1)
+        self.assertEqual(leads[0]["crm_outcome"]["loss_reason_name"], "Не устроила цена")
+        self.assertEqual(leads[0]["closed_not_realized"]["closed_at"], _ts(16))
+
     def test_non_closed_status_is_ignored(self):
         leads = [{
             "crm": {"found": True, "entity_type": "lead", "entity_id": 101},
