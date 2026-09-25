@@ -93,6 +93,8 @@ def apply_closed_not_realized_history(
     current_ts = int(now_ts if now_ts is not None else time.time())
     today = _moscow_date(current_ts)
     first_day = today - timedelta(days=HISTORY_DAYS - 1)
+    detail_cache: dict[int, dict[str, Any]] = {}
+    comment_cache: dict[int, tuple[str, int | None]] = {}
 
     for lead in leads:
         lead.pop("closed_not_realized", None)
@@ -128,18 +130,33 @@ def apply_closed_not_realized_history(
             continue
 
         crm_lead_id = int(crm["entity_id"])
-        detailed = client._get_entity(
-            "leads",
-            crm_lead_id,
-            params={"with": "loss_reason"},
-        ) or {}
+        if feedback.get("loss_reason_checked"):
+            try:
+                closed_at = int(feedback.get("closed_at") or 0)
+            except (TypeError, ValueError):
+                closed_at = 0
+            raw_reason_id = feedback.get("loss_reason_id")
+            try:
+                reason_id = int(raw_reason_id) if raw_reason_id else None
+            except (TypeError, ValueError):
+                reason_id = None
+            reason_name = str(feedback.get("loss_reason_name") or "").strip() or "Не указана"
+        else:
+            detailed = detail_cache.get(crm_lead_id)
+            if detailed is None:
+                detailed = client._get_entity(
+                    "leads",
+                    crm_lead_id,
+                    params={"with": "loss_reason"},
+                ) or {}
+                detail_cache[crm_lead_id] = detailed
 
-        try:
-            closed_at = int(detailed.get("closed_at") or 0)
-        except (TypeError, ValueError):
-            closed_at = 0
-        reason_id, reason_name = _loss_reason(detailed)
-        reason_name = reason_name or "Не указана"
+            try:
+                closed_at = int(detailed.get("closed_at") or 0)
+            except (TypeError, ValueError):
+                closed_at = 0
+            reason_id, reason_name = _loss_reason(detailed)
+            reason_name = reason_name or "Не указана"
 
         lead["crm_outcome"] = {
             "result": "LOST",
@@ -159,10 +176,14 @@ def apply_closed_not_realized_history(
 
         last_comment = ""
         last_comment_at: int | None = None
-        try:
-            last_comment, last_comment_at = _latest_common_comment(client, crm_lead_id)
-        except RuntimeError as exc:
-            LOG.warning("CRM closed-lead comment lookup failed lead_id=%s error=%s", crm_lead_id, exc)
+        if crm_lead_id in comment_cache:
+            last_comment, last_comment_at = comment_cache[crm_lead_id]
+        else:
+            try:
+                last_comment, last_comment_at = _latest_common_comment(client, crm_lead_id)
+                comment_cache[crm_lead_id] = (last_comment, last_comment_at)
+            except RuntimeError as exc:
+                LOG.warning("CRM closed-lead comment lookup failed lead_id=%s error=%s", crm_lead_id, exc)
 
         lead["closed_not_realized"] = {
             "crm_lead_id": crm_lead_id,
