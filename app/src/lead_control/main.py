@@ -11,6 +11,7 @@ from .closed_not_realized import apply_closed_not_realized_history
 from .config import load_config
 from .crm_apply import apply_crm
 from .crm_feedback import apply_crm_feedback_tracking
+from .crm_pipeline_activity import collect_pipeline_activity
 from .daily_duplicates import apply_daily_phone_duplicate_policy
 from .data_branch import commit_data_if_changed, prepare_data_worktree
 from .explicit_client_name import apply_explicit_client_names
@@ -207,6 +208,14 @@ def main() -> None:
             previous_leads=previous_leads,
             reuse_stable=config.fast_refresh,
         )
+        try:
+            leads_payload["pipeline_activity"] = collect_pipeline_activity(
+                leads_payload["leads"],
+                amocrm,
+            )
+        except RuntimeError as exc:
+            LOG.warning("CRM pipeline activity lookup failed error=%s", exc)
+            leads_payload["pipeline_activity"] = old_leads_payload.get("pipeline_activity") or {}
         apply_closed_not_realized_history(leads_payload["leads"], amocrm)
     apply_crm_day_status_policy(leads_payload["leads"])
 
