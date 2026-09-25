@@ -59,6 +59,7 @@ class DashboardSnapshotTests(unittest.TestCase):
             self.assertEqual(daily["latest"][0]["guests"], "14")
             self.assertEqual(daily["latest"][0]["manager"], "Максим")
             self.assertEqual(daily["latest"][0]["crm_status"], "ЖДЕМ НА ДЕГУСТАЦИЮ")
+            self.assertEqual(view["latest"][0]["crm_status"], "ЖДЕМ НА ДЕГУСТАЦИЮ")
 
     def test_tilda_veranda_unknown_event_is_excluded_only_from_event_metric(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
