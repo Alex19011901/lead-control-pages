@@ -19,17 +19,17 @@ PIPELINE_ACTIVITY_CSS = r'''
 .pipeline-week-control select{background:#111d2c;color:#fff;border:1px solid #2a3b50;border-radius:7px;padding:5px 7px;font-size:10px;font-weight:700;outline:none}
 .pipeline-activity-scroll{overflow-x:auto;padding-bottom:2px;margin-top:7px}
 .pipeline-activity-grid{display:grid;grid-template-columns:118px repeat(7,28px) 36px;gap:2px;width:max-content;min-width:0;align-items:stretch}
-.pa-head,.pa-label,.pa-cell,.pa-total{border:1px solid #223146;border-radius:5px;min-height:23px;display:flex;align-items:center}
-.pa-head{justify-content:center;text-align:center;background:#0d1825;color:#aebdd0;font-size:8px;padding:2px 1px;line-height:1}
-.pa-head:first-child{justify-content:flex-start;padding-left:6px}
+.pa-head,.pa-label,.pa-cell,.pa-total{border:1px solid #223146;border-radius:3px;height:12px;min-height:12px;display:flex;align-items:center;box-sizing:border-box}
+.pa-head{justify-content:center;text-align:center;background:#0d1825;color:#aebdd0;font-size:7px;padding:0 1px;line-height:1;white-space:nowrap;overflow:hidden}
+.pa-head:first-child{justify-content:flex-start;padding-left:3px}
 .pa-head.today{outline:1px solid #7d5cff88;color:#fff}
-.pa-label{justify-content:flex-start;background:#0d1825;padding:3px 4px;font-size:9px;font-weight:700;line-height:1.02}
-.pa-label .dot{width:5px;height:5px;border-radius:50%;margin-right:4px;flex:0 0 auto}
-.pa-cell,.pa-total{justify-content:center;font-size:9px;font-weight:800;padding:1px}
+.pa-label{justify-content:flex-start;background:#0d1825;padding:0 3px;font-size:7px;font-weight:700;line-height:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pa-label .dot{width:3px;height:3px;border-radius:50%;margin-right:3px;flex:0 0 auto}
+.pa-cell,.pa-total{justify-content:center;font-size:7px;font-weight:800;padding:0;line-height:1}
 .pa-cell.zero{background:#0d1825;color:#718196}
 .pa-total{background:#151f2f}
-.pa-subtoday{display:block;color:#9bb8ff;font-size:7px;margin-top:1px}
-@media(max-width:760px){#pipelineActivityCard{padding:7px;width:100%}.pipeline-activity-head{gap:5px}.pipeline-week-control{width:100%;justify-content:space-between}.pipeline-week-control select{flex:0 1 170px;max-width:170px}.pipeline-activity-grid{grid-template-columns:105px repeat(7,27px) 34px;gap:2px}.pa-head,.pa-label,.pa-cell,.pa-total{min-height:22px;border-radius:4px}.pa-label{font-size:8px;padding:2px 4px}.pa-cell,.pa-total{font-size:9px}}
+.pa-subtoday{display:none}
+@media(max-width:760px){#pipelineActivityCard{padding:6px;width:100%}.pipeline-activity-head{gap:4px}.pipeline-week-control{width:100%;justify-content:space-between}.pipeline-week-control select{flex:0 1 165px;max-width:165px}.pipeline-activity-grid{grid-template-columns:100px repeat(7,26px) 32px;gap:1px}.pa-head,.pa-label,.pa-cell,.pa-total{height:11px;min-height:11px;border-radius:2px}.pa-head,.pa-label,.pa-cell,.pa-total{font-size:7px}.pa-label{padding:0 2px}}
 '''
 
 PIPELINE_ACTIVITY_RENDER = r'''function renderPipelineActivity(){var grid=id('pipelineActivityGrid'),sel=id('pipelineWeekSelect'),empty=id('pipelineActivityEmpty'),weeks=(PA&&PA.weeks)||[],stages=(PA&&PA.stages)||[],days=(PA&&PA.days)||{},active=[],i,j,week,dates,maxCount=0,count,total,html='',palette=['78,161,255','54,209,107','255,174,66','255,95,103','125,92,255','77,211,191','245,141,66','156,163,175'];if(!grid||!sel)return;if(!weeks.length){sel.innerHTML='<option>Нет данных</option>';grid.innerHTML='';empty.style.display='block';return}if(pipelineWeekIndex<0||pipelineWeekIndex>=weeks.length)pipelineWeekIndex=0;sel.innerHTML='';for(i=0;i<weeks.length;i++){var opt=document.createElement('option');opt.value=String(i);opt.textContent=weeks[i].label||('Неделя '+(i+1));sel.appendChild(opt)}sel.value=String(pipelineWeekIndex);sel.onchange=function(){pipelineWeekIndex=parseInt(this.value||'0',10)||0;renderPipelineActivity()};week=weeks[pipelineWeekIndex];dates=week.dates||[];for(i=0;i<stages.length;i++){total=0;for(j=0;j<dates.length;j++){count=parseInt(((days[dates[j]]||{})[String(stages[i].id)]||0),10)||0;total+=count;if(count>maxCount)maxCount=count}if(total>0)active.push(stages[i])}if(!active.length){grid.innerHTML='';empty.style.display='block';return}html+='<div class="pa-head">Этап</div>';for(j=0;j<dates.length;j++){var isToday=dates[j]===String(PA.today||'');html+='<div class="pa-head'+(isToday?' today':'')+'">'+esc(fd(dates[j]).slice(0,5))+(isToday?'<span class="pa-subtoday">Сегодня</span>':'')+'</div>'}html+='<div class="pa-head">Σ</div>';for(i=0;i<active.length;i++){var rgb=palette[i%palette.length];total=0;html+='<div class="pa-label"><span class="dot" style="background:rgb('+rgb+')"></span>'+esc(active[i].name)+'</div>';for(j=0;j<dates.length;j++){count=parseInt(((days[dates[j]]||{})[String(active[i].id)]||0),10)||0;total+=count;if(count){var alpha=.16+(maxCount?count/maxCount*.48:0);html+='<div class="pa-cell" style="background:rgba('+rgb+','+alpha.toFixed(2)+');border-color:rgba('+rgb+',.42)">'+count+'</div>'}else html+='<div class="pa-cell zero">0</div>'}html+='<div class="pa-total">'+total+'</div>'}grid.innerHTML=html;empty.style.display='none'}
