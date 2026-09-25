@@ -36,6 +36,7 @@ class FakeClient:
         self.event_calls = 0
         self.task_calls = 0
         self.lead_reads = 0
+        self.batch_lead_calls = 0
 
     def _get_entity(self, entity_type, entity_id, params=None):
         if entity_type == "leads" and int(entity_id) == int(self.lead_card["id"]):
@@ -44,6 +45,17 @@ class FakeClient:
         return None
 
     def _request_json(self, path, params):
+        if path == "/api/v4/leads":
+            self.batch_lead_calls += 1
+            requested_ids = {
+                int(value)
+                for key, value in params.items()
+                if str(key).startswith("filter[id][")
+            }
+            leads = [dict(self.lead_card)] if int(self.lead_card["id"]) in requested_ids else []
+            if leads and params.get("with") == "loss_reason":
+                leads[0].setdefault("_embedded", {})
+            return {"_embedded": {"leads": leads}, "_links": {}}
         if path == "/api/v4/leads/notes":
             self.note_calls += 1
             self.assert_notes_query(params)
@@ -343,9 +355,61 @@ class CRMFeedbackTests(unittest.TestCase):
             reuse_stable=True,
         )
 
-        self.assertGreater(client.lead_reads, 0)
+        self.assertGreater(client.lead_reads + client.batch_lead_calls, 0)
         self.assertEqual(lead["crm_feedback"]["state"], "EXCLUDED")
         self.assertEqual(client.note_calls, 0)
+
+    def test_duplicate_dashboard_leads_share_one_current_card_and_one_history_scan(self):
+        created = moscow_ts(2026, 8, 14, 14, 16, 26)
+        client = FakeClient(
+            make_card(created),
+            note_pages=[[]],
+            event_pages=[[]],
+            task_pages=[[]],
+        )
+        lead_a = make_lead(created)
+        lead_b = make_lead(created)
+        lead_b["id"] = "b"
+
+        apply_crm_feedback_tracking(
+            [lead_a, lead_b],
+            client,
+            now_ts=moscow_ts(2026, 8, 20, 12, 0, 0),
+        )
+
+        self.assertEqual(client.batch_lead_calls, 1)
+        self.assertEqual(client.lead_reads, 0)
+        self.assertEqual(client.note_calls, 1)
+        self.assertEqual(client.event_calls, 1)
+        self.assertEqual(client.task_calls, 1)
+        self.assertEqual(lead_a["crm_feedback"]["state"], "NO_FEEDBACK")
+        self.assertEqual(lead_b["crm_feedback"]["state"], "NO_FEEDBACK")
+
+    def test_closed_lead_feedback_includes_loss_metadata_from_current_card(self):
+        created = moscow_ts(2026, 8, 14, 14, 16, 26)
+        closed_at = moscow_ts(2026, 8, 20, 12, 0, 0)
+        card = make_card(created, status_id=143)
+        card["closed_at"] = closed_at
+        card["loss_reason_id"] = 501
+        card["_embedded"] = {
+            "loss_reason": [{"id": 501, "name": "Не устроила цена"}]
+        }
+        client = FakeClient(card, status_name="Закрыто и не реализовано")
+        lead = make_lead(created)
+
+        apply_crm_feedback_tracking(
+            [lead],
+            client,
+            now_ts=moscow_ts(2026, 8, 24, 12, 0, 0),
+        )
+
+        feedback = lead["crm_feedback"]
+        self.assertEqual(feedback["state"], "EXCLUDED")
+        self.assertEqual(feedback["closed_at"], closed_at)
+        self.assertEqual(feedback["loss_reason_id"], 501)
+        self.assertEqual(feedback["loss_reason_name"], "Не устроила цена")
+        self.assertTrue(feedback["loss_reason_checked"])
+        self.assertEqual(client.batch_lead_calls, 1)
 
     def test_cached_comment_is_not_reused_after_manager_change(self):
         created = moscow_ts(2026, 8, 14, 14, 16, 26)
