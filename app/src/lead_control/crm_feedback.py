@@ -453,22 +453,26 @@ def apply_crm_feedback_tracking(
                         responsible_user_id,
                     )
                     activity_cache[activity_key] = first_activity_at
-                    except RuntimeError as exc:
+                except RuntimeError as exc:
                     # A history lookup must not corrupt the existing lead-control
                     # result. Keep the row unknown and retry on the next run.
-                    LOG.warning("CRM feedback history lookup failed lead_id=%s error=%s", crm_lead_id, exc)
+                    LOG.warning(
+                        "CRM feedback history lookup failed lead_id=%s error=%s",
+                        crm_lead_id,
+                        exc,
+                    )
                     lead["crm_feedback"] = {
-                    "state": "UNKNOWN",
-                    "crm_lead_id": crm_lead_id,
-                    "lead_created_at": created_at,
-                    "first_activity_at": None,
-                    "pipeline_id": pipeline_id,
-                    "status_id": status_id,
-                    "status_name": status_name,
-                    "excluded": False,
-                    "responsible_user_id": responsible_user_id,
-                    "rule_version": FEEDBACK_RULE_VERSION,
-                    **outcome_meta,
+                        "state": "UNKNOWN",
+                        "crm_lead_id": crm_lead_id,
+                        "lead_created_at": created_at,
+                        "first_activity_at": None,
+                        "pipeline_id": pipeline_id,
+                        "status_id": status_id,
+                        "status_name": status_name,
+                        "excluded": False,
+                        "responsible_user_id": responsible_user_id,
+                        "rule_version": FEEDBACK_RULE_VERSION,
+                        **outcome_meta,
                     }
                     continue
 
