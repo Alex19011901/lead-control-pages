@@ -15,6 +15,7 @@ FEEDBACK_RED_DAY = 5
 FEEDBACK_RULE_VERSION = 6
 CLOSED_NOT_REALIZED_STATUS_ID = 143
 MOSCOW_TZ = ZoneInfo("Europe/Moscow")
+LEAD_CARD_BATCH_SIZE = 100
 
 
 def _status_key(value: object) -> str:
@@ -95,6 +96,71 @@ def _status_name(
         name = ""
     cache[key] = name
     return name
+
+
+def _loss_reason_from_card(payload: dict[str, Any]) -> tuple[int | None, str]:
+    raw = ((payload.get("_embedded") or {}).get("loss_reason"))
+    item: dict[str, Any] = {}
+    if isinstance(raw, list) and raw:
+        item = raw[0] if isinstance(raw[0], dict) else {}
+    elif isinstance(raw, dict):
+        item = raw
+
+    reason_id = item.get("id") or payload.get("loss_reason_id")
+    try:
+        reason_id = int(reason_id) if reason_id else None
+    except (TypeError, ValueError):
+        reason_id = None
+    return reason_id, str(item.get("name") or "").strip()
+
+
+def _current_lead_cards(
+    client: AmoCRMClient,
+    crm_lead_ids: set[int],
+) -> dict[int, dict[str, Any]]:
+    """Load current amoCRM deal cards in batches, with exact-card fallback."""
+    result: dict[int, dict[str, Any]] = {}
+    ordered_ids = sorted(crm_lead_ids)
+
+    for start in range(0, len(ordered_ids), LEAD_CARD_BATCH_SIZE):
+        chunk = ordered_ids[start : start + LEAD_CARD_BATCH_SIZE]
+        params: dict[str, Any] = {"limit": 250, "with": "loss_reason"}
+        for index, crm_lead_id in enumerate(chunk):
+            params[f"filter[id][{index}]"] = crm_lead_id
+
+        try:
+            payload = client._request_json("/api/v4/leads", params)
+            cards = list(((payload.get("_embedded") or {}).get("leads")) or [])
+        except RuntimeError as exc:
+            LOG.warning(
+                "CRM batch lead lookup failed count=%s error=%s; falling back to exact reads",
+                len(chunk),
+                exc,
+            )
+            cards = []
+
+        for card in cards:
+            try:
+                card_id = int(card.get("id") or 0)
+            except (TypeError, ValueError):
+                continue
+            if card_id:
+                result[card_id] = card
+
+        # Preserve the previous exact-read behavior for any card omitted from
+        # the batch response because of permissions, deletion, or API quirks.
+        for crm_lead_id in chunk:
+            if crm_lead_id in result:
+                continue
+            card = client._get_entity(
+                "leads",
+                crm_lead_id,
+                params={"with": "loss_reason"},
+            ) or {}
+            if card:
+                result[crm_lead_id] = card
+
+    return result
 
 
 def _first_manager_comment_after_creation(
@@ -271,6 +337,17 @@ def apply_crm_feedback_tracking(
         if item.get("id")
     }
     status_cache: dict[tuple[int, int], str] = {}
+    crm_lead_ids: set[int] = set()
+    for lead in leads:
+        crm = lead.get("crm") or {}
+        if not crm.get("found") or crm.get("entity_type") != "lead" or not crm.get("entity_id"):
+            continue
+        try:
+            crm_lead_ids.add(int(crm["entity_id"]))
+        except (TypeError, ValueError):
+            continue
+    current_cards = _current_lead_cards(client, crm_lead_ids)
+    activity_cache: dict[tuple[int, int, int], int | None] = {}
 
     for lead in leads:
         crm = lead.get("crm") or {}
@@ -286,7 +363,7 @@ def apply_crm_feedback_tracking(
             crm_responsible_user_id = int(crm.get("responsible_user_id") or 0)
         except (TypeError, ValueError):
             crm_responsible_user_id = 0
-        full_lead = client._get_entity("leads", crm_lead_id) or {}
+        full_lead = current_cards.get(crm_lead_id) or {}
         try:
             created_at = int(full_lead.get("created_at") or crm.get("created_at") or 0)
         except (TypeError, ValueError):
@@ -302,6 +379,17 @@ def apply_crm_feedback_tracking(
         except (TypeError, ValueError):
             responsible_user_id = 0
         status_name = _status_name(client, pipeline_id, status_id, status_cache)
+        try:
+            closed_at = int(full_lead.get("closed_at") or 0)
+        except (TypeError, ValueError):
+            closed_at = 0
+        loss_reason_id, loss_reason_name = _loss_reason_from_card(full_lead)
+        outcome_meta = {
+            "closed_at": closed_at or None,
+            "loss_reason_id": loss_reason_id,
+            "loss_reason_name": loss_reason_name,
+            "loss_reason_checked": bool(full_lead),
+        }
 
         if _is_feedback_excluded_status(status_id, status_name):
             lead["crm_feedback"] = {
@@ -315,6 +403,7 @@ def apply_crm_feedback_tracking(
                 "excluded": True,
                 "responsible_user_id": responsible_user_id or None,
                 "rule_version": FEEDBACK_RULE_VERSION,
+                **outcome_meta,
             }
             continue
 
@@ -330,6 +419,7 @@ def apply_crm_feedback_tracking(
                 "excluded": False,
                 "responsible_user_id": responsible_user_id or None,
                 "rule_version": FEEDBACK_RULE_VERSION,
+                **outcome_meta,
             }
             continue
 
@@ -351,18 +441,23 @@ def apply_crm_feedback_tracking(
                 first_activity_at = previous_activity
 
         if first_activity_at is None:
-            try:
-                first_activity_at = _first_manager_comment_after_creation(
-                    client,
-                    crm_lead_id,
-                    created_at,
-                    responsible_user_id,
-                )
-            except RuntimeError as exc:
-                # A history lookup must not corrupt the existing lead-control
-                # result. Keep the row unknown and retry on the next run.
-                LOG.warning("CRM feedback history lookup failed lead_id=%s error=%s", crm_lead_id, exc)
-                lead["crm_feedback"] = {
+            activity_key = (crm_lead_id, created_at, responsible_user_id)
+            if activity_key in activity_cache:
+                first_activity_at = activity_cache[activity_key]
+            else:
+                try:
+                    first_activity_at = _first_manager_comment_after_creation(
+                        client,
+                        crm_lead_id,
+                        created_at,
+                        responsible_user_id,
+                    )
+                    activity_cache[activity_key] = first_activity_at
+                    except RuntimeError as exc:
+                    # A history lookup must not corrupt the existing lead-control
+                    # result. Keep the row unknown and retry on the next run.
+                    LOG.warning("CRM feedback history lookup failed lead_id=%s error=%s", crm_lead_id, exc)
+                    lead["crm_feedback"] = {
                     "state": "UNKNOWN",
                     "crm_lead_id": crm_lead_id,
                     "lead_created_at": created_at,
@@ -373,8 +468,9 @@ def apply_crm_feedback_tracking(
                     "excluded": False,
                     "responsible_user_id": responsible_user_id,
                     "rule_version": FEEDBACK_RULE_VERSION,
-                }
-                continue
+                    **outcome_meta,
+                    }
+                    continue
 
         if first_activity_at is not None:
             state = "CLEAR"
@@ -395,4 +491,5 @@ def apply_crm_feedback_tracking(
             "deadline_at": _feedback_deadline_ts(created_at),
             "responsible_user_id": responsible_user_id,
             "rule_version": FEEDBACK_RULE_VERSION,
+            **outcome_meta,
         }
