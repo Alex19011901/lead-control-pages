@@ -19976,6 +19976,81 @@
       "violations": []
     },
     {
+      "category": "САЙТ ТИЛЬДА",
+      "channel": "TELEGRAM",
+      "crm": {
+        "ambiguity_count": 0,
+        "created_at": null,
+        "entity_id": null,
+        "entity_type": null,
+        "event_type": null,
+        "found": false,
+        "responsible_user_id": null,
+        "responsible_user_name": null,
+        "updated_at": null
+      },
+      "crm_created_at": null,
+      "crm_found": false,
+      "crm_required": true,
+      "crm_responsible": null,
+      "deadline_msk_ts": 1790369999,
+      "fields": {
+        "category": "САЙТ ТИЛЬДА",
+        "description": "Содержание заявки:\nName: Борис\nPhone: +79615259018\nколичество_гостей: 100\nDate: 10/12/2026\nCheckbox: yes\npage_url: https://moscowbanket.ru/\npage_referrer: https://svetliy-moscow.ru/\nform_submit_timestamp: 1790324536\nmetrika_client_id: 1724240382644212343\nym_client_id: 1724240382644212343\nym_clientid: 1724240382644212343\nym_uid: 1724240382644212343\n_ym_uid: 1724240382644212343\nclient_id: 1724240382644212343\nclientid: 1724240382644212343\nyandex_client_id: 1724240382644212343\nya_client_id: 1724240382644212343\n\nДополнительная информация:\nКод заявки: 2925975:8698541933\nКод блока: rec1191803796\nhttps://moscowbanket.ru/\n-----",
+        "event_date": "2026-12-10",
+        "event_date_raw": "10/12/2026",
+        "event_type": "",
+        "form_submit_timestamp": 1790324536,
+        "guests_count": 100,
+        "metrika_client_id": "1724240382644212343",
+        "name": "Борис",
+        "phone_digits": "79615259018",
+        "phone_raw": "+79615259018",
+        "source": "САЙТ ТИЛЬДА",
+        "telegram_username": "",
+        "yclid": ""
+      },
+      "first_seen_at": "2026-09-25T11:22:14+03:00",
+      "first_seen_ts": 1790324534,
+      "id": "4a62fc1136949bda",
+      "identifier": {
+        "type": "phone",
+        "value": "79615259018"
+      },
+      "last_seen_at": "2026-09-25T11:22:14+03:00",
+      "last_seen_ts": 1790324534,
+      "manager_reaction": {
+        "name": "Олеся",
+        "reacted_at": "2026-09-25T11:22:52+03:00",
+        "reacted_ts": 1790324572,
+        "reaction": [
+          {
+            "emoji": "❤",
+            "type": "emoji"
+          }
+        ],
+        "update_id": 185608553,
+        "user_id": 328611361,
+        "username": "Olesyagozhina"
+      },
+      "received_at": "2026-09-25T11:22:14+03:00",
+      "sender_name": "TildaForms",
+      "sender_user_id": 265299531,
+      "sender_username": "TildaFormsBot",
+      "source": "САЙТ ТИЛЬДА",
+      "status": "PENDING",
+      "telegram": {
+        "chat_id": -1001645768111,
+        "message_ids": [
+          6018
+        ],
+        "update_ids": [
+          185608552
+        ]
+      },
+      "violations": []
+    },
+    {
       "category": "TG_LEAD",
       "channel": "TELEGRAM",
       "crm": {
@@ -60535,6 +60610,14 @@
     {
       "category": "HOST",
       "channel": "MAX",
+      "closed_not_realized": {
+        "closed_at": 1790325209,
+        "crm_lead_id": 48940287,
+        "last_comment": "",
+        "last_comment_at": null,
+        "loss_reason_id": 24466294,
+        "loss_reason_name": "Нет обратной связи"
+      },
       "crm": {
         "ambiguity_count": 0,
         "created_at": 1790317852,
@@ -60551,18 +60634,25 @@
       "crm_created_at": 1790317852,
       "crm_feedback": {
         "crm_lead_id": 48940287,
-        "deadline_at": 1790629200,
-        "excluded": false,
+        "excluded": true,
         "first_activity_at": null,
         "lead_created_at": 1790317852,
         "pipeline_id": 10081590,
         "responsible_user_id": 12982830,
         "rule_version": 6,
-        "state": "WAITING",
-        "status_id": 79927034,
-        "status_name": "Первичный контакт"
+        "state": "EXCLUDED",
+        "status_id": 143,
+        "status_name": "Закрыто и не реализовано"
       },
       "crm_found": true,
+      "crm_outcome": {
+        "closed_at": 1790325209,
+        "loss_reason_id": 24466294,
+        "loss_reason_name": "Нет обратной связи",
+        "result": "LOST",
+        "status_id": 143,
+        "status_name": "Закрыто и не реализовано"
+      },
       "crm_required": true,
       "crm_responsible": 12982830,
       "deadline_msk_ts": 1790197199,
@@ -61834,6 +61924,9 @@
       },
       "2026-09-24": {
         "143": 8
+      },
+      "2026-09-25": {
+        "143": 1
       }
     },
     "pipeline_id": 10081590,
@@ -61916,7 +62009,7 @@
       }
     ],
     "today": "2026-09-25",
-    "total_movements": 357,
+    "total_movements": 358,
     "weeks": [
       {
         "dates": [
