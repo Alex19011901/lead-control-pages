@@ -211,6 +211,14 @@ def crm_manager_name(lead: dict) -> str:
     return str(crm.get("responsible_user_name") or "").strip()
 
 
+def crm_status_name(lead: dict) -> str:
+    crm = lead.get("crm") or {}
+    if not crm.get("found") or crm.get("entity_type") != "lead":
+        return ""
+    feedback = lead.get("crm_feedback") or {}
+    return str(feedback.get("status_name") or "").strip()
+
+
 def utc_now() -> str:
     return datetime.now(timezone.utc).isoformat(timespec="seconds").replace("+00:00", "Z")
 
@@ -272,6 +280,7 @@ def build(input_path: Path, output_path: Path, view_output_path: Path | None = N
                 "name": lead.get("name") or (lead.get("fields") or {}).get("name") or "",
                 "identifier": identifier_value(lead),
                 "manager": crm_manager_name(lead),
+                "crm_status": crm_status_name(lead),
             }
         )
 
