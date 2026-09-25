@@ -27,6 +27,12 @@ class ClosedNotRealizedWidgetTests(unittest.TestCase):
         self.assertIn("renderOutcomes()", rendered)
         self.assertIn("Успешно реализовано", rendered)
         self.assertIn("Отказ: ", rendered)
+        self.assertIn('id="pipelineActivityCard"', rendered)
+        self.assertIn('id="pipelineWeekSelect"', rendered)
+        self.assertIn('id="pipelineActivityGrid"', rendered)
+        self.assertIn("Активность по этапам воронки", rendered)
+        self.assertIn("PA=view.pipeline_activity||{}", rendered)
+        self.assertIn("renderPipelineActivity()", rendered)
 
     def test_dashboard_view_exports_success_and_loss_outcomes(self):
         with tempfile.TemporaryDirectory() as tmp:
@@ -36,6 +42,15 @@ class ClosedNotRealizedWidgetTests(unittest.TestCase):
             leads_path.write_text(
                 json.dumps(
                     {
+                        "pipeline_activity": {
+                            "pipeline_id": 77,
+                            "pipeline_name": "Основная воронка",
+                            "today": "2026-09-21",
+                            "weeks": [{"index": 0, "start": "2026-09-21", "end": "2026-09-27", "dates": ["2026-09-21"], "label": "21.09–27.09 · Текущая"}],
+                            "stages": [{"id": 20, "name": "Предбронь", "sort": 20}],
+                            "days": {"2026-09-21": {"20": 2}},
+                            "total_movements": 2,
+                        },
                         "leads": [
                             {
                                 "id": "success",
@@ -81,6 +96,8 @@ class ClosedNotRealizedWidgetTests(unittest.TestCase):
             result = json.loads(view_path.read_text(encoding="utf-8"))
 
             self.assertEqual(len(result["outcomes"]), 2)
+            self.assertEqual(result["pipeline_activity"]["total_movements"], 2)
+            self.assertEqual(result["pipeline_activity"]["days"]["2026-09-21"]["20"], 2)
             by_result = {row["result"]: row for row in result["outcomes"]}
             self.assertEqual(by_result["SUCCESS"]["date"], "2026-09-21")
             self.assertEqual(by_result["LOST"]["reason"], "Не устроила цена")
