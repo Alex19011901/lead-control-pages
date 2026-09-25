@@ -143,6 +143,7 @@ def compact_lead(lead: dict) -> dict:
         "identifier": lead.get("identifier") or "",
         "manager": lead.get("manager") or "",
         "crm_status": lead.get("crm_status") or "",
+        "crm_loss_reason": lead.get("crm_loss_reason") or "",
     }
 
 
