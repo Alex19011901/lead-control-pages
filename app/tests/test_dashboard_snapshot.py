@@ -29,6 +29,15 @@ class DashboardSnapshotTests(unittest.TestCase):
                                 "guests": 14,
                                 "name": "Наталья",
                                 "identifier": {"type": "phone", "value": "79606254413"},
+                                "crm": {
+                                    "found": True,
+                                    "entity_type": "lead",
+                                    "entity_id": 123,
+                                    "responsible_user_name": "Максим"
+                                },
+                                "crm_feedback": {
+                                    "status_name": "ЖДЕМ НА ДЕГУСТАЦИЮ"
+                                },
                             }
                         ]
                     },
@@ -48,6 +57,8 @@ class DashboardSnapshotTests(unittest.TestCase):
             self.assertEqual(daily["daily"]["2026-08-20"]["source"]["Заявки хост"], 1)
             self.assertEqual(daily["latest"][0]["identifier"], "79606254413")
             self.assertEqual(daily["latest"][0]["guests"], "14")
+            self.assertEqual(daily["latest"][0]["manager"], "Максим")
+            self.assertEqual(daily["latest"][0]["crm_status"], "ЖДЕМ НА ДЕГУСТАЦИЮ")
 
     def test_tilda_veranda_unknown_event_is_excluded_only_from_event_metric(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
