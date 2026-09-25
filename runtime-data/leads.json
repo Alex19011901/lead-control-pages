@@ -61779,6 +61779,100 @@
       "status": "OK",
       "username": "",
       "violations": []
+    },
+    {
+      "category": "HOST",
+      "channel": "MAX",
+      "crm": {
+        "ambiguity_count": 0,
+        "created_at": 1761248469,
+        "entity_id": 34330239,
+        "entity_type": "lead",
+        "event_type": "Корпоратив",
+        "found": true,
+        "guests": "80",
+        "guests_source": "CRM",
+        "responsible_user_id": 13009530,
+        "responsible_user_name": "Олеся",
+        "updated_at": 1762102356
+      },
+      "crm_created_at": 1761248469,
+      "crm_feedback": {
+        "crm_lead_id": 34330239,
+        "excluded": true,
+        "first_activity_at": null,
+        "lead_created_at": 1761248469,
+        "pipeline_id": 10081590,
+        "responsible_user_id": 13009530,
+        "rule_version": 6,
+        "state": "EXCLUDED",
+        "status_id": 143,
+        "status_name": "Закрыто и не реализовано"
+      },
+      "crm_found": true,
+      "crm_outcome": {
+        "closed_at": 1762102357,
+        "loss_reason_id": 21780202,
+        "loss_reason_name": "Дата занята",
+        "result": "LOST",
+        "status_id": 143,
+        "status_name": "Закрыто и не реализовано"
+      },
+      "crm_required": true,
+      "crm_responsible": 13009530,
+      "deadline_msk_ts": 1790369999,
+      "event_date": "2026-12-24",
+      "event_type": "Корпоратив",
+      "event_type_source": "CRM",
+      "fields": {
+        "category": "HOST",
+        "email": "",
+        "event_date": "2026-12-24",
+        "event_date_raw": "24.12",
+        "event_type": "Корпоратив",
+        "guests_count": 90,
+        "guests_max": null,
+        "guests_min": null,
+        "guests_raw": "90п.",
+        "name": "Татьяна",
+        "phone_digits": "79266965888",
+        "phone_raw": "89266965888",
+        "source": "Заявки хост",
+        "telegram_username": ""
+      },
+      "first_seen_at": "2026-09-25T11:56:30+03:00",
+      "first_seen_ts": 1790326590,
+      "guests": 90,
+      "guests_max": null,
+      "guests_min": null,
+      "guests_raw": "90п.",
+      "id": "37d410ddc2af9bfe",
+      "identifier": {
+        "type": "phone",
+        "value": "79266965888"
+      },
+      "last_seen_at": "2026-09-25T11:56:30+03:00",
+      "last_seen_ts": 1790326590,
+      "manager_reaction": null,
+      "max": {
+        "chat_id": -71704692523093,
+        "message_ids": [
+          "mid.ffffbec8f345ffab01a0d7c7cc4e672c"
+        ],
+        "sender_name": "Елена",
+        "sender_user_id": 121513620,
+        "sender_username": null
+      },
+      "message_id": "mid.ffffbec8f345ffab01a0d7c7cc4e672c",
+      "name": "Татьяна",
+      "phone": "89266965888",
+      "received_at": "2026-09-25T11:56:30+03:00",
+      "sender_name": "Елена",
+      "sender_user_id": 121513620,
+      "source": "Заявки хост",
+      "status": "OK",
+      "username": "",
+      "violations": []
     }
   ],
   "pipeline_activity": {
