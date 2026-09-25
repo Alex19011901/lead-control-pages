@@ -107,7 +107,8 @@ class DashboardSnapshotTests(unittest.TestCase):
             self.assertEqual(view["latest"][0]["crm_loss_reason"], "Слишком дорого")
 
     def test_latest_leads_template_renders_loss_reason_small(self) -> None:
-        html = (ROOT / "dashboard" / "pageshare" / "index.html").read_text(encoding="utf-8")
+        root = Path(__file__).resolve().parents[1]
+        html = (root / "dashboard" / "pageshare" / "index.html").read_text(encoding="utf-8")
         self.assertIn("function crmStageHtml", html)
         self.assertIn("crm-loss-reason", html)
         self.assertIn("x.crm_loss_reason", html)
