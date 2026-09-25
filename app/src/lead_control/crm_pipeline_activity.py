@@ -3,7 +3,7 @@ from __future__ import annotations
 import logging
 import time
 from collections import Counter
-from datetime import datetime, timedelta
+from datetime import date, datetime, timedelta
 from typing import Any
 from zoneinfo import ZoneInfo
 
@@ -64,8 +64,12 @@ def _pipeline_stages(client: AmoCRMClient, pipeline_id: int) -> tuple[str, list[
     return pipeline_name, result
 
 
-def _week_payload(today) -> list[dict[str, Any]]:
-    current_monday = today - timedelta(days=today.weekday())
+def _week_start(day: date) -> date:
+    return day - timedelta(days=day.weekday())
+
+
+def _week_payload(today: date) -> list[dict[str, Any]]:
+    current_monday = _week_start(today)
     weeks: list[dict[str, Any]] = []
     for index in range(WEEKS_TO_KEEP):
         start = current_monday - timedelta(days=7 * index)
@@ -87,22 +91,38 @@ def _week_payload(today) -> list[dict[str, Any]]:
     return weeks
 
 
+def _previous_week_start(previous_activity: dict[str, Any] | None) -> date | None:
+    if not previous_activity:
+        return None
+    raw = str(previous_activity.get("today") or "")
+    if not raw:
+        return None
+    try:
+        return _week_start(date.fromisoformat(raw))
+    except ValueError:
+        return None
+
+
 def collect_pipeline_activity(
     leads: list[dict[str, Any]],
     client: AmoCRMClient,
     now_ts: int | None = None,
+    previous_activity: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
-    """Collect every real amoCRM lead status transition for the dashboard leads.
+    """Collect every real amoCRM lead status transition for dashboard leads.
 
-    A single lead can contribute several movements on the same day. Lead creation
-    is not counted because only lead_status_changed events are requested.
+    Lead creation is excluded because only lead_status_changed events are
+    requested. During the first collection we load four calendar weeks. Later
+    refreshes rebuild only the current week. On the first refresh of a new week
+    we rebuild the just-finished previous week as well, so weekend movements are
+    not lost even if the last prior refresh happened earlier.
     """
     current_ts = int(now_ts if now_ts is not None else time.time())
     now_dt = datetime.fromtimestamp(current_ts, MOSCOW_TZ)
     today = now_dt.date()
+    current_week_start = _week_start(today)
     weeks = _week_payload(today)
-    first_day = datetime.fromisoformat(weeks[-1]["start"]).replace(tzinfo=MOSCOW_TZ)
-    from_ts = int(first_day.timestamp())
+    first_day = date.fromisoformat(weeks[-1]["start"])
 
     tracked_ids: set[int] = set()
     for lead in leads:
@@ -131,10 +151,41 @@ def collect_pipeline_activity(
     pipeline_name, stages = _pipeline_stages(client, pipeline_id)
     valid_status_ids = {int(stage["id"]) for stage in stages}
 
+    previous_same_pipeline = bool(
+        previous_activity
+        and int(previous_activity.get("pipeline_id") or 0) == pipeline_id
+        and isinstance(previous_activity.get("days"), dict)
+    )
+
+    if previous_same_pipeline:
+        query_start = current_week_start
+        prior_week_start = _previous_week_start(previous_activity)
+        if prior_week_start is not None and prior_week_start != current_week_start:
+            query_start = current_week_start - timedelta(days=7)
+        if query_start < first_day:
+            query_start = first_day
+    else:
+        query_start = first_day
+
     days: dict[str, dict[str, int]] = {}
-    total_movements = 0
-    seen_event_ids: set[str] = set()
+    if previous_same_pipeline:
+        for day_key, bucket in (previous_activity.get("days") or {}).items():
+            try:
+                day_value = date.fromisoformat(str(day_key))
+            except ValueError:
+                continue
+            if first_day <= day_value < query_start and isinstance(bucket, dict):
+                days[str(day_key)] = {
+                    str(status_id): int(count or 0)
+                    for status_id, count in bucket.items()
+                    if int(count or 0) > 0
+                }
+
+    query_from_ts = int(
+        datetime.combine(query_start, datetime.min.time(), tzinfo=MOSCOW_TZ).timestamp()
+    )
     page = 1
+    seen_event_ids: set[str] = set()
 
     while True:
         payload = client._request_json(
@@ -142,7 +193,7 @@ def collect_pipeline_activity(
             {
                 "filter[entity]": "lead",
                 "filter[type]": "lead_status_changed",
-                "filter[created_at][from]": from_ts,
+                "filter[created_at][from]": query_from_ts,
                 "filter[created_at][to]": current_ts,
                 "limit": EVENT_PAGE_LIMIT,
                 "page": page,
@@ -170,11 +221,13 @@ def collect_pipeline_activity(
             if before_status_id == after_status_id and before_pipeline_id == after_pipeline_id:
                 continue
 
-            day = datetime.fromtimestamp(created_at, MOSCOW_TZ).date().isoformat()
-            bucket = days.setdefault(day, {})
+            day = datetime.fromtimestamp(created_at, MOSCOW_TZ).date()
+            if day < query_start or day > today:
+                continue
+            day_key = day.isoformat()
+            bucket = days.setdefault(day_key, {})
             key = str(after_status_id)
             bucket[key] = int(bucket.get(key) or 0) + 1
-            total_movements += 1
 
         links = payload.get("_links") or {}
         if not events or not links.get("next"):
@@ -183,6 +236,12 @@ def collect_pipeline_activity(
         if page > MAX_EVENT_PAGES:
             LOG.warning("CRM pipeline activity pagination stopped after %s pages", MAX_EVENT_PAGES)
             break
+
+    total_movements = sum(
+        int(count or 0)
+        for bucket in days.values()
+        for count in bucket.values()
+    )
 
     return {
         "pipeline_id": pipeline_id,
