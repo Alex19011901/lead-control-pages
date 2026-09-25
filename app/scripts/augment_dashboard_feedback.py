@@ -236,6 +236,7 @@ def augment(leads_path: Path, view_path: Path, now_ts: int | None = None) -> Non
     view["closed_not_realized"] = closed_not_realized_rows
     view["closed_not_realized_summary"] = {"total": len(closed_not_realized_rows), "days": 5}
     view["outcomes"] = outcome_rows
+    view["pipeline_activity"] = leads_payload.get("pipeline_activity") or {}
     view_path.write_text(json.dumps(view, ensure_ascii=False, indent=2), encoding="utf-8")
 
 
