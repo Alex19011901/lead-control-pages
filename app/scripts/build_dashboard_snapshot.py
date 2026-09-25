@@ -219,6 +219,19 @@ def crm_status_name(lead: dict) -> str:
     return str(feedback.get("status_name") or "").strip()
 
 
+def crm_loss_reason(lead: dict) -> str:
+    status = crm_status_name(lead).casefold().replace("ё", "е")
+    if status not in {"закрыто и не реализовано", "закрыто и не реализованно"}:
+        return ""
+    feedback = lead.get("crm_feedback") or {}
+    outcome = lead.get("crm_outcome") or {}
+    return str(
+        feedback.get("loss_reason_name")
+        or outcome.get("loss_reason_name")
+        or ""
+    ).strip()
+
+
 def utc_now() -> str:
     return datetime.now(timezone.utc).isoformat(timespec="seconds").replace("+00:00", "Z")
 
@@ -281,6 +294,7 @@ def build(input_path: Path, output_path: Path, view_output_path: Path | None = N
                 "identifier": identifier_value(lead),
                 "manager": crm_manager_name(lead),
                 "crm_status": crm_status_name(lead),
+                "crm_loss_reason": crm_loss_reason(lead),
             }
         )
 
