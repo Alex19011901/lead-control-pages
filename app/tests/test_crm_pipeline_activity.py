@@ -27,6 +27,9 @@ def _event(event_id: str, entity_id: int, created_at: int, before_id: int, after
 
 
 class FakeClient:
+    def __init__(self):
+        self.event_params = []
+
     def _request_json(self, path, params):
         if path == "/api/v4/leads/pipelines/77":
             return {
@@ -41,6 +44,7 @@ class FakeClient:
                 },
             }
         if path == "/api/v4/events":
+            self.event_params.append(dict(params))
             return {
                 "_embedded": {
                     "events": [
@@ -69,9 +73,10 @@ class PipelineActivityTests(unittest.TestCase):
             },
         ]
 
+        client = FakeClient()
         result = collect_pipeline_activity(
             leads,
-            FakeClient(),
+            client,
             now_ts=_ts(2026, 9, 25, 18),
         )
 
@@ -83,6 +88,37 @@ class PipelineActivityTests(unittest.TestCase):
         self.assertEqual(result["days"]["2026-09-25"]["20"], 2)
         self.assertEqual(result["days"]["2026-09-25"]["30"], 1)
         self.assertEqual(result["total_movements"], 3)
+
+    def test_reuses_finished_weeks_and_rebuilds_only_current_week(self):
+        leads = [
+            {
+                "crm": {"found": True, "entity_type": "lead", "entity_id": 101},
+                "crm_feedback": {"pipeline_id": 77},
+            }
+        ]
+        previous = {
+            "pipeline_id": 77,
+            "today": "2026-09-24",
+            "days": {
+                "2026-09-15": {"20": 4},
+                "2026-09-22": {"30": 99},
+            },
+        }
+        client = FakeClient()
+
+        result = collect_pipeline_activity(
+            leads,
+            client,
+            now_ts=_ts(2026, 9, 25, 18),
+            previous_activity=previous,
+        )
+
+        self.assertEqual(result["days"]["2026-09-15"]["20"], 4)
+        self.assertNotEqual(result["days"].get("2026-09-22", {}).get("30"), 99)
+        self.assertEqual(
+            client.event_params[0]["filter[created_at][from]"],
+            _ts(2026, 9, 21, 0),
+        )
 
     def test_empty_when_no_tracked_crm_leads(self):
         result = collect_pipeline_activity([], FakeClient(), now_ts=_ts(2026, 9, 25))
