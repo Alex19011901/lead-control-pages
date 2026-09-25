@@ -3,30 +3,31 @@
     "today": {
       "start": "2026-09-25",
       "end": "2026-09-25",
-      "total": 2,
+      "total": 3,
       "status": {
-        "PENDING": 1,
+        "PENDING": 2,
         "OK": 1
       },
       "source": {
-        "САЙТ ТИЛЬДА": 1,
+        "САЙТ ТИЛЬДА": 2,
         "Заявки хост": 1
       },
       "channel": {
-        "TELEGRAM": 1,
+        "TELEGRAM": 2,
         "MAX": 1
       },
       "guest": {
-        "51-100": 2
+        "51-100": 2,
+        "1-20": 1
       },
       "event": {
-        "Корпоратив": 1,
+        "Корпоратив": 2,
         "Не определено": 1
       },
       "days": [
         [
           "2026-09-25",
-          2
+          3
         ]
       ]
     },
@@ -67,28 +68,28 @@
     "7": {
       "start": "2026-09-19",
       "end": "2026-09-25",
-      "total": 54,
+      "total": 55,
       "status": {
         "OK": 45,
         "-": 2,
         "LATE_CRM": 6,
-        "PENDING": 1
+        "PENDING": 2
       },
       "source": {
         "Заявка с ТГ": 4,
         "Тильда Веранда": 2,
         "Заявки хост": 30,
-        "САЙТ ТИЛЬДА": 14,
+        "САЙТ ТИЛЬДА": 15,
         "MARQUIZ": 1,
         "WedWed": 1,
         "ЗАЯВКА ПОЧТА": 2
       },
       "channel": {
         "MAX": 39,
-        "TELEGRAM": 15
+        "TELEGRAM": 16
       },
       "guest": {
-        "1-20": 18,
+        "1-20": 19,
         "21-50": 19,
         "51-100": 11,
         "Не указано": 1,
@@ -96,7 +97,7 @@
         "151+": 1
       },
       "event": {
-        "Корпоратив": 14,
+        "Корпоратив": 15,
         "Свадьба": 17,
         "Юбилей": 10,
         "Конференция": 1,
@@ -131,22 +132,22 @@
         ],
         [
           "2026-09-25",
-          2
+          3
         ]
       ]
     },
     "30": {
       "start": "2026-08-27",
       "end": "2026-09-25",
-      "total": 269,
+      "total": 270,
       "status": {
         "OK": 232,
         "-": 9,
         "LATE_CRM": 27,
-        "PENDING": 1
+        "PENDING": 2
       },
       "source": {
-        "САЙТ ТИЛЬДА": 71,
+        "САЙТ ТИЛЬДА": 72,
         "MARQUIZ": 12,
         "Заявки хост": 147,
         "Тильда Веранда": 9,
@@ -157,19 +158,19 @@
         "ЗАЯВКА ПОЧТА": 8
       },
       "channel": {
-        "TELEGRAM": 83,
+        "TELEGRAM": 84,
         "MAX": 186
       },
       "guest": {
         "51-100": 64,
         "21-50": 96,
         "101-150": 22,
-        "1-20": 85,
+        "1-20": 86,
         "Не указано": 3,
         "151+": 14
       },
       "event": {
-        "Корпоратив": 92,
+        "Корпоратив": 93,
         "Свадьба": 85,
         "Бизнес мероприятие": 7,
         "Выпускной": 2,
@@ -297,22 +298,22 @@
         ],
         [
           "2026-09-25",
-          2
+          3
         ]
       ]
     },
     "all": {
       "start": "2026-07-01",
       "end": "2026-09-25",
-      "total": 664,
+      "total": 665,
       "status": {
         "LATE_CRM": 132,
         "OK": 479,
         "-": 52,
-        "PENDING": 1
+        "PENDING": 2
       },
       "source": {
-        "САЙТ ТИЛЬДА": 170,
+        "САЙТ ТИЛЬДА": 171,
         "Тильда Веранда": 48,
         "Заявки хост": 350,
         "Заявка с ТГ": 29,
@@ -325,20 +326,20 @@
         "ЗАЯВКА ПОЧТА": 13
       },
       "channel": {
-        "TELEGRAM": 206,
+        "TELEGRAM": 207,
         "MAX": 458
       },
       "guest": {
         "51-100": 120,
         "21-50": 242,
-        "1-20": 236,
+        "1-20": 237,
         "101-150": 58,
         "151+": 28,
         "Не указано": 11
       },
       "event": {
         "Юбилей": 133,
-        "Корпоратив": 177,
+        "Корпоратив": 178,
         "Свадьба": 203,
         "Не определено": 68,
         "Бизнес мероприятие": 22,
@@ -687,12 +688,26 @@
         ],
         [
           "2026-09-25",
-          2
+          3
         ]
       ]
     }
   },
   "latest": [
+    {
+      "date": "2026-09-25",
+      "ts": "2026-09-25T12:43:41+03:00",
+      "source": "САЙТ ТИЛЬДА",
+      "status": "PENDING",
+      "channel": "TELEGRAM",
+      "guest_range": "20",
+      "guests": "20",
+      "event_type": "Корпоратив",
+      "name": "Марина",
+      "identifier": "79969708455",
+      "manager": "",
+      "crm_status": ""
+    },
     {
       "date": "2026-09-25",
       "ts": "2026-09-25T11:56:30+03:00",
@@ -704,7 +719,8 @@
       "event_type": "Корпоратив",
       "name": "Татьяна",
       "identifier": "79266965888",
-      "manager": "Олеся"
+      "manager": "Олеся",
+      "crm_status": "Закрыто и не реализовано"
     },
     {
       "date": "2026-09-25",
@@ -717,7 +733,8 @@
       "event_type": "unknown",
       "name": "Борис",
       "identifier": "79615259018",
-      "manager": ""
+      "manager": "",
+      "crm_status": ""
     },
     {
       "date": "2026-09-24",
@@ -730,7 +747,8 @@
       "event_type": "Свадьба",
       "name": "Алина",
       "identifier": "79853393649",
-      "manager": "Максим"
+      "manager": "Максим",
+      "crm_status": "Выслано предложение"
     },
     {
       "date": "2026-09-24",
@@ -743,7 +761,8 @@
       "event_type": "Свадьба",
       "name": "Каролина",
       "identifier": "79096430517",
-      "manager": "Максим"
+      "manager": "Максим",
+      "crm_status": "Выслано предложение"
     },
     {
       "date": "2026-09-24",
@@ -756,7 +775,8 @@
       "event_type": "Свадьба",
       "name": "Анна",
       "identifier": "79015977701",
-      "manager": "Максим"
+      "manager": "Максим",
+      "crm_status": "Закрыто и не реализовано"
     },
     {
       "date": "2026-09-24",
@@ -769,7 +789,8 @@
       "event_type": "Свадьба",
       "name": "",
       "identifier": "79776346972",
-      "manager": "Максим"
+      "manager": "Максим",
+      "crm_status": "Закрыто и не реализовано"
     },
     {
       "date": "2026-09-24",
@@ -782,7 +803,8 @@
       "event_type": "Свадьба",
       "name": "Ксения",
       "identifier": "79160206394",
-      "manager": "Максим"
+      "manager": "Максим",
+      "crm_status": "Выслано предложение"
     },
     {
       "date": "2026-09-24",
@@ -795,7 +817,8 @@
       "event_type": "Корпоратив",
       "name": "Александра",
       "identifier": "79851853516",
-      "manager": "Максим"
+      "manager": "Максим",
+      "crm_status": "Закрыто и не реализовано"
     },
     {
       "date": "2026-09-24",
@@ -808,7 +831,8 @@
       "event_type": "Свадьба",
       "name": "",
       "identifier": "angelishka_sh",
-      "manager": "Максим"
+      "manager": "Максим",
+      "crm_status": "Первичный контакт"
     },
     {
       "date": "2026-09-24",
@@ -821,7 +845,8 @@
       "event_type": "Юбилей",
       "name": "Ангелина",
       "identifier": "79610905351",
-      "manager": "Максим"
+      "manager": "Максим",
+      "crm_status": "Выслано предложение"
     },
     {
       "date": "2026-09-24",
@@ -834,7 +859,8 @@
       "event_type": "Юбилей",
       "name": "Лариса Григорьевна",
       "identifier": "79160976298",
-      "manager": "Максим"
+      "manager": "Максим",
+      "crm_status": "Закрыто и не реализовано"
     },
     {
       "date": "2026-09-24",
@@ -847,7 +873,8 @@
       "event_type": "Юбилей",
       "name": "Наталья",
       "identifier": "79104564396",
-      "manager": "Максим"
+      "manager": "Максим",
+      "crm_status": "Закрыто и не реализовано"
     },
     {
       "date": "2026-09-24",
@@ -860,7 +887,8 @@
       "event_type": "Юбилей",
       "name": "Анастасия. (Организатор)",
       "identifier": "79631001366",
-      "manager": "Максим"
+      "manager": "Максим",
+      "crm_status": "Закрыто и не реализовано"
     },
     {
       "date": "2026-09-24",
@@ -873,7 +901,8 @@
       "event_type": "Свадьба",
       "name": "Елизавета",
       "identifier": "79152172774",
-      "manager": "Максим"
+      "manager": "Максим",
+      "crm_status": "Закрыто и не реализовано"
     },
     {
       "date": "2026-09-24",
@@ -886,7 +915,8 @@
       "event_type": "Юбилей",
       "name": "Алексей",
       "identifier": "79266248254",
-      "manager": "Максим"
+      "manager": "Максим",
+      "crm_status": "Закрыто и не реализовано"
     },
     {
       "date": "2026-09-24",
@@ -899,7 +929,8 @@
       "event_type": "Юбилей",
       "name": "Павел",
       "identifier": "79998028729",
-      "manager": "Максим"
+      "manager": "Максим",
+      "crm_status": "ЖДУНЫ"
     },
     {
       "date": "2026-09-23",
@@ -912,7 +943,8 @@
       "event_type": "unknown",
       "name": "Александра",
       "identifier": "sashabramova",
-      "manager": "Максим"
+      "manager": "Максим",
+      "crm_status": "Первичный контакт"
     },
     {
       "date": "2026-09-23",
@@ -925,7 +957,8 @@
       "event_type": "Корпоратив",
       "name": "Анастасия",
       "identifier": "79267006287",
-      "manager": "Максим"
+      "manager": "Максим",
+      "crm_status": "Выслано предложение"
     },
     {
       "date": "2026-09-23",
@@ -938,7 +971,8 @@
       "event_type": "Корпоратив",
       "name": "Наталья Сергеевна Ярославкина",
       "identifier": "79912098464",
-      "manager": "Максим"
+      "manager": "Максим",
+      "crm_status": "Первичный контакт"
     },
     {
       "date": "2026-09-23",
@@ -951,7 +985,8 @@
       "event_type": "Свадьба",
       "name": "",
       "identifier": "79658987576",
-      "manager": "Максим"
+      "manager": "Максим",
+      "crm_status": "Закрыто и не реализовано"
     },
     {
       "date": "2026-09-23",
@@ -964,7 +999,8 @@
       "event_type": "Юбилей",
       "name": "Гюнай",
       "identifier": "79936262971",
-      "manager": "Максим"
+      "manager": "Максим",
+      "crm_status": "Закрыто и не реализовано"
     },
     {
       "date": "2026-09-23",
@@ -977,7 +1013,8 @@
       "event_type": "unknown",
       "name": "Татьяна",
       "identifier": "79895917163",
-      "manager": "Максим"
+      "manager": "Максим",
+      "crm_status": "Первичный контакт"
     },
     {
       "date": "2026-09-23",
@@ -990,7 +1027,8 @@
       "event_type": "Корпоратив",
       "name": "Ксения",
       "identifier": "79159896884",
-      "manager": "Максим"
+      "manager": "Максим",
+      "crm_status": "Закрыто и не реализовано"
     },
     {
       "date": "2026-09-23",
@@ -1003,7 +1041,8 @@
       "event_type": "Корпоратив",
       "name": "елизавета",
       "identifier": "79625800125",
-      "manager": "Максим"
+      "manager": "Максим",
+      "crm_status": "Успешно реализовано"
     },
     {
       "date": "2026-09-23",
@@ -1016,7 +1055,8 @@
       "event_type": "Свадьба",
       "name": "Игорь",
       "identifier": "79154017484",
-      "manager": "Максим"
+      "manager": "Максим",
+      "crm_status": "Закрыто и не реализовано"
     },
     {
       "date": "2026-09-23",
@@ -1029,7 +1069,8 @@
       "event_type": "unknown",
       "name": "Анастасия",
       "identifier": "79772909296",
-      "manager": "Максим"
+      "manager": "Максим",
+      "crm_status": "Закрыто и не реализовано"
     },
     {
       "date": "2026-09-23",
@@ -1042,7 +1083,8 @@
       "event_type": "unknown",
       "name": "Валерия",
       "identifier": "79647039759",
-      "manager": "Максим"
+      "manager": "Максим",
+      "crm_status": "Первичный контакт"
     },
     {
       "date": "2026-09-23",
@@ -1055,7 +1097,8 @@
       "event_type": "Корпоратив",
       "name": "Екатерина",
       "identifier": "79066041616",
-      "manager": "Максим"
+      "manager": "Максим",
+      "crm_status": "Закрыто и не реализовано"
     },
     {
       "date": "2026-09-23",
@@ -1068,7 +1111,8 @@
       "event_type": "Свадьба",
       "name": "Анна",
       "identifier": "79091519001",
-      "manager": "Максим"
+      "manager": "Максим",
+      "crm_status": "Выслано предложение"
     },
     {
       "date": "2026-09-23",
@@ -1081,7 +1125,8 @@
       "event_type": "Корпоратив",
       "name": "Наталья",
       "identifier": "79680368368",
-      "manager": "Максим"
+      "manager": "Максим",
+      "crm_status": "Закрыто и не реализовано"
     },
     {
       "date": "2026-09-22",
@@ -1094,7 +1139,8 @@
       "event_type": "Корпоратив",
       "name": "Александр",
       "identifier": "79166317366",
-      "manager": "Олеся"
+      "manager": "Олеся",
+      "crm_status": "Выслано предложение"
     },
     {
       "date": "2026-09-22",
@@ -1107,7 +1153,8 @@
       "event_type": "Корпоратив",
       "name": "Анастасия Хрулева",
       "identifier": "79686158998",
-      "manager": "Олеся"
+      "manager": "Олеся",
+      "crm_status": "Выслано предложение"
     },
     {
       "date": "2026-09-22",
@@ -1120,7 +1167,8 @@
       "event_type": "unknown",
       "name": "12:00. терраса. Ильдар",
       "identifier": "79168885871",
-      "manager": "Олеся"
+      "manager": "Олеся",
+      "crm_status": "Закрыто и не реализовано"
     },
     {
       "date": "2026-09-22",
@@ -1133,7 +1181,8 @@
       "event_type": "Съёмки",
       "name": "камин. зал. Екатерина",
       "identifier": "79262070271",
-      "manager": "Олеся"
+      "manager": "Олеся",
+      "crm_status": "Закрыто и не реализовано"
     },
     {
       "date": "2026-09-22",
@@ -1146,7 +1195,8 @@
       "event_type": "Бизнес мероприятие",
       "name": "Олеся",
       "identifier": "79197666838",
-      "manager": "Максим"
+      "manager": "Максим",
+      "crm_status": "Закрыто и не реализовано"
     },
     {
       "date": "2026-09-22",
@@ -1159,7 +1209,8 @@
       "event_type": "Свадьба",
       "name": "анна",
       "identifier": "79053237637",
-      "manager": "Олеся"
+      "manager": "Олеся",
+      "crm_status": "Выслано предложение"
     },
     {
       "date": "2026-09-22",
@@ -1172,7 +1223,8 @@
       "event_type": "Корпоратив",
       "name": "юбилей. Карина",
       "identifier": "79252008373",
-      "manager": "Максим"
+      "manager": "Максим",
+      "crm_status": "Контакты на декабрь 26"
     },
     {
       "date": "2026-09-22",
@@ -1185,7 +1237,8 @@
       "event_type": "Юбилей",
       "name": "Елена",
       "identifier": "79031936433",
-      "manager": "Олеся"
+      "manager": "Олеся",
+      "crm_status": "ЖДЕМ НА ДЕГУСТАЦИЮ"
     },
     {
       "date": "2026-09-22",
@@ -1198,7 +1251,8 @@
       "event_type": "Свадьба",
       "name": "свадьба. Софья",
       "identifier": "79035329848",
-      "manager": "Олеся"
+      "manager": "Олеся",
+      "crm_status": "Выслано предложение"
     },
     {
       "date": "2026-09-21",
@@ -1211,7 +1265,8 @@
       "event_type": "Юбилей",
       "name": "Дмитрий",
       "identifier": "79154068133",
-      "manager": "Олеся"
+      "manager": "Олеся",
+      "crm_status": "Выслано предложение"
     },
     {
       "date": "2026-09-21",
@@ -1224,7 +1279,8 @@
       "event_type": "Корпоратив",
       "name": "Елена",
       "identifier": "79108571975",
-      "manager": "Олеся"
+      "manager": "Олеся",
+      "crm_status": "Закрыто и не реализовано"
     },
     {
       "date": "2026-09-21",
@@ -1237,7 +1293,8 @@
       "event_type": "Свадьба",
       "name": "каминный зал. свадьба. Никита",
       "identifier": "79778793386",
-      "manager": "Олеся"
+      "manager": "Олеся",
+      "crm_status": "Закрыто и не реализовано"
     },
     {
       "date": "2026-09-21",
@@ -1250,7 +1307,8 @@
       "event_type": "Свадьба",
       "name": "Екатерина",
       "identifier": "79064896113",
-      "manager": "Олеся"
+      "manager": "Олеся",
+      "crm_status": "Выслано предложение"
     },
     {
       "date": "2026-09-21",
@@ -1263,7 +1321,8 @@
       "event_type": "Свадьба",
       "name": "Юлия",
       "identifier": "79037792366",
-      "manager": "Олеся"
+      "manager": "Олеся",
+      "crm_status": "Выслано предложение"
     },
     {
       "date": "2026-09-21",
@@ -1276,7 +1335,8 @@
       "event_type": "Бизнес мероприятие",
       "name": "Станислав",
       "identifier": "79055590858",
-      "manager": "Олеся"
+      "manager": "Олеся",
+      "crm_status": "Закрыто и не реализовано"
     },
     {
       "date": "2026-09-21",
@@ -1289,7 +1349,8 @@
       "event_type": "Корпоратив",
       "name": "Ольга",
       "identifier": "79162619035",
-      "manager": "Олеся"
+      "manager": "Олеся",
+      "crm_status": "Выслано предложение"
     },
     {
       "date": "2026-09-21",
@@ -1302,7 +1363,8 @@
       "event_type": "Бизнес мероприятие",
       "name": "Божена",
       "identifier": "79104855255",
-      "manager": "Олеся"
+      "manager": "Олеся",
+      "crm_status": "Выслано предложение"
     },
     {
       "date": "2026-09-21",
@@ -1315,7 +1377,8 @@
       "event_type": "Конференция",
       "name": "Собыленская Маргарита",
       "identifier": "79252757190",
-      "manager": "Олеся"
+      "manager": "Олеся",
+      "crm_status": "Выслано предложение"
     },
     {
       "date": "2026-09-20",
@@ -1328,7 +1391,8 @@
       "event_type": "Юбилей",
       "name": "Алёна",
       "identifier": "al_dmtr",
-      "manager": "Максим"
+      "manager": "Максим",
+      "crm_status": "Выслано предложение"
     },
     {
       "date": "2026-09-20",
@@ -1341,7 +1405,8 @@
       "event_type": "Свадьба",
       "name": "Наталья",
       "identifier": "79037644790",
-      "manager": "Максим"
+      "manager": "Максим",
+      "crm_status": "Закрыто и не реализовано"
     },
     {
       "date": "2026-09-19",
@@ -1354,7 +1419,8 @@
       "event_type": "Свадьба",
       "name": "Семен",
       "identifier": "79639917650",
-      "manager": "Максим"
+      "manager": "Максим",
+      "crm_status": "Закрыто и не реализовано"
     },
     {
       "date": "2026-09-19",
@@ -1367,7 +1433,8 @@
       "event_type": "unknown",
       "name": "Флоран",
       "identifier": "79264060586",
-      "manager": ""
+      "manager": "",
+      "crm_status": ""
     },
     {
       "date": "2026-09-19",
@@ -1380,7 +1447,8 @@
       "event_type": "unknown",
       "name": "Софья",
       "identifier": "79268980022",
-      "manager": ""
+      "manager": "",
+      "crm_status": ""
     },
     {
       "date": "2026-09-19",
@@ -1393,7 +1461,8 @@
       "event_type": "Корпоратив",
       "name": "",
       "identifier": "79778721106",
-      "manager": "Олеся"
+      "manager": "Олеся",
+      "crm_status": "Закрыто и не реализовано"
     },
     {
       "date": "2026-09-18",
@@ -1406,7 +1475,8 @@
       "event_type": "Свадьба",
       "name": "Вероника",
       "identifier": "79265708138",
-      "manager": "Олеся"
+      "manager": "Олеся",
+      "crm_status": "Принимают решение"
     },
     {
       "date": "2026-09-18",
@@ -1419,7 +1489,8 @@
       "event_type": "Корпоратив",
       "name": "Алина",
       "identifier": "79666709631",
-      "manager": "Олеся"
+      "manager": "Олеся",
+      "crm_status": "Закрыто и не реализовано"
     },
     {
       "date": "2026-09-18",
@@ -1432,7 +1503,8 @@
       "event_type": "Юбилей",
       "name": "Юрий",
       "identifier": "79255071006",
-      "manager": "Олеся"
+      "manager": "Олеся",
+      "crm_status": "Закрыто и не реализовано"
     },
     {
       "date": "2026-09-18",
@@ -1445,7 +1517,8 @@
       "event_type": "Корпоратив",
       "name": "Сергей",
       "identifier": "79258612290",
-      "manager": "Олеся"
+      "manager": "Олеся",
+      "crm_status": "Принимают решение"
     },
     {
       "date": "2026-09-18",
@@ -1458,25 +1531,13 @@
       "event_type": "Юбилей",
       "name": "Александр",
       "identifier": "79100840060",
-      "manager": "Олеся"
-    },
-    {
-      "date": "2026-09-18",
-      "ts": "2026-09-18T12:37:54+03:00",
-      "source": "Заявки хост",
-      "status": "OK",
-      "channel": "MAX",
-      "guest_range": "100",
-      "guests": "100",
-      "event_type": "Корпоратив",
-      "name": "Екатерина",
-      "identifier": "79169782415",
-      "manager": "Олеся"
+      "manager": "Олеся",
+      "crm_status": "Принимают решение"
     }
   ],
   "not_entered": [],
-  "snapshot_generated_at": "2026-09-25T09:43:06Z",
-  "snapshot_at": "2026-09-25T11:56:30+03:00",
+  "snapshot_generated_at": "2026-09-25T10:06:38Z",
+  "snapshot_at": "2026-09-25T12:43:41+03:00",
   "min_date": "2026-07-01",
   "max_date": "2026-09-25",
   "feedback_summary": {
@@ -1501,7 +1562,7 @@
       "crm_status": "Выслано предложение",
       "first_activity_at": "",
       "first_activity_ts": null,
-      "age_seconds": 311274,
+      "age_seconds": 312686,
       "feedback_state": "NO_FEEDBACK"
     },
     {
@@ -1517,7 +1578,7 @@
       "crm_status": "Выслано предложение",
       "first_activity_at": "",
       "first_activity_ts": null,
-      "age_seconds": 311370,
+      "age_seconds": 312782,
       "feedback_state": "NO_FEEDBACK"
     },
     {
@@ -1533,7 +1594,7 @@
       "crm_status": "Выслано предложение",
       "first_activity_at": "",
       "first_activity_ts": null,
-      "age_seconds": 325787,
+      "age_seconds": 327199,
       "feedback_state": "NO_FEEDBACK"
     },
     {
@@ -1549,7 +1610,7 @@
       "crm_status": "Выслано предложение",
       "first_activity_at": "",
       "first_activity_ts": null,
-      "age_seconds": 325836,
+      "age_seconds": 327248,
       "feedback_state": "NO_FEEDBACK"
     },
     {
@@ -1565,7 +1626,7 @@
       "crm_status": "Выслано предложение",
       "first_activity_at": "",
       "first_activity_ts": null,
-      "age_seconds": 403492,
+      "age_seconds": 404904,
       "feedback_state": "NO_FEEDBACK"
     },
     {
@@ -1581,7 +1642,7 @@
       "crm_status": "Выслано предложение",
       "first_activity_at": "",
       "first_activity_ts": null,
-      "age_seconds": 223908,
+      "age_seconds": 225320,
       "feedback_state": "WAITING_BLUE"
     },
     {
@@ -1597,7 +1658,7 @@
       "crm_status": "Выслано предложение",
       "first_activity_at": "",
       "first_activity_ts": null,
-      "age_seconds": 223974,
+      "age_seconds": 225386,
       "feedback_state": "WAITING_BLUE"
     },
     {
@@ -1613,7 +1674,7 @@
       "crm_status": "Выслано предложение",
       "first_activity_at": "",
       "first_activity_ts": null,
-      "age_seconds": 238565,
+      "age_seconds": 239977,
       "feedback_state": "WAITING_BLUE"
     },
     {
@@ -1629,7 +1690,7 @@
       "crm_status": "ЖДЕМ НА ДЕГУСТАЦИЮ",
       "first_activity_at": "",
       "first_activity_ts": null,
-      "age_seconds": 240947,
+      "age_seconds": 242359,
       "feedback_state": "WAITING_BLUE"
     },
     {
@@ -1645,7 +1706,7 @@
       "crm_status": "Первичный контакт",
       "first_activity_at": "",
       "first_activity_ts": null,
-      "age_seconds": 149709,
+      "age_seconds": 151121,
       "feedback_state": "WAITING_YELLOW"
     },
     {
@@ -1661,7 +1722,7 @@
       "crm_status": "Выслано предложение",
       "first_activity_at": "",
       "first_activity_ts": null,
-      "age_seconds": 155392,
+      "age_seconds": 156804,
       "feedback_state": "WAITING_YELLOW"
     },
     {
@@ -1677,7 +1738,7 @@
       "crm_status": "Первичный контакт",
       "first_activity_at": "",
       "first_activity_ts": null,
-      "age_seconds": 161845,
+      "age_seconds": 163257,
       "feedback_state": "WAITING_YELLOW"
     },
     {
@@ -1693,7 +1754,7 @@
       "crm_status": "Первичный контакт",
       "first_activity_at": "",
       "first_activity_ts": null,
-      "age_seconds": 165050,
+      "age_seconds": 166462,
       "feedback_state": "WAITING_YELLOW"
     },
     {
@@ -1709,7 +1770,7 @@
       "crm_status": "Первичный контакт",
       "first_activity_at": "",
       "first_activity_ts": null,
-      "age_seconds": 172179,
+      "age_seconds": 173591,
       "feedback_state": "WAITING_YELLOW"
     },
     {
@@ -1725,7 +1786,7 @@
       "crm_status": "Выслано предложение",
       "first_activity_at": "",
       "first_activity_ts": null,
-      "age_seconds": 176349,
+      "age_seconds": 177761,
       "feedback_state": "WAITING_YELLOW"
     },
     {
@@ -1741,7 +1802,7 @@
       "crm_status": "Выслано предложение",
       "first_activity_at": "",
       "first_activity_ts": null,
-      "age_seconds": 179626,
+      "age_seconds": 181038,
       "feedback_state": "WAITING_YELLOW"
     },
     {
@@ -1757,7 +1818,7 @@
       "crm_status": "Выслано предложение",
       "first_activity_at": "",
       "first_activity_ts": null,
-      "age_seconds": 179717,
+      "age_seconds": 181129,
       "feedback_state": "WAITING_YELLOW"
     },
     {
@@ -1773,7 +1834,7 @@
       "crm_status": "Выслано предложение",
       "first_activity_at": "",
       "first_activity_ts": null,
-      "age_seconds": 180007,
+      "age_seconds": 181419,
       "feedback_state": "WAITING_YELLOW"
     }
   ],
