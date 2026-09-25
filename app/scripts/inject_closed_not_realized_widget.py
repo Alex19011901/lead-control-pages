@@ -11,22 +11,25 @@ OUTCOME_CARD = '''<div class="card" style="grid-column:1/-1"><div class="title">
 PIPELINE_ACTIVITY_CARD = '''<div class="card" id="pipelineActivityCard" style="grid-column:1/-1"><div class="pipeline-activity-head"><div style="flex:1;min-width:0"><div class="title" style="margin-bottom:3px">Активность по этапам воронки</div><div class="note">Каждый реальный перевод существующей заявки в новый этап amoCRM. Блок живёт отдельно от верхнего выбора периода.</div></div><label class="pipeline-week-control"><span>Неделя</span><select id="pipelineWeekSelect" aria-label="Выбор недели"></select></label></div><div class="pipeline-activity-scroll"><div class="pipeline-activity-grid" id="pipelineActivityGrid"></div></div><div class="feedback-empty" id="pipelineActivityEmpty" style="display:none">За выбранную неделю перемещений нет</div></div>'''
 
 PIPELINE_ACTIVITY_CSS = r'''
-.pipeline-activity-head{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;flex-wrap:wrap}
-.pipeline-week-control{display:flex;align-items:center;gap:8px;color:#c4cfdb;font-size:12px;font-weight:700}
-.pipeline-week-control select{background:#111d2c;color:#fff;border:1px solid #2a3b50;border-radius:10px;padding:9px 10px;font-weight:700;outline:none}
-.pipeline-activity-scroll{overflow-x:auto;padding-bottom:3px;margin-top:12px}
-.pipeline-activity-grid{display:grid;grid-template-columns:minmax(180px,1.7fr) repeat(7,minmax(66px,.72fr)) minmax(74px,.72fr);gap:6px;min-width:820px;align-items:stretch}
-.pa-head,.pa-label,.pa-cell,.pa-total{border:1px solid #223146;border-radius:10px;min-height:44px;display:flex;align-items:center}
-.pa-head{justify-content:center;text-align:center;background:#0d1825;color:#aebdd0;font-size:11px;padding:7px 5px;line-height:1.2}
-.pa-head:first-child{justify-content:flex-start;padding-left:10px}
+#pipelineActivityCard{padding:10px}
+#pipelineActivityCard .title{font-size:14px;margin-bottom:2px}
+#pipelineActivityCard .note{font-size:10px}
+.pipeline-activity-head{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;flex-wrap:wrap}
+.pipeline-week-control{display:flex;align-items:center;gap:5px;color:#c4cfdb;font-size:10px;font-weight:700}
+.pipeline-week-control select{background:#111d2c;color:#fff;border:1px solid #2a3b50;border-radius:7px;padding:5px 7px;font-size:10px;font-weight:700;outline:none}
+.pipeline-activity-scroll{overflow-x:auto;padding-bottom:2px;margin-top:7px}
+.pipeline-activity-grid{display:grid;grid-template-columns:140px repeat(7,34px) 44px;gap:3px;width:max-content;min-width:0;align-items:stretch}
+.pa-head,.pa-label,.pa-cell,.pa-total{border:1px solid #223146;border-radius:6px;min-height:29px;display:flex;align-items:center}
+.pa-head{justify-content:center;text-align:center;background:#0d1825;color:#aebdd0;font-size:9px;padding:3px 2px;line-height:1.05}
+.pa-head:first-child{justify-content:flex-start;padding-left:6px}
 .pa-head.today{outline:1px solid #7d5cff88;color:#fff}
-.pa-label{justify-content:flex-start;background:#0d1825;padding:8px 10px;font-size:12px;font-weight:700;line-height:1.25}
-.pa-label .dot{width:8px;height:8px;border-radius:50%;margin-right:8px;flex:0 0 auto}
-.pa-cell,.pa-total{justify-content:center;font-size:13px;font-weight:800;padding:7px 4px}
+.pa-label{justify-content:flex-start;background:#0d1825;padding:4px 6px;font-size:10px;font-weight:700;line-height:1.08}
+.pa-label .dot{width:6px;height:6px;border-radius:50%;margin-right:5px;flex:0 0 auto}
+.pa-cell,.pa-total{justify-content:center;font-size:11px;font-weight:800;padding:2px}
 .pa-cell.zero{background:#0d1825;color:#718196}
 .pa-total{background:#151f2f}
-.pa-subtoday{display:block;color:#9bb8ff;font-size:9px;margin-top:2px}
-@media(max-width:760px){.pipeline-activity-head{gap:9px}.pipeline-week-control{width:100%;justify-content:space-between}.pipeline-week-control select{flex:1;max-width:230px}.pipeline-activity-grid{min-width:760px;grid-template-columns:minmax(150px,1.5fr) repeat(7,minmax(60px,.65fr)) minmax(68px,.65fr)}}
+.pa-subtoday{display:block;color:#9bb8ff;font-size:7px;margin-top:1px}
+@media(max-width:760px){#pipelineActivityCard{padding:8px}.pipeline-activity-head{gap:6px}.pipeline-week-control{width:100%;justify-content:space-between}.pipeline-week-control select{flex:0 1 185px;max-width:185px}.pipeline-activity-grid{grid-template-columns:125px repeat(7,31px) 40px;gap:2px}.pa-head,.pa-label,.pa-cell,.pa-total{min-height:27px;border-radius:5px}.pa-label{font-size:9px;padding:3px 5px}.pa-cell,.pa-total{font-size:10px}}
 '''
 
 PIPELINE_ACTIVITY_RENDER = r'''function renderPipelineActivity(){var grid=id('pipelineActivityGrid'),sel=id('pipelineWeekSelect'),empty=id('pipelineActivityEmpty'),weeks=(PA&&PA.weeks)||[],stages=(PA&&PA.stages)||[],days=(PA&&PA.days)||{},i,j,week,dates,maxCount=0,count,total,html='',palette=['78,161,255','54,209,107','255,174,66','255,95,103','125,92,255','77,211,191','245,141,66','156,163,175'];if(!grid||!sel)return;if(!weeks.length){sel.innerHTML='<option>Нет данных</option>';grid.innerHTML='';empty.style.display='block';return}if(pipelineWeekIndex<0||pipelineWeekIndex>=weeks.length)pipelineWeekIndex=0;sel.innerHTML='';for(i=0;i<weeks.length;i++){var opt=document.createElement('option');opt.value=String(i);opt.textContent=weeks[i].label||('Неделя '+(i+1));sel.appendChild(opt)}sel.value=String(pipelineWeekIndex);sel.onchange=function(){pipelineWeekIndex=parseInt(this.value||'0',10)||0;renderPipelineActivity()};week=weeks[pipelineWeekIndex];dates=week.dates||[];for(i=0;i<stages.length;i++)for(j=0;j<dates.length;j++){count=parseInt(((days[dates[j]]||{})[String(stages[i].id)]||0),10)||0;if(count>maxCount)maxCount=count}html+='<div class="pa-head">Этап воронки</div>';for(j=0;j<dates.length;j++){var isToday=dates[j]===String(PA.today||'');html+='<div class="pa-head'+(isToday?' today':'')+'">'+esc(fd(dates[j]).slice(0,5))+(isToday?'<span class="pa-subtoday">Сегодня</span>':'')+'</div>'}html+='<div class="pa-head">Итого<br>за неделю</div>';for(i=0;i<stages.length;i++){var rgb=palette[i%palette.length];total=0;html+='<div class="pa-label"><span class="dot" style="background:rgb('+rgb+')"></span>'+esc(stages[i].name)+'</div>';for(j=0;j<dates.length;j++){count=parseInt(((days[dates[j]]||{})[String(stages[i].id)]||0),10)||0;total+=count;if(count){var alpha=.16+(maxCount?count/maxCount*.48:0);html+='<div class="pa-cell" style="background:rgba('+rgb+','+alpha.toFixed(2)+');border-color:rgba('+rgb+',.42)">'+count+'</div>'}else html+='<div class="pa-cell zero">0</div>'}html+='<div class="pa-total">'+total+'</div>'}grid.innerHTML=html;empty.style.display=stages.length?'none':'block'}
