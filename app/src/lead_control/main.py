@@ -212,6 +212,7 @@ def main() -> None:
             leads_payload["pipeline_activity"] = collect_pipeline_activity(
                 leads_payload["leads"],
                 amocrm,
+                previous_activity=old_leads_payload.get("pipeline_activity") or {},
             )
         except RuntimeError as exc:
             LOG.warning("CRM pipeline activity lookup failed error=%s", exc)
