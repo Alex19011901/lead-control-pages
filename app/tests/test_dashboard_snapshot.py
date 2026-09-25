@@ -61,6 +61,57 @@ class DashboardSnapshotTests(unittest.TestCase):
             self.assertEqual(daily["latest"][0]["crm_status"], "ЖДЕМ НА ДЕГУСТАЦИЮ")
             self.assertEqual(view["latest"][0]["crm_status"], "ЖДЕМ НА ДЕГУСТАЦИЮ")
 
+    def test_closed_latest_lead_exposes_loss_reason(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            input_path = root / "leads.json"
+            daily_path = root / "dashboard_daily.json"
+            view_path = root / "dashboard_view.json"
+            input_path.write_text(
+                json.dumps(
+                    {
+                        "leads": [
+                            {
+                                "received_at": "2026-09-25T11:56:30+03:00",
+                                "source": "Заявки хост",
+                                "status": "OK",
+                                "channel": "MAX",
+                                "guests": 80,
+                                "name": "Татьяна",
+                                "identifier": {"type": "phone", "value": "79266965888"},
+                                "crm": {
+                                    "found": True,
+                                    "entity_type": "lead",
+                                    "entity_id": 456,
+                                    "responsible_user_name": "Олеся",
+                                },
+                                "crm_feedback": {
+                                    "status_name": "Закрыто и не реализовано",
+                                    "loss_reason_name": "Слишком дорого",
+                                },
+                            }
+                        ]
+                    },
+                    ensure_ascii=False,
+                ),
+                encoding="utf-8",
+            )
+
+            build(input_path, daily_path)
+            build_view(daily_path, view_path)
+
+            daily = json.loads(daily_path.read_text(encoding="utf-8"))
+            view = json.loads(view_path.read_text(encoding="utf-8"))
+            self.assertEqual(daily["latest"][0]["crm_status"], "Закрыто и не реализовано")
+            self.assertEqual(daily["latest"][0]["crm_loss_reason"], "Слишком дорого")
+            self.assertEqual(view["latest"][0]["crm_loss_reason"], "Слишком дорого")
+
+    def test_latest_leads_template_renders_loss_reason_small(self) -> None:
+        html = (ROOT / "dashboard" / "pageshare" / "index.html").read_text(encoding="utf-8")
+        self.assertIn("function crmStageHtml", html)
+        self.assertIn("crm-loss-reason", html)
+        self.assertIn("x.crm_loss_reason", html)
+
     def test_tilda_veranda_unknown_event_is_excluded_only_from_event_metric(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
