@@ -20055,20 +20055,37 @@
       "channel": "TELEGRAM",
       "crm": {
         "ambiguity_count": 0,
-        "created_at": null,
-        "entity_id": null,
-        "entity_type": null,
-        "event_type": null,
-        "found": false,
-        "responsible_user_id": null,
-        "responsible_user_name": null,
-        "updated_at": null
+        "created_at": 1790334763,
+        "entity_id": 48950269,
+        "entity_type": "lead",
+        "event_type": "Корпоратив",
+        "found": true,
+        "guests": "20",
+        "guests_source": "CRM",
+        "responsible_user_id": 13009530,
+        "responsible_user_name": "Олеся",
+        "updated_at": 1790334768
       },
-      "crm_created_at": null,
-      "crm_found": false,
+      "crm_created_at": 1790334763,
+      "crm_feedback": {
+        "crm_lead_id": 48950269,
+        "deadline_at": 1790629200,
+        "excluded": false,
+        "first_activity_at": null,
+        "lead_created_at": 1790334763,
+        "pipeline_id": 10081590,
+        "responsible_user_id": 13009530,
+        "rule_version": 6,
+        "state": "WAITING",
+        "status_id": 79927038,
+        "status_name": "Выслано предложение"
+      },
+      "crm_found": true,
       "crm_required": true,
-      "crm_responsible": null,
+      "crm_responsible": 13009530,
       "deadline_msk_ts": 1790369999,
+      "event_type": "Корпоратив",
+      "event_type_source": "CRM",
       "fields": {
         "category": "САЙТ ТИЛЬДА",
         "description": "Содержание заявки:\nName: Марина\nPhone: +79969708455\nДата: 08-10-2026\nКол-во_гостей: 20\nCheckbox: yes\nyclid: 15106371539311788031\nutm_source: yandex_direct\nutm_medium: cpc\nutm_campaign: Korporativy_poisk\nutm_term: отметить корпоратив\npage_url: https://moscowbanket.ru/polukabinet#dati\npage_referrer: https://moscowbanket.ru/corporate/?utm_source=yandex_direct&utm_medium=cpc&utm_campaign=Korporativy_poisk&type=search&source=none&added=no&block=premium&position=2&keyword=%D0%BE%D1%82%D0%BC%D0%B5%D1%82%D0%B8%D1%82%D1%8C%20%D0%BA%D0%BE%D1%80%D0%BF%D0%BE%D1%80%D0%B0%D1%82%D0%B8%D0%B2&utm_term=%D0%BE%D1%82%D0%BC%D0%B5%D1%82%D0%B8%D1%82%D1%8C%20%D0%BA%D0%BE%D1%80%D0%BF%D0%BE%D1%80%D0%B0%D1%82%D0%B8%D0%B2&callibri=yd_c:118776773_gb:5552984178_ad:16902913971_ph:54481850361_st:search_s:none_dt:desktop&etext=2202.Fpzk5_I5CffT8SZTuwusrc-Om66Inbzi1ul8ci2uzh3Qz9pmw8qZgHATDOlXspuBjZImckym8aLBkKXanssPh5LykDDPZxNY6_1bb_dWA112dG1sYWdub3Rsdm10b2tj.169f166063216e2d5311121d520d269df0927f09&yclid=15106371539311788031\nform_submit_timestamp: 1790329421\nmetrika_client_id: 1790329017774883323\nym_client_id: 1790329017774883323\nym_clientid: 1790329017774883323\nym_uid: 1790329017774883323\n_ym_uid: 1790329017774883323\nclient_id: 1790329017774883323\nclientid: 1790329017774883323\nyandex_client_id: 1790329017774883323\nya_client_id: 1790329017774883323\n\nДополнительная информация:\nКод заявки: 2925975:8698773542\nКод блока: rec1193957381\nhttps://moscowbanket.ru/polukabinet#dati\nUTM source: yandex_direct\nUTM medium: cpc\nUTM campaign: korporativy_poisk\nUTM term: отметить корпоратив\n-----",
@@ -20113,7 +20130,7 @@
       "sender_user_id": 265299531,
       "sender_username": "TildaFormsBot",
       "source": "САЙТ ТИЛЬДА",
-      "status": "PENDING",
+      "status": "OK",
       "telegram": {
         "chat_id": -1001645768111,
         "message_ids": [
@@ -62156,7 +62173,8 @@
         "143": 8
       },
       "2026-09-25": {
-        "143": 1
+        "143": 1,
+        "79927038": 1
       }
     },
     "pipeline_id": 10081590,
@@ -62239,7 +62257,7 @@
       }
     ],
     "today": "2026-09-25",
-    "total_movements": 358,
+    "total_movements": 359,
     "weeks": [
       {
         "dates": [
