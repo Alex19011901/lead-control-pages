@@ -1,5 +1,5 @@
 name: Lead Control Public Runner
-# manual-refresh: outcomes-activity-one-row-20260925
+# manual-refresh: latest-leads-crm-stage-20260925
 on:
   schedule:
     - cron: "50 6 * * *"
@@ -33,7 +33,7 @@ jobs:
 
       - name: Test Lead Control parsers and advertising export
         working-directory: app
-        run: PYTHONPATH=. python -m unittest tests.test_tilda_parser tests.test_build_advertising_export tests.test_metrika_client_attribution_export tests.test_max_forwarded_wedwed tests.test_wedwed_enrichment tests.test_phone_deduplication tests.test_daily_lead_regressions tests.test_daily_duplicate_policy tests.test_lead_enrichment tests.test_max_explicit_client_name tests.test_linked_contact_followup tests.test_closed_not_realized tests.test_closed_not_realized_widget tests.test_crm_pipeline_activity -v
+        run: PYTHONPATH=. python -m unittest tests.test_tilda_parser tests.test_build_advertising_export tests.test_metrika_client_attribution_export tests.test_max_forwarded_wedwed tests.test_wedwed_enrichment tests.test_phone_deduplication tests.test_daily_lead_regressions tests.test_daily_duplicate_policy tests.test_lead_enrichment tests.test_max_explicit_client_name tests.test_linked_contact_followup tests.test_closed_not_realized tests.test_closed_not_realized_widget tests.test_crm_pipeline_activity tests.test_dashboard_snapshot -v
 
       - name: Install OCR
         run: |
