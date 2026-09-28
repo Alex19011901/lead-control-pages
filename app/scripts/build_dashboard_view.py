@@ -167,12 +167,25 @@ def build(input_path: Path, output_path: Path) -> None:
         "all": merge_range(daily, min_day, max_day),
     }
 
+    source_date_start = today - timedelta(days=29)
+    source_days: dict[str, dict[str, int]] = {}
+    for offset in range(30):
+        day = source_date_start + timedelta(days=offset)
+        item = daily.get(day.isoformat()) or {}
+        source_days[day.isoformat()] = {
+            str(name): int(count)
+            for name, count in (item.get("source") or {}).items()
+        }
+
     all_leads = snap.get("leads") or []
     latest = [compact_lead(lead) for lead in all_leads[:60]]
     not_entered = [compact_lead(lead) for lead in all_leads if (lead.get("status") or "") == "ALARM_NO_CRM"]
 
     out = {
         "ranges": ranges,
+        "source_days": source_days,
+        "source_date_start": source_date_start.isoformat(),
+        "source_date_end": today.isoformat(),
         "latest": latest,
         "not_entered": not_entered,
         "snapshot_generated_at": snap.get("snapshot_generated_at") or "",
