@@ -1,5 +1,5 @@
 name: Lead Control Public Runner
-# manual-refresh: last-preclose-record-20260928
+# manual-refresh: bounded-preclose-snapshot-20260928
 on:
   schedule:
     - cron: "0 5 * * *"
@@ -33,7 +33,7 @@ jobs:
 
       - name: Test Lead Control parsers and advertising export
         working-directory: app
-        run: PYTHONPATH=. python -m unittest tests.test_tilda_parser tests.test_build_advertising_export tests.test_metrika_client_attribution_export tests.test_max_forwarded_wedwed tests.test_wedwed_enrichment tests.test_phone_deduplication tests.test_daily_lead_regressions tests.test_daily_duplicate_policy tests.test_lead_enrichment tests.test_max_explicit_client_name tests.test_linked_contact_followup tests.test_closed_not_realized tests.test_closed_not_realized_widget tests.test_crm_pipeline_activity tests.test_crm_feedback tests.test_dashboard_snapshot tests.test_dashboard_view_calendar -v
+        run: PYTHONPATH=. python -m unittest tests.test_tilda_parser tests.test_build_advertising_export tests.test_metrika_client_attribution_export tests.test_max_forwarded_wedwed tests.test_wedwed_enrichment tests.test_phone_deduplication tests.test_daily_lead_regressions tests.test_daily_duplicate_policy tests.test_lead_enrichment tests.test_max_explicit_client_name tests.test_linked_contact_followup tests.test_closed_not_realized tests.test_closed_not_realized_widget tests.test_crm_pipeline_activity tests.test_crm_feedback tests.test_dashboard_snapshot tests.test_dashboard_view_calendar tests.test_preclose_snapshot_regression -v
 
       - name: Install OCR
         run: |
@@ -61,6 +61,37 @@ jobs:
           LEAD_CONTROL_DATA_DIR: ../runtime-data
           LEAD_CONTROL_FAST_REFRESH: "1"
         run: PYTHONPATH=src python -m lead_control.main
+
+      - name: Verify saved pre-close records without CRM requests
+        working-directory: app
+        run: |
+          PYTHONPATH=src python - <<'PY'
+          import copy
+          import json
+          from collections import Counter
+          from pathlib import Path
+          from lead_control.closed_not_realized import apply_closed_not_realized_history, _frozen
+
+          rows = json.loads(Path('../runtime-data/leads.json').read_text())['leads']
+          visible = [row for row in rows if row.get('closed_not_realized')]
+          states = Counter(row['closed_not_realized'].get('last_record_status', 'LEGACY') for row in visible)
+          print('PRECLOSE_STATES ' + json.dumps(dict(states), sort_keys=True))
+          for row in visible:
+              record = row['closed_not_realized']
+              if int(record.get('crm_lead_id') or 0) == 48855703:
+                  print('PRECLOSE_TARGET ' + json.dumps({key: record.get(key) for key in ('crm_lead_id', 'closed_at', 'last_comment_at', 'last_record_at', 'last_record_type', 'last_record_status')}))
+          stable = [row for row in visible if _frozen(row['closed_not_realized']) and (row.get('crm_feedback') or {}).get('loss_reason_checked')]
+          cloned = copy.deepcopy(stable)
+          class NoNetwork:
+              def _request_json(self, *args, **kwargs):
+                  raise AssertionError('Saved closed history must not be queried again')
+              def _get_entity(self, *args, **kwargs):
+                  raise AssertionError('Current card metadata must be reused')
+          apply_closed_not_realized_history(cloned, NoNetwork(), previous_leads=stable)
+          for before, after in zip(stable, cloned):
+              assert before['preclose_record_cache'] == after['preclose_record_cache']
+          print('PRECLOSE_CACHE_VERIFIED ' + str(len(stable)) + ' rows; additional CRM requests: 0')
+          PY
 
       - name: Rebuild dashboard
         env:
