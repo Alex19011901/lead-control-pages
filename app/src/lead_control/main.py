@@ -217,7 +217,9 @@ def main() -> None:
         except RuntimeError as exc:
             LOG.warning("CRM pipeline activity lookup failed error=%s", exc)
             leads_payload["pipeline_activity"] = old_leads_payload.get("pipeline_activity") or {}
-        apply_closed_not_realized_history(leads_payload["leads"], amocrm)
+        apply_closed_not_realized_history(
+            leads_payload["leads"], amocrm, previous_leads=previous_leads,
+        )
     apply_crm_day_status_policy(leads_payload["leads"])
 
     leads_changed = stable_json(leads_payload) != old_leads_json
