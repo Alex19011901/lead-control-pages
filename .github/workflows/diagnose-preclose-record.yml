@@ -11,78 +11,84 @@ concurrency:
 jobs:
   diagnose:
     runs-on: ubuntu-latest
-    timeout-minutes: 4
+    timeout-minutes: 8
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Read message availability without logging private text
+      - name: Test pre-close repair before real-data validation
+        working-directory: app
+        run: PYTHONPATH=.:src python -m unittest tests.test_preclose_record_recovery tests.test_closed_not_realized tests.test_closed_not_realized_widget tests.test_crm_feedback tests.test_dashboard_snapshot -v
+      - name: Validate current closed rows without changing CRM or dashboard data
         env:
           AMOCRM_TOKEN: ${{ secrets.AMOCRM_TOKEN }}
         run: |
-          python - <<'PY'
+          PYTHONPATH=app/src python - <<'PY'
+          import copy
           import hashlib
           import json
           import os
           import urllib.error
           import urllib.parse
           import urllib.request
+          from collections import Counter
+          from datetime import datetime
+          from lead_control.closed_not_realized import apply_closed_not_realized_history
 
-          domain = 'https://alex1901yaru.amocrm.ru'
           token = os.environ['AMOCRM_TOKEN']
-          lead_id = 48855703
+          domain = 'https://alex1901yaru.amocrm.ru'
 
           class NoRedirect(urllib.request.HTTPRedirectHandler):
               def redirect_request(self, req, fp, code, msg, headers, newurl):
                   return None
-          opener = urllib.request.build_opener(NoRedirect)
 
-          def shape(value, depth=0):
-              if depth > 5:
-                  return type(value).__name__
-              if isinstance(value, dict):
-                  return {str(k): shape(v, depth + 1) for k, v in list(value.items())[:25]}
-              if isinstance(value, list):
-                  return [shape(value[0], depth + 1)] if value else []
-              return type(value).__name__
+          class ReadOnlyClient:
+              def __init__(self):
+                  self.calls = 0
+                  self.opener = urllib.request.build_opener(NoRedirect)
+              def _request_json(self, path, params):
+                  if path not in ('/api/v4/leads/notes', '/api/v4/events', '/api/v4/tasks'):
+                      raise AssertionError('Unexpected endpoint')
+                  self.calls += 1
+                  req = urllib.request.Request(domain + path + '?' + urllib.parse.urlencode(params), headers={'Accept': 'application/json', 'Authorization': 'Bearer ' + token}, method='GET')
+                  try:
+                      with self.opener.open(req, timeout=25) as response:
+                          raw = response.read()
+                          return json.loads(raw) if raw else {}
+                  except urllib.error.HTTPError as exc:
+                      print(json.dumps({'http_error': exc.code, 'path': path}), flush=True)
+                      if exc.code in (400, 404):
+                          raise RuntimeError('CRM history HTTP ' + str(exc.code)) from None
+                      raise SystemExit('Stopped after authorization/rate/server error; no retry')
+                  except (urllib.error.URLError, TimeoutError):
+                      raise SystemExit('Stopped after network error; no retry')
 
-          def request(label, path, params):
-              url = domain + path + ('?' + urllib.parse.urlencode(params) if params else '')
-              req = urllib.request.Request(url, headers={'Accept': 'application/json', 'Authorization': 'Bearer ' + token}, method='GET')
-              try:
-                  with opener.open(req, timeout=25) as res:
-                      raw = res.read()
-                      try:
-                          payload = json.loads(raw) if raw else {}
-                      except ValueError:
-                          print(json.dumps({'check': label, 'http': res.status, 'json': False}), flush=True)
-                          return None
-                      print(json.dumps({'check': label, 'http': res.status, 'shape': shape(payload)}, ensure_ascii=False), flush=True)
-                      return payload
-              except urllib.error.HTTPError as exc:
-                  print(json.dumps({'check': label, 'http': exc.code}), flush=True)
-                  if exc.code in (400, 404, 405, 301, 302, 303, 307, 308):
-                      return None
-                  raise SystemExit('Stopped after authorization/rate/server error; no retry')
-              except (urllib.error.URLError, TimeoutError):
-                  raise SystemExit('Stopped after network error; no retry')
+          class NoRequests:
+              def _request_json(self, *args, **kwargs):
+                  raise AssertionError('Saved closed record triggered another history request')
+              def _get_entity(self, *args, **kwargs):
+                  raise AssertionError('Saved closed record triggered another card request')
 
-          def summarize_notes(label, payload):
-              if not isinstance(payload, dict):
-                  return
-              items = (payload.get('_embedded') or {}).get('notes') or (payload.get('_embedded') or {}).get('items') or []
-              records = []
-              for item in items:
-                  params = item.get('params') or {}
-                  text = params.get('text', '') if isinstance(params, dict) else ''
-                  text = str(text or item.get('text') or '')
-                  records.append({'id': item.get('id'), 'type': item.get('note_type'), 'created_at': item.get('created_at'), 'text_length': len(text), 'text_sha256': hashlib.sha256(text.encode()).hexdigest() if text else None})
-              print(json.dumps({'check': label, 'count': len(items), 'records': records[:30]}, ensure_ascii=False), flush=True)
-
-          notes = request('notes_by_entity', '/api/v4/leads/' + str(lead_id) + '/notes', {'limit': 250, 'page': 1})
-          summarize_notes('notes_by_entity', notes)
-          legacy = request('legacy_notes', '/api/v2/notes', {'type': 'lead', 'element_id': lead_id, 'limit_rows': 100})
-          summarize_notes('legacy_notes', legacy)
-          request('chat_session_read_access', '/ajax/v1/chats/session', {})
+          view = json.load(open('dashboard_view.json'))
+          rows = view.get('closed_not_realized') or []
+          if not rows:
+              raise SystemExit('No closed rows to validate')
+          now_ts = int(datetime.fromisoformat(view['snapshot_generated_at'].replace('Z', '+00:00')).timestamp())
+          originals = []
+          for row in rows:
+              originals.append({'id': 'check-' + str(row['crm_lead_id']), 'crm': {'found': True, 'entity_type': 'lead', 'entity_id': row['crm_lead_id']}, 'crm_feedback': {'status_id': 143, 'status_name': 'Закрыто и не реализовано', 'closed_at': row['closed_ts'], 'loss_reason_checked': True, 'loss_reason_name': row.get('reason') or ''}})
+          leads = copy.deepcopy(originals)
+          client = ReadOnlyClient()
+          apply_closed_not_realized_history(leads, client, now_ts=now_ts)
+          records = [x['closed_not_realized'] for x in leads]
+          states = Counter(x['last_record_status'] for x in records)
+          for record in records:
+              text = record.get('last_comment') or ''
+              print(json.dumps({'lead_id': record['crm_lead_id'], 'state': record['last_record_status'], 'record_type': record['last_record_type'], 'record_at': record['last_record_at'], 'closed_at': record['closed_at'], 'text_length': len(text), 'text_sha256': hashlib.sha256(text.encode()).hexdigest() if text else None}, ensure_ascii=False), flush=True)
+          assert states['READ_ERROR'] == 0, 'Some history sources are still failing'
+          second = copy.deepcopy(originals)
+          apply_closed_not_realized_history(second, NoRequests(), now_ts=now_ts, previous_leads=leads)
+          assert [x['closed_not_realized'] for x in second] == records
+          print(json.dumps({'preclose_validation': {'rows': len(rows), 'states': dict(states), 'requests_first_pass': client.calls, 'requests_second_pass': 0, 'production_data_modified': False}}, ensure_ascii=False), flush=True)
           PY
