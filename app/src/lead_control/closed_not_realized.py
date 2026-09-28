@@ -40,16 +40,72 @@ def _loss_reason(payload: dict[str, Any]) -> tuple[int | None, str]:
     return reason_id, str(item.get("name") or "").strip()
 
 
-def _latest_common_comment(client: AmoCRMClient, crm_lead_id: int) -> tuple[str, int | None]:
+def _extract_text(value: object) -> str:
+    """Extract human-readable text from amoCRM note/event payload fragments."""
+    if isinstance(value, str):
+        return value.strip()
+    if isinstance(value, list):
+        for item in value:
+            text = _extract_text(item)
+            if text:
+                return text
+        return ""
+    if not isinstance(value, dict):
+        return ""
+
+    preferred_keys = (
+        "text",
+        "message",
+        "comment",
+        "body",
+        "result",
+        "value",
+        "name",
+    )
+    for key in preferred_keys:
+        if key not in value:
+            continue
+        text = _extract_text(value.get(key))
+        if text:
+            return text
+    return ""
+
+
+def _latest_record_before_closed(
+    client: AmoCRMClient,
+    crm_lead_id: int,
+    closed_at: int,
+) -> tuple[str, int | None]:
+    """Return the latest meaningful timeline record strictly before closure.
+
+    Sources:
+    - amoCRM lead notes of any type that contain human-readable text;
+    - direct-message timeline events when their payload contains text;
+    - completed task results.
+
+    System-only status/field changes are deliberately ignored.
+    """
     latest_text = ""
     latest_at: int | None = None
+
+    def consider(text: str, ts: int) -> None:
+        nonlocal latest_text, latest_at
+        text = str(text or "").strip()
+        if not text or not ts or ts >= closed_at:
+            return
+        if latest_at is None or ts > latest_at:
+            latest_at = ts
+            latest_text = text
+
+    # Notes: do not limit to note_type=common. amoCRM shows several note types
+    # in the card timeline, and the dashboard must reflect the actual last
+    # meaningful entry before closing.
     page = 1
     while True:
         payload = client._request_json(
             "/api/v4/leads/notes",
             {
                 "filter[entity_id][0]": crm_lead_id,
-                "filter[note_type]": "common",
                 "limit": 250,
                 "page": page,
             },
@@ -61,17 +117,13 @@ def _latest_common_comment(client: AmoCRMClient, crm_lead_id: int) -> tuple[str,
                 created_at = int(note.get("created_at") or 0)
             except (TypeError, ValueError):
                 continue
-            if entity_id != crm_lead_id or not created_at:
-                continue
-            if str(note.get("note_type") or "").strip().casefold() != "common":
+            if entity_id != crm_lead_id or not created_at or created_at >= closed_at:
                 continue
             params = note.get("params") or {}
-            text = str(params.get("text") or "").strip() if isinstance(params, dict) else ""
+            text = _extract_text(params)
             if not text:
-                continue
-            if latest_at is None or created_at > latest_at:
-                latest_at = created_at
-                latest_text = text
+                text = _extract_text(note.get("text"))
+            consider(text, created_at)
 
         links = payload.get("_links") or {}
         if not links.get("next") or not notes:
@@ -81,8 +133,81 @@ def _latest_common_comment(client: AmoCRMClient, crm_lead_id: int) -> tuple[str,
             LOG.warning("CRM closed-lead notes pagination stopped lead_id=%s after 50 pages", crm_lead_id)
             break
 
-    return latest_text, latest_at
+    # Internal/direct messages may be represented as events rather than notes.
+    page = 1
+    while True:
+        payload = client._request_json(
+            "/api/v4/events",
+            {
+                "filter[entity]": "lead",
+                "filter[entity_id]": crm_lead_id,
+                "filter[created_at][to]": closed_at - 1,
+                "limit": 100,
+                "page": page,
+            },
+        )
+        events = list(((payload.get("_embedded") or {}).get("events")) or [])
+        for event in events:
+            try:
+                entity_id = int(event.get("entity_id") or 0)
+                created_at = int(event.get("created_at") or 0)
+            except (TypeError, ValueError):
+                continue
+            if entity_id != crm_lead_id or not created_at or created_at >= closed_at:
+                continue
+            event_type = str(event.get("type") or "").strip()
+            if event_type != "entity_direct_message":
+                continue
+            text = (
+                _extract_text(event.get("value_after"))
+                or _extract_text(event.get("params"))
+                or _extract_text(event.get("value_before"))
+            )
+            consider(text, created_at)
 
+        links = payload.get("_links") or {}
+        if not links.get("next") or not events:
+            break
+        page += 1
+        if page > 50:
+            LOG.warning("CRM closed-lead events pagination stopped lead_id=%s after 50 pages", crm_lead_id)
+            break
+
+    # A completed task with a written result is also a visible meaningful
+    # timeline record. Use the completion/update timestamp and only before close.
+    page = 1
+    while True:
+        payload = client._request_json(
+            "/api/v4/tasks",
+            {
+                "filter[entity_type]": "leads",
+                "filter[entity_id]": crm_lead_id,
+                "limit": 250,
+                "page": page,
+            },
+        )
+        tasks = list(((payload.get("_embedded") or {}).get("tasks")) or [])
+        for task in tasks:
+            try:
+                entity_id = int(task.get("entity_id") or 0)
+                updated_at = int(task.get("updated_at") or 0)
+            except (TypeError, ValueError):
+                continue
+            if entity_id != crm_lead_id or not task.get("is_completed"):
+                continue
+            result = task.get("result") or {}
+            text = _extract_text(result)
+            consider(text, updated_at)
+
+        links = payload.get("_links") or {}
+        if not links.get("next") or not tasks:
+            break
+        page += 1
+        if page > 50:
+            LOG.warning("CRM closed-lead tasks pagination stopped lead_id=%s after 50 pages", crm_lead_id)
+            break
+
+    return latest_text, latest_at
 
 def apply_closed_not_realized_history(
     leads: list[dict[str, Any]],
@@ -94,7 +219,7 @@ def apply_closed_not_realized_history(
     today = _moscow_date(current_ts)
     first_day = today - timedelta(days=HISTORY_DAYS - 1)
     detail_cache: dict[int, dict[str, Any]] = {}
-    comment_cache: dict[int, tuple[str, int | None]] = {}
+    comment_cache: dict[tuple[int, int], tuple[str, int | None]] = {}
 
     for lead in leads:
         lead.pop("closed_not_realized", None)
@@ -176,14 +301,19 @@ def apply_closed_not_realized_history(
 
         last_comment = ""
         last_comment_at: int | None = None
-        if crm_lead_id in comment_cache:
-            last_comment, last_comment_at = comment_cache[crm_lead_id]
+        comment_key = (crm_lead_id, closed_at)
+        if comment_key in comment_cache:
+            last_comment, last_comment_at = comment_cache[comment_key]
         else:
             try:
-                last_comment, last_comment_at = _latest_common_comment(client, crm_lead_id)
-                comment_cache[crm_lead_id] = (last_comment, last_comment_at)
+                last_comment, last_comment_at = _latest_record_before_closed(
+                    client,
+                    crm_lead_id,
+                    closed_at,
+                )
+                comment_cache[comment_key] = (last_comment, last_comment_at)
             except RuntimeError as exc:
-                LOG.warning("CRM closed-lead comment lookup failed lead_id=%s error=%s", crm_lead_id, exc)
+                LOG.warning("CRM closed-lead timeline lookup failed lead_id=%s error=%s", crm_lead_id, exc)
 
         lead["closed_not_realized"] = {
             "crm_lead_id": crm_lead_id,
