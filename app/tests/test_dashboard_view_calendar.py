@@ -70,6 +70,14 @@ class DashboardViewCalendarTests(unittest.TestCase):
             self.assertEqual(view["source_days"]["2026-08-30"], {"MARQUIZ": 1})
             self.assertNotIn("2026-08-29", view["source_days"])
 
+    def test_sources_widget_keeps_period_mode_and_visual_bars(self) -> None:
+        root = Path(__file__).resolve().parents[1]
+        html = (root / "dashboard" / "pageshare" / "index.html").read_text(encoding="utf-8")
+        self.assertIn("По выбранному периоду", html)
+        self.assertIn("source-card", html)
+        self.assertIn("source-bars", html)
+        self.assertIn("sourceDate?((SD&&SD[sourceDate])||{}):((R[currentRange]&&R[currentRange].src)||{})", html)
+
     def test_today_uses_moscow_calendar_even_when_latest_lead_is_yesterday(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
