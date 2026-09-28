@@ -19512,6 +19512,14 @@
     {
       "category": "САЙТ ТИЛЬДА",
       "channel": "TELEGRAM",
+      "closed_not_realized": {
+        "closed_at": 1790576691,
+        "crm_lead_id": 48873293,
+        "last_comment": "",
+        "last_comment_at": null,
+        "loss_reason_id": 21779742,
+        "loss_reason_name": "Не устроили условия"
+      },
       "crm": {
         "ambiguity_count": 0,
         "created_at": 1790157207,
@@ -19525,23 +19533,30 @@
       },
       "crm_created_at": 1790157207,
       "crm_feedback": {
-        "closed_at": null,
+        "closed_at": 1790576691,
         "crm_lead_id": 48873293,
-        "deadline_at": 1790456400,
-        "excluded": false,
+        "excluded": true,
         "first_activity_at": null,
         "lead_created_at": 1790157207,
         "loss_reason_checked": true,
-        "loss_reason_id": null,
-        "loss_reason_name": "",
+        "loss_reason_id": 21779742,
+        "loss_reason_name": "Не устроили условия",
         "pipeline_id": 10081590,
         "responsible_user_id": 12982830,
         "rule_version": 6,
-        "state": "NO_FEEDBACK",
-        "status_id": 79927034,
-        "status_name": "Первичный контакт"
+        "state": "EXCLUDED",
+        "status_id": 143,
+        "status_name": "Закрыто и не реализовано"
       },
       "crm_found": true,
+      "crm_outcome": {
+        "closed_at": 1790576691,
+        "loss_reason_id": 21779742,
+        "loss_reason_name": "Не устроили условия",
+        "result": "LOST",
+        "status_id": 143,
+        "status_name": "Закрыто и не реализовано"
+      },
       "crm_required": true,
       "crm_responsible": 12982830,
       "deadline_msk_ts": 1790197199,
@@ -19604,14 +19619,6 @@
     {
       "category": "САЙТ ТИЛЬДА",
       "channel": "TELEGRAM",
-      "closed_not_realized": {
-        "closed_at": 1790156755,
-        "crm_lead_id": 48873039,
-        "last_comment": "",
-        "last_comment_at": null,
-        "loss_reason_id": 21779734,
-        "loss_reason_name": "Слишком дорого"
-      },
       "crm": {
         "ambiguity_count": 0,
         "created_at": 1790156755,
@@ -19713,14 +19720,6 @@
     {
       "category": "САЙТ ТИЛЬДА",
       "channel": "TELEGRAM",
-      "closed_not_realized": {
-        "closed_at": 1790160302,
-        "crm_lead_id": 48876209,
-        "last_comment": "",
-        "last_comment_at": null,
-        "loss_reason_id": 24466290,
-        "loss_reason_name": "Спам"
-      },
       "crm": {
         "ambiguity_count": 0,
         "created_at": 1790160302,
@@ -19920,6 +19919,14 @@
     {
       "category": "САЙТ ТИЛЬДА",
       "channel": "TELEGRAM",
+      "closed_not_realized": {
+        "closed_at": 1790576565,
+        "crm_lead_id": 48878719,
+        "last_comment": "",
+        "last_comment_at": null,
+        "loss_reason_id": 21779738,
+        "loss_reason_name": "Пропала потребность"
+      },
       "crm": {
         "ambiguity_count": 0,
         "created_at": 1790164336,
@@ -19935,23 +19942,30 @@
       },
       "crm_created_at": 1790164336,
       "crm_feedback": {
-        "closed_at": null,
+        "closed_at": 1790576565,
         "crm_lead_id": 48878719,
-        "deadline_at": 1790456400,
-        "excluded": false,
+        "excluded": true,
         "first_activity_at": null,
         "lead_created_at": 1790164336,
         "loss_reason_checked": true,
-        "loss_reason_id": null,
-        "loss_reason_name": "",
+        "loss_reason_id": 21779738,
+        "loss_reason_name": "Пропала потребность",
         "pipeline_id": 10081590,
         "responsible_user_id": 12982830,
         "rule_version": 6,
-        "state": "NO_FEEDBACK",
-        "status_id": 79927034,
-        "status_name": "Первичный контакт"
+        "state": "EXCLUDED",
+        "status_id": 143,
+        "status_name": "Закрыто и не реализовано"
       },
       "crm_found": true,
+      "crm_outcome": {
+        "closed_at": 1790576565,
+        "loss_reason_id": 21779738,
+        "loss_reason_name": "Пропала потребность",
+        "result": "LOST",
+        "status_id": 143,
+        "status_name": "Закрыто и не реализовано"
+      },
       "crm_required": true,
       "crm_responsible": 12982830,
       "deadline_msk_ts": 1790197199,
@@ -20014,14 +20028,6 @@
     {
       "category": "САЙТ ТИЛЬДА",
       "channel": "TELEGRAM",
-      "closed_not_realized": {
-        "closed_at": 1790166501,
-        "crm_lead_id": 48880287,
-        "last_comment": "",
-        "last_comment_at": null,
-        "loss_reason_id": 21780202,
-        "loss_reason_name": "Дата занята"
-      },
       "crm": {
         "ambiguity_count": 0,
         "created_at": 1790166501,
@@ -20144,7 +20150,7 @@
         "crm_lead_id": 48883287,
         "deadline_at": 1790456400,
         "excluded": false,
-        "first_activity_at": null,
+        "first_activity_at": 1790576398,
         "lead_created_at": 1790167541,
         "loss_reason_checked": true,
         "loss_reason_id": null,
@@ -20152,7 +20158,7 @@
         "pipeline_id": 10081590,
         "responsible_user_id": 12982830,
         "rule_version": 6,
-        "state": "NO_FEEDBACK",
+        "state": "CLEAR",
         "status_id": 79927034,
         "status_name": "Первичный контакт"
       },
@@ -20342,7 +20348,7 @@
         "pipeline_id": 10081590,
         "responsible_user_id": 12982830,
         "rule_version": 6,
-        "state": "WAITING",
+        "state": "NO_FEEDBACK",
         "status_id": 79927038,
         "status_name": "Выслано предложение"
       },
@@ -20549,7 +20555,7 @@
         "pipeline_id": 10081590,
         "responsible_user_id": 12982830,
         "rule_version": 6,
-        "state": "WAITING",
+        "state": "NO_FEEDBACK",
         "status_id": 79927038,
         "status_name": "Выслано предложение"
       },
@@ -40423,42 +40429,76 @@
       "category": "WEDWED",
       "channel": "MAX",
       "crm": {
-        "found": false,
-        "required": false
+        "ambiguity_count": 0,
+        "created_at": 1786696675,
+        "entity_id": 47513999,
+        "entity_type": "lead",
+        "event_type": null,
+        "found": true,
+        "guests": "50",
+        "guests_source": "CRM",
+        "responsible_user_id": 12982830,
+        "responsible_user_name": "Максим",
+        "updated_at": 1788194193
       },
-      "crm_check_status": "NOT_REQUIRED",
-      "crm_created_at": null,
-      "crm_found": false,
-      "crm_required": false,
-      "crm_responsible": null,
+      "crm_check_status": "PENDING",
+      "crm_created_at": 1786696675,
+      "crm_feedback": {
+        "closed_at": 1788194193,
+        "crm_lead_id": 47513999,
+        "excluded": true,
+        "first_activity_at": null,
+        "lead_created_at": 1786696675,
+        "loss_reason_checked": true,
+        "loss_reason_id": 21779738,
+        "loss_reason_name": "Пропала потребность",
+        "pipeline_id": 10081590,
+        "responsible_user_id": 12982830,
+        "rule_version": 6,
+        "state": "EXCLUDED",
+        "status_id": 143,
+        "status_name": "Закрыто и не реализовано"
+      },
+      "crm_found": true,
+      "crm_outcome": {
+        "closed_at": 1788194193,
+        "loss_reason_id": 21779738,
+        "loss_reason_name": "Пропала потребность",
+        "result": "LOST",
+        "status_id": 143,
+        "status_name": "Закрыто и не реализовано"
+      },
+      "crm_required": true,
+      "crm_responsible": 12982830,
       "deadline_msk_ts": 1786741199,
-      "event_date": "",
+      "event_date": "2026-10-10",
       "fields": {
         "category": "WEDWED",
         "email": "",
-        "event_date": "",
-        "event_date_raw": "",
+        "event_date": "2026-10-10",
+        "event_date_raw": "10.10.2026 Рассматриваю и другие даты",
         "event_type": "",
-        "guests_count": null,
+        "guests_count": 50,
         "guests_max": null,
         "guests_min": null,
-        "guests_raw": "",
-        "name": "",
-        "phone_digits": "",
-        "phone_raw": "",
+        "guests_raw": "50",
+        "name": "Юлия",
+        "phone_digits": "79152718960",
+        "phone_raw": "+7 (915) 271-89-60",
         "source": "WedWed",
-        "telegram_username": ""
+        "telegram_username": "",
+        "wedwed_url": "https://wedwed.ru/l/3D4wnIr"
       },
       "first_seen_at": "2026-08-14T11:06:57+03:00",
       "first_seen_ts": 1786694817,
-      "guests": null,
+      "guests": 50,
       "guests_max": null,
       "guests_min": null,
-      "guests_raw": "",
+      "guests_raw": "50",
       "id": "19a5b98a83c2c77d",
       "identifier": {
-        "type": "max_message",
-        "value": "mid.ffffbec8f345ffab019fff4f5586676f"
+        "type": "phone",
+        "value": "79152718960"
       },
       "last_seen_at": "2026-08-14T11:06:57+03:00",
       "last_seen_ts": 1786694817,
@@ -40473,15 +40513,16 @@
         "sender_username": null
       },
       "message_id": "mid.ffffbec8f345ffab019fff4f5586676f",
-      "name": "",
-      "phone": "",
+      "name": "Юлия",
+      "phone": "+7 (915) 271-89-60",
       "received_at": "2026-08-14T11:06:57+03:00",
       "sender_name": "Олеся",
       "sender_user_id": 48906491,
       "source": "WedWed",
-      "status": "-",
+      "status": "OK",
       "username": "",
-      "violations": []
+      "violations": [],
+      "wedwed_url": "https://wedwed.ru/l/3D4wnIr"
     },
     {
       "category": "TILDA_VERANDA",
@@ -61236,7 +61277,7 @@
         "crm_lead_id": 48773801,
         "deadline_at": 1790197200,
         "excluded": false,
-        "first_activity_at": null,
+        "first_activity_at": 1790576811,
         "lead_created_at": 1789925894,
         "loss_reason_checked": true,
         "loss_reason_id": null,
@@ -61244,7 +61285,7 @@
         "pipeline_id": 10081590,
         "responsible_user_id": 12982830,
         "rule_version": 6,
-        "state": "NO_FEEDBACK",
+        "state": "CLEAR",
         "status_id": 79927038,
         "status_name": "Выслано предложение"
       },
@@ -62826,14 +62867,6 @@
     {
       "category": "HOST",
       "channel": "MAX",
-      "closed_not_realized": {
-        "closed_at": 1790169843,
-        "crm_lead_id": 48870123,
-        "last_comment": "",
-        "last_comment_at": null,
-        "loss_reason_id": 21779738,
-        "loss_reason_name": "Пропала потребность"
-      },
       "crm": {
         "ambiguity_count": 0,
         "created_at": 1790152751,
@@ -62951,7 +62984,7 @@
         "crm_lead_id": 48870333,
         "deadline_at": 1790456400,
         "excluded": false,
-        "first_activity_at": null,
+        "first_activity_at": 1790576853,
         "lead_created_at": 1790153037,
         "loss_reason_checked": true,
         "loss_reason_id": null,
@@ -62959,7 +62992,7 @@
         "pipeline_id": 10081590,
         "responsible_user_id": 12982830,
         "rule_version": 6,
-        "state": "NO_FEEDBACK",
+        "state": "CLEAR",
         "status_id": 79927038,
         "status_name": "Выслано предложение"
       },
@@ -63023,14 +63056,6 @@
     {
       "category": "HOST",
       "channel": "MAX",
-      "closed_not_realized": {
-        "closed_at": 1790154273,
-        "crm_lead_id": 48871161,
-        "last_comment": "",
-        "last_comment_at": null,
-        "loss_reason_id": 21780202,
-        "loss_reason_name": "Дата занята"
-      },
       "crm": {
         "ambiguity_count": 0,
         "created_at": 1790154273,
@@ -63129,14 +63154,6 @@
     {
       "category": "WEDWED",
       "channel": "MAX",
-      "closed_not_realized": {
-        "closed_at": 1790167892,
-        "crm_lead_id": 48883515,
-        "last_comment": "",
-        "last_comment_at": null,
-        "loss_reason_id": 21779734,
-        "loss_reason_name": "Слишком дорого"
-      },
       "crm": {
         "ambiguity_count": 0,
         "created_at": 1790167892,
@@ -63365,7 +63382,7 @@
         "crm_lead_id": 48889537,
         "deadline_at": 1790456400,
         "excluded": false,
-        "first_activity_at": null,
+        "first_activity_at": 1790576273,
         "lead_created_at": 1790173994,
         "loss_reason_checked": true,
         "loss_reason_id": null,
@@ -63373,9 +63390,9 @@
         "pipeline_id": 10081590,
         "responsible_user_id": 12982830,
         "rule_version": 6,
-        "state": "NO_FEEDBACK",
-        "status_id": 79927038,
-        "status_name": "Выслано предложение"
+        "state": "CLEAR",
+        "status_id": 79927042,
+        "status_name": "Принимают решение"
       },
       "crm_found": true,
       "crm_required": true,
@@ -63458,7 +63475,7 @@
         "crm_lead_id": 48892711,
         "deadline_at": 1790456400,
         "excluded": false,
-        "first_activity_at": null,
+        "first_activity_at": 1790576236,
         "lead_created_at": 1790179677,
         "loss_reason_checked": true,
         "loss_reason_id": null,
@@ -63466,9 +63483,9 @@
         "pipeline_id": 10081590,
         "responsible_user_id": 12982830,
         "rule_version": 6,
-        "state": "NO_FEEDBACK",
-        "status_id": 79927034,
-        "status_name": "Первичный контакт"
+        "state": "CLEAR",
+        "status_id": 79927042,
+        "status_name": "Принимают решение"
       },
       "crm_found": true,
       "crm_required": true,
@@ -64092,7 +64109,7 @@
         "pipeline_id": 10081590,
         "responsible_user_id": 12982830,
         "rule_version": 6,
-        "state": "WAITING",
+        "state": "NO_FEEDBACK",
         "status_id": 79927034,
         "status_name": "Первичный контакт"
       },
@@ -64395,7 +64412,7 @@
         "pipeline_id": 10081590,
         "responsible_user_id": 12982830,
         "rule_version": 6,
-        "state": "WAITING",
+        "state": "NO_FEEDBACK",
         "status_id": 79927038,
         "status_name": "Выслано предложение"
       },
@@ -65643,47 +65660,6 @@
   ],
   "pipeline_activity": {
     "days": {
-      "2026-08-31": {
-        "143": 20,
-        "79927034": 1,
-        "79927042": 2,
-        "79927046": 1,
-        "80331318": 1
-      },
-      "2026-09-01": {
-        "143": 3,
-        "79927038": 10,
-        "79927042": 2,
-        "80331318": 1,
-        "86372998": 2
-      },
-      "2026-09-02": {
-        "143": 5,
-        "79927038": 9,
-        "79927042": 3,
-        "79927914": 1,
-        "86372998": 1
-      },
-      "2026-09-03": {
-        "143": 3,
-        "79927038": 2
-      },
-      "2026-09-04": {
-        "143": 1
-      },
-      "2026-09-05": {
-        "143": 27,
-        "79927042": 10,
-        "80331318": 4,
-        "84995274": 1,
-        "86372998": 1
-      },
-      "2026-09-06": {
-        "142": 1,
-        "143": 3,
-        "79927038": 4,
-        "80331318": 1
-      },
       "2026-09-07": {
         "143": 3,
         "79927038": 1
@@ -65796,6 +65772,10 @@
       },
       "2026-09-27": {
         "79927038": 1
+      },
+      "2026-09-28": {
+        "143": 2,
+        "79927042": 2
       }
     },
     "pipeline_id": 10081590,
@@ -65877,9 +65857,24 @@
         "sort": 11000
       }
     ],
-    "today": "2026-09-27",
-    "total_movements": 371,
+    "today": "2026-09-28",
+    "total_movements": 255,
     "weeks": [
+      {
+        "dates": [
+          "2026-09-28",
+          "2026-09-29",
+          "2026-09-30",
+          "2026-10-01",
+          "2026-10-02",
+          "2026-10-03",
+          "2026-10-04"
+        ],
+        "end": "2026-10-04",
+        "index": 0,
+        "label": "28.09–04.10 · Текущая",
+        "start": "2026-09-28"
+      },
       {
         "dates": [
           "2026-09-21",
@@ -65891,8 +65886,8 @@
           "2026-09-27"
         ],
         "end": "2026-09-27",
-        "index": 0,
-        "label": "21.09–27.09 · Текущая",
+        "index": 1,
+        "label": "21.09–27.09",
         "start": "2026-09-21"
       },
       {
@@ -65906,7 +65901,7 @@
           "2026-09-20"
         ],
         "end": "2026-09-20",
-        "index": 1,
+        "index": 2,
         "label": "14.09–20.09",
         "start": "2026-09-14"
       },
@@ -65921,24 +65916,9 @@
           "2026-09-13"
         ],
         "end": "2026-09-13",
-        "index": 2,
+        "index": 3,
         "label": "07.09–13.09",
         "start": "2026-09-07"
-      },
-      {
-        "dates": [
-          "2026-08-31",
-          "2026-09-01",
-          "2026-09-02",
-          "2026-09-03",
-          "2026-09-04",
-          "2026-09-05",
-          "2026-09-06"
-        ],
-        "end": "2026-09-06",
-        "index": 3,
-        "label": "31.08–06.09",
-        "start": "2026-08-31"
       }
     ]
   },
