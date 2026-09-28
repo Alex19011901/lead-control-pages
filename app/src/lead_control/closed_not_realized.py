@@ -8,12 +8,13 @@ from zoneinfo import ZoneInfo
 
 from .amocrm_client import AmoCRMClient
 
-
 LOG = logging.getLogger(__name__)
 SUCCESSFUL_STATUS_ID = 142
 CLOSED_NOT_REALIZED_STATUS_ID = 143
 HISTORY_DAYS = 5
 MOSCOW_TZ = ZoneInfo("Europe/Moscow")
+PRE_CLOSE_RECORD_VERSION = 2
+MAX_HISTORY_PAGES = 50
 
 
 def _moscow_date(ts: int):
@@ -24,24 +25,23 @@ def _status_key(value: object) -> str:
     return str(value or "").strip().casefold().replace("ё", "е")
 
 
-def _loss_reason(payload: dict[str, Any]) -> tuple[int | None, str]:
-    raw = ((payload.get("_embedded") or {}).get("loss_reason"))
-    item: dict[str, Any] = {}
-    if isinstance(raw, list) and raw:
-        item = raw[0] if isinstance(raw[0], dict) else {}
-    elif isinstance(raw, dict):
-        item = raw
-
-    reason_id = item.get("id") or payload.get("loss_reason_id")
+def _int(value: object) -> int:
     try:
-        reason_id = int(reason_id) if reason_id else None
+        return int(value or 0)
     except (TypeError, ValueError):
-        reason_id = None
+        return 0
+
+
+def _loss_reason(payload: dict[str, Any]) -> tuple[int | None, str]:
+    raw = (payload.get("_embedded") or {}).get("loss_reason")
+    item = raw[0] if isinstance(raw, list) and raw else raw
+    item = item if isinstance(item, dict) else {}
+    reason_id = _int(item.get("id") or payload.get("loss_reason_id")) or None
     return reason_id, str(item.get("name") or "").strip()
 
 
 def _extract_text(value: object) -> str:
-    """Extract human-readable text from amoCRM note/event payload fragments."""
+    """Only explicit text fields: never mistake a message ID for its text."""
     if isinstance(value, str):
         return value.strip()
     if isinstance(value, list):
@@ -49,277 +49,209 @@ def _extract_text(value: object) -> str:
             text = _extract_text(item)
             if text:
                 return text
-        return ""
-    if not isinstance(value, dict):
-        return ""
-
-    preferred_keys = (
-        "text",
-        "message",
-        "comment",
-        "body",
-        "result",
-        "value",
-        "name",
-    )
-    for key in preferred_keys:
-        if key not in value:
-            continue
-        text = _extract_text(value.get(key))
-        if text:
-            return text
+    if isinstance(value, dict):
+        for key in ("text", "message", "comment", "body", "result", "value"):
+            if key in value:
+                text = _extract_text(value[key])
+                if text:
+                    return text
     return ""
 
 
-def _latest_record_before_closed(
-    client: AmoCRMClient,
-    crm_lead_id: int,
-    closed_at: int,
-) -> tuple[str, int | None]:
-    """Return the latest meaningful timeline record strictly before closure.
-
-    Sources:
-    - amoCRM lead notes of any type that contain human-readable text;
-    - direct-message timeline events when their payload contains text;
-    - completed task results.
-
-    System-only status/field changes are deliberately ignored.
-    """
-    latest_text = ""
-    latest_at: int | None = None
-
-    def consider(text: str, ts: int) -> None:
-        nonlocal latest_text, latest_at
-        text = str(text or "").strip()
-        if not text or not ts or ts >= closed_at:
+def _history_items(client: AmoCRMClient, path: str, params: dict, collection: str):
+    """Complete pagination; an incomplete response must not be frozen as empty."""
+    for page in range(1, MAX_HISTORY_PAGES + 1):
+        payload = client._request_json(path, {**params, "page": page})
+        items = (payload.get("_embedded") or {}).get(collection) or []
+        if not isinstance(items, list):
+            raise RuntimeError("Invalid CRM history collection")
+        yield from (item for item in items if isinstance(item, dict))
+        has_next = bool((payload.get("_links") or {}).get("next"))
+        if not has_next:
             return
-        if latest_at is None or ts > latest_at:
-            latest_at = ts
-            latest_text = text
+        if not items:
+            raise RuntimeError("Incomplete CRM history pagination")
+    raise RuntimeError("CRM history page limit reached")
 
-    # Notes: do not limit to note_type=common. amoCRM shows several note types
-    # in the card timeline, and the dashboard must reflect the actual last
-    # meaningful entry before closing.
-    page = 1
-    while True:
-        payload = client._request_json(
-            "/api/v4/leads/notes",
-            {
-                "filter[entity_id][0]": crm_lead_id,
-                "limit": 250,
-                "page": page,
-            },
-        )
-        notes = list(((payload.get("_embedded") or {}).get("notes")) or [])
-        for note in notes:
-            try:
-                entity_id = int(note.get("entity_id") or 0)
-                created_at = int(note.get("created_at") or 0)
-            except (TypeError, ValueError):
-                continue
-            if entity_id != crm_lead_id or not created_at or created_at >= closed_at:
-                continue
-            params = note.get("params") or {}
-            text = _extract_text(params)
-            if not text:
-                text = _extract_text(note.get("text"))
-            consider(text, created_at)
 
-        links = payload.get("_links") or {}
-        if not links.get("next") or not notes:
-            break
-        page += 1
-        if page > 50:
-            LOG.warning("CRM closed-lead notes pagination stopped lead_id=%s after 50 pages", crm_lead_id)
-            break
+def _read_preclose_record(client: AmoCRMClient, crm_lead_id: int,
+                         closed_at: int) -> dict[str, Any]:
+    latest: dict[str, Any] = {}
+    errors: list[str] = []
 
-    # Internal/direct messages may be represented as events rather than notes.
-    page = 1
-    while True:
-        payload = client._request_json(
-            "/api/v4/events",
-            {
-                "filter[entity]": "lead",
-                "filter[entity_id]": crm_lead_id,
-                "filter[created_at][to]": closed_at - 1,
-                "limit": 100,
-                "page": page,
-            },
-        )
-        events = list(((payload.get("_embedded") or {}).get("events")) or [])
-        for event in events:
-            try:
-                entity_id = int(event.get("entity_id") or 0)
-                created_at = int(event.get("created_at") or 0)
-            except (TypeError, ValueError):
-                continue
-            if entity_id != crm_lead_id or not created_at or created_at >= closed_at:
-                continue
-            event_type = str(event.get("type") or "").strip()
-            if event_type != "entity_direct_message":
-                continue
-            text = (
-                _extract_text(event.get("value_after"))
-                or _extract_text(event.get("params"))
-                or _extract_text(event.get("value_before"))
-            )
-            consider(text, created_at)
+    def consider(text: str, ts: int, kind: str, record_id: object = "",
+                 missing_text: bool = False) -> None:
+        nonlocal latest
+        if not 0 < ts < closed_at or (not text and not missing_text):
+            return
+        # An ID-only message later than a note must not silently become that note.
+        if ts > _int(latest.get("at")) or (ts == _int(latest.get("at")) and missing_text):
+            latest = {"text": text, "at": ts, "kind": kind,
+                      "record_id": str(record_id or "")}
 
-        links = payload.get("_links") or {}
-        if not links.get("next") or not events:
-            break
-        page += 1
-        if page > 50:
-            LOG.warning("CRM closed-lead events pagination stopped lead_id=%s after 50 pages", crm_lead_id)
-            break
+    sources = (
+        ("notes", "/api/v4/leads/notes", {
+            "filter[entity_id][0]": crm_lead_id, "limit": 250}),
+        ("events", "/api/v4/events", {
+            "filter[entity]": "lead", "filter[entity_id]": crm_lead_id,
+            # amoCRM requires BOTH bounds when a date range is passed.
+            "filter[created_at][from]": 1,
+            "filter[created_at][to]": closed_at - 1, "limit": 100}),
+        ("tasks", "/api/v4/tasks", {
+            "filter[entity_type]": "leads", "filter[entity_id]": crm_lead_id,
+            "limit": 250}),
+    )
+    for collection, path, params in sources:
+        try:
+            for item in _history_items(client, path, params, collection):
+                if _int(item.get("entity_id")) != crm_lead_id:
+                    continue
+                if collection == "notes":
+                    text = _extract_text(item.get("params")) or _extract_text(item.get("text"))
+                    consider(text, _int(item.get("created_at")),
+                             str(item.get("note_type") or "note"), item.get("id"))
+                elif collection == "events":
+                    if item.get("type") != "entity_direct_message":
+                        continue
+                    text = (_extract_text(item.get("value_after"))
+                            or _extract_text(item.get("params")))
+                    consider(text, _int(item.get("created_at")), "entity_direct_message",
+                             item.get("id"), missing_text=not bool(text))
+                elif item.get("is_completed"):
+                    consider(_extract_text(item.get("result")), _int(item.get("updated_at")),
+                             "task_result", item.get("id"))
+        except RuntimeError as exc:
+            errors.append(collection)
+            LOG.warning("CRM pre-close source failed lead_id=%s source=%s error=%s",
+                        crm_lead_id, collection, exc)
+            # No retry here. Other successful source results are retained.
 
-    # A completed task with a written result is also a visible meaningful
-    # timeline record. Use the completion/update timestamp and only before close.
-    page = 1
-    while True:
-        payload = client._request_json(
-            "/api/v4/tasks",
-            {
-                "filter[entity_type]": "leads",
-                "filter[entity_id]": crm_lead_id,
-                "limit": 250,
-                "page": page,
-            },
-        )
-        tasks = list(((payload.get("_embedded") or {}).get("tasks")) or [])
-        for task in tasks:
-            try:
-                entity_id = int(task.get("entity_id") or 0)
-                updated_at = int(task.get("updated_at") or 0)
-            except (TypeError, ValueError):
-                continue
-            if entity_id != crm_lead_id or not task.get("is_completed"):
-                continue
-            result = task.get("result") or {}
-            text = _extract_text(result)
-            consider(text, updated_at)
+    if errors:
+        state = "READ_ERROR"
+    elif not latest:
+        state = "EMPTY"
+    elif not latest.get("text"):
+        state = "TEXT_UNAVAILABLE"
+    else:
+        state = "VERIFIED"
+    return {
+        "crm_lead_id": crm_lead_id, "closed_at": closed_at,
+        "last_comment": str(latest.get("text") or ""),
+        "last_comment_at": latest.get("at") if latest.get("text") else None,
+        "last_record_at": latest.get("at"),
+        "last_record_type": str(latest.get("kind") or ""),
+        "last_record_id": str(latest.get("record_id") or ""),
+        "last_record_status": state,
+        "last_record_rule_version": PRE_CLOSE_RECORD_VERSION,
+        "last_record_errors": errors,
+    }
 
-        links = payload.get("_links") or {}
-        if not links.get("next") or not tasks:
-            break
-        page += 1
-        if page > 50:
-            LOG.warning("CRM closed-lead tasks pagination stopped lead_id=%s after 50 pages", crm_lead_id)
-            break
 
-    return latest_text, latest_at
+def _latest_record_before_closed(client: AmoCRMClient, crm_lead_id: int,
+                                 closed_at: int) -> tuple[str, int | None]:
+    record = _read_preclose_record(client, crm_lead_id, closed_at)
+    if record["last_record_status"] == "READ_ERROR":
+        raise RuntimeError("Incomplete pre-close history read")
+    return record["last_comment"], record["last_comment_at"]
+
+
+def _snapshot_key(record: dict) -> tuple[int, int]:
+    return _int(record.get("crm_lead_id")), _int(record.get("closed_at"))
+
+
+def _frozen(record: dict) -> bool:
+    if _int(record.get("last_record_rule_version")) != PRE_CLOSE_RECORD_VERSION:
+        return False
+    state = record.get("last_record_status")
+    if state == "VERIFIED":
+        return bool(str(record.get("last_comment") or "").strip()) and (
+            0 < _int(record.get("last_comment_at")) < _int(record.get("closed_at")))
+    return state in {"EMPTY", "TEXT_UNAVAILABLE"}
+
 
 def apply_closed_not_realized_history(
-    leads: list[dict[str, Any]],
-    client: AmoCRMClient,
+    leads: list[dict[str, Any]], client: AmoCRMClient,
     now_ts: int | None = None,
+    previous_leads: list[dict[str, Any]] | None = None,
 ) -> None:
-    """Attach CRM outcome metadata and exact recent closed/lost details."""
+    """Freeze successfully read pre-close records, preserving data on read errors."""
     current_ts = int(now_ts if now_ts is not None else time.time())
     today = _moscow_date(current_ts)
     first_day = today - timedelta(days=HISTORY_DAYS - 1)
-    detail_cache: dict[int, dict[str, Any]] = {}
-    comment_cache: dict[tuple[int, int], tuple[str, int | None]] = {}
+    previous: dict[tuple[int, int], dict] = {}
+    for old in list(previous_leads or []) + leads:
+        old_crm_id = _int((old.get("crm") or {}).get("entity_id"))
+        for field in ("closed_not_realized", "preclose_record_cache"):
+            record = old.get(field) or {}
+            key = _snapshot_key(record)
+            if key[0] != old_crm_id or not all(key):
+                continue
+            existing = previous.get(key) or {}
+            if not existing or _frozen(record) or not existing.get("last_comment"):
+                previous[key] = dict(record)
 
+    detail_cache: dict[int, dict] = {}
+    record_cache: dict[tuple[int, int], dict] = {}
     for lead in leads:
         lead.pop("closed_not_realized", None)
         lead.pop("crm_outcome", None)
-
         crm = lead.get("crm") or {}
         if not crm.get("found") or crm.get("entity_type") != "lead" or not crm.get("entity_id"):
             continue
-
+        crm_id = _int(crm["entity_id"])
         feedback = lead.get("crm_feedback") or {}
-        try:
-            status_id = int(feedback.get("status_id") or 0)
-        except (TypeError, ValueError):
-            status_id = 0
-        status_name_raw = str(feedback.get("status_name") or "").strip()
-        status_name = _status_key(status_name_raw)
-
-        is_success = status_id == SUCCESSFUL_STATUS_ID or status_name == "успешно реализовано"
-        is_lost = status_id == CLOSED_NOT_REALIZED_STATUS_ID or status_name in {
-            "закрыто и не реализовано",
-            "закрыто и не реализованно",
-        }
-
-        if is_success:
-            lead["crm_outcome"] = {
-                "result": "SUCCESS",
-                "status_id": status_id or SUCCESSFUL_STATUS_ID,
-                "status_name": status_name_raw or "Успешно реализовано",
-            }
+        status_id = _int(feedback.get("status_id"))
+        status_name = str(feedback.get("status_name") or "").strip()
+        key_name = _status_key(status_name)
+        if status_id == SUCCESSFUL_STATUS_ID or key_name == "успешно реализовано":
+            lead["crm_outcome"] = {"result": "SUCCESS", "status_id": status_id or 142,
+                                   "status_name": status_name or "Успешно реализовано"}
+            continue
+        if status_id != 143 and key_name not in {"закрыто и не реализовано", "закрыто и не реализованно"}:
             continue
 
-        if not is_lost:
-            continue
-
-        crm_lead_id = int(crm["entity_id"])
         if feedback.get("loss_reason_checked"):
-            try:
-                closed_at = int(feedback.get("closed_at") or 0)
-            except (TypeError, ValueError):
-                closed_at = 0
-            raw_reason_id = feedback.get("loss_reason_id")
-            try:
-                reason_id = int(raw_reason_id) if raw_reason_id else None
-            except (TypeError, ValueError):
-                reason_id = None
-            reason_name = str(feedback.get("loss_reason_name") or "").strip() or "Не указана"
+            closed_at = _int(feedback.get("closed_at"))
+            reason_id = _int(feedback.get("loss_reason_id")) or None
+            reason = str(feedback.get("loss_reason_name") or "").strip() or "Не указана"
         else:
-            detailed = detail_cache.get(crm_lead_id)
-            if detailed is None:
-                detailed = client._get_entity(
-                    "leads",
-                    crm_lead_id,
-                    params={"with": "loss_reason"},
-                ) or {}
-                detail_cache[crm_lead_id] = detailed
-
-            try:
-                closed_at = int(detailed.get("closed_at") or 0)
-            except (TypeError, ValueError):
-                closed_at = 0
-            reason_id, reason_name = _loss_reason(detailed)
-            reason_name = reason_name or "Не указана"
-
+            if crm_id not in detail_cache:
+                detail_cache[crm_id] = client._get_entity(
+                    "leads", crm_id, params={"with": "loss_reason"}) or {}
+            card = detail_cache[crm_id]
+            closed_at = _int(card.get("closed_at"))
+            reason_id, reason = _loss_reason(card)
+            reason = reason or "Не указана"
         lead["crm_outcome"] = {
-            "result": "LOST",
-            "status_id": status_id or CLOSED_NOT_REALIZED_STATUS_ID,
-            "status_name": status_name_raw or "Закрыто и не реализовано",
-            "closed_at": closed_at or None,
-            "loss_reason_id": reason_id,
-            "loss_reason_name": reason_name,
+            "result": "LOST", "status_id": status_id or 143,
+            "status_name": status_name or "Закрыто и не реализовано",
+            "closed_at": closed_at or None, "loss_reason_id": reason_id,
+            "loss_reason_name": reason,
         }
-
         if not closed_at:
             continue
-
-        closed_date = _moscow_date(closed_at)
-        if closed_date < first_day or closed_date > today:
+        key = (crm_id, closed_at)
+        saved = previous.get(key) or {}
+        if saved:
+            lead["preclose_record_cache"] = dict(saved)
+        if not first_day <= _moscow_date(closed_at) <= today:
             continue
-
-        last_comment = ""
-        last_comment_at: int | None = None
-        comment_key = (crm_lead_id, closed_at)
-        if comment_key in comment_cache:
-            last_comment, last_comment_at = comment_cache[comment_key]
+        if key in record_cache:
+            record = dict(record_cache[key])
+        elif _frozen(saved):
+            record = dict(saved)
         else:
-            try:
-                last_comment, last_comment_at = _latest_record_before_closed(
-                    client,
-                    crm_lead_id,
-                    closed_at,
-                )
-                comment_cache[comment_key] = (last_comment, last_comment_at)
-            except RuntimeError as exc:
-                LOG.warning("CRM closed-lead timeline lookup failed lead_id=%s error=%s", crm_lead_id, exc)
-
+            record = _read_preclose_record(client, crm_id, closed_at)
+            if record["last_record_status"] == "READ_ERROR":
+                saved_at = _int(saved.get("last_comment_at"))
+                if saved.get("last_comment") and 0 < saved_at < closed_at:
+                    record["last_comment"] = saved["last_comment"]
+                    record["last_comment_at"] = saved_at
+                    record["last_record_preserved"] = True
+            # Old unversioned empty values are never considered valid cache hits.
+        record_cache[key] = dict(record)
+        lead["preclose_record_cache"] = dict(record)
         lead["closed_not_realized"] = {
-            "crm_lead_id": crm_lead_id,
-            "closed_at": closed_at,
-            "loss_reason_id": reason_id,
-            "loss_reason_name": reason_name,
-            "last_comment": last_comment,
-            "last_comment_at": last_comment_at,
+            **record, "crm_lead_id": crm_id, "closed_at": closed_at,
+            "loss_reason_id": reason_id, "loss_reason_name": reason,
         }
