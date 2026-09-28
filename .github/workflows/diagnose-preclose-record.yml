@@ -1,0 +1,115 @@
+name: Diagnose pre-close record (read only)
+on:
+  push:
+    paths:
+      - '.github/workflows/diagnose-preclose-record.yml'
+permissions:
+  contents: read
+concurrency:
+  group: lead-control-production
+  cancel-in-progress: false
+jobs:
+  diagnose:
+    runs-on: ubuntu-latest
+    timeout-minutes: 4
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Read one CRM card and identify the rejected query
+        env:
+          AMOCRM_TOKEN: ${{ secrets.AMOCRM_TOKEN }}
+        run: |
+          python - <<'PY'
+          import hashlib
+          import json
+          import os
+          import urllib.error
+          import urllib.parse
+          import urllib.request
+          from collections import Counter
+
+          domain = 'https://alex1901yaru.amocrm.ru'
+          lead_id = 48855703
+          token = os.environ['AMOCRM_TOKEN']
+
+          def request(label, path, params):
+              url = domain + path + ('?' + urllib.parse.urlencode(params) if params else '')
+              req = urllib.request.Request(url, headers={'Accept': 'application/json', 'Authorization': 'Bearer ' + token}, method='GET')
+              try:
+                  with urllib.request.urlopen(req, timeout=25) as res:
+                      raw = res.read()
+                      payload = json.loads(raw) if raw else {}
+                      print(json.dumps({'check': label, 'path': path, 'http': res.status}, ensure_ascii=False), flush=True)
+                      return payload
+              except urllib.error.HTTPError as exc:
+                  raw = exc.read()
+                  try:
+                      problem = json.loads(raw)
+                  except ValueError:
+                      problem = {}
+                  safe = {key: problem.get(key) for key in ('title', 'status', 'detail', 'validation-errors', 'errors') if key in problem}
+                  # No token, authorization header, raw CRM text, or personal contact data is logged.
+                  message = json.dumps({'check': label, 'path': path, 'http': exc.code, 'problem': safe}, ensure_ascii=False)
+                  print(message.replace(token, '[REDACTED]')[:5000], flush=True)
+                  if exc.code in (400, 404):
+                      return None
+                  raise SystemExit('Stopped after CRM HTTP error; no retry')
+              except (urllib.error.URLError, TimeoutError):
+                  raise SystemExit('Stopped after CRM network error; no retry')
+
+          def shape(value, depth=0):
+              if depth >= 5:
+                  return type(value).__name__
+              if isinstance(value, dict):
+                  return {str(k): shape(v, depth+1) for k, v in value.items()}
+              if isinstance(value, list):
+                  return [shape(value[0], depth+1)] if value else []
+              return type(value).__name__
+
+          def text_of(value):
+              if isinstance(value, str):
+                  return value.strip()
+              if isinstance(value, list):
+                  return next((text_of(v) for v in value if text_of(v)), '')
+              if isinstance(value, dict):
+                  return next((text_of(value[k]) for k in ('text','message','comment','body','result','value','name') if k in value and text_of(value[k])), '')
+              return ''
+
+          def summarize(label, payload, collection, cutoff):
+              if payload is None:
+                  return
+              items = ((payload.get('_embedded') or {}).get(collection)) or []
+              print(json.dumps({'check': label, 'count': len(items), 'next_page': bool((payload.get('_links') or {}).get('next')), 'types': dict(Counter(str(x.get('type') or x.get('note_type') or '') for x in items))}, ensure_ascii=False), flush=True)
+              rows = []
+              for item in items:
+                  ts = int(item.get('created_at') or 0) if collection != 'tasks' else int(item.get('updated_at') or 0)
+                  text = text_of(item.get('params')) or text_of(item.get('value_after')) or text_of(item.get('result')) or text_of(item.get('text'))
+                  rows.append({'id': item.get('id'), 'type': item.get('type') or item.get('note_type'), 'created_at': item.get('created_at'), 'updated_at': item.get('updated_at'), 'created_by': item.get('created_by'), 'before_close': 0 < ts < cutoff, 'text_length': len(text), 'text_sha256': hashlib.sha256(text.encode()).hexdigest() if text else None, 'payload_shape': shape(item.get('params') or item.get('value_after') or item.get('result') or {}), 'is_completed': item.get('is_completed')})
+              print(json.dumps({'check': label, 'records': sorted(rows, key=lambda x: int(x.get('created_at') or 0), reverse=True)[:30]}, ensure_ascii=False), flush=True)
+
+          card = request('card', '/api/v4/leads/' + str(lead_id), {})
+          if not card:
+              raise SystemExit('Card not available')
+          created_at = int(card.get('created_at') or 0)
+          closed_at = int(card.get('closed_at') or 0)
+          print(json.dumps({'lead_id': lead_id, 'created_at': created_at, 'closed_at': closed_at, 'status_id': card.get('status_id')}), flush=True)
+          if not closed_at:
+              raise SystemExit('Card is not closed')
+          notes = request('notes_original', '/api/v4/leads/notes', {'filter[entity_id][0]': lead_id, 'limit': 250, 'page': 1})
+          summarize('notes_original', notes, 'notes', closed_at)
+          if notes is None:
+              notes = request('notes_by_entity', '/api/v4/leads/' + str(lead_id) + '/notes', {'limit': 250, 'page': 1})
+              summarize('notes_by_entity', notes, 'notes', closed_at)
+          events = request('events_original', '/api/v4/events', {'filter[entity]': 'lead', 'filter[entity_id]': lead_id, 'filter[created_at][to]': closed_at - 1, 'limit': 100, 'page': 1})
+          summarize('events_original', events, 'events', closed_at)
+          if events is None:
+              events = request('events_bounded', '/api/v4/events', {'filter[entity]': 'lead', 'filter[entity_id]': lead_id, 'filter[created_at][from]': created_at, 'filter[created_at][to]': closed_at - 1, 'limit': 100, 'page': 1})
+              summarize('events_bounded', events, 'events', closed_at)
+          tasks = request('tasks', '/api/v4/tasks', {'filter[entity_type]': 'leads', 'filter[entity_id]': lead_id, 'limit': 250, 'page': 1})
+          summarize('tasks', tasks, 'tasks', closed_at)
+          view = json.load(open('dashboard_view.json'))
+          rows = view.get('closed_not_realized') or []
+          print(json.dumps({'snapshot': view.get('snapshot_generated_at'), 'closed_rows': len(rows), 'empty_last_record': sum(not str(x.get('last_comment') or '').strip() for x in rows)}), flush=True)
+          PY
