@@ -35,27 +35,61 @@ class FakeClient:
 
     def _request_json(self, path, params):
         self.request_calls.append((path, dict(params)))
-        if path != "/api/v4/leads/notes":
-            return {}
-        return {
-            "_embedded": {
-                "notes": [
-                    {
-                        "entity_id": 101,
-                        "note_type": "common",
-                        "created_at": _ts(15, 10),
-                        "params": {"text": "Первый комментарий"},
-                    },
-                    {
-                        "entity_id": 101,
-                        "note_type": "common",
-                        "created_at": _ts(16, 9),
-                        "params": {"text": "Клиент выбрал другую площадку"},
-                    },
-                ]
-            },
-            "_links": {},
-        }
+        if path == "/api/v4/leads/notes":
+            return {
+                "_embedded": {
+                    "notes": [
+                        {
+                            "entity_id": 101,
+                            "note_type": "common",
+                            "created_at": _ts(15, 10),
+                            "params": {"text": "Первый комментарий"},
+                        },
+                        {
+                            "entity_id": 101,
+                            "note_type": "service_message",
+                            "created_at": _ts(16, 9),
+                            "params": {"text": "Клиент выбрал другую площадку"},
+                        },
+                        {
+                            "entity_id": 101,
+                            "note_type": "common",
+                            "created_at": _ts(16, 13),
+                            "params": {"text": "Это уже после закрытия"},
+                        },
+                    ]
+                },
+                "_links": {},
+            }
+        if path == "/api/v4/events":
+            return {
+                "_embedded": {
+                    "events": [
+                        {
+                            "entity_id": 101,
+                            "type": "entity_direct_message",
+                            "created_at": _ts(16, 10),
+                            "value_after": [{"message": "Написали клиенту"}],
+                        }
+                    ]
+                },
+                "_links": {},
+            }
+        if path == "/api/v4/tasks":
+            return {
+                "_embedded": {
+                    "tasks": [
+                        {
+                            "entity_id": 101,
+                            "updated_at": _ts(16, 11),
+                            "is_completed": True,
+                            "result": {"text": "Клиент отменил мероприятие"},
+                        }
+                    ]
+                },
+                "_links": {},
+            }
+        return {}
 
 
 class ClosedNotRealizedTests(unittest.TestCase):
@@ -78,9 +112,9 @@ class ClosedNotRealizedTests(unittest.TestCase):
         self.assertEqual(leads[0]["closed_not_realized"]["loss_reason_name"], "Не устроила цена")
         self.assertEqual(
             leads[0]["closed_not_realized"]["last_comment"],
-            "Клиент выбрал другую площадку",
+            "Клиент отменил мероприятие",
         )
-        self.assertEqual(leads[0]["closed_not_realized"]["last_comment_at"], _ts(16, 9))
+        self.assertEqual(leads[0]["closed_not_realized"]["last_comment_at"], _ts(16, 11))
         self.assertNotIn("closed_not_realized", leads[1])
         self.assertEqual(leads[0]["crm_outcome"]["result"], "LOST")
         self.assertEqual(leads[0]["crm_outcome"]["loss_reason_name"], "Не устроила цена")
@@ -94,7 +128,7 @@ class ClosedNotRealizedTests(unittest.TestCase):
                 (102, (("with", "loss_reason"),)),
             ],
         )
-        self.assertEqual(len(client.request_calls), 1)
+        self.assertEqual(len(client.request_calls), 3)
 
     def test_reuses_loss_metadata_from_feedback_without_second_lead_read(self):
         leads = [
@@ -115,9 +149,32 @@ class ClosedNotRealizedTests(unittest.TestCase):
         apply_closed_not_realized_history(leads, client, now_ts=_ts(16, 18))
 
         self.assertEqual(client.calls, [])
-        self.assertEqual(len(client.request_calls), 1)
+        self.assertEqual(len(client.request_calls), 3)
         self.assertEqual(leads[0]["crm_outcome"]["loss_reason_name"], "Не устроила цена")
         self.assertEqual(leads[0]["closed_not_realized"]["closed_at"], _ts(16))
+
+    def test_last_record_is_strictly_before_closed_at(self):
+        leads = [
+            {
+                "crm": {"found": True, "entity_type": "lead", "entity_id": 101},
+                "crm_feedback": {
+                    "status_id": 143,
+                    "status_name": "Закрыто и не реализовано",
+                    "closed_at": _ts(16),
+                    "loss_reason_id": 501,
+                    "loss_reason_name": "Пропала потребность",
+                    "loss_reason_checked": True,
+                },
+            }
+        ]
+        client = FakeClient()
+
+        apply_closed_not_realized_history(leads, client, now_ts=_ts(16, 18))
+
+        closed = leads[0]["closed_not_realized"]
+        self.assertEqual(closed["last_comment"], "Клиент отменил мероприятие")
+        self.assertEqual(closed["last_comment_at"], _ts(16, 11))
+        self.assertNotEqual(closed["last_comment"], "Это уже после закрытия")
 
     def test_non_closed_status_is_ignored(self):
         leads = [{
