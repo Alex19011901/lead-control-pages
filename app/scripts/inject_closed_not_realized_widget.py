@@ -78,8 +78,8 @@ def inject(html: str) -> str:
     )
     html = replace_once(
         html,
-        "var R={},DY=[],L=[],N=[],F=[],FS={},W=[],currentRange=",
-        "var R={},DY=[],L=[],N=[],F=[],FS={},W=[],C=[],CS={},O=[],PA={},pipelineWeekIndex=0,currentRange=",
+        "var R={},DY=[],L=[],N=[],F=[],FS={},W=[],SD={},sourceDate='',currentRange=",
+        "var R={},DY=[],L=[],N=[],F=[],FS={},W=[],SD={},sourceDate='',C=[],CS={},O=[],PA={},pipelineWeekIndex=0,currentRange=",
         "dashboard state",
     )
     html = replace_once(
