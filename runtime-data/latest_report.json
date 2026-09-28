@@ -19,7 +19,7 @@
     "ТоМесто": 1
   },
   "event_types": {
-    "unknown": 117,
+    "unknown": 116,
     "Бизнес мероприятие": 22,
     "Выпускной": 5,
     "ДР": 2,
@@ -27,7 +27,7 @@
     "Конференция": 1,
     "Корпоратив": 181,
     "Поминки": 1,
-    "Свадьба": 210,
+    "Свадьба": 211,
     "Съемки": 1,
     "Съёмки": 2,
     "Юбилей": 134
@@ -44,11 +44,11 @@
   "latest_leads": [
     {
       "created_at": "2026-09-28T10:20:29+03:00",
-      "crm_entity_id": null,
-      "crm_entity_type": null,
-      "crm_found": false,
+      "crm_entity_id": 49022943,
+      "crm_entity_type": "lead",
+      "crm_found": true,
       "event_date": "",
-      "event_type": "",
+      "event_type": "Свадьба",
       "guests_count": 40,
       "identifier": "7********59",
       "identifier_type": "phone",
@@ -57,7 +57,7 @@
       "manager_username": "",
       "name": "Наталья",
       "source": "Заявки хост",
-      "status": "PENDING",
+      "status": "OK",
       "violations": []
     },
     {
@@ -407,7 +407,7 @@
   ],
   "needs_review": 112,
   "no_reaction": 0,
-  "ok": 495,
+  "ok": 496,
   "total_leads": 681,
-  "updated_at": "2026-09-28T10:32:07+03:00"
+  "updated_at": "2026-09-28T11:29:11+03:00"
 }

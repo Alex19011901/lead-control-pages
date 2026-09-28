@@ -61809,7 +61809,7 @@
         "crm_lead_id": 48807797,
         "deadline_at": 1790283600,
         "excluded": false,
-        "first_activity_at": null,
+        "first_activity_at": 1790580720,
         "lead_created_at": 1790003599,
         "loss_reason_checked": true,
         "loss_reason_id": null,
@@ -61817,9 +61817,9 @@
         "pipeline_id": 10081590,
         "responsible_user_id": 13009530,
         "rule_version": 6,
-        "state": "NO_FEEDBACK",
-        "status_id": 79927038,
-        "status_name": "Выслано предложение"
+        "state": "CLEAR",
+        "status_id": 79927042,
+        "status_name": "Принимают решение"
       },
       "crm_found": true,
       "crm_required": true,
@@ -65740,29 +65740,65 @@
     {
       "category": "HOST",
       "channel": "MAX",
+      "closed_not_realized": {
+        "closed_at": 1790581639,
+        "crm_lead_id": 49022943,
+        "last_comment": "",
+        "last_comment_at": null,
+        "loss_reason_id": 21779734,
+        "loss_reason_name": "Слишком дорого"
+      },
       "crm": {
         "ambiguity_count": 0,
-        "created_at": null,
-        "entity_id": null,
-        "entity_type": null,
-        "event_type": null,
-        "found": false,
-        "responsible_user_id": null,
-        "responsible_user_name": null,
-        "updated_at": null
+        "created_at": 1790581639,
+        "entity_id": 49022943,
+        "entity_type": "lead",
+        "event_type": "Свадьба",
+        "found": true,
+        "guests": "40",
+        "guests_source": "CRM",
+        "responsible_user_id": 12982830,
+        "responsible_user_name": "Максим",
+        "updated_at": 1790581656
       },
-      "crm_created_at": null,
-      "crm_found": false,
+      "crm_created_at": 1790581639,
+      "crm_feedback": {
+        "closed_at": 1790581639,
+        "crm_lead_id": 49022943,
+        "excluded": true,
+        "first_activity_at": null,
+        "lead_created_at": 1790581639,
+        "loss_reason_checked": true,
+        "loss_reason_id": 21779734,
+        "loss_reason_name": "Слишком дорого",
+        "pipeline_id": 10081590,
+        "responsible_user_id": 12982830,
+        "rule_version": 6,
+        "state": "EXCLUDED",
+        "status_id": 143,
+        "status_name": "Закрыто и не реализовано"
+      },
+      "crm_found": true,
+      "crm_outcome": {
+        "closed_at": 1790581639,
+        "loss_reason_id": 21779734,
+        "loss_reason_name": "Слишком дорого",
+        "result": "LOST",
+        "status_id": 143,
+        "status_name": "Закрыто и не реализовано"
+      },
       "crm_required": true,
-      "crm_responsible": null,
+      "crm_responsible": 12982830,
       "deadline_msk_ts": 1790629199,
       "event_date": "",
+      "event_type": "Свадьба",
+      "event_type_source": "CRM",
       "fields": {
         "category": "HOST",
         "email": "",
         "event_date": "",
         "event_date_raw": "",
-        "event_type": "",
+        "event_type": "Свадьба",
         "guests_count": 40,
         "guests_max": null,
         "guests_min": null,
@@ -65803,7 +65839,7 @@
       "sender_name": "SV",
       "sender_user_id": 205529129,
       "source": "Заявки хост",
-      "status": "PENDING",
+      "status": "OK",
       "username": "",
       "violations": []
     }
@@ -65925,8 +65961,8 @@
       },
       "2026-09-28": {
         "142": 1,
-        "143": 7,
-        "79927042": 5,
+        "143": 8,
+        "79927042": 6,
         "79927914": 1,
         "88382034": 3
       }
@@ -66011,7 +66047,7 @@
       }
     ],
     "today": "2026-09-28",
-    "total_movements": 268,
+    "total_movements": 270,
     "weeks": [
       {
         "dates": [
