@@ -61,3 +61,5 @@ jobs:
               assert text
               assert 0 < int(record.get('last_record_at') or 0) < closed_at
           PY
+
+# rerun: validate-manager-text-v4
