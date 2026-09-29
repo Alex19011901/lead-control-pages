@@ -186,12 +186,12 @@ class PrecloseRecordRecoveryTests(unittest.TestCase):
             'last_record_at': CLOSE - 5,
             'last_record_type': 'entity_direct_message',
             'last_record_status': 'TEXT_UNAVAILABLE',
-            'last_record_rule_version': 2,
+            'last_record_rule_version': 3,
         }
         current, client = lead(), Client(notes=[note()])
         apply_closed_not_realized_history([current], client, CLOSE + 60, [prior])
         self.assertEqual(len(client.calls), 3)
-        self.assertEqual(current['closed_not_realized']['last_record_rule_version'], 3)
+        self.assertEqual(current['closed_not_realized']['last_record_rule_version'], 4)
         self.assertEqual(current['closed_not_realized']['last_record_status'], 'VERIFIED')
 
     def test_duplicate_dashboard_rows_share_scan(self):
