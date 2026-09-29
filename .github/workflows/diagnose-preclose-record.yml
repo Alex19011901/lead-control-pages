@@ -11,40 +11,66 @@ concurrency:
 jobs:
   diagnose:
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 3
     steps:
-      - name: Find fetchMessagesById call sites
+      - name: Probe amoCRM message id query format
+        env:
+          AMOCRM_TOKEN: ${{ secrets.AMOCRM_TOKEN }}
         run: |
           python - <<'PY'
-          import json,re,urllib.request
-          urls=[
-            "https://statix.amocrm.ru/frontend/build/61179.e4e5e039b9efcd5d.js",
-            "https://statix.amocrm.ru/frontend/build/72055.3aaf8668fcbe0efa.js",
-            "https://statix.amocrm.ru/frontend/build/cards.5882b28acb4ffff2.js",
-            "https://statix.amocrm.ru/frontend/build/common.d0f691c50ac7a91e.js",
-            "https://statix.amocrm.ru/frontend/build/app.bc39e01e19e8400a.js",
+          import http.cookiejar,json,os,urllib.parse,urllib.request,urllib.error
+          base='https://alex1901yaru.amocrm.ru'
+          bearer=os.environ['AMOCRM_TOKEN']
+          lead_id=48813485
+          closed_at=1790580620
+          jar=http.cookiejar.CookieJar()
+          opener=urllib.request.build_opener(urllib.request.HTTPCookieProcessor(jar))
+          def open_req(url,method='GET',data=None,headers=None):
+              h={'User-Agent':'Mozilla/5.0','Authorization':'Bearer '+bearer}
+              h.update(headers or {})
+              req=urllib.request.Request(url,data=data,headers=h,method=method)
+              with opener.open(req,timeout=25) as r:
+                  return r.status,r.read()
+          open_req(f'{base}/leads/detail/{lead_id}',headers={'Accept':'text/html,*/*'})
+          form=urllib.parse.urlencode({'request[chats][session][action]':'create'}).encode()
+          st,raw=open_req(base+'/ajax/v1/chats/session','POST',form,{
+              'Accept':'application/json, text/javascript, */*; q=0.01',
+              'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8',
+              'X-Requested-With':'XMLHttpRequest',
+              'Referer':f'{base}/leads/detail/{lead_id}',
+          })
+          sess=json.loads(raw or b'{}')
+          p=((sess.get('response') or {}).get('chats') or {}).get('session') or {}
+          access=str(p.get('access_token') or '')
+          ev_url=base+'/api/v4/events?'+urllib.parse.urlencode({
+              'filter[entity]':'lead','filter[entity_id]':lead_id,
+              'filter[created_at][from]':closed_at-86400*7,
+              'filter[created_at][to]':closed_at-1,'limit':100,
+          })
+          _,eraw=open_req(ev_url,headers={'Accept':'application/json'})
+          ev=json.loads(eraw or b'{}')
+          ds=[x for x in ((ev.get('_embedded') or {}).get('events') or []) if isinstance(x,dict) and x.get('type')=='entity_direct_message']
+          ds.sort(key=lambda x:int(x.get('created_at') or 0))
+          e=ds[-1]
+          mid=''
+          for part in e.get('value_after') or []:
+              if isinstance(part,dict) and isinstance(part.get('message'),dict):
+                  mid=str(part['message'].get('id') or '')
+                  if mid:break
+          tests=[
+              ('plain', [('id',mid)]),
+              ('brackets', [('id[]',mid)]),
+              ('index0', [('id[0]',mid)]),
+              ('json_array', [('id',json.dumps([mid]))]),
           ]
-          out=[]
-          for url in urls:
+          for label,pairs in tests:
+              url='https://amojo.amocrm.ru/v2/messages?'+urllib.parse.urlencode(pairs)
+              req=urllib.request.Request(url,headers={'User-Agent':'Mozilla/5.0','Accept':'application/json','X-Auth-Token':access},method='GET')
               try:
-                  req=urllib.request.Request(url,headers={'User-Agent':'Mozilla/5.0'})
                   with urllib.request.urlopen(req,timeout=20) as r:
-                      text=r.read().decode('utf-8','ignore')
-              except Exception:
-                  continue
-              for needle in ('fetchMessagesById','fetchMessagesById('):
-                  start=0
-                  while True:
-                      pos=text.find(needle,start)
-                      if pos<0: break
-                      out.append({
-                          'file':url.rsplit('/',1)[-1],
-                          'needle':needle,
-                          'snippet':text[max(0,pos-1400):pos+2600],
-                      })
-                      start=pos+len(needle)
-                      if len(out)>=30: break
-                  if len(out)>=30: break
-              if len(out)>=30: break
-          print(json.dumps(out,ensure_ascii=False),flush=True)
+                      body=r.read().decode('utf-8','ignore')
+                      print(json.dumps({'label':label,'http':r.status,'body':body[:4000]},ensure_ascii=False),flush=True)
+              except urllib.error.HTTPError as ex:
+                  body=ex.read().decode('utf-8','ignore')
+                  print(json.dumps({'label':label,'http':ex.code,'body':body[:1000]},ensure_ascii=False),flush=True)
           PY
