@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import http.cookiejar
 import json
 import logging
 import time
@@ -55,6 +56,8 @@ class AmoCRMClient:
             tuple[str, int, tuple[tuple[str, str], ...]],
             dict[str, Any] | None,
         ] = {}
+        self._amojo_access_token: str | None = None
+        self._amojo_message_cache: dict[str, dict[str, Any]] = {}
 
     def search(
         self,
@@ -259,6 +262,117 @@ class AmoCRMClient:
             name = ""
         self._user_names[uid] = name
         return name or None
+
+    def fetch_internal_messages(
+        self,
+        lead_id: int,
+        message_ids: list[str],
+    ) -> dict[str, dict[str, Any]]:
+        """Read amoCRM internal-chat messages exactly as the lead card does.
+
+        The CRM events API exposes only message IDs for entity_direct_message.
+        The web card creates a short-lived amojo session and then loads message
+        bodies from /v2/messages using repeated id[] query parameters.
+        """
+        ids = [str(item or "").strip() for item in message_ids]
+        ids = [item for item in ids if item]
+        missing = [item for item in dict.fromkeys(ids) if item not in self._amojo_message_cache]
+        if not missing:
+            return {item: self._amojo_message_cache[item] for item in ids if item in self._amojo_message_cache}
+
+        access_token = self._amojo_access_token or self._create_amojo_session(int(lead_id))
+        self._amojo_access_token = access_token
+
+        query = urllib.parse.urlencode([("id[]", item) for item in missing])
+        host = "https://amojo.amocrm.com" if ".amocrm.com" in self.domain else "https://amojo.amocrm.ru"
+        request = urllib.request.Request(
+            f"{host}/v2/messages?{query}",
+            headers={
+                "Accept": "application/json",
+                "User-Agent": "Mozilla/5.0",
+                "X-Auth-Token": access_token,
+            },
+            method="GET",
+        )
+        try:
+            with urllib.request.urlopen(request, timeout=30) as response:
+                payload = json.loads(response.read().decode("utf-8") or "[]")
+        except urllib.error.HTTPError as exc:
+            raise RuntimeError(f"amoCRM chat message lookup failed: HTTP {exc.code}") from None
+        except (urllib.error.URLError, TimeoutError) as exc:
+            reason = getattr(exc, "reason", exc)
+            raise RuntimeError(f"amoCRM chat message lookup failed: {reason}") from None
+        except json.JSONDecodeError:
+            raise RuntimeError("amoCRM chat message lookup failed: invalid JSON response") from None
+
+        if not isinstance(payload, list):
+            raise RuntimeError("amoCRM chat message lookup failed: invalid payload")
+
+        for item in payload:
+            if not isinstance(item, dict):
+                continue
+            message_id = str(item.get("id") or "").strip()
+            if message_id:
+                self._amojo_message_cache[message_id] = item
+
+        return {item: self._amojo_message_cache[item] for item in ids if item in self._amojo_message_cache}
+
+    def _create_amojo_session(self, lead_id: int) -> str:
+        """Create the same short-lived chat session used by the amoCRM card."""
+        jar = http.cookiejar.CookieJar()
+        opener = urllib.request.build_opener(urllib.request.HTTPCookieProcessor(jar))
+        page_url = f"{self.domain}/leads/detail/{int(lead_id)}"
+
+        page_request = urllib.request.Request(
+            page_url,
+            headers={
+                "Accept": "text/html,*/*",
+                "Authorization": f"Bearer {self._token}",
+                "User-Agent": "Mozilla/5.0",
+            },
+            method="GET",
+        )
+        try:
+            with opener.open(page_request, timeout=30) as response:
+                response.read()
+        except urllib.error.HTTPError as exc:
+            raise RuntimeError(f"amoCRM chat session page failed: HTTP {exc.code}") from None
+        except (urllib.error.URLError, TimeoutError) as exc:
+            reason = getattr(exc, "reason", exc)
+            raise RuntimeError(f"amoCRM chat session page failed: {reason}") from None
+
+        body = urllib.parse.urlencode(
+            {"request[chats][session][action]": "create"}
+        ).encode("utf-8")
+        session_request = urllib.request.Request(
+            f"{self.domain}/ajax/v1/chats/session",
+            data=body,
+            headers={
+                "Accept": "application/json, text/javascript, */*; q=0.01",
+                "Authorization": f"Bearer {self._token}",
+                "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
+                "Referer": page_url,
+                "User-Agent": "Mozilla/5.0",
+                "X-Requested-With": "XMLHttpRequest",
+            },
+            method="POST",
+        )
+        try:
+            with opener.open(session_request, timeout=30) as response:
+                payload = json.loads(response.read().decode("utf-8") or "{}")
+        except urllib.error.HTTPError as exc:
+            raise RuntimeError(f"amoCRM chat session failed: HTTP {exc.code}") from None
+        except (urllib.error.URLError, TimeoutError) as exc:
+            reason = getattr(exc, "reason", exc)
+            raise RuntimeError(f"amoCRM chat session failed: {reason}") from None
+        except json.JSONDecodeError:
+            raise RuntimeError("amoCRM chat session failed: invalid JSON response") from None
+
+        session = (((payload.get("response") or {}).get("chats") or {}).get("session") or {})
+        access_token = str(session.get("access_token") or "").strip()
+        if not access_token:
+            raise RuntimeError("amoCRM chat session failed: missing access token")
+        return access_token
 
     def _request_json(self, path: str, params: dict[str, Any]) -> dict[str, Any]:
         query = urllib.parse.urlencode(params)
