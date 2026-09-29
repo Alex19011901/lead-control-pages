@@ -22,7 +22,10 @@ class ClosedNotRealizedWidgetTests(unittest.TestCase):
         self.assertIn("Последняя запись", rendered)
         self.assertIn("x.last_record", rendered)
         self.assertIn("closedRecordHtml", rendered)
-        self.assertNotIn("closed-record-time", rendered)
+        self.assertIn(
+            "function closedRecordHtml(x){var v=String(x.last_record||x.last_comment||'').trim();if(!v)return '—';return esc(v)}",
+            rendered,
+        )
         self.assertIn('id="outcomes"', rendered)
         self.assertIn("Результаты реализации", rendered)
         self.assertIn("O=view.outcomes||[]", rendered)
