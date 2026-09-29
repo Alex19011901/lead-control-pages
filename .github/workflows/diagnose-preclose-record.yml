@@ -206,4 +206,46 @@ jobs:
                   {'id': x.get('id'), 'type': x.get('type'), 'entity_id': x.get('entity_id'), 'entity_type': x.get('entity_type'), 'created_at': x.get('created_at'), 'shape': safe_shape(x)}
                   for x in chat_items[-20:] if isinstance(x, dict)
               ]}, ensure_ascii=False), flush=True)
+
+          # Inspect linked talk metadata through the same amoCRM OAuth token.
+          def raw_get_simple(label, path, pairs):
+              url = domain + path + ('?' + urllib.parse.urlencode(pairs) if pairs else '')
+              req = urllib.request.Request(url, headers={'Accept': 'application/json', 'Authorization': 'Bearer ' + token}, method='GET')
+              try:
+                  with urllib.request.urlopen(req, timeout=25) as response:
+                      raw = response.read()
+                      payload = json.loads(raw) if raw else {}
+                      print(json.dumps({'talk_check': label, 'http': response.status, 'shape': safe_shape(payload)}, ensure_ascii=False), flush=True)
+                      return payload
+              except urllib.error.HTTPError as exc:
+                  print(json.dumps({'talk_check': label, 'http': exc.code}), flush=True)
+                  if exc.code in (400, 404, 204):
+                      return {}
+                  raise SystemExit('Stopped after talk authorization/rate/server error; no retry')
+              except (urllib.error.URLError, TimeoutError):
+                  raise SystemExit('Stopped after talk network error; no retry')
+
+          talks = raw_get_simple('target_talks', '/api/v4/talks', [
+              ('filter[entity_id]', target_id),
+              ('filter[entity_type]', 'lead'),
+              ('limit', 250),
+          ])
+          talk_items = (talks.get('_embedded') or {}).get('talks') or []
+          print(json.dumps({'talks_target': [
+              {
+                  'talk_id': x.get('talk_id'),
+                  'chat_id': x.get('chat_id'),
+                  'contact_id': x.get('contact_id'),
+                  'entity_id': x.get('entity_id'),
+                  'entity_type': x.get('entity_type'),
+                  'origin': x.get('origin'),
+                  'source_id': x.get('source_id'),
+                  'created_at': x.get('created_at'),
+                  'updated_at': x.get('updated_at'),
+                  'status': x.get('status'),
+              }
+              for x in talk_items if isinstance(x, dict)
+          ]}, ensure_ascii=False), flush=True)
+
+          raw_get_simple('account_amojo', '/api/v4/account', [('with', 'amojo_id')])
           PY
