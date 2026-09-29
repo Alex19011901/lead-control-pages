@@ -11,7 +11,6 @@ OUTCOME_CARD = '''<div class="outcome-activity-row"><div class="card" id="outcom
 PIPELINE_ACTIVITY_CARD = '''<div class="card" id="pipelineActivityCard"><div class="pipeline-activity-head"><div class="title">Активность по этапам воронки</div><label class="pipeline-week-control"><span>Неделя</span><select id="pipelineWeekSelect" aria-label="Выбор недели"></select></label></div><div class="note pipeline-activity-note">Каждый реальный перевод существующей заявки в новый этап amoCRM.</div><div class="pipeline-activity-scroll"><div class="pipeline-activity-grid" id="pipelineActivityGrid"></div></div><div class="feedback-empty" id="pipelineActivityEmpty" style="display:none">За выбранную неделю перемещений нет</div></div></div>'''
 
 PIPELINE_ACTIVITY_CSS = r'''
-.closed-record-time{display:block;margin-top:2px;color:#8193aa;font-size:9px;line-height:1.15;font-weight:500}
 .outcome-activity-row{grid-column:1/-1;display:grid;grid-template-columns:1.2fr .8fr;gap:10px;align-items:stretch}
 #outcomeCard,#pipelineActivityCard{min-width:0;height:100%}
 #pipelineActivityCard .pipeline-activity-head{flex-wrap:nowrap;align-items:center}
