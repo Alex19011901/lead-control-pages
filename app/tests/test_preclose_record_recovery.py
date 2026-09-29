@@ -91,6 +91,39 @@ class PrecloseRecordRecoveryTests(unittest.TestCase):
         self.assertEqual(record['last_record_status'], 'TEXT_UNAVAILABLE')
         self.assertEqual(record['last_record_at'], CLOSE - 5)
         self.assertEqual(record['last_comment'], '')
+        self.assertEqual(record['last_record_display'], 'Внутреннее сообщение')
+
+    def test_internal_message_snapshot_is_not_read_again_next_run(self):
+        event = {'id': 'event-1', 'type': 'entity_direct_message', 'entity_id': 101,
+                 'created_at': CLOSE - 5, 'value_after': [{'message': {'id': 'message-1'}}]}
+        first = lead()
+        first_client = Client(events=[event])
+        apply_closed_not_realized_history([first], first_client, CLOSE + 60)
+        self.assertEqual(len(first_client.calls), 3)
+        self.assertEqual(first['closed_not_realized']['last_record_display'], 'Внутреннее сообщение')
+
+        second, second_client = lead(), Client()
+        apply_closed_not_realized_history([second], second_client, CLOSE + 120, [first])
+        self.assertEqual(second_client.calls, [])
+        self.assertEqual(second['closed_not_realized'], first['closed_not_realized'])
+
+    def test_previous_rule_snapshot_is_read_once_then_upgraded(self):
+        prior = lead()
+        prior['closed_not_realized'] = {
+            'crm_lead_id': 101,
+            'closed_at': CLOSE,
+            'last_comment': '',
+            'last_record_display': 'Внутреннее сообщение',
+            'last_record_at': CLOSE - 5,
+            'last_record_type': 'entity_direct_message',
+            'last_record_status': 'TEXT_UNAVAILABLE',
+            'last_record_rule_version': 2,
+        }
+        current, client = lead(), Client(notes=[note()])
+        apply_closed_not_realized_history([current], client, CLOSE + 60, [prior])
+        self.assertEqual(len(client.calls), 3)
+        self.assertEqual(current['closed_not_realized']['last_record_rule_version'], 3)
+        self.assertEqual(current['closed_not_realized']['last_record_status'], 'VERIFIED')
 
     def test_duplicate_dashboard_rows_share_scan(self):
         first, second, client = lead(), lead(), Client(notes=[note()])
