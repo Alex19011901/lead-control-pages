@@ -1,4 +1,4 @@
-# rerun-marker: exact-manager-record-final2-20260929
+# rerun-marker: diagnose-elizabeth-49047285-20260929
 name: Diagnose pre-close record (read only)
 on:
   push:
@@ -18,49 +18,127 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Test exact pre-close manager record
-        working-directory: app
-        run: PYTHONPATH=.:src python -m unittest tests.test_preclose_record_recovery tests.test_preclose_snapshot_regression tests.test_closed_not_realized tests.test_closed_not_realized_widget -v
-      - name: Validate real closed leads without changing data
+      - name: Inspect Elizabeth 49047285 around close
         env:
           AMOCRM_TOKEN: ${{ secrets.AMOCRM_TOKEN }}
         run: |
           PYTHONPATH=app/src python - <<'PY'
-          import hashlib
-          import json
-          import os
+          import json, os
+          from datetime import datetime
+          from zoneinfo import ZoneInfo
           from lead_control.amocrm_client import AmoCRMClient
-          from lead_control.closed_not_realized import _read_preclose_record
+          from lead_control.closed_not_realized import (
+              _history_items, _extract_text, _message_id_from_event, _read_preclose_record
+          )
 
-          client=AmoCRMClient('https://alex1901yaru.amocrm.ru',os.environ['AMOCRM_TOKEN'])
-          targets=[
-              (48813485,1790580620),
-              (48855703,1790579990),
-          ]
-          for lead_id,closed_at in targets:
-              card=client._get_entity('leads',lead_id) or {}
-              manager_id=int(card.get('responsible_user_id') or 0)
-              record=_read_preclose_record(
-                  client,
-                  lead_id,
-                  closed_at,
-                  responsible_user_id=manager_id or None,
-              )
-              text=str(record.get('last_comment') or '')
-              print(json.dumps({
-                  'lead_id':lead_id,
-                  'manager_id':manager_id,
-                  'status':record.get('last_record_status'),
-                  'type':record.get('last_record_type'),
-                  'record_at':record.get('last_record_at'),
-                  'closed_at':closed_at,
-                  'author':record.get('last_record_author'),
-                  'text_len':len(text),
-                  'text_sha256':hashlib.sha256(text.encode()).hexdigest() if text else None,
-              },ensure_ascii=False),flush=True)
-              assert record.get('last_record_status')=='VERIFIED'
-              assert text
-              assert 0 < int(record.get('last_record_at') or 0) < closed_at
+          lead_id = 49047285
+          closed_at = 1790607245
+          tz = ZoneInfo("Europe/Moscow")
+          client = AmoCRMClient('https://alex1901yaru.amocrm.ru', os.environ['AMOCRM_TOKEN'])
+          card = client._get_entity('leads', lead_id) or {}
+          manager_id = int(card.get('responsible_user_id') or 0)
+
+          def fmt(ts):
+              ts = int(ts or 0)
+              return datetime.fromtimestamp(ts, tz).isoformat() if ts else ""
+
+          print("CARD " + json.dumps({
+              "lead_id": lead_id,
+              "responsible_user_id": manager_id,
+              "closed_at": closed_at,
+              "closed_at_msk": fmt(closed_at),
+              "status_id": card.get("status_id"),
+          }, ensure_ascii=False), flush=True)
+
+          notes = []
+          for item in _history_items(
+              client, "/api/v4/leads/notes",
+              {"filter[entity_id][0]": lead_id, "limit": 250},
+              "notes",
+          ):
+              if int(item.get("entity_id") or 0) != lead_id:
+                  continue
+              text = _extract_text(item.get("params")) or _extract_text(item.get("text"))
+              if text or str(item.get("note_type") or "") == "common":
+                  notes.append({
+                      "id": item.get("id"),
+                      "note_type": item.get("note_type"),
+                      "created_at": int(item.get("created_at") or 0),
+                      "created_at_msk": fmt(item.get("created_at")),
+                      "delta_to_close_sec": int(item.get("created_at") or 0) - closed_at,
+                      "created_by": item.get("created_by"),
+                      "text": text,
+                  })
+          print("NOTES " + json.dumps(notes, ensure_ascii=False), flush=True)
+
+          events = []
+          direct_ids = []
+          for item in _history_items(
+              client, "/api/v4/events",
+              {
+                  "filter[entity]": "lead",
+                  "filter[entity_id]": lead_id,
+                  "filter[created_at][from]": closed_at - 600,
+                  "filter[created_at][to]": closed_at + 600,
+                  "limit": 100,
+              },
+              "events",
+          ):
+              if int(item.get("entity_id") or 0) != lead_id:
+                  continue
+              mid = _message_id_from_event(item)
+              if mid:
+                  direct_ids.append(mid)
+              events.append({
+                  "id": item.get("id"),
+                  "type": item.get("type"),
+                  "created_at": int(item.get("created_at") or 0),
+                  "created_at_msk": fmt(item.get("created_at")),
+                  "delta_to_close_sec": int(item.get("created_at") or 0) - closed_at,
+                  "created_by": item.get("created_by"),
+                  "message_id": mid,
+                  "text_from_event": _extract_text(item.get("value_after")) or _extract_text(item.get("params")),
+              })
+          print("EVENTS " + json.dumps(events, ensure_ascii=False), flush=True)
+
+          if direct_ids:
+              messages = client.fetch_internal_messages(lead_id, direct_ids)
+              resolved = []
+              for mid in direct_ids:
+                  m = messages.get(mid) or {}
+                  nested = m.get("message") or {}
+                  resolved.append({
+                      "id": mid,
+                      "created_at": int(m.get("created_at") or 0),
+                      "created_at_msk": fmt(m.get("created_at")),
+                      "text": str(m.get("text") or (nested.get("text") if isinstance(nested, dict) else "") or ""),
+                      "author": (m.get("author") or {}).get("full_name") or (m.get("author") or {}).get("name"),
+                  })
+              print("MESSAGES " + json.dumps(resolved, ensure_ascii=False), flush=True)
+
+          tasks = []
+          for item in _history_items(
+              client, "/api/v4/tasks",
+              {"filter[entity_type]": "leads", "filter[entity_id]": lead_id, "limit": 250},
+              "tasks",
+          ):
+              if int(item.get("entity_id") or 0) != lead_id:
+                  continue
+              if item.get("is_completed") or _extract_text(item.get("result")):
+                  tasks.append({
+                      "id": item.get("id"),
+                      "is_completed": item.get("is_completed"),
+                      "responsible_user_id": item.get("responsible_user_id"),
+                      "updated_at": int(item.get("updated_at") or 0),
+                      "updated_at_msk": fmt(item.get("updated_at")),
+                      "delta_to_close_sec": int(item.get("updated_at") or 0) - closed_at,
+                      "result": _extract_text(item.get("result")),
+                  })
+          print("TASKS " + json.dumps(tasks, ensure_ascii=False), flush=True)
+
+          record = _read_preclose_record(
+              client, lead_id, closed_at,
+              responsible_user_id=manager_id or None,
+          )
+          print("RESULT " + json.dumps(record, ensure_ascii=False), flush=True)
           PY
-
-# rerun: validate-manager-text-v4
