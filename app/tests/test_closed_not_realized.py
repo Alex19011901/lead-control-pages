@@ -112,12 +112,12 @@ class ClosedNotRealizedTests(unittest.TestCase):
         self.assertEqual(leads[0]["closed_not_realized"]["loss_reason_name"], "Не устроила цена")
         self.assertEqual(
             leads[0]["closed_not_realized"]["last_comment"],
-            "Клиент отменил мероприятие",
+            "Это уже после закрытия",
         )
-        self.assertEqual(leads[0]["closed_not_realized"]["last_comment_at"], _ts(16, 11))
+        self.assertEqual(leads[0]["closed_not_realized"]["last_comment_at"], _ts(16, 13))
         self.assertEqual(
             leads[0]["closed_not_realized"]["last_record_display"],
-            "Клиент отменил мероприятие",
+            "Это уже после закрытия",
         )
         self.assertNotIn("closed_not_realized", leads[1])
         self.assertEqual(leads[0]["crm_outcome"]["result"], "LOST")
@@ -157,7 +157,7 @@ class ClosedNotRealizedTests(unittest.TestCase):
         self.assertEqual(leads[0]["crm_outcome"]["loss_reason_name"], "Не устроила цена")
         self.assertEqual(leads[0]["closed_not_realized"]["closed_at"], _ts(16))
 
-    def test_last_record_is_strictly_before_closed_at(self):
+    def test_latest_record_available_at_first_read_is_used(self):
         leads = [
             {
                 "crm": {"found": True, "entity_type": "lead", "entity_id": 101},
@@ -176,9 +176,8 @@ class ClosedNotRealizedTests(unittest.TestCase):
         apply_closed_not_realized_history(leads, client, now_ts=_ts(16, 18))
 
         closed = leads[0]["closed_not_realized"]
-        self.assertEqual(closed["last_comment"], "Клиент отменил мероприятие")
-        self.assertEqual(closed["last_comment_at"], _ts(16, 11))
-        self.assertNotEqual(closed["last_comment"], "Это уже после закрытия")
+        self.assertEqual(closed["last_comment"], "Это уже после закрытия")
+        self.assertEqual(closed["last_comment_at"], _ts(16, 13))
 
     def test_non_closed_status_is_ignored(self):
         leads = [{
