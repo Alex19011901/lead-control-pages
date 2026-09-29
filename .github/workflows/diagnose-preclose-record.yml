@@ -11,33 +11,45 @@ concurrency:
 jobs:
   diagnose:
     runs-on: ubuntu-latest
-    timeout-minutes: 2
+    timeout-minutes: 3
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Inspect direct-message event name only
+      - name: Inspect authenticated lead page for visible manager record
         env:
           AMOCRM_TOKEN: ${{ secrets.AMOCRM_TOKEN }}
         run: |
           python - <<'PY'
-          import json, os, urllib.request, urllib.error
+          import json, os, urllib.request, urllib.error, re
           token=os.environ['AMOCRM_TOKEN']
-          event_id='01m3ke4epft5pqe63t4x14cc4z'
-          url='https://alex1901yaru.amocrm.ru/api/v4/events/'+event_id
-          req=urllib.request.Request(url,headers={'Accept':'application/json','Authorization':'Bearer '+token},method='GET')
-          try:
-              with urllib.request.urlopen(req,timeout=20) as r:
-                  p=json.loads(r.read() or b'{}')
-                  print(json.dumps({
-                      'http':r.status,
-                      'type':p.get('type'),
-                      'name':p.get('name'),
-                      'created_at':p.get('created_at'),
-                      'created_by':p.get('created_by'),
-                  },ensure_ascii=False),flush=True)
-          except urllib.error.HTTPError as e:
-              print(json.dumps({'http':e.code}),flush=True)
-              raise SystemExit(1)
+          lead_id=48813485
+          phrase='бросил трубку'
+          urls=[
+            f'https://alex1901yaru.amocrm.ru/leads/detail/{lead_id}',
+            f'https://alex1901yaru.amocrm.ru/leads/detail/{lead_id}?ajax=1',
+          ]
+          for url in urls:
+              req=urllib.request.Request(url,headers={
+                  'Authorization':'Bearer '+token,
+                  'Accept':'text/html,application/json',
+                  'User-Agent':'Mozilla/5.0',
+              },method='GET')
+              try:
+                  with urllib.request.urlopen(req,timeout=25) as r:
+                      raw=r.read()
+                      text=raw.decode('utf-8','ignore')
+                      print(json.dumps({
+                          'url':url,
+                          'http':r.status,
+                          'content_type':r.headers.get('Content-Type'),
+                          'length':len(text),
+                          'contains_known_phrase':phrase.lower() in text.lower(),
+                          'contains_internal_message':'Внутреннее сообщение'.lower() in text.lower(),
+                          'looks_like_login':('/oauth' in text.lower() or 'войти' in text.lower()),
+                          'script_src_count':len(re.findall(r'<script[^>]+src=',text,re.I)),
+                      },ensure_ascii=False),flush=True)
+              except urllib.error.HTTPError as e:
+                  print(json.dumps({'url':url,'http':e.code}),flush=True)
           PY
