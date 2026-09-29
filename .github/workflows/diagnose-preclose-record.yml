@@ -11,31 +11,37 @@ concurrency:
 jobs:
   diagnose:
     runs-on: ubuntu-latest
-    timeout-minutes: 2
+    timeout-minutes: 3
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
-        with:
-          python-version: '3.12'
-      - name: List amoCRM lead-card script URLs
-        env:
-          AMOCRM_TOKEN: ${{ secrets.AMOCRM_TOKEN }}
+      - name: Inspect public amoCRM card bundle for timeline endpoints
         run: |
           python - <<'PY'
-          import json, os, re, urllib.parse, urllib.request
-          token=os.environ['AMOCRM_TOKEN']
-          base='https://alex1901yaru.amocrm.ru'
-          req=urllib.request.Request(
-              base+'/leads/detail/48813485',
-              headers={'Authorization':'Bearer '+token,'Accept':'text/html','User-Agent':'Mozilla/5.0'},
-              method='GET',
-          )
-          with urllib.request.urlopen(req,timeout=20) as r:
-              html=r.read().decode('utf-8','ignore')
-          scripts=[]
-          for src in re.findall(r'<script[^>]+src=["\']([^"\']+)["\']',html,re.I):
-              url=urllib.parse.urljoin(base,src)
-              if url not in scripts:
-                  scripts.append(url)
-          print(json.dumps({'script_urls':scripts},ensure_ascii=False),flush=True)
+          import json, re, urllib.request
+          urls=[
+            'https://statix.amocrm.ru/frontend/build/cards.5882b28acb4ffff2.js',
+            'https://statix.amocrm.ru/frontend/build/common.d0f691c50ac7a91e.js',
+            'https://statix.amocrm.ru/frontend/build/app.bc39e01e19e8400a.js',
+          ]
+          needles=('entity_direct_message','amojo','timeline','feed','ajax','chat','message')
+          for url in urls:
+              try:
+                  with urllib.request.urlopen(url,timeout=25) as r:
+                      text=r.read().decode('utf-8','ignore')
+              except Exception as e:
+                  print(json.dumps({'url':url,'error':type(e).__name__}),flush=True)
+                  continue
+              found=[n for n in needles if n in text.lower()]
+              paths=sorted(set(re.findall(r'["\']([^"\']*(?:ajax|chat|message|feed|timeline|amojo)[^"\']*)["\']',text,re.I)))
+              clean=[]
+              for p in paths:
+                  if len(p)>240:
+                      continue
+                  if p not in clean:
+                      clean.append(p)
+              print(json.dumps({
+                  'url':url,
+                  'length':len(text),
+                  'found':found,
+                  'candidate_paths':clean[:120],
+              },ensure_ascii=False),flush=True)
           PY
