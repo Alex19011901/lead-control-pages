@@ -115,6 +115,10 @@ class ClosedNotRealizedTests(unittest.TestCase):
             "Клиент отменил мероприятие",
         )
         self.assertEqual(leads[0]["closed_not_realized"]["last_comment_at"], _ts(16, 11))
+        self.assertEqual(
+            leads[0]["closed_not_realized"]["last_record_display"],
+            "Клиент отменил мероприятие",
+        )
         self.assertNotIn("closed_not_realized", leads[1])
         self.assertEqual(leads[0]["crm_outcome"]["result"], "LOST")
         self.assertEqual(leads[0]["crm_outcome"]["loss_reason_name"], "Не устроила цена")
