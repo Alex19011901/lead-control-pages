@@ -91,4 +91,40 @@ jobs:
           apply_closed_not_realized_history(second, NoRequests(), now_ts=now_ts, previous_leads=leads)
           assert [x['closed_not_realized'] for x in second] == records
           print(json.dumps({'preclose_validation': {'rows': len(rows), 'states': dict(states), 'requests_first_pass': client.calls, 'requests_second_pass': 0, 'production_data_modified': False}}, ensure_ascii=False), flush=True)
+
+          # Inspect only the STRUCTURE of records around the target lead.
+          target_id = 48855703
+          target_closed = next((int(r['closed_ts']) for r in rows if int(r['crm_lead_id']) == target_id), 0)
+          def safe_shape(v, depth=0):
+              if depth > 4:
+                  return type(v).__name__
+              if isinstance(v, dict):
+                  out = {}
+                  for k, val in list(v.items())[:30]:
+                      key = str(k)
+                      if key.lower() in {'text','message','comment','body','result','value','name'}:
+                          if isinstance(val, str):
+                              out[key] = {'type': 'str', 'len': len(val), 'nonempty': bool(val.strip())}
+                          else:
+                              out[key] = safe_shape(val, depth + 1)
+                      else:
+                          out[key] = safe_shape(val, depth + 1)
+                  return out
+              if isinstance(v, list):
+                  return [safe_shape(v[0], depth + 1)] if v else []
+              return type(v).__name__
+
+          for label, path, params, collection in [
+              ('notes', '/api/v4/leads/notes', {'filter[entity_id][0]': target_id, 'limit': 250}, 'notes'),
+              ('events', '/api/v4/events', {'filter[entity]': 'lead', 'filter[entity_id]': target_id, 'filter[created_at][from]': max(1, target_closed - 86400*7), 'filter[created_at][to]': max(1, target_closed - 1), 'limit': 100}, 'events'),
+              ('tasks', '/api/v4/tasks', {'filter[entity_type]': 'leads', 'filter[entity_id]': target_id, 'limit': 250}, 'tasks'),
+          ]:
+              payload = client._request_json(path, params)
+              items = (payload.get('_embedded') or {}).get(collection) or []
+              print(json.dumps({'target_structure': label, 'count': len(items), 'items': [
+                  {'id': x.get('id'), 'type': x.get('type') or x.get('note_type'), 'created_at': x.get('created_at'), 'updated_at': x.get('updated_at'), 'is_completed': x.get('is_completed'), 'shape': safe_shape(x)}
+                  for x in items if isinstance(x, dict) and (
+                      int(x.get('created_at') or x.get('updated_at') or 0) >= target_closed - 86400*7
+                  )
+              ][-20:]}, ensure_ascii=False), flush=True)
           PY
