@@ -96,6 +96,7 @@ class PrecloseSnapshotRegressionTests(unittest.TestCase):
         result = _read_preclose_record(client, 101, ts(28))
         self.assertEqual(result['last_record_status'], 'TEXT_UNAVAILABLE')
         self.assertEqual(result['last_comment'], '')
+        self.assertEqual(result['last_record_display'], 'Внутреннее сообщение')
         self.assertEqual(result['last_record_at'], ts(28) - 9)
         self.assertEqual(result['last_record_id'], 'real-event-id')
         self.assertTrue(result['last_record_status'] != 'READ_ERROR')
