@@ -38,7 +38,7 @@ class Client:
         collection = path.rsplit('/', 1)[-1]
         if collection == 'events':
             assert params['filter[created_at][from]'] > 0
-            assert params['filter[created_at][to]'] == CLOSE - 1
+            assert params['filter[created_at][to]'] >= CLOSE
         if collection == self.failure:
             raise RuntimeError('amoCRM request failed: HTTP 400')
         return {'_embedded': {collection: self.data[collection]}, '_links': {}}
@@ -65,10 +65,20 @@ class PrecloseRecordRecoveryTests(unittest.TestCase):
         self.assertEqual(record['last_comment'], 'Запись перед закрытием')
         self.assertEqual(record['last_record_status'], 'VERIFIED')
 
-    def test_records_at_or_after_closure_are_excluded(self):
-        record = _read_preclose_record(Client(notes=[note(), note('После', CLOSE + 1),
-                                                       note('Одновременно', CLOSE)]), 101, CLOSE)
-        self.assertEqual(record['last_comment_at'], CLOSE - 10)
+    def test_latest_record_available_on_first_read_is_used_even_after_close(self):
+        record = _read_preclose_record(
+            Client(notes=[
+                note(),
+                note('Одновременно', CLOSE),
+                note('Через 35 секунд', CLOSE + 35),
+                note('Позже первого чтения', CLOSE + 120),
+            ]),
+            101,
+            CLOSE,
+            read_at=CLOSE + 60,
+        )
+        self.assertEqual(record['last_comment'], 'Через 35 секунд')
+        self.assertEqual(record['last_comment_at'], CLOSE + 35)
 
     def test_error_preserves_previously_saved_text(self):
         prior = lead()
@@ -191,7 +201,7 @@ class PrecloseRecordRecoveryTests(unittest.TestCase):
         current, client = lead(), Client(notes=[note()])
         apply_closed_not_realized_history([current], client, CLOSE + 60, [prior])
         self.assertEqual(len(client.calls), 3)
-        self.assertEqual(current['closed_not_realized']['last_record_rule_version'], 4)
+        self.assertEqual(current['closed_not_realized']['last_record_rule_version'], 5)
         self.assertEqual(current['closed_not_realized']['last_record_status'], 'VERIFIED')
 
     def test_duplicate_dashboard_rows_share_scan(self):
