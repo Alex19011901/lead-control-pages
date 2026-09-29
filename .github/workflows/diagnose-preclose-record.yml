@@ -11,19 +11,164 @@ concurrency:
 jobs:
   diagnose:
     runs-on: ubuntu-latest
-    timeout-minutes: 2
+    timeout-minutes: 3
     steps:
-      - name: Extract exact amoCRM message URL builder
+      - name: Read exact amoCRM manager message via card session
+        env:
+          AMOCRM_TOKEN: ${{ secrets.AMOCRM_TOKEN }}
         run: |
           python - <<'PY'
-          import json,urllib.request
-          url='https://statix.amocrm.ru/frontend/build/61179.e4e5e039b9efcd5d.js'
-          req=urllib.request.Request(url,headers={'User-Agent':'Mozilla/5.0'},method='GET')
-          with urllib.request.urlopen(req,timeout=20) as r:
-              text=r.read().decode('utf-8','ignore')
-          out={}
-          for needle in ('fetchMessages:function','fetchMessagesMultiple:function','fetchMessagesById:function'):
-              pos=text.find(needle)
-              out[needle]=text[max(0,pos-1600):pos+2600] if pos>=0 else ''
-          print(json.dumps(out,ensure_ascii=False),flush=True)
+          import http.cookiejar
+          import json
+          import os
+          import re
+          import urllib.error
+          import urllib.parse
+          import urllib.request
+
+          base='https://alex1901yaru.amocrm.ru'
+          lead_id=48813485
+          token=os.environ['AMOCRM_TOKEN']
+          page_url=f'{base}/leads/detail/{lead_id}'
+
+          jar=http.cookiejar.CookieJar()
+          opener=urllib.request.build_opener(urllib.request.HTTPCookieProcessor(jar))
+
+          common={
+              'User-Agent':'Mozilla/5.0',
+              'Accept':'application/json, text/javascript, */*; q=0.01',
+              'Authorization':'Bearer '+token,
+          }
+
+          def req(url, extra=None):
+              headers=dict(common)
+              headers.update(extra or {})
+              request=urllib.request.Request(url,headers=headers,method='GET')
+              with opener.open(request,timeout=25) as r:
+                  raw=r.read()
+                  ctype=r.headers.get('Content-Type') or ''
+                  text=raw.decode('utf-8','ignore')
+                  return r.status,ctype,text
+
+          st,ct,html=req(page_url,{'Accept':'text/html,*/*'})
+          print(json.dumps({'page_http':st,'cookie_count':len(list(jar)),'html_len':len(html)}),flush=True)
+
+          def pick(patterns):
+              for p in patterns:
+                  m=re.search(p,html,re.I)
+                  if m:
+                      return m.group(1).replace('\\/','/')
+              return ''
+
+          amojo_server=pick([
+              r'["\']amojo_server["\']\s*:\s*["\']([^"\']+)',
+              r'amojo_server\\?"\s*:\s*\\?"([^"\\]+)',
+          ])
+          amojo_id=pick([
+              r'["\']amojo_id["\']\s*:\s*["\']([^"\']+)',
+              r'amojo_id\\?"\s*:\s*\\?"([^"\\]+)',
+          ])
+          stand=pick([
+              r'["\']stand["\']\s*:\s*["\']([^"\']+)',
+              r'["\']stand["\']\s*:\s*([0-9]+)',
+          ])
+          print(json.dumps({
+              'account_constants':{
+                  'amojo_server_present':bool(amojo_server),
+                  'amojo_id_present':bool(amojo_id),
+                  'stand':stand,
+              }
+          }),flush=True)
+
+          session_url=base+'/ajax/v1/chats/session'
+          try:
+              sst,sct,stext=req(session_url,{
+                  'Referer':page_url,
+                  'X-Requested-With':'XMLHttpRequest',
+              })
+              try:
+                  session=json.loads(stext) if stext else {}
+              except ValueError:
+                  session={}
+              def shape(v,depth=0):
+                  if depth>4:return type(v).__name__
+                  if isinstance(v,dict):
+                      out={}
+                      for k,val in v.items():
+                          if str(k).lower() in ('token','access_token'):
+                              out[k]={'present':bool(val),'length':len(str(val or ''))}
+                          else:
+                              out[k]=shape(val,depth+1)
+                      return out
+                  if isinstance(v,list):
+                      return [shape(v[0],depth+1)] if v else []
+                  return type(v).__name__
+              print(json.dumps({'session_http':sst,'session_shape':shape(session)},ensure_ascii=False),flush=True)
+          except urllib.error.HTTPError as e:
+              print(json.dumps({'session_http':e.code}),flush=True)
+              raise SystemExit(2)
+
+          chat_token=''
+          stack=[session]
+          while stack and not chat_token:
+              cur=stack.pop()
+              if isinstance(cur,dict):
+                  for k,v in cur.items():
+                      if str(k).lower() in ('token','access_token') and isinstance(v,str) and v:
+                          chat_token=v
+                          break
+                      stack.append(v)
+              elif isinstance(cur,list):
+                  stack.extend(cur)
+          if not chat_token:
+              raise SystemExit('No chat token in card session response')
+
+          # Find the last direct-message event before close and extract its message ID.
+          close_ts=1790580620
+          events_url=base+'/api/v4/events?'+urllib.parse.urlencode({
+              'filter[entity]':'lead',
+              'filter[entity_id]':lead_id,
+              'filter[created_at][from]':max(1,close_ts-86400*7),
+              'filter[created_at][to]':close_ts-1,
+              'limit':100,
+          })
+          est,ect,etext=req(events_url,{'Accept':'application/json'})
+          events=json.loads(etext)
+          items=(events.get('_embedded') or {}).get('events') or []
+          direct=[x for x in items if isinstance(x,dict) and x.get('type')=='entity_direct_message']
+          direct.sort(key=lambda x:int(x.get('created_at') or 0))
+          if not direct:
+              raise SystemExit('No direct message event')
+          event=direct[-1]
+          message_id=''
+          for part in event.get('value_after') or []:
+              if isinstance(part,dict) and isinstance(part.get('message'),dict):
+                  message_id=str(part['message'].get('id') or '')
+                  if message_id:break
+          print(json.dumps({'event_at':event.get('created_at'),'message_id_present':bool(message_id)}),flush=True)
+          if not message_id:
+              raise SystemExit('No message ID')
+
+          if not amojo_server:
+              raise SystemExit('amojo_server not found in card page')
+
+          msg_url=amojo_server.rstrip('/')+'/v2/messages?'+urllib.parse.urlencode({'id':message_id})
+          mreq=urllib.request.Request(
+              msg_url,
+              headers={
+                  'User-Agent':'Mozilla/5.0',
+                  'Accept':'application/json',
+                  'X-Auth-Token':chat_token,
+                  'Referer':page_url,
+              },
+              method='GET',
+          )
+          try:
+              with urllib.request.urlopen(mreq,timeout=25) as r:
+                  raw=r.read()
+                  payload=json.loads(raw) if raw else {}
+                  print(json.dumps({'message_http':r.status,'message_payload':payload},ensure_ascii=False),flush=True)
+          except urllib.error.HTTPError as e:
+              print(json.dumps({'message_http':e.code}),flush=True)
+              raise SystemExit(3)
           PY
