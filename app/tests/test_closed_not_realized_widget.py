@@ -58,8 +58,8 @@ class ClosedNotRealizedWidgetTests(unittest.TestCase):
                                     "crm_lead_id": 48855703,
                                     "closed_at": 1790579990,
                                     "loss_reason_name": "Пропала потребность",
-                                    "last_comment": "не стал разговаривать, бросил трубку...) в максе игнор",
-                                    "last_record_display": "не стал разговаривать, бросил трубку...) в максе игнор",
+                                    "last_comment": "Точный текст менеджера",
+                                    "last_record_display": "Точный текст менеджера",
                                     "last_record_at": 1790579981,
                                     "last_record_type": "entity_direct_message",
                                     "last_record_status": "VERIFIED",
@@ -81,7 +81,7 @@ class ClosedNotRealizedWidgetTests(unittest.TestCase):
             row = result["closed_not_realized"][0]
             self.assertEqual(
                 row["last_record"],
-                "не стал разговаривать, бросил трубку...) в максе игнор",
+                "Точный текст менеджера",
             )
             self.assertEqual(row["last_record_type"], "entity_direct_message")
             self.assertEqual(row["last_record_status"], "VERIFIED")
