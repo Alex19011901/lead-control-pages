@@ -22,7 +22,7 @@ class ClosedNotRealizedWidgetTests(unittest.TestCase):
         self.assertIn("Последняя запись", rendered)
         self.assertIn("x.last_record", rendered)
         self.assertIn("closedRecordHtml", rendered)
-        self.assertIn("closed-record-time", rendered)
+        self.assertNotIn("closed-record-time", rendered)
         self.assertIn('id="outcomes"', rendered)
         self.assertIn("Результаты реализации", rendered)
         self.assertIn("O=view.outcomes||[]", rendered)
@@ -58,11 +58,11 @@ class ClosedNotRealizedWidgetTests(unittest.TestCase):
                                     "crm_lead_id": 48855703,
                                     "closed_at": 1790579990,
                                     "loss_reason_name": "Пропала потребность",
-                                    "last_comment": "",
-                                    "last_record_display": "Внутреннее сообщение",
+                                    "last_comment": "не стал разговаривать, бросил трубку...) в максе игнор",
+                                    "last_record_display": "не стал разговаривать, бросил трубку...) в максе игнор",
                                     "last_record_at": 1790579981,
                                     "last_record_type": "entity_direct_message",
-                                    "last_record_status": "TEXT_UNAVAILABLE",
+                                    "last_record_status": "VERIFIED",
                                 },
                             }
                         ]
@@ -79,9 +79,12 @@ class ClosedNotRealizedWidgetTests(unittest.TestCase):
             augment(leads_path, view_path, now_ts=1790581000)
             result = json.loads(view_path.read_text(encoding="utf-8"))
             row = result["closed_not_realized"][0]
-            self.assertEqual(row["last_record"], "Внутреннее сообщение")
+            self.assertEqual(
+                row["last_record"],
+                "не стал разговаривать, бросил трубку...) в максе игнор",
+            )
             self.assertEqual(row["last_record_type"], "entity_direct_message")
-            self.assertEqual(row["last_record_status"], "TEXT_UNAVAILABLE")
+            self.assertEqual(row["last_record_status"], "VERIFIED")
             self.assertTrue(row["last_record_at"].startswith("2026-09-28T10:19:41"))
 
     def test_dashboard_view_exports_success_and_loss_outcomes(self):
