@@ -58,11 +58,6 @@ class AmoCRMClient:
             dict[str, Any] | None,
         ] = {}
         self._amojo_access_token: str | None = None
-        self._amojo_message_cache: dict[str, dict[str, Any] | None] = {}
-        self._amojo_opener = urllib.request.build_opener(
-            urllib.request.HTTPCookieProcessor(http.cookiejar.CookieJar())
-        )
-        self._amojo_access_token: str | None = None
         self._amojo_message_cache: dict[str, dict[str, Any]] = {}
 
     def search(
@@ -253,121 +248,6 @@ class AmoCRMClient:
 
         self._entity_cache[cache_key] = entity
         return entity
-
-    def _amojo_session_token(self, lead_id: int) -> str:
-        """Create one amoCRM web chat session for this refresh.
-
-        amoCRM's public events API exposes internal-message IDs but not their
-        text. The lead card itself creates a short-lived amojo session using the
-        same authenticated amoCRM account. Reuse that session for all closed
-        leads in the current refresh.
-        """
-        if self._amojo_access_token:
-            return self._amojo_access_token
-
-        lead_url = f"{self.domain}/leads/detail/{int(lead_id)}"
-        page_request = urllib.request.Request(
-            lead_url,
-            headers={
-                "Accept": "text/html,*/*",
-                "Authorization": f"Bearer {self._token}",
-                "User-Agent": "Mozilla/5.0",
-            },
-            method="GET",
-        )
-        try:
-            with self._amojo_opener.open(page_request, timeout=30) as response:
-                response.read()
-        except (urllib.error.HTTPError, urllib.error.URLError, TimeoutError) as exc:
-            code = getattr(exc, "code", None)
-            suffix = f"HTTP {code}" if code else str(getattr(exc, "reason", exc))
-            raise RuntimeError(f"amoCRM chat session bootstrap failed: {suffix}") from None
-
-        body = urllib.parse.urlencode(
-            {"request[chats][session][action]": "create"}
-        ).encode("utf-8")
-        session_request = urllib.request.Request(
-            f"{self.domain}/ajax/v1/chats/session",
-            data=body,
-            headers={
-                "Accept": "application/json, text/javascript, */*; q=0.01",
-                "Authorization": f"Bearer {self._token}",
-                "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
-                "Referer": lead_url,
-                "User-Agent": "Mozilla/5.0",
-                "X-Requested-With": "XMLHttpRequest",
-            },
-            method="POST",
-        )
-        try:
-            with self._amojo_opener.open(session_request, timeout=30) as response:
-                payload = json.loads(response.read().decode("utf-8") or "{}")
-        except urllib.error.HTTPError as exc:
-            raise RuntimeError(
-                f"amoCRM chat session request failed: HTTP {exc.code}"
-            ) from None
-        except (urllib.error.URLError, TimeoutError) as exc:
-            raise RuntimeError(
-                f"amoCRM chat session request failed: {getattr(exc, 'reason', exc)}"
-            ) from None
-        except json.JSONDecodeError:
-            raise RuntimeError("amoCRM chat session request failed: invalid JSON") from None
-
-        session = ((payload.get("response") or {}).get("chats") or {}).get("session") or {}
-        token = str(session.get("access_token") or "").strip()
-        if not token:
-            raise RuntimeError("amoCRM chat session request returned no access token")
-
-        self._amojo_access_token = token
-        return token
-
-    def _get_amojo_message(
-        self,
-        message_id: str,
-        lead_id: int,
-    ) -> dict[str, Any] | None:
-        """Fetch one internal-message payload by the ID exposed in CRM events."""
-        mid = str(message_id or "").strip()
-        if not mid:
-            return None
-        if mid in self._amojo_message_cache:
-            return self._amojo_message_cache[mid]
-
-        access_token = self._amojo_session_token(lead_id)
-        query = urllib.parse.urlencode([("id[]", mid)])
-        request = urllib.request.Request(
-            f"https://amojo.amocrm.ru/v2/messages?{query}",
-            headers={
-                "Accept": "application/json",
-                "User-Agent": "Mozilla/5.0",
-                "X-Auth-Token": access_token,
-            },
-            method="GET",
-        )
-        try:
-            with urllib.request.urlopen(request, timeout=30) as response:
-                payload = json.loads(response.read().decode("utf-8") or "[]")
-        except urllib.error.HTTPError as exc:
-            raise RuntimeError(
-                f"amoCRM message lookup failed: HTTP {exc.code}"
-            ) from None
-        except (urllib.error.URLError, TimeoutError) as exc:
-            raise RuntimeError(
-                f"amoCRM message lookup failed: {getattr(exc, 'reason', exc)}"
-            ) from None
-        except json.JSONDecodeError:
-            raise RuntimeError("amoCRM message lookup failed: invalid JSON") from None
-
-        items = payload if isinstance(payload, list) else []
-        found = next(
-            (
-                item for item in items
-                if isinstance(item, dict) and str(item.get("id") or "") == mid
-            ),
-            None,
-        )
-        self._amojo_message_cache[mid] = found
-        return found
 
     def _get_user_name(self, user_id: Any) -> str | None:
         if not user_id:
