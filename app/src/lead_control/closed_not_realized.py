@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import html
 import logging
 import time
 from datetime import datetime, timedelta
@@ -102,11 +103,12 @@ def _read_preclose_record(
     def consider(text: str, ts: int, kind: str, record_id: object = "",
                  missing_text: bool = False) -> None:
         nonlocal latest
-        if not 0 < ts <= scan_at or (not text and not missing_text):
+        clean_text = html.unescape(str(text or "")).strip()
+        if not 0 < ts <= scan_at or (not clean_text and not missing_text):
             return
         if ts > _int(latest.get("at")) or (ts == _int(latest.get("at")) and missing_text):
             latest = {
-                "text": str(text or "").strip(),
+                "text": clean_text,
                 "at": ts,
                 "kind": kind,
                 "record_id": str(record_id or ""),
