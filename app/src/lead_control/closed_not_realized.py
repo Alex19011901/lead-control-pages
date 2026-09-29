@@ -13,7 +13,7 @@ SUCCESSFUL_STATUS_ID = 142
 CLOSED_NOT_REALIZED_STATUS_ID = 143
 HISTORY_DAYS = 5
 MOSCOW_TZ = ZoneInfo("Europe/Moscow")
-PRE_CLOSE_RECORD_VERSION = 3
+PRE_CLOSE_RECORD_VERSION = 4
 MAX_HISTORY_PAGES = 50
 
 
@@ -74,27 +74,47 @@ def _history_items(client: AmoCRMClient, path: str, params: dict, collection: st
     raise RuntimeError("CRM history page limit reached")
 
 
-def _read_preclose_record(client: AmoCRMClient, crm_lead_id: int,
-                         closed_at: int) -> dict[str, Any]:
+def _message_id_from_event(event: dict[str, Any]) -> str:
+    for part in event.get("value_after") or []:
+        if not isinstance(part, dict):
+            continue
+        message = part.get("message")
+        if isinstance(message, dict):
+            message_id = str(message.get("id") or "").strip()
+            if message_id:
+                return message_id
+    return ""
+
+
+def _read_preclose_record(
+    client: AmoCRMClient,
+    crm_lead_id: int,
+    closed_at: int,
+    responsible_user_id: int | None = None,
+) -> dict[str, Any]:
+    """Return the last meaningful record by the responsible manager before close."""
     latest: dict[str, Any] = {}
     errors: list[str] = []
+    manager_id = _int(responsible_user_id)
 
     def consider(text: str, ts: int, kind: str, record_id: object = "",
                  missing_text: bool = False) -> None:
         nonlocal latest
         if not 0 < ts < closed_at or (not text and not missing_text):
             return
-        # An ID-only message later than a note must not silently become that note.
         if ts > _int(latest.get("at")) or (ts == _int(latest.get("at")) and missing_text):
-            latest = {"text": text, "at": ts, "kind": kind,
-                      "record_id": str(record_id or "")}
+            latest = {
+                "text": str(text or "").strip(),
+                "at": ts,
+                "kind": kind,
+                "record_id": str(record_id or ""),
+            }
 
     sources = (
         ("notes", "/api/v4/leads/notes", {
             "filter[entity_id][0]": crm_lead_id, "limit": 250}),
         ("events", "/api/v4/events", {
             "filter[entity]": "lead", "filter[entity_id]": crm_lead_id,
-            # amoCRM requires BOTH bounds when a date range is passed.
             "filter[created_at][from]": 1,
             "filter[created_at][to]": closed_at - 1, "limit": 100}),
         ("tasks", "/api/v4/tasks", {
@@ -106,48 +126,119 @@ def _read_preclose_record(client: AmoCRMClient, crm_lead_id: int,
             for item in _history_items(client, path, params, collection):
                 if _int(item.get("entity_id")) != crm_lead_id:
                     continue
+
                 if collection == "notes":
+                    if str(item.get("note_type") or "").strip().casefold() != "common":
+                        continue
+                    if manager_id and _int(item.get("created_by")) != manager_id:
+                        continue
                     text = _extract_text(item.get("params")) or _extract_text(item.get("text"))
-                    consider(text, _int(item.get("created_at")),
-                             str(item.get("note_type") or "note"), item.get("id"))
-                elif collection == "events":
+                    consider(
+                        text,
+                        _int(item.get("created_at")),
+                        "common",
+                        item.get("id"),
+                    )
+                    continue
+
+                if collection == "events":
                     if item.get("type") != "entity_direct_message":
                         continue
-                    text = (_extract_text(item.get("value_after"))
-                            or _extract_text(item.get("params")))
-                    consider(text, _int(item.get("created_at")), "entity_direct_message",
-                             item.get("id"), missing_text=not bool(text))
-                elif item.get("is_completed"):
-                    consider(_extract_text(item.get("result")), _int(item.get("updated_at")),
-                             "task_result", item.get("id"))
+                    if manager_id and _int(item.get("created_by")) != manager_id:
+                        continue
+                    text = (
+                        _extract_text(item.get("value_after"))
+                        or _extract_text(item.get("params"))
+                    )
+                    message_id = _message_id_from_event(item)
+                    consider(
+                        text,
+                        _int(item.get("created_at")),
+                        "entity_direct_message",
+                        message_id or item.get("id"),
+                        missing_text=not bool(text),
+                    )
+                    continue
+
+                if not item.get("is_completed"):
+                    continue
+                if manager_id and _int(item.get("responsible_user_id")) != manager_id:
+                    continue
+                text = _extract_text(item.get("result"))
+                consider(
+                    text,
+                    _int(item.get("updated_at")),
+                    "task_result",
+                    item.get("id"),
+                )
         except RuntimeError as exc:
             errors.append(collection)
-            LOG.warning("CRM pre-close source failed lead_id=%s source=%s error=%s",
-                        crm_lead_id, collection, exc)
-            # No retry here. Other successful source results are retained.
+            LOG.warning(
+                "CRM pre-close source failed lead_id=%s source=%s error=%s",
+                crm_lead_id,
+                collection,
+                exc,
+            )
+
+    # The events API exposes only the ID of an internal chat message.
+    # Resolve the body through the exact short-lived amojo session used by
+    # the amoCRM lead card itself.
+    if (
+        latest
+        and latest.get("kind") == "entity_direct_message"
+        and not str(latest.get("text") or "").strip()
+        and str(latest.get("record_id") or "").strip()
+    ):
+        message_id = str(latest["record_id"]).strip()
+        try:
+            messages = client.fetch_internal_messages(crm_lead_id, [message_id])
+            message = messages.get(message_id) or {}
+            nested = message.get("message") or {}
+            text = str(
+                message.get("text")
+                or (nested.get("text") if isinstance(nested, dict) else "")
+                or ""
+            ).strip()
+            if text:
+                latest["text"] = text
+                author = message.get("author") or {}
+                if isinstance(author, dict):
+                    latest["author_name"] = str(
+                        author.get("full_name") or author.get("name") or ""
+                    ).strip()
+            else:
+                errors.append("amojo_message_text")
+        except RuntimeError as exc:
+            errors.append("amojo_message")
+            LOG.warning(
+                "CRM pre-close message lookup failed lead_id=%s message_id=%s error=%s",
+                crm_lead_id,
+                message_id,
+                exc,
+            )
 
     if errors:
         state = "READ_ERROR"
     elif not latest:
         state = "EMPTY"
-    elif not latest.get("text"):
+    elif not str(latest.get("text") or "").strip():
         state = "TEXT_UNAVAILABLE"
     else:
         state = "VERIFIED"
+
     text = str(latest.get("text") or "").strip()
     record_type = str(latest.get("kind") or "")
-    display = text
-    if not display and state == "TEXT_UNAVAILABLE" and record_type == "entity_direct_message":
-        display = "Внутреннее сообщение"
 
     return {
-        "crm_lead_id": crm_lead_id, "closed_at": closed_at,
+        "crm_lead_id": crm_lead_id,
+        "closed_at": closed_at,
         "last_comment": text,
         "last_comment_at": latest.get("at") if text else None,
-        "last_record_display": display,
+        "last_record_display": text,
         "last_record_at": latest.get("at"),
         "last_record_type": record_type,
         "last_record_id": str(latest.get("record_id") or ""),
+        "last_record_author": str(latest.get("author_name") or ""),
         "last_record_status": state,
         "last_record_rule_version": PRE_CLOSE_RECORD_VERSION,
         "last_record_errors": errors,
@@ -174,12 +265,6 @@ def _frozen(record: dict) -> bool:
     if state == "VERIFIED":
         return bool(str(record.get("last_comment") or "").strip()) and (
             0 < _int(record.get("last_record_at") or record.get("last_comment_at")) < closed_at
-        )
-    if state == "TEXT_UNAVAILABLE":
-        return (
-            str(record.get("last_record_type") or "") == "entity_direct_message"
-            and str(record.get("last_record_display") or "").strip() == "Внутреннее сообщение"
-            and 0 < _int(record.get("last_record_at")) < closed_at
         )
     return state == "EMPTY"
 
@@ -256,7 +341,16 @@ def apply_closed_not_realized_history(
         elif _frozen(saved):
             record = dict(saved)
         else:
-            record = _read_preclose_record(client, crm_id, closed_at)
+            responsible_user_id = _int(
+                feedback.get("responsible_user_id")
+                or crm.get("responsible_user_id")
+            )
+            record = _read_preclose_record(
+                client,
+                crm_id,
+                closed_at,
+                responsible_user_id=responsible_user_id or None,
+            )
             if record["last_record_status"] == "READ_ERROR":
                 saved_at = _int(saved.get("last_comment_at"))
                 if saved.get("last_comment") and 0 < saved_at < closed_at:
