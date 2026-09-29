@@ -11,45 +11,35 @@ concurrency:
 jobs:
   diagnose:
     runs-on: ubuntu-latest
-    timeout-minutes: 6
+    timeout-minutes: 2
     steps:
-      - name: Scan all loaded amoCRM scripts for chat history endpoint
+      - name: Extract amoCRM fetchMessages endpoints
         run: |
           python - <<'PY'
-          import json, re, urllib.request
-          urls=["https://statix.amocrm.ru/frontend/build/system.b38846b3c6.js","https://statix.amocrm.ru/frontend/build/runtime.016042d8464a73e8.js","https://statix.amocrm.ru/frontend/build/60502.72c94566029ea628.js","https://statix.amocrm.ru/frontend/build/96895.ebba32d2e569e21c.js","https://statix.amocrm.ru/frontend/build/12694.ba71cca843538b19.js","https://statix.amocrm.ru/frontend/build/39098.c7f3a7f8f9d7bf93.js","https://statix.amocrm.ru/frontend/build/41261.318834efc7fcdd71.js","https://statix.amocrm.ru/frontend/build/app.bc39e01e19e8400a.js","https://statix.amocrm.ru/frontend/build/base_langs-ru.465d620328f5118a.js","https://statix.amocrm.ru/frontend/build/common.d0f691c50ac7a91e.js","https://statix.amocrm.ru/frontend/build/39775.decf6a71e412827d.js","https://statix.amocrm.ru/frontend/build/82912.5e0cb81d22081d23.js","https://statix.amocrm.ru/frontend/build/68356.3e12bb35b5216d89.js","https://statix.amocrm.ru/frontend/build/70111.71f368bae3f9a930.js","https://statix.amocrm.ru/frontend/build/22644.491ae95effd83f62.js","https://statix.amocrm.ru/frontend/build/89749.75155a9472f24245.js","https://statix.amocrm.ru/frontend/build/41396.7acb6d9ed508a5ea.js","https://statix.amocrm.ru/frontend/build/1369.6739b4c4180c81a1.js","https://statix.amocrm.ru/frontend/build/29660.5d71ac58fe14fedd.js","https://statix.amocrm.ru/frontend/build/30713.4aa87a1fcfff4bf9.js","https://statix.amocrm.ru/frontend/build/11418.6c6e3b1eaace3f9e.js","https://statix.amocrm.ru/frontend/build/19670.ecb3f855bffbbff8.js","https://statix.amocrm.ru/frontend/build/16299.bda7d6cf61122e88.js","https://statix.amocrm.ru/frontend/build/4946.da5d6176d47cc044.js","https://statix.amocrm.ru/frontend/build/92296.35410f17fd63e737.js","https://statix.amocrm.ru/frontend/build/83533.7df1ac7a772a7dc1.js","https://statix.amocrm.ru/frontend/build/96999.c0b701cb8bea3968.js","https://statix.amocrm.ru/frontend/build/21985.fed5b314282f09fc.js","https://statix.amocrm.ru/frontend/build/31003.1481861913833238.js","https://statix.amocrm.ru/frontend/build/56516.325c1a2a6274b474.js","https://statix.amocrm.ru/frontend/build/13285.cdd61e002c401506.js","https://statix.amocrm.ru/frontend/build/83479.f5e0afef6870a4cb.js","https://statix.amocrm.ru/frontend/build/52392.a904379f88833d6d.js","https://statix.amocrm.ru/frontend/build/10173.687c8e6ea9c39996.js","https://statix.amocrm.ru/frontend/build/65276.6a3f6991559a832e.js","https://statix.amocrm.ru/frontend/build/56328.5ea27b60eaf26860.js","https://statix.amocrm.ru/frontend/build/95603.53bbf5a5f4b9b9c1.js","https://statix.amocrm.ru/frontend/build/63883.abf8d90c63a1dc53.js","https://statix.amocrm.ru/frontend/build/61179.e4e5e039b9efcd5d.js","https://statix.amocrm.ru/frontend/build/61715.b674fdd548f67590.js","https://statix.amocrm.ru/frontend/build/64819.e07b2ab2483c53ae.js","https://statix.amocrm.ru/frontend/build/15097.091730ee77c15210.js","https://statix.amocrm.ru/frontend/build/49586.b21c14d373f66e05.js","https://statix.amocrm.ru/frontend/build/10410.b12c173a95ea832b.js","https://statix.amocrm.ru/frontend/build/57677.83604aabd855ac7c.js","https://statix.amocrm.ru/frontend/build/20570.8dfc1f5bce4b2a62.js","https://statix.amocrm.ru/frontend/build/22024.ea2a75b0757e9392.js","https://statix.amocrm.ru/frontend/build/61565.31d999159f96e965.js","https://statix.amocrm.ru/frontend/build/33624.12c15d3e2818c6c4.js","https://statix.amocrm.ru/frontend/build/20054.bdb0867d92d600b7.js","https://statix.amocrm.ru/frontend/build/54158.38fa190b84829d2e.js","https://statix.amocrm.ru/frontend/build/7333.88d0ddfcc6e6bcd4.js","https://statix.amocrm.ru/frontend/build/22901.4e5c0017e1bad4ff.js","https://statix.amocrm.ru/frontend/build/52891.947c4b37728f5977.js","https://statix.amocrm.ru/frontend/build/73388.b810f5bc62376158.js","https://statix.amocrm.ru/frontend/build/96986.ab440d4fecc3b680.js","https://statix.amocrm.ru/frontend/build/59742.a8e2aa9ee3449b1c.js","https://statix.amocrm.ru/frontend/build/26449.77103d8b7f1d6bf0.js","https://statix.amocrm.ru/frontend/build/3045.defb301a87982148.js","https://statix.amocrm.ru/frontend/build/93821.702c2667a7d0e151.js","https://statix.amocrm.ru/frontend/build/19844.189eeeb3b61f9e07.js","https://statix.amocrm.ru/frontend/build/5812.374c4d5da5a4c51b.js","https://statix.amocrm.ru/frontend/build/29816.94df62b7ab697ce0.js","https://statix.amocrm.ru/frontend/build/26179.a3521beae5c1e12c.js","https://statix.amocrm.ru/frontend/build/cards.5882b28acb4ffff2.js","https://statix.amocrm.ru/frontend/build/mail.f08a3c139d7a77b6.js","https://statix.amocrm.ru/frontend/build/print.e481b2189a82a076.js","https://statix.amocrm.ru/frontend/build/87139.6fc0ad72673139ef.js","https://statix.amocrm.ru/frontend/build/7909.b649dbc22597c076.js","https://statix.amocrm.ru/frontend/build/47356.ed9c8e3ebc1b7a85.js","https://statix.amocrm.ru/frontend/build/82960.3ff5e08cad3ab5ed.js","https://statix.amocrm.ru/frontend/build/77522.d3b499c6a0f646da.js","https://statix.amocrm.ru/frontend/build/16077.ee96b88ebdd4fe82.js","https://statix.amocrm.ru/frontend/build/56465.d9d909529d080ed9.js","https://statix.amocrm.ru/frontend/build/18967.c2d3435c731eb3b7.js","https://statix.amocrm.ru/frontend/build/55303.223e25fee2ee09bb.js","https://statix.amocrm.ru/frontend/build/65247.035373e6001d4076.js","https://statix.amocrm.ru/frontend/build/88406.26fa5840c80271c9.js","https://statix.amocrm.ru/frontend/build/24542.e884b4a1ea89015a.js","https://statix.amocrm.ru/frontend/build/91830.d8d787dbb784829e.js","https://statix.amocrm.ru/frontend/build/43699.db070aba5d3ae2af.js","https://statix.amocrm.ru/frontend/build/93231.6ac6088f5a2328d4.js","https://statix.amocrm.ru/frontend/build/19645.bf939cf7b8f28e88.js","https://statix.amocrm.ru/frontend/build/29637.6372e0e0c611358e.js","https://statix.amocrm.ru/frontend/build/82110.a2961faa0bf23b11.js","https://statix.amocrm.ru/frontend/build/3768.4c1b2c5dfc7b0e06.js","https://statix.amocrm.ru/frontend/build/23387.bbbb84bc4b2d7c46.js","https://statix.amocrm.ru/frontend/build/36977.481caa1f8c676188.js","https://statix.amocrm.ru/frontend/build/7399.5d10afc666e28f04.js","https://statix.amocrm.ru/frontend/build/72055.3aaf8668fcbe0efa.js","https://statix.amocrm.ru/frontend/build/93836.8a8e8e8dd21fd767.js","https://statix.amocrm.ru/frontend/build/96435.0d72409fd6444969.js","https://statix.amocrm.ru/frontend/build/56098.e90ac88eab85ed5e.js","https://statix.amocrm.ru/frontend/build/72835.0ec3bf2f63be983a.js","https://statix.amocrm.ru/frontend/build/74418.e036b6c65f385cfe.js","https://statix.amocrm.ru/frontend/build/53693.b8f71ed230c5b2a6.js","https://statix.amocrm.ru/frontend/build/74668.bcc05e2a069089a8.js","https://statix.amocrm.ru/frontend/build/98125.983de51298980b6e.js","https://statix.amocrm.ru/frontend/build/3225.c327f755b5180195.js","https://statix.amocrm.ru/frontend/build/8221.afcaa37ba1d22041.js","https://statix.amocrm.ru/frontend/build/45770.b1616e96f57195aa.js","https://statix.amocrm.ru/frontend/build/49266.ef84245cc46aceca.js","https://statix.amocrm.ru/frontend/build/16431.845584300b838af9.js","https://statix.amocrm.ru/frontend/build/3452.a276433a8e285306.js","https://statix.amocrm.ru/frontend/build/78823.8b730eefb0d9e2b6.js","https://statix.amocrm.ru/frontend/build/72592.e2d7012a78342bde.js","https://statix.amocrm.ru/frontend/build/76967.5744825fc9482377.js","https://statix.amocrm.ru/frontend/build/49064.03e59ae2ae08e52e.js","https://statix.amocrm.ru/frontend/build/99481.bed632b6e9520f20.js","https://statix.amocrm.ru/frontend/build/89284.2213793e12657ae3.js","https://statix.amocrm.ru/frontend/build/83112.e43d206e8fd537e5.js","https://statix.amocrm.ru/frontend/build/59518.ac1793e4c4003a37.js","https://statix.amocrm.ru/frontend/build/84511.503983e92f202d81.js","https://statix.amocrm.ru/frontend/build/33380.137882dd0d0534a7.js","https://statix.amocrm.ru/frontend/build/55284.6169b1c40a093ae3.js","https://statix.amocrm.ru/frontend/build/20298.941c8b6de8c96739.js","https://statix.amocrm.ru/frontend/build/7300.1a37165baf89a478.js","https://statix.amocrm.ru/frontend/build/28481.5fc9e4aa03f1892d.js","https://statix.amocrm.ru/frontend/build/33996.0b8733b286755468.js","https://statix.amocrm.ru/frontend/build/60481.a468e01f5f680135.js","https://statix.amocrm.ru/frontend/build/47123.461709f7a6ac0623.js","https://statix.amocrm.ru/frontend/build/40781.0875bd8817e9a4d5.js","https://statix.amocrm.ru/frontend/build/22804.ccd6e2855cdddd50.js","https://statix.amocrm.ru/frontend/build/62336.f4250923a69714a7.js","https://statix.amocrm.ru/frontend/build/94394.605a303db712db64.js","https://statix.amocrm.ru/frontend/build/72490.adbd86ecaf262c69.js","https://statix.amocrm.ru/frontend/build/51167.69d25e7d530f8ff8.js","https://statix.amocrm.ru/frontend/build/70915.0fc46a3f9bc05462.js","https://statix.amocrm.ru/frontend/build/75333.ea74d8f937e2a63d.js","https://statix.amocrm.ru/frontend/build/33242.9ecfcffbf352f92f.js","https://statix.amocrm.ru/frontend/build/33324.f1d563c5b39c4534.js","https://statix.amocrm.ru/frontend/build/93500.9a3d3c1f1c4c956a.js","https://statix.amocrm.ru/frontend/build/29256.ea892ee3d206ba78.js","https://statix.amocrm.ru/frontend/build/91240.b705d631b10023de.js","https://statix.amocrm.ru/frontend/build/80678.980d8200eec58b85.js","https://statix.amocrm.ru/frontend/build/26366.7cd26496c4b14e2f.js"]
-          headers={'User-Agent':'Mozilla/5.0','Referer':'https://alex1901yaru.amocrm.ru/','Accept':'*/*'}
-          needles=(
-              'entity_direct_message','amojo.amocrm','/v2/origin/','amojo_chats',
-              '/ajax/v1/chats','/ajax/v2/chats','/ajax/v3/chats','/ajax/v4/chats',
-              'message_history','messages/history','chat_history','getmessages','conversation_id',
-          )
-          matches=[]
-          for idx,url in enumerate(urls):
-              try:
-                  req=urllib.request.Request(url,headers=headers,method='GET')
-                  with urllib.request.urlopen(req,timeout=15) as r:
-                      text=r.read().decode('utf-8','ignore')
-              except Exception:
+          import json,re,urllib.request
+          url='https://statix.amocrm.ru/frontend/build/61179.e4e5e039b9efcd5d.js'
+          req=urllib.request.Request(url,headers={'User-Agent':'Mozilla/5.0'},method='GET')
+          with urllib.request.urlopen(req,timeout=20) as r:
+              text=r.read().decode('utf-8','ignore')
+          hits={}
+          for needle in ('fetchMessages:function','fetchMessagesMultiple:function','fetchMessagesById:function','sendMessagev1:function'):
+              pos=text.find(needle)
+              if pos<0:
+                  hits[needle]=[]
                   continue
-              low=text.lower()
-              found=[n for n in needles if n in low]
-              if not found:
-                  continue
+              chunk=text[max(0,pos-4000):pos+8000]
               strings=[]
-              for m in re.finditer(r'["\']([^"\']{1,260})["\']',text):
+              for m in re.finditer(r'["\']([^"\']{1,300})["\']',chunk):
                   s=m.group(1)
                   sl=s.lower()
-                  if any(k in sl for k in (
-                      'amojo','/ajax/','/chats','message','history','conversation','socket'
-                  )):
+                  if any(k in sl for k in ('/ajax/','chat','message','amojo','v1/','v2/','v3/','v4/')):
                       if s not in strings:
                           strings.append(s)
-              matches.append({
-                  'index':idx,
-                  'file':url.rsplit('/',1)[-1],
-                  'found':found,
-                  'strings':strings[:220],
-              })
-          print(json.dumps({'scanned':len(urls),'matches':matches},ensure_ascii=False),flush=True)
+              hits[needle]=strings[:120]
+          direct=[]
+          for m in re.finditer(r'["\']([^"\']*/ajax/[^"\']*)["\']',text):
+              s=m.group(1)
+              if any(k in s.lower() for k in ('chat','message','amojo')) and s not in direct:
+                  direct.append(s)
+          print(json.dumps({'hits':hits,'direct':direct[:300]},ensure_ascii=False),flush=True)
           PY
