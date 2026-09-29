@@ -51,6 +51,7 @@ jobs:
                   if not (
                       path in ('/api/v4/leads/notes', '/api/v4/events', '/api/v4/tasks', '/api/v4/talks')
                       or path.startswith('/api/v4/talks/')
+                      or path.startswith('/api/v4/events/')
                   ):
                       raise AssertionError('Unexpected endpoint')
                   self.calls += 1
@@ -131,6 +132,11 @@ jobs:
                       label == 'talks' or int(x.get('created_at') or x.get('updated_at') or 0) >= target_closed - 86400*7
                   )
               ][-20:]}, ensure_ascii=False), flush=True)
+              if label == 'events':
+                  direct = next((x for x in items if isinstance(x, dict) and x.get('type') == 'entity_direct_message'), None)
+                  if direct and direct.get('id'):
+                      event_detail = client._request_json('/api/v4/events/' + str(direct['id']), {})
+                      print(json.dumps({'target_event_detail': {'event_id': direct['id'], 'shape': safe_shape(event_detail)}}, ensure_ascii=False), flush=True)
               if label == 'talks':
                   for talk in items:
                       tid = talk.get('talk_id')
