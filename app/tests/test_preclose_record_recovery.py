@@ -70,14 +70,14 @@ class PrecloseRecordRecoveryTests(unittest.TestCase):
             Client(notes=[
                 note(),
                 note('Одновременно', CLOSE),
-                note('Через 35 секунд', CLOSE + 35),
+                note('&quot;Через 35 секунд&quot;', CLOSE + 35),
                 note('Позже первого чтения', CLOSE + 120),
             ]),
             101,
             CLOSE,
             read_at=CLOSE + 60,
         )
-        self.assertEqual(record['last_comment'], 'Через 35 секунд')
+        self.assertEqual(record['last_comment'], '"Через 35 секунд"')
         self.assertEqual(record['last_comment_at'], CLOSE + 35)
 
     def test_error_preserves_previously_saved_text(self):
