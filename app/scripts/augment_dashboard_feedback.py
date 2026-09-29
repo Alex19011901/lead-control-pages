@@ -120,6 +120,14 @@ def compact_closed_not_realized_lead(lead: dict) -> dict | None:
         "manager": crm_manager_name(lead),
         "reason": str(closed.get("loss_reason_name") or "").strip() or "Не указана",
         "last_comment": str(closed.get("last_comment") or "").strip(),
+        "last_record": str(
+            closed.get("last_record_display") or closed.get("last_comment") or ""
+        ).strip(),
+        "last_record_at": iso_moscow(
+            closed.get("last_record_at") or closed.get("last_comment_at") or 0
+        ),
+        "last_record_type": str(closed.get("last_record_type") or "").strip(),
+        "last_record_status": str(closed.get("last_record_status") or "").strip(),
     }
 
 
