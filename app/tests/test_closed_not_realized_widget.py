@@ -19,8 +19,10 @@ class ClosedNotRealizedWidgetTests(unittest.TestCase):
         self.assertIn("C=view.closed_not_realized||[]", rendered)
         self.assertIn("renderClosedNotRealized()", rendered)
         self.assertIn("Закрыто и не реализовано — 5 дней", rendered)
-        self.assertIn("Последний комментарий", rendered)
-        self.assertIn("x.last_comment", rendered)
+        self.assertIn("Последняя запись", rendered)
+        self.assertIn("x.last_record", rendered)
+        self.assertIn("closedRecordHtml", rendered)
+        self.assertIn("closed-record-time", rendered)
         self.assertIn('id="outcomes"', rendered)
         self.assertIn("Результаты реализации", rendered)
         self.assertIn("O=view.outcomes||[]", rendered)
@@ -33,6 +35,54 @@ class ClosedNotRealizedWidgetTests(unittest.TestCase):
         self.assertIn("Активность по этапам воронки", rendered)
         self.assertIn("PA=view.pipeline_activity||{}", rendered)
         self.assertIn("renderPipelineActivity()", rendered)
+
+    def test_dashboard_view_exports_last_record_metadata(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            leads_path = root / "leads.json"
+            view_path = root / "dashboard_view.json"
+            leads_path.write_text(
+                json.dumps(
+                    {
+                        "leads": [
+                            {
+                                "id": "closed",
+                                "received_at": "2026-09-28T10:00:00+03:00",
+                                "crm": {
+                                    "found": True,
+                                    "entity_type": "lead",
+                                    "entity_id": 48855703,
+                                    "responsible_user_name": "Олеся",
+                                },
+                                "closed_not_realized": {
+                                    "crm_lead_id": 48855703,
+                                    "closed_at": 1790579990,
+                                    "loss_reason_name": "Пропала потребность",
+                                    "last_comment": "",
+                                    "last_record_display": "Внутреннее сообщение",
+                                    "last_record_at": 1790579981,
+                                    "last_record_type": "entity_direct_message",
+                                    "last_record_status": "TEXT_UNAVAILABLE",
+                                },
+                            }
+                        ]
+                    },
+                    ensure_ascii=False,
+                ),
+                encoding="utf-8",
+            )
+            view_path.write_text(
+                json.dumps({"ranges": {}, "latest": [], "not_entered": []}),
+                encoding="utf-8",
+            )
+
+            augment(leads_path, view_path, now_ts=1790581000)
+            result = json.loads(view_path.read_text(encoding="utf-8"))
+            row = result["closed_not_realized"][0]
+            self.assertEqual(row["last_record"], "Внутреннее сообщение")
+            self.assertEqual(row["last_record_type"], "entity_direct_message")
+            self.assertEqual(row["last_record_status"], "TEXT_UNAVAILABLE")
+            self.assertTrue(row["last_record_at"].startswith("2026-09-28T10:19:41"))
 
     def test_dashboard_view_exports_success_and_loss_outcomes(self):
         with tempfile.TemporaryDirectory() as tmp:
