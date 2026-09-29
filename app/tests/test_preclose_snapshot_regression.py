@@ -34,10 +34,12 @@ def note(text, at):
 
 
 class Client:
-    def __init__(self, notes=None, events=None, tasks=None, fail=None):
+    def __init__(self, notes=None, events=None, tasks=None, fail=None, messages=None):
         self.data = {'notes': notes or [], 'events': events or [], 'tasks': tasks or []}
         self.fail = fail
         self.calls = []
+        self.messages = messages or {}
+        self.message_calls = []
 
     def _request_json(self, path, params):
         self.calls.append((path, dict(params)))
@@ -48,6 +50,14 @@ class Client:
         if collection == self.fail:
             raise RuntimeError('amoCRM request failed: HTTP 400')
         return {'_embedded': {collection: copy.deepcopy(self.data[collection])}, '_links': {}}
+
+    def fetch_internal_messages(self, lead_id, message_ids):
+        self.message_calls.append((int(lead_id), list(message_ids)))
+        return {
+            message_id: self.messages[message_id]
+            for message_id in message_ids
+            if message_id in self.messages
+        }
 
     def _get_entity(self, *args, **kwargs):
         raise AssertionError('Current card is already available; do not reread it')
@@ -94,12 +104,11 @@ class PrecloseSnapshotRegressionTests(unittest.TestCase):
             'created_at': ts(28) - 9, 'value_after': [{'message': {'id': 'message-uuid'}}],
         }])
         result = _read_preclose_record(client, 101, ts(28))
-        self.assertEqual(result['last_record_status'], 'TEXT_UNAVAILABLE')
+        self.assertEqual(result['last_record_status'], 'READ_ERROR')
         self.assertEqual(result['last_comment'], '')
-        self.assertEqual(result['last_record_display'], 'Внутреннее сообщение')
         self.assertEqual(result['last_record_at'], ts(28) - 9)
-        self.assertEqual(result['last_record_id'], 'real-event-id')
-        self.assertTrue(result['last_record_status'] != 'READ_ERROR')
+        self.assertEqual(result['last_record_id'], 'message-uuid')
+        self.assertEqual(client.message_calls, [(101, ['message-uuid'])])
 
     def test_saved_snapshot_avoids_all_history_calls_next_run(self):
         first = lead()
