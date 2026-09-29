@@ -48,7 +48,10 @@ jobs:
                   self.calls = 0
                   self.opener = urllib.request.build_opener(NoRedirect)
               def _request_json(self, path, params):
-                  if path not in ('/api/v4/leads/notes', '/api/v4/events', '/api/v4/tasks'):
+                  if not (
+                      path in ('/api/v4/leads/notes', '/api/v4/events', '/api/v4/tasks', '/api/v4/talks')
+                      or path.startswith('/api/v4/talks/')
+                  ):
                       raise AssertionError('Unexpected endpoint')
                   self.calls += 1
                   req = urllib.request.Request(domain + path + '?' + urllib.parse.urlencode(params), headers={'Accept': 'application/json', 'Authorization': 'Bearer ' + token}, method='GET')
