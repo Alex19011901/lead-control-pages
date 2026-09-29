@@ -13,7 +13,7 @@ SUCCESSFUL_STATUS_ID = 142
 CLOSED_NOT_REALIZED_STATUS_ID = 143
 HISTORY_DAYS = 5
 MOSCOW_TZ = ZoneInfo("Europe/Moscow")
-PRE_CLOSE_RECORD_VERSION = 2
+PRE_CLOSE_RECORD_VERSION = 3
 MAX_HISTORY_PAGES = 50
 
 
@@ -134,12 +134,19 @@ def _read_preclose_record(client: AmoCRMClient, crm_lead_id: int,
         state = "TEXT_UNAVAILABLE"
     else:
         state = "VERIFIED"
+    text = str(latest.get("text") or "").strip()
+    record_type = str(latest.get("kind") or "")
+    display = text
+    if not display and state == "TEXT_UNAVAILABLE" and record_type == "entity_direct_message":
+        display = "Внутреннее сообщение"
+
     return {
         "crm_lead_id": crm_lead_id, "closed_at": closed_at,
-        "last_comment": str(latest.get("text") or ""),
-        "last_comment_at": latest.get("at") if latest.get("text") else None,
+        "last_comment": text,
+        "last_comment_at": latest.get("at") if text else None,
+        "last_record_display": display,
         "last_record_at": latest.get("at"),
-        "last_record_type": str(latest.get("kind") or ""),
+        "last_record_type": record_type,
         "last_record_id": str(latest.get("record_id") or ""),
         "last_record_status": state,
         "last_record_rule_version": PRE_CLOSE_RECORD_VERSION,
@@ -163,10 +170,18 @@ def _frozen(record: dict) -> bool:
     if _int(record.get("last_record_rule_version")) != PRE_CLOSE_RECORD_VERSION:
         return False
     state = record.get("last_record_status")
+    closed_at = _int(record.get("closed_at"))
     if state == "VERIFIED":
         return bool(str(record.get("last_comment") or "").strip()) and (
-            0 < _int(record.get("last_comment_at")) < _int(record.get("closed_at")))
-    return state in {"EMPTY", "TEXT_UNAVAILABLE"}
+            0 < _int(record.get("last_record_at") or record.get("last_comment_at")) < closed_at
+        )
+    if state == "TEXT_UNAVAILABLE":
+        return (
+            str(record.get("last_record_type") or "") == "entity_direct_message"
+            and str(record.get("last_record_display") or "").strip() == "Внутреннее сообщение"
+            and 0 < _int(record.get("last_record_at")) < closed_at
+        )
+    return state == "EMPTY"
 
 
 def apply_closed_not_realized_history(
@@ -247,8 +262,12 @@ def apply_closed_not_realized_history(
                 if saved.get("last_comment") and 0 < saved_at < closed_at:
                     record["last_comment"] = saved["last_comment"]
                     record["last_comment_at"] = saved_at
+                    record["last_record_display"] = (
+                        str(saved.get("last_record_display") or saved.get("last_comment") or "").strip()
+                    )
                     record["last_record_preserved"] = True
-            # Old unversioned empty values are never considered valid cache hits.
+            # Old/unversioned and previous-rule snapshots are read exactly once
+            # under the current rule, then frozen only after a complete read.
         record_cache[key] = dict(record)
         lead["preclose_record_cache"] = dict(record)
         lead["closed_not_realized"] = {
