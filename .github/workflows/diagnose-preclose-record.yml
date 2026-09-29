@@ -248,4 +248,97 @@ jobs:
           ]}, ensure_ascii=False), flush=True)
 
           raw_get_simple('account_amojo', '/api/v4/account', [('with', 'amojo_id')])
+
+          # Compare a previously populated row with the currently empty target.
+          for compare_id, compare_closed in [
+              (48855703, 1790579990),  # Божена
+              (48909969, 1790248804),  # Елизавета: previously showed a comment
+          ]:
+              n = client._request_json('/api/v4/leads/notes', {
+                  'filter[entity_id][0]': compare_id, 'limit': 250, 'page': 1,
+              })
+              e = client._request_json('/api/v4/events', {
+                  'filter[entity]': 'lead',
+                  'filter[entity_id]': compare_id,
+                  'filter[created_at][from]': max(1, compare_closed - 86400*30),
+                  'filter[created_at][to]': max(1, compare_closed - 1),
+                  'limit': 100, 'page': 1,
+              })
+              t = client._request_json('/api/v4/tasks', {
+                  'filter[entity_type]': 'leads',
+                  'filter[entity_id]': compare_id,
+                  'limit': 250, 'page': 1,
+              })
+              notes = (n.get('_embedded') or {}).get('notes') or []
+              events = (e.get('_embedded') or {}).get('events') or []
+              tasks = (t.get('_embedded') or {}).get('tasks') or []
+
+              note_rows = []
+              for x in notes:
+                  if not isinstance(x, dict):
+                      continue
+                  ts = int(x.get('created_at') or 0)
+                  if not 0 < ts < compare_closed:
+                      continue
+                  params = x.get('params') or {}
+                  txt = ''
+                  if isinstance(params, dict):
+                      txt = str(params.get('text') or '')
+                  note_rows.append({
+                      'id': x.get('id'),
+                      'type': x.get('note_type'),
+                      'at': ts,
+                      'text_len': len(txt),
+                      'has_text': bool(txt.strip()),
+                  })
+
+              event_rows = []
+              for x in events:
+                  if not isinstance(x, dict):
+                      continue
+                  ts = int(x.get('created_at') or 0)
+                  if not 0 < ts < compare_closed:
+                      continue
+                  va = x.get('value_after')
+                  has_message_id = False
+                  has_text = False
+                  if isinstance(va, list):
+                      for part in va:
+                          if not isinstance(part, dict):
+                              continue
+                          msg = part.get('message')
+                          if isinstance(msg, dict):
+                              has_message_id = bool(msg.get('id'))
+                              has_text = bool(str(msg.get('text') or '').strip())
+                  event_rows.append({
+                      'id': x.get('id'),
+                      'type': x.get('type'),
+                      'at': ts,
+                      'has_message_id': has_message_id,
+                      'has_text': has_text,
+                  })
+
+              task_rows = []
+              for x in tasks:
+                  if not isinstance(x, dict) or not x.get('is_completed'):
+                      continue
+                  ts = int(x.get('updated_at') or 0)
+                  if not 0 < ts < compare_closed:
+                      continue
+                  result = x.get('result') or {}
+                  txt = str(result.get('text') or '') if isinstance(result, dict) else ''
+                  task_rows.append({
+                      'id': x.get('id'),
+                      'at': ts,
+                      'text_len': len(txt),
+                      'has_text': bool(txt.strip()),
+                  })
+
+              print(json.dumps({
+                  'compare_lead': compare_id,
+                  'closed_at': compare_closed,
+                  'notes': sorted(note_rows, key=lambda z: z['at'])[-10:],
+                  'events': sorted(event_rows, key=lambda z: z['at'])[-10:],
+                  'tasks': sorted(task_rows, key=lambda z: z['at'])[-10:],
+              }, ensure_ascii=False), flush=True)
           PY
