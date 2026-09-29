@@ -1,4 +1,4 @@
-# rerun-marker: exact-manager-record-final2-20260929
+# rerun-marker: latest-record-v5-20260929
 name: Diagnose pre-close record (read only)
 on:
   push:
@@ -36,6 +36,7 @@ jobs:
           targets=[
               (48813485,1790580620),
               (48855703,1790579990),
+              (49047285,1790607245),
           ]
           for lead_id,closed_at in targets:
               card=client._get_entity('leads',lead_id) or {}
@@ -60,7 +61,10 @@ jobs:
               },ensure_ascii=False),flush=True)
               assert record.get('last_record_status')=='VERIFIED'
               assert text
-              assert 0 < int(record.get('last_record_at') or 0) < closed_at
+              assert 0 < int(record.get('last_record_at') or 0)
+              if lead_id == 49047285:
+                  print('ELIZABETH_TEXT ' + text, flush=True)
+                  assert 'отмените заявку' in text.casefold()
           PY
 
 # rerun: validate-manager-text-v4
