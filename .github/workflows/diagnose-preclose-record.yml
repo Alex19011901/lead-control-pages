@@ -11,51 +11,34 @@ concurrency:
 jobs:
   diagnose:
     runs-on: ubuntu-latest
-    timeout-minutes: 3
+    timeout-minutes: 2
     steps:
-      - name: Inspect amoCRM frontend chat constants
+      - name: Inspect lead page for embedded chat constants
         env:
           AMOCRM_TOKEN: ${{ secrets.AMOCRM_TOKEN }}
         run: |
           python - <<'PY'
-          import json, os, re, urllib.request, urllib.error
+          import json, os, re, urllib.request
           token=os.environ['AMOCRM_TOKEN']
           base='https://alex1901yaru.amocrm.ru'
-          paths=[
-              '/frontend/constants/v2/ephemeral',
-              '/frontend/constants/v2/platform',
-              '/frontend/constants/v2/account',
-              '/frontend/constants/v2/user',
-          ]
-          headers={
-              'Authorization':'Bearer '+token,
-              'Accept':'*/*',
-              'User-Agent':'Mozilla/5.0',
-              'Referer':base+'/leads/detail/48813485',
-          }
-          for path in paths:
-              req=urllib.request.Request(base+path,headers=headers,method='GET')
-              try:
-                  with urllib.request.urlopen(req,timeout=20) as r:
-                      text=r.read().decode('utf-8','ignore')
-              except urllib.error.HTTPError as e:
-                  print(json.dumps({'path':path,'http':e.code}),flush=True)
-                  continue
-              hits=[]
-              low=text.lower()
-              for needle in ('amojo_chats','amojo_origins','chat_id','internal_chat','talk_id'):
-                  start=0
-                  while True:
-                      pos=low.find(needle,start)
-                      if pos<0: break
-                      sn=re.sub(r'\s+',' ',text[max(0,pos-700):pos+1800])
-                      hits.append({'needle':needle,'snippet':sn[:2500]})
-                      start=pos+len(needle)
-                      if len([x for x in hits if x['needle']==needle])>=4: break
-              print(json.dumps({
-                  'path':path,
-                  'http':200,
-                  'length':len(text),
-                  'hits':hits,
-              },ensure_ascii=False),flush=True)
+          lead_id=48813485
+          req=urllib.request.Request(
+              f'{base}/leads/detail/{lead_id}',
+              headers={'Authorization':'Bearer '+token,'Accept':'text/html','User-Agent':'Mozilla/5.0'},
+              method='GET',
+          )
+          with urllib.request.urlopen(req,timeout=20) as r:
+              text=r.read().decode('utf-8','ignore')
+          hits=[]
+          low=text.lower()
+          for needle in ('amojo_chats','chat_id','entity_direct_message','internal_chat','amojo_users'):
+              start=0
+              while True:
+                  pos=low.find(needle,start)
+                  if pos<0: break
+                  sn=re.sub(r'\s+',' ',text[max(0,pos-1200):pos+3500])
+                  hits.append({'needle':needle,'snippet':sn[:4700]})
+                  start=pos+len(needle)
+                  if len([x for x in hits if x['needle']==needle])>=6: break
+          print(json.dumps({'length':len(text),'hits':hits},ensure_ascii=False),flush=True)
           PY
