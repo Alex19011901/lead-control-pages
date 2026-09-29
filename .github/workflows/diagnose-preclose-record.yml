@@ -118,13 +118,20 @@ jobs:
               ('notes', '/api/v4/leads/notes', {'filter[entity_id][0]': target_id, 'limit': 250}, 'notes'),
               ('events', '/api/v4/events', {'filter[entity]': 'lead', 'filter[entity_id]': target_id, 'filter[created_at][from]': max(1, target_closed - 86400*7), 'filter[created_at][to]': max(1, target_closed - 1), 'limit': 100}, 'events'),
               ('tasks', '/api/v4/tasks', {'filter[entity_type]': 'leads', 'filter[entity_id]': target_id, 'limit': 250}, 'tasks'),
+              ('talks', '/api/v4/talks', {'filter[entity_id][0]': target_id, 'filter[entity_type]': 'lead', 'limit': 250}, 'talks'),
           ]:
               payload = client._request_json(path, params)
               items = (payload.get('_embedded') or {}).get(collection) or []
               print(json.dumps({'target_structure': label, 'count': len(items), 'items': [
-                  {'id': x.get('id'), 'type': x.get('type') or x.get('note_type'), 'created_at': x.get('created_at'), 'updated_at': x.get('updated_at'), 'is_completed': x.get('is_completed'), 'shape': safe_shape(x)}
+                  {'id': x.get('id') or x.get('talk_id'), 'type': x.get('type') or x.get('note_type') or x.get('origin'), 'created_at': x.get('created_at'), 'updated_at': x.get('updated_at'), 'is_completed': x.get('is_completed'), 'shape': safe_shape(x)}
                   for x in items if isinstance(x, dict) and (
-                      int(x.get('created_at') or x.get('updated_at') or 0) >= target_closed - 86400*7
+                      label == 'talks' or int(x.get('created_at') or x.get('updated_at') or 0) >= target_closed - 86400*7
                   )
               ][-20:]}, ensure_ascii=False), flush=True)
+              if label == 'talks':
+                  for talk in items:
+                      tid = talk.get('talk_id')
+                      if tid:
+                          detail = client._request_json('/api/v4/talks/' + str(tid), {})
+                          print(json.dumps({'target_talk_detail': {'talk_id': tid, 'shape': safe_shape(detail)}}, ensure_ascii=False), flush=True)
           PY
