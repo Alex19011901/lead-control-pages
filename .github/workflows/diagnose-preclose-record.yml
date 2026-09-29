@@ -11,37 +11,46 @@ concurrency:
 jobs:
   diagnose:
     runs-on: ubuntu-latest
-    timeout-minutes: 3
+    timeout-minutes: 5
     steps:
-      - name: Inspect public amoCRM card bundles with browser headers
+      - name: Scan amoCRM dynamic card chunks for timeline endpoints
         run: |
           python - <<'PY'
           import json, re, urllib.request
-          urls=[
-            'https://statix.amocrm.ru/frontend/build/cards.5882b28acb4ffff2.js',
-            'https://statix.amocrm.ru/frontend/build/common.d0f691c50ac7a91e.js',
-            'https://statix.amocrm.ru/frontend/build/app.bc39e01e19e8400a.js',
+          base='https://statix.amocrm.ru/frontend/build/'
+          files=[
+            '3045.defb301a87982148.js','93821.702c2667a7d0e151.js','19844.189eeeb3b61f9e07.js',
+            '5812.374c4d5da5a4c51b.js','29816.94df62b7ab697ce0.js','26179.a3521beae5c1e12c.js',
+            '87139.6fc0ad72673139ef.js','7909.b649dbc22597c076.js','47356.ed9c8e3ebc1b7a85.js',
+            '82960.3ff5e08cad3ab5ed.js','77522.d3b499c6a0f646da.js','16077.ee96b88ebdd4fe82.js',
+            '56465.d9d909529d080ed9.js','18967.c2d3435c731eb3b7.js','55303.223e25fee2ee09bb.js',
+            '65247.035373e6001d4076.js','88406.26fa5840c80271c9.js','24542.e884b4a1ea89015a.js',
+            '91830.d8d787dbb784829e.js','43699.db070aba5d3ae2af.js','93231.6ac6088f5a2328d4.js',
+            '19645.bf939cf7b8f28e88.js','29637.6372e0e0c611358e.js','82110.a2961faa0bf23b11.js',
+            '3768.4c1b2c5dfc7b0e06.js','23387.bbbb84bc4b2d7c46.js','36977.481caa1f8c676188.js',
+            '7399.5d10afc666e28f04.js','72055.3aaf8668fcbe0efa.js','93836.8a8e8e8dd21fd767.js',
+            '96435.0d72409fd6444969.js','56098.e90ac88eab85ed5e.js','72835.0ec3bf2f63be983a.js',
+            '74418.e036b6c65f385cfe.js','53693.b8f71ed230c5b2a6.js','74668.bcc05e2a069089a8.js'
           ]
-          for url in urls:
-              req=urllib.request.Request(url,headers={
-                  'User-Agent':'Mozilla/5.0',
-                  'Referer':'https://alex1901yaru.amocrm.ru/',
-                  'Accept':'*/*',
-              },method='GET')
+          needles=('entity_direct_message','amojo','timeline','feed','/ajax/','chat','message')
+          headers={'User-Agent':'Mozilla/5.0','Referer':'https://alex1901yaru.amocrm.ru/','Accept':'*/*'}
+          for fn in files:
               try:
-                  with urllib.request.urlopen(req,timeout=25) as r:
+                  req=urllib.request.Request(base+fn,headers=headers,method='GET')
+                  with urllib.request.urlopen(req,timeout=20) as r:
                       text=r.read().decode('utf-8','ignore')
-                      low=text.lower()
-                      paths=sorted(set(re.findall(r'["\']([^"\']*(?:ajax|chat|message|feed|timeline|amojo)[^"\']*)["\']',text,re.I)))
-                      print(json.dumps({
-                          'url':url,
-                          'http':r.status,
-                          'content_type':r.headers.get('Content-Type'),
-                          'length':len(text),
-                          'starts_with':re.sub(r'\s+',' ',text[:160]),
-                          'has_entity_direct_message':'entity_direct_message' in low,
-                          'candidate_paths':[p for p in paths if len(p)<240][:120],
-                      },ensure_ascii=False),flush=True)
-              except Exception as e:
-                  print(json.dumps({'url':url,'error':type(e).__name__}),flush=True)
+              except Exception:
+                  continue
+              low=text.lower()
+              found=[n for n in needles if n in low]
+              if not found:
+                  continue
+              paths=[]
+              for m in re.finditer(r'["\']([^"\']{1,220})["\']',text):
+                  s=m.group(1)
+                  sl=s.lower()
+                  if any(k in sl for k in ('/ajax/','chat','message','feed','timeline','amojo','events')):
+                      if s not in paths:
+                          paths.append(s)
+              print(json.dumps({'file':fn,'length':len(text),'found':found,'candidate_paths':paths[:160]},ensure_ascii=False),flush=True)
           PY
