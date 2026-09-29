@@ -114,8 +114,8 @@ class PrecloseRecordRecoveryTests(unittest.TestCase):
             messages={
                 'message-1': {
                     'id': 'message-1',
-                    'text': 'не стал разговаривать, бросил трубку...) в максе игнор',
-                    'message': {'type': 'text', 'text': 'не стал разговаривать, бросил трубку...) в максе игнор'},
+                    'text': 'Точный текст менеджера',
+                    'message': {'type': 'text', 'text': 'Точный текст менеджера'},
                     'author': {'name': 'Олеся'},
                 }
             },
@@ -125,7 +125,7 @@ class PrecloseRecordRecoveryTests(unittest.TestCase):
         self.assertEqual(record['last_record_at'], CLOSE - 5)
         self.assertEqual(
             record['last_comment'],
-            'не стал разговаривать, бросил трубку...) в максе игнор',
+            'Точный текст менеджера',
         )
         self.assertEqual(record['last_record_display'], record['last_comment'])
         self.assertEqual(record['last_record_author'], 'Олеся')
