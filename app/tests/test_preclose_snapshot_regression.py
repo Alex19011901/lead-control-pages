@@ -64,13 +64,13 @@ class Client:
 
 
 class PrecloseSnapshotRegressionTests(unittest.TestCase):
-    def test_events_use_both_range_boundaries(self):
+    def test_events_use_first_read_as_upper_boundary(self):
         client = Client(notes=[note('До закрытия', ts(28, 9))])
         row = lead()
         apply_closed_not_realized_history([row], client, now_ts=ts(28, 18))
         query = [p for path, p in client.calls if path.endswith('/events')][0]
         self.assertEqual(query['filter[created_at][from]'], 1)
-        self.assertEqual(query['filter[created_at][to]'], ts(28) - 1)
+        self.assertEqual(query['filter[created_at][to]'], ts(28, 18))
         self.assertEqual(row['closed_not_realized']['last_comment'], 'До закрытия')
 
     def test_missing_creation_date_still_sends_positive_lower_bound(self):
@@ -87,15 +87,15 @@ class PrecloseSnapshotRegressionTests(unittest.TestCase):
         self.assertFalse(result['last_record_status'] != 'READ_ERROR')
         self.assertEqual(len(client.calls), 3)
 
-    def test_latest_record_is_chosen_before_close(self):
+    def test_latest_record_available_on_first_read_is_chosen(self):
         client = Client(
             notes=[note('Ранее', ts(28, 8)), note('Позже закрытия', ts(28, 13)), note('В момент закрытия', ts(28))],
             events=[{'entity_id': 101, 'type': 'entity_direct_message', 'created_at': ts(28, 9), 'value_after': [{'message': {'text': 'Сообщение'}}]}],
             tasks=[{'id': 9, 'entity_id': 101, 'updated_at': ts(28, 10), 'is_completed': True, 'result': {'text': 'Результат задачи'}}],
         )
-        result = _read_preclose_record(client, 101, ts(28))
-        self.assertEqual(result['last_comment'], 'Результат задачи')
-        self.assertEqual(result['last_comment_at'], ts(28, 10))
+        result = _read_preclose_record(client, 101, ts(28), read_at=ts(28, 18))
+        self.assertEqual(result['last_comment'], 'Позже закрытия')
+        self.assertEqual(result['last_comment_at'], ts(28, 13))
         self.assertEqual(result['last_record_status'], 'VERIFIED')
 
     def test_real_message_id_only_is_not_text_or_an_older_note(self):
