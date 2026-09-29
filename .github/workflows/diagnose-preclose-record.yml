@@ -11,26 +11,122 @@ concurrency:
 jobs:
   diagnose:
     runs-on: ubuntu-latest
-    timeout-minutes: 2
+    timeout-minutes: 3
     steps:
-      - name: Extract exact amoCRM chat-session request
+      - name: Read exact manager message using amoCRM chat session
+        env:
+          AMOCRM_TOKEN: ${{ secrets.AMOCRM_TOKEN }}
         run: |
           python - <<'PY'
-          import json,urllib.request
-          url='https://statix.amocrm.ru/frontend/build/61179.e4e5e039b9efcd5d.js'
-          req=urllib.request.Request(url,headers={'User-Agent':'Mozilla/5.0'},method='GET')
-          with urllib.request.urlopen(req,timeout=20) as r:
-              text=r.read().decode('utf-8','ignore')
-          out={}
-          for needle in ('/ajax/v1/chats/session','access_token','amojo_token','token_manager'):
-              poss=[]
-              start=0
-              while True:
-                  pos=text.find(needle,start)
-                  if pos<0:break
-                  poss.append(text[max(0,pos-2200):pos+4200])
-                  start=pos+len(needle)
-                  if len(poss)>=5:break
-              out[needle]=poss
-          print(json.dumps(out,ensure_ascii=False),flush=True)
+          import http.cookiejar,json,os,re,urllib.error,urllib.parse,urllib.request
+          base='https://alex1901yaru.amocrm.ru'
+          lead_id=48813485
+          closed_at=1790580620
+          bearer=os.environ['AMOCRM_TOKEN']
+          page_url=f'{base}/leads/detail/{lead_id}'
+          jar=http.cookiejar.CookieJar()
+          opener=urllib.request.build_opener(urllib.request.HTTPCookieProcessor(jar))
+
+          def open_req(url,method='GET',data=None,headers=None):
+              h={'User-Agent':'Mozilla/5.0','Authorization':'Bearer '+bearer}
+              h.update(headers or {})
+              req=urllib.request.Request(url,data=data,headers=h,method=method)
+              with opener.open(req,timeout=25) as r:
+                  raw=r.read()
+                  return r.status,r.headers,raw
+
+          st,h,raw=open_req(page_url,headers={'Accept':'text/html,*/*'})
+          html=raw.decode('utf-8','ignore')
+          print(json.dumps({'page_http':st,'cookie_count':len(list(jar)),'html_len':len(html)}),flush=True)
+
+          for key in ('amojo_server','amojo_ws_server','stand','amojo_id'):
+              pos=html.lower().find(key.lower())
+              snippet=''
+              if pos>=0:
+                  snippet=re.sub(r'\s+',' ',html[max(0,pos-250):pos+650])
+              print(json.dumps({'html_constant':key,'found':pos>=0,'snippet':snippet[:900]},ensure_ascii=False),flush=True)
+
+          form=urllib.parse.urlencode({'request[chats][session][action]':'create'}).encode()
+          try:
+              sst,sh,sraw=open_req(
+                  base+'/ajax/v1/chats/session',
+                  method='POST',
+                  data=form,
+                  headers={
+                      'Accept':'application/json, text/javascript, */*; q=0.01',
+                      'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8',
+                      'X-Requested-With':'XMLHttpRequest',
+                      'Referer':page_url,
+                  },
+              )
+          except urllib.error.HTTPError as e:
+              print(json.dumps({'session_http':e.code,'body':e.read().decode('utf-8','ignore')[:1000]},ensure_ascii=False),flush=True)
+              raise SystemExit(2)
+
+          session=json.loads(sraw or b'{}')
+          payload=((session.get('response') or {}).get('chats') or {}).get('session') or {}
+          access=str(payload.get('access_token') or '')
+          account=payload.get('account') or {}
+          user=payload.get('user') or {}
+          print(json.dumps({
+              'session_http':sst,
+              'access_present':bool(access),
+              'access_len':len(access),
+              'account':account,
+              'user_keys':sorted(user.keys()) if isinstance(user,dict) else [],
+              'top_keys':sorted(payload.keys()) if isinstance(payload,dict) else [],
+          },ensure_ascii=False),flush=True)
+          if not access:
+              raise SystemExit('No access token')
+
+          est,eh,eraw=open_req(
+              base+'/api/v4/events?'+urllib.parse.urlencode({
+                  'filter[entity]':'lead',
+                  'filter[entity_id]':lead_id,
+                  'filter[created_at][from]':closed_at-86400*7,
+                  'filter[created_at][to]':closed_at-1,
+                  'limit':100,
+              }),
+              headers={'Accept':'application/json'},
+          )
+          events=json.loads(eraw or b'{}')
+          direct=[x for x in ((events.get('_embedded') or {}).get('events') or []) if isinstance(x,dict) and x.get('type')=='entity_direct_message']
+          direct.sort(key=lambda x:int(x.get('created_at') or 0))
+          event=direct[-1]
+          mid=''
+          for part in event.get('value_after') or []:
+              if isinstance(part,dict) and isinstance(part.get('message'),dict):
+                  mid=str(part['message'].get('id') or '')
+                  if mid:break
+          print(json.dumps({'event_at':event.get('created_at'),'message_id':mid},ensure_ascii=False),flush=True)
+
+          # amojo_server is normally present in the authenticated card bootstrap.
+          candidates=[]
+          for pat in (
+              r'["\']amojo_server["\']\s*:\s*["\']([^"\']+)',
+              r'amojo_server\\?"\s*:\s*\\?"([^"\\]+)',
+              r'amojo_server[^:]{0,80}:\s*["\']([^"\']+)',
+          ):
+              m=re.search(pat,html,re.I)
+              if m:
+                  candidates.append(m.group(1).replace('\\/','/'))
+          server=next((x for x in candidates if x.startswith('http')), '')
+          if not server:
+              # Production frontend currently uses this host; validate with the obtained session token.
+              server='https://amojo.amocrm.ru'
+          msg_url=server.rstrip('/')+'/v2/messages?'+urllib.parse.urlencode({'id':mid})
+          mreq=urllib.request.Request(msg_url,headers={
+              'User-Agent':'Mozilla/5.0',
+              'Accept':'application/json',
+              'X-Auth-Token':access,
+              'Referer':page_url,
+          },method='GET')
+          try:
+              with urllib.request.urlopen(mreq,timeout=25) as r:
+                  mraw=r.read()
+                  mp=json.loads(mraw) if mraw else {}
+                  print(json.dumps({'message_http':r.status,'server':server,'payload':mp},ensure_ascii=False),flush=True)
+          except urllib.error.HTTPError as e:
+              print(json.dumps({'message_http':e.code,'server':server,'body':e.read().decode('utf-8','ignore')[:1000]},ensure_ascii=False),flush=True)
+              raise SystemExit(3)
           PY
