@@ -13,7 +13,7 @@ SUCCESSFUL_STATUS_ID = 142
 CLOSED_NOT_REALIZED_STATUS_ID = 143
 HISTORY_DAYS = 5
 MOSCOW_TZ = ZoneInfo("Europe/Moscow")
-PRE_CLOSE_RECORD_VERSION = 4
+PRE_CLOSE_RECORD_VERSION = 5
 MAX_HISTORY_PAGES = 50
 
 
@@ -91,16 +91,18 @@ def _read_preclose_record(
     crm_lead_id: int,
     closed_at: int,
     responsible_user_id: int | None = None,
+    read_at: int | None = None,
 ) -> dict[str, Any]:
-    """Return the last meaningful record by the responsible manager before close."""
+    """Return the latest meaningful manager record available on the first read."""
     latest: dict[str, Any] = {}
     errors: list[str] = []
     manager_id = _int(responsible_user_id)
+    scan_at = int(read_at if read_at is not None else time.time())
 
     def consider(text: str, ts: int, kind: str, record_id: object = "",
                  missing_text: bool = False) -> None:
         nonlocal latest
-        if not 0 < ts < closed_at or (not text and not missing_text):
+        if not 0 < ts <= scan_at or (not text and not missing_text):
             return
         if ts > _int(latest.get("at")) or (ts == _int(latest.get("at")) and missing_text):
             latest = {
@@ -116,7 +118,7 @@ def _read_preclose_record(
         ("events", "/api/v4/events", {
             "filter[entity]": "lead", "filter[entity_id]": crm_lead_id,
             "filter[created_at][from]": 1,
-            "filter[created_at][to]": closed_at - 1, "limit": 100}),
+            "filter[created_at][to]": scan_at, "limit": 100}),
         ("tasks", "/api/v4/tasks", {
             "filter[entity_type]": "leads", "filter[entity_id]": crm_lead_id,
             "limit": 250}),
@@ -264,7 +266,7 @@ def _frozen(record: dict) -> bool:
     closed_at = _int(record.get("closed_at"))
     if state == "VERIFIED":
         return bool(str(record.get("last_comment") or "").strip()) and (
-            0 < _int(record.get("last_record_at") or record.get("last_comment_at")) < closed_at
+            0 < _int(record.get("last_record_at") or record.get("last_comment_at"))
         )
     return state == "EMPTY"
 
@@ -350,10 +352,11 @@ def apply_closed_not_realized_history(
                 crm_id,
                 closed_at,
                 responsible_user_id=responsible_user_id or None,
+                read_at=current_ts,
             )
             if record["last_record_status"] == "READ_ERROR":
                 saved_at = _int(saved.get("last_comment_at"))
-                if saved.get("last_comment") and 0 < saved_at < closed_at:
+                if saved.get("last_comment") and 0 < saved_at:
                     record["last_comment"] = saved["last_comment"]
                     record["last_comment_at"] = saved_at
                     record["last_record_display"] = (
