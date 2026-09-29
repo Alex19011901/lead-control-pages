@@ -143,4 +143,67 @@ jobs:
                       if tid:
                           detail = client._request_json('/api/v4/talks/' + str(tid), {})
                           print(json.dumps({'target_talk_detail': {'talk_id': tid, 'shape': safe_shape(detail)}}, ensure_ascii=False), flush=True)
+
+          def raw_get(label, path, params=None):
+              params = params or {}
+              url = domain + path + (('?' + urllib.parse.urlencode(params, doseq=True)) if params else '')
+              req = urllib.request.Request(url, headers={'Accept': 'application/json', 'Authorization': 'Bearer ' + token}, method='GET')
+              try:
+                  with client.opener.open(req, timeout=25) as response:
+                      raw = response.read()
+                      payload = json.loads(raw) if raw else {}
+                      print(json.dumps({'extra_check': label, 'http': response.status, 'shape': safe_shape(payload)}, ensure_ascii=False), flush=True)
+                      return payload
+              except urllib.error.HTTPError as exc:
+                  print(json.dumps({'extra_check': label, 'http': exc.code}), flush=True)
+                  return {}
+
+          # 1) Official entity-specific notes endpoint for the target card.
+          target_notes = raw_get('target_specific_notes', f'/api/v4/leads/{target_id}/notes', {'limit': 250, 'page': 1})
+          notes_items = (target_notes.get('_embedded') or {}).get('notes') or []
+          print(json.dumps({'target_specific_notes_count': len(notes_items), 'items': [
+              {'id': x.get('id'), 'note_type': x.get('note_type'), 'created_at': x.get('created_at'), 'shape': safe_shape(x)}
+              for x in notes_items[-20:] if isinstance(x, dict)
+          ]}, ensure_ascii=False), flush=True)
+
+          # 2) Exact event payload by ID for the final event before close.
+          event_list = client._request_json('/api/v4/events', {
+              'filter[entity]': 'lead',
+              'filter[entity_id]': target_id,
+              'filter[created_at][from]': max(1, target_closed - 86400*7),
+              'filter[created_at][to]': max(1, target_closed - 1),
+              'limit': 100,
+          })
+          event_items = (event_list.get('_embedded') or {}).get('events') or []
+          target_event = max(
+              (x for x in event_items if isinstance(x, dict) and int(x.get('created_at') or 0) < target_closed),
+              key=lambda x: int(x.get('created_at') or 0),
+              default=None,
+          )
+          if target_event and target_event.get('id'):
+              raw_get('target_event_by_id', '/api/v4/events/' + str(target_event['id']))
+
+          # 3) Find linked contacts and inspect customer-chat events through the contact filter.
+          lead_card = raw_get('target_lead_contacts', f'/api/v4/leads/{target_id}', {'with': 'contacts'})
+          contacts = [int(x.get('id')) for x in ((lead_card.get('_embedded') or {}).get('contacts') or []) if x.get('id')]
+          print(json.dumps({'target_contact_ids': contacts}, ensure_ascii=False), flush=True)
+          for contact_id in contacts[:5]:
+              chat_events = raw_get(
+                  'contact_chat_events_' + str(contact_id),
+                  '/api/v4/events',
+                  [
+                      ('filter[entity][]', 'contact'),
+                      ('filter[entity_id][]', str(contact_id)),
+                      ('filter[type][]', 'incoming_chat_message'),
+                      ('filter[type][]', 'outgoing_chat_message'),
+                      ('filter[created_at][from]', str(max(1, target_closed - 86400*30))),
+                      ('filter[created_at][to]', str(max(1, target_closed - 1))),
+                      ('limit', '100'),
+                  ],
+              )
+              chat_items = (chat_events.get('_embedded') or {}).get('events') or []
+              print(json.dumps({'contact_chat_events': contact_id, 'count': len(chat_items), 'items': [
+                  {'id': x.get('id'), 'type': x.get('type'), 'entity_id': x.get('entity_id'), 'entity_type': x.get('entity_type'), 'created_at': x.get('created_at'), 'shape': safe_shape(x)}
+                  for x in chat_items[-20:] if isinstance(x, dict)
+              ]}, ensure_ascii=False), flush=True)
           PY
