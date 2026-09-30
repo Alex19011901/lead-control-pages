@@ -1,5 +1,5 @@
 {
-  "alarm_no_crm": 3,
+  "alarm_no_crm": 1,
   "by_manager": {
     "no_manager_reaction": 590,
     "Максим": 66,
@@ -19,13 +19,13 @@
     "ТоМесто": 1
   },
   "event_types": {
-    "unknown": 117,
+    "unknown": 116,
     "Бизнес мероприятие": 25,
     "Выпускной": 7,
     "ДР": 2,
     "Детский праздник": 5,
     "Конференция": 3,
-    "Корпоратив": 190,
+    "Корпоратив": 191,
     "Поминки": 1,
     "Свадьба": 218,
     "Съемки": 1,
@@ -40,7 +40,7 @@
     "51-100": 106,
     "unknown": 127
   },
-  "late_crm": 140,
+  "late_crm": 142,
   "latest_leads": [
     {
       "created_at": "2026-09-30T11:53:47+03:00",
@@ -116,11 +116,11 @@
     },
     {
       "created_at": "2026-09-29T19:03:11+03:00",
-      "crm_entity_id": null,
-      "crm_entity_type": null,
-      "crm_found": false,
+      "crm_entity_id": 49105347,
+      "crm_entity_type": "lead",
+      "crm_found": true,
       "event_date": "2026-12-25",
-      "event_type": "",
+      "event_type": "Корпоратив",
       "guests_count": 80,
       "identifier": "7********69",
       "identifier_type": "phone",
@@ -129,9 +129,9 @@
       "manager_username": "Olesyagozhina",
       "name": "Никита",
       "source": "САЙТ ТИЛЬДА",
-      "status": "ALARM_NO_CRM",
+      "status": "LATE_CRM",
       "violations": [
-        "ALARM_NO_CRM"
+        "LATE_CRM"
       ]
     },
     {
@@ -214,9 +214,9 @@
     },
     {
       "created_at": "2026-09-29T13:20:10+03:00",
-      "crm_entity_id": null,
-      "crm_entity_type": null,
-      "crm_found": false,
+      "crm_entity_id": 49105315,
+      "crm_entity_type": "lead",
+      "crm_found": true,
       "event_date": "2026-12-12",
       "event_type": "Корпоратив",
       "guests_count": 100,
@@ -227,9 +227,9 @@
       "manager_username": "Olesyagozhina",
       "name": "Мария",
       "source": "MARQUIZ",
-      "status": "ALARM_NO_CRM",
+      "status": "LATE_CRM",
       "violations": [
-        "ALARM_NO_CRM"
+        "LATE_CRM"
       ]
     },
     {
@@ -427,5 +427,5 @@
   "no_reaction": 0,
   "ok": 512,
   "total_leads": 710,
-  "updated_at": "2026-09-30T12:45:30+03:00"
+  "updated_at": "2026-09-30T12:50:16+03:00"
 }

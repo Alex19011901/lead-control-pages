@@ -22090,20 +22090,41 @@
       "channel": "TELEGRAM",
       "crm": {
         "ambiguity_count": 0,
-        "created_at": null,
-        "entity_id": null,
-        "entity_type": null,
-        "event_type": null,
-        "found": false,
-        "responsible_user_id": null,
-        "responsible_user_name": null,
-        "updated_at": null
+        "created_at": 1790761451,
+        "entity_id": 49105315,
+        "entity_type": "lead",
+        "event_type": "Корпоратив",
+        "found": true,
+        "guests": "100",
+        "guests_source": "CRM",
+        "responsible_user_id": 13009530,
+        "responsible_user_name": "Олеся",
+        "updated_at": 1790761485
       },
-      "crm_created_at": null,
-      "crm_found": false,
+      "crm_created_at": 1790761451,
+      "crm_feedback": {
+        "closed_at": null,
+        "crm_lead_id": 49105315,
+        "deadline_at": 1791061200,
+        "excluded": false,
+        "first_activity_at": null,
+        "lead_created_at": 1790761451,
+        "loss_reason_checked": true,
+        "loss_reason_id": null,
+        "loss_reason_name": "",
+        "pipeline_id": 10081590,
+        "responsible_user_id": 13009530,
+        "rule_version": 6,
+        "state": "WAITING",
+        "status_id": 79927038,
+        "status_name": "Выслано предложение"
+      },
+      "crm_found": true,
       "crm_required": true,
-      "crm_responsible": null,
+      "crm_responsible": 13009530,
       "deadline_msk_ts": 1790715599,
+      "event_type": "Корпоратив",
+      "event_type_source": "CRM",
       "fields": {
         "category": "MARQUIZ",
         "description": "🎯 Заявка на квиз \"Организуйте идеальное мероприятие в ресторане «Светлый».\"\n\nИмя: Мария\nТелефон: +79832765424\n\nКакое мероприятие вы планируете?\nКорпоратив\n\nСколько гостей ожидается?\n100\n\nУточните дату Вашего мероприятия?\n12.12.2026\n\nКакой формат мероприятия интересует?\nБанкет\n\nТовары:\n\nТовары не выбраны\n\n\nБонусы: Бесплатная дегустация, Без арендной платы\n\nМестоположение: Россия\nUTM-метки:\ncampaign: Bankety_poisk_quiz\nmedium: cpc\nsource: yandex_direct\n\nСтраница: https://mrqz.me/moscowbanket?callibri=yd_c:712849433_gb:5773918675_ad:1915822986185365516_ph:57675183326_st:search_s:none_dt:desktop&utm_source=yandex_direct&utm_medium=cpc&utm_campaign=Bankety_poisk_quiz&type=search&source=none&added=no&block=premium&position=3&keyword=%D0%B1%D0%B0%D0%BD%D0%BA%D0%B5%D1%82%D0%BD%D1%8B%D0%B5%20%D0%B7%D0%B0%D0%BB%D1%8B%20%D0%BC%D0%BE%D1%81%D0%BA%D0%B2%D1%8B&etext=2202.tBHfQdwhggmzFEhfUbi0HXZ1bHbUcsigytl-9AI51nAcDoeIidJs2MwX8zOQrzdvIPkU_MzyfZWclSlyIxI8tmxicmZ4enZjcGxnbGhxaWQ.69e74562079efa21efe3163a03b726f523af6319&yclid=11181854085853741055&ybaip=1\n\nСогласия:\nЯ согласен на обработку персональных данных: Да",
@@ -22147,7 +22168,7 @@
       "sender_user_id": 446491725,
       "sender_username": "MarquizBot",
       "source": "MARQUIZ",
-      "status": "ALARM_NO_CRM",
+      "status": "LATE_CRM",
       "telegram": {
         "chat_id": -1001645768111,
         "message_ids": [
@@ -22158,34 +22179,78 @@
         ]
       },
       "violations": [
-        "ALARM_NO_CRM"
+        "LATE_CRM"
       ]
     },
     {
       "category": "САЙТ ТИЛЬДА",
       "channel": "TELEGRAM",
+      "closed_not_realized": {
+        "closed_at": 1790761535,
+        "crm_lead_id": 49105347,
+        "last_comment": "",
+        "last_comment_at": null,
+        "last_record_at": null,
+        "last_record_author": "",
+        "last_record_display": "",
+        "last_record_errors": [],
+        "last_record_id": "",
+        "last_record_rule_version": 5,
+        "last_record_status": "EMPTY",
+        "last_record_type": "",
+        "loss_reason_id": 21780202,
+        "loss_reason_name": "Дата занята"
+      },
       "crm": {
         "ambiguity_count": 0,
-        "created_at": null,
-        "entity_id": null,
-        "entity_type": null,
-        "event_type": null,
-        "found": false,
-        "responsible_user_id": null,
-        "responsible_user_name": null,
-        "updated_at": null
+        "created_at": 1790761528,
+        "entity_id": 49105347,
+        "entity_type": "lead",
+        "event_type": "Корпоратив",
+        "found": true,
+        "guests": "80",
+        "guests_source": "CRM",
+        "responsible_user_id": 13009530,
+        "responsible_user_name": "Олеся",
+        "updated_at": 1790761582
       },
-      "crm_created_at": null,
-      "crm_found": false,
+      "crm_created_at": 1790761528,
+      "crm_feedback": {
+        "closed_at": 1790761535,
+        "crm_lead_id": 49105347,
+        "excluded": true,
+        "first_activity_at": null,
+        "lead_created_at": 1790761528,
+        "loss_reason_checked": true,
+        "loss_reason_id": 21780202,
+        "loss_reason_name": "Дата занята",
+        "pipeline_id": 10081590,
+        "responsible_user_id": 13009530,
+        "rule_version": 6,
+        "state": "EXCLUDED",
+        "status_id": 143,
+        "status_name": "Закрыто и не реализовано"
+      },
+      "crm_found": true,
+      "crm_outcome": {
+        "closed_at": 1790761535,
+        "loss_reason_id": 21780202,
+        "loss_reason_name": "Дата занята",
+        "result": "LOST",
+        "status_id": 143,
+        "status_name": "Закрыто и не реализовано"
+      },
       "crm_required": true,
-      "crm_responsible": null,
+      "crm_responsible": 13009530,
       "deadline_msk_ts": 1790715599,
+      "event_type": "Корпоратив",
+      "event_type_source": "CRM",
       "fields": {
         "category": "САЙТ ТИЛЬДА",
         "description": "Содержание заявки:\nName: Никита\nPhone: +79258564769\nколичество_гостей: 80\nDate: 25/12/2026\nCheckbox: yes\npage_url: https://moscowbanket.ru/#rec917519779\nform_submit_timestamp: 1790697790\nmetrika_client_id: 1790697741852481185\nym_client_id: 1790697741852481185\nym_clientid: 1790697741852481185\nym_uid: 1790697741852481185\n_ym_uid: 1790697741852481185\nclient_id: 1790697741852481185\nclientid: 1790697741852481185\nyandex_client_id: 1790697741852481185\nya_client_id: 1790697741852481185\n\nДополнительная информация:\nКод заявки: 2925975:8708565032\nКод блока: rec1191803796\nhttps://moscowbanket.ru/#rec917519779\n-----",
         "event_date": "2026-12-25",
         "event_date_raw": "25/12/2026",
-        "event_type": "",
+        "event_type": "Корпоратив",
         "form_submit_timestamp": 1790697790,
         "guests_count": 80,
         "metrika_client_id": "1790697741852481185",
@@ -22219,12 +22284,26 @@
         "user_id": 328611361,
         "username": "Olesyagozhina"
       },
+      "preclose_record_cache": {
+        "closed_at": 1790761535,
+        "crm_lead_id": 49105347,
+        "last_comment": "",
+        "last_comment_at": null,
+        "last_record_at": null,
+        "last_record_author": "",
+        "last_record_display": "",
+        "last_record_errors": [],
+        "last_record_id": "",
+        "last_record_rule_version": 5,
+        "last_record_status": "EMPTY",
+        "last_record_type": ""
+      },
       "received_at": "2026-09-29T19:03:11+03:00",
       "sender_name": "TildaForms",
       "sender_user_id": 265299531,
       "sender_username": "TildaFormsBot",
       "source": "САЙТ ТИЛЬДА",
-      "status": "ALARM_NO_CRM",
+      "status": "LATE_CRM",
       "telegram": {
         "chat_id": -1001645768111,
         "message_ids": [
@@ -22235,7 +22314,7 @@
         ]
       },
       "violations": [
-        "ALARM_NO_CRM"
+        "LATE_CRM"
       ]
     },
     {
@@ -69235,8 +69314,8 @@
         "79927038": 2
       },
       "2026-09-30": {
-        "143": 4,
-        "79927038": 3,
+        "143": 5,
+        "79927038": 4,
         "79927914": 1,
         "80182874": 1
       }
@@ -69321,7 +69400,7 @@
       }
     ],
     "today": "2026-09-30",
-    "total_movements": 286,
+    "total_movements": 288,
     "weeks": [
       {
         "dates": [
