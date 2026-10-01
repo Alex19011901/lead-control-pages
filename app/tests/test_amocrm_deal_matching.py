@@ -200,6 +200,7 @@ class FastRefreshClosedMatchTests(unittest.TestCase):
         lead = {
             "id": "MAX:new-request",
             "first_seen_ts": 3000,
+            "deadline_msk_ts": 5000,
             "identifier": {"type": "phone", "value": "79152636030"},
             "crm_required": True,
             "status": "PENDING",
