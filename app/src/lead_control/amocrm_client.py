@@ -88,7 +88,19 @@ class AmoCRMClient:
         if not unique_candidates:
             return AmoCRMSearchResult(found=False)
 
-        chosen = self._choose_lead_candidate(unique_candidates, target_created_at)
+        # A deal that was already closed before this incoming request cannot
+        # represent the new request, even when the phone number is the same.
+        eligible_candidates = self._eligible_lead_candidates(
+            unique_candidates,
+            target_created_at,
+        )
+        if not eligible_candidates:
+            return AmoCRMSearchResult(
+                found=False,
+                ambiguity_count=max(0, len(unique_candidates) - 1),
+            )
+
+        chosen = self._choose_lead_candidate(eligible_candidates, target_created_at)
 
         if len(unique_candidates) > 1:
             LOG.warning(
@@ -187,11 +199,32 @@ class AmoCRMClient:
             "id": int(entity["id"]),
             "created_at": entity.get("created_at"),
             "updated_at": entity.get("updated_at"),
+            "closed_at": entity.get("closed_at"),
             "responsible_user_id": entity.get("responsible_user_id"),
             "event_type": _extract_event_type_from_entity(entity),
             "custom_fields_values": entity.get("custom_fields_values") or [],
             "name": entity.get("name"),
         }
+
+    @staticmethod
+    def _eligible_lead_candidates(
+        candidates: list[dict[str, Any]],
+        target_created_at: int | None,
+    ) -> list[dict[str, Any]]:
+        target = int(target_created_at or 0)
+        if target <= 0:
+            return list(candidates)
+
+        eligible: list[dict[str, Any]] = []
+        for candidate in candidates:
+            try:
+                closed_at = int(candidate.get("closed_at") or 0)
+            except (TypeError, ValueError):
+                closed_at = 0
+            if closed_at and closed_at < target:
+                continue
+            eligible.append(candidate)
+        return eligible
 
     @staticmethod
     def _choose_lead_candidate(
