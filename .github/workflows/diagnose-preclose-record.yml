@@ -63,7 +63,7 @@ jobs:
               'contacts':[int(x.get('id') or 0) for x in contacts],
               'candidate_count':len(candidates),
               'chosen_id':int(chosen.get('id') or 0) if chosen else None,
-              'search_result':result.to_dict(),
+              'search_result':result.as_dict(),
           },ensure_ascii=False),flush=True)
 
           rows=[]
