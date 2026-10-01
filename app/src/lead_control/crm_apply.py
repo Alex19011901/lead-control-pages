@@ -54,7 +54,7 @@ def apply_crm(
                 and previous_crm.get("found")
                 and previous_crm.get("entity_type") == "lead"
                 and previous_crm.get("entity_id")
-                and _crm_match_is_current_for_lead(lead, previous_crm)
+                and _previous_crm_match_can_be_reused(lead, previous)
             ):
                 lead["crm"] = dict(previous_crm)
                 _update_status(lead)
@@ -90,6 +90,26 @@ def apply_crm(
                 crm_payload["guests_source"] = "CRM"
         lead["crm"] = crm_payload
         _update_status(lead)
+
+
+def _previous_crm_match_can_be_reused(
+    lead: dict[str, Any],
+    previous: dict[str, Any],
+) -> bool:
+    previous_crm = previous.get("crm") or {}
+    previous_feedback = previous.get("crm_feedback") or {}
+
+    try:
+        source_ts = int(lead.get("first_seen_ts") or 0)
+        closed_at = int(previous_feedback.get("closed_at") or 0)
+    except (TypeError, ValueError):
+        source_ts = 0
+        closed_at = 0
+
+    if source_ts > 0 and closed_at > 0 and closed_at < source_ts:
+        return False
+
+    return _crm_match_is_current_for_lead(lead, previous_crm)
 
 
 def _crm_match_is_current_for_lead(
