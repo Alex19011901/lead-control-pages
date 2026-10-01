@@ -70708,6 +70708,204 @@
       "status": "OK",
       "username": "",
       "violations": []
+    },
+    {
+      "category": "HOST",
+      "channel": "MAX",
+      "crm": {
+        "check_status": "NO_IDENTIFIER",
+        "found": false,
+        "required": true
+      },
+      "crm_check_status": "NO_IDENTIFIER",
+      "crm_created_at": null,
+      "crm_found": false,
+      "crm_required": true,
+      "crm_responsible": null,
+      "deadline_msk_ts": 1790888399,
+      "event_date": "",
+      "fields": {
+        "category": "HOST",
+        "event_date": "",
+        "event_date_raw": "",
+        "event_type": "",
+        "guests_count": null,
+        "guests_max": null,
+        "guests_min": null,
+        "guests_raw": "",
+        "name": "",
+        "phone_digits": "",
+        "phone_raw": "",
+        "source": "Заявки хост",
+        "telegram_username": ""
+      },
+      "first_seen_at": "2026-10-01T15:35:05+03:00",
+      "first_seen_ts": 1790858105,
+      "guests": null,
+      "guests_max": null,
+      "guests_min": null,
+      "guests_raw": "",
+      "id": "9365e56d68bac32c",
+      "identifier": {
+        "type": "review_message",
+        "value": "MAX:-71704692523093:mid.ffffbec8f345ffab01a0f776146219d5"
+      },
+      "last_seen_at": "2026-10-01T15:35:05+03:00",
+      "last_seen_ts": 1790858105,
+      "manager_reaction": null,
+      "manual_review": {
+        "decided_at": "2026-10-01T16:43:00+03:00",
+        "decision": "HOST",
+        "key": "MAX:-71704692523093:mid.ffffbec8f345ffab01a0f776146219d5"
+      },
+      "max": {
+        "chat_id": -71704692523093,
+        "message_ids": [
+          "mid.ffffbec8f345ffab01a0f776146219d5"
+        ],
+        "sender_name": "Al",
+        "sender_user_id": 74336871,
+        "sender_username": null
+      },
+      "message_id": "mid.ffffbec8f345ffab01a0f776146219d5",
+      "name": "",
+      "phone": "",
+      "received_at": "2026-10-01T15:35:05+03:00",
+      "sender_name": "Al",
+      "sender_user_id": 74336871,
+      "sender_username": null,
+      "source": "Заявки хост",
+      "status": "-",
+      "username": "",
+      "violations": []
+    },
+    {
+      "category": "HOST",
+      "channel": "MAX",
+      "closed_not_realized": {
+        "closed_at": 1790865196,
+        "crm_lead_id": 49149151,
+        "last_comment": "не ждет",
+        "last_comment_at": 1790865205,
+        "last_record_at": 1790865205,
+        "last_record_author": "",
+        "last_record_display": "не ждет",
+        "last_record_errors": [],
+        "last_record_id": "320343987",
+        "last_record_rule_version": 5,
+        "last_record_status": "VERIFIED",
+        "last_record_type": "common",
+        "loss_reason_id": 21779742,
+        "loss_reason_name": "Не устроили условия"
+      },
+      "crm": {
+        "ambiguity_count": 0,
+        "created_at": 1790865196,
+        "entity_id": 49149151,
+        "entity_type": "lead",
+        "event_type": "Корпоратив",
+        "found": true,
+        "guests": "30",
+        "guests_source": "CRM",
+        "responsible_user_id": 12982830,
+        "responsible_user_name": "Максим",
+        "updated_at": 1790865204
+      },
+      "crm_created_at": 1790865196,
+      "crm_feedback": {
+        "closed_at": 1790865196,
+        "crm_lead_id": 49149151,
+        "excluded": true,
+        "first_activity_at": null,
+        "lead_created_at": 1790865196,
+        "loss_reason_checked": true,
+        "loss_reason_id": 21779742,
+        "loss_reason_name": "Не устроили условия",
+        "pipeline_id": 10081590,
+        "responsible_user_id": 12982830,
+        "rule_version": 6,
+        "state": "EXCLUDED",
+        "status_id": 143,
+        "status_name": "Закрыто и не реализовано"
+      },
+      "crm_found": true,
+      "crm_outcome": {
+        "closed_at": 1790865196,
+        "loss_reason_id": 21779742,
+        "loss_reason_name": "Не устроили условия",
+        "result": "LOST",
+        "status_id": 143,
+        "status_name": "Закрыто и не реализовано"
+      },
+      "crm_required": true,
+      "crm_responsible": 12982830,
+      "deadline_msk_ts": 1790888399,
+      "event_date": "2026-12-12",
+      "event_type": "Корпоратив",
+      "event_type_source": "CRM",
+      "fields": {
+        "category": "HOST",
+        "email": "",
+        "event_date": "2026-12-12",
+        "event_date_raw": "12.12",
+        "event_type": "Корпоратив",
+        "guests_count": 30,
+        "guests_max": null,
+        "guests_min": null,
+        "guests_raw": "30п.",
+        "name": "Милена",
+        "phone_digits": "79182029903",
+        "phone_raw": "89182029903",
+        "source": "Заявки хост",
+        "telegram_username": ""
+      },
+      "first_seen_at": "2026-10-01T17:28:18+03:00",
+      "first_seen_ts": 1790864898,
+      "guests": 30,
+      "guests_max": null,
+      "guests_min": null,
+      "guests_raw": "30п.",
+      "id": "fb0ee6328900d8f4",
+      "identifier": {
+        "type": "phone",
+        "value": "79182029903"
+      },
+      "last_seen_at": "2026-10-01T17:28:18+03:00",
+      "last_seen_ts": 1790864898,
+      "manager_reaction": null,
+      "max": {
+        "chat_id": -71704692523093,
+        "message_ids": [
+          "mid.ffffbec8f345ffab01a0f7ddb7e366d7"
+        ],
+        "sender_name": "Елена",
+        "sender_user_id": 121513620,
+        "sender_username": null
+      },
+      "message_id": "mid.ffffbec8f345ffab01a0f7ddb7e366d7",
+      "name": "Милена",
+      "phone": "89182029903",
+      "preclose_record_cache": {
+        "closed_at": 1790865196,
+        "crm_lead_id": 49149151,
+        "last_comment": "не ждет",
+        "last_comment_at": 1790865205,
+        "last_record_at": 1790865205,
+        "last_record_author": "",
+        "last_record_display": "не ждет",
+        "last_record_errors": [],
+        "last_record_id": "320343987",
+        "last_record_rule_version": 5,
+        "last_record_status": "VERIFIED",
+        "last_record_type": "common"
+      },
+      "received_at": "2026-10-01T17:28:18+03:00",
+      "sender_name": "Елена",
+      "sender_user_id": 121513620,
+      "source": "Заявки хост",
+      "status": "OK",
+      "username": "",
+      "violations": []
     }
   ],
   "pipeline_activity": {
@@ -70844,7 +71042,7 @@
         "80182874": 1
       },
       "2026-10-01": {
-        "143": 7,
+        "143": 8,
         "79927038": 2,
         "79927914": 1,
         "88382034": 4
@@ -70930,7 +71128,7 @@
       }
     ],
     "today": "2026-10-01",
-    "total_movements": 312,
+    "total_movements": 313,
     "weeks": [
       {
         "dates": [
