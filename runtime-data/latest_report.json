@@ -1,7 +1,7 @@
 {
-  "alarm_no_crm": 4,
+  "alarm_no_crm": 1,
   "by_manager": {
-    "no_manager_reaction": 597,
+    "no_manager_reaction": 598,
     "Максим": 66,
     "Олеся": 55
   },
@@ -14,34 +14,52 @@
     "Заявка сайт": 3,
     "Заявки хост": 386,
     "С улицы": 2,
-    "САЙТ ТИЛЬДА": 181,
+    "САЙТ ТИЛЬДА": 182,
     "Тильда Веранда": 48,
     "ТоМесто": 1
   },
   "event_types": {
     "unknown": 117,
-    "Бизнес мероприятие": 26,
+    "Бизнес мероприятие": 27,
     "Выпускной": 7,
     "ДР": 2,
     "Детский праздник": 5,
-    "Конференция": 2,
+    "Конференция": 1,
     "Корпоратив": 196,
     "Поминки": 1,
-    "Свадьба": 218,
+    "Свадьба": 219,
     "Съемки": 1,
     "Съёмки": 2,
     "Юбилей": 141
   },
   "guest_ranges": {
-    "1-20": 204,
+    "1-20": 205,
     "101-150": 47,
     "151+": 25,
     "21-50": 207,
     "51-100": 108,
     "unknown": 127
   },
-  "late_crm": 143,
+  "late_crm": 146,
   "latest_leads": [
+    {
+      "created_at": "2026-10-01T09:48:27+03:00",
+      "crm_entity_id": null,
+      "crm_entity_type": null,
+      "crm_found": false,
+      "event_date": "2026-10-31",
+      "event_type": "",
+      "guests_count": 16,
+      "identifier": "7********28",
+      "identifier_type": "phone",
+      "lead_id": "aeb12e02abab02c6",
+      "manager": "",
+      "manager_username": "",
+      "name": "Наталья",
+      "source": "САЙТ ТИЛЬДА",
+      "status": "PENDING",
+      "violations": []
+    },
     {
       "created_at": "2026-09-30T16:29:22+03:00",
       "crm_entity_id": 49114053,
@@ -82,11 +100,11 @@
     },
     {
       "created_at": "2026-09-30T15:11:06+03:00",
-      "crm_entity_id": null,
-      "crm_entity_type": null,
-      "crm_found": false,
+      "crm_entity_id": 49134199,
+      "crm_entity_type": "lead",
+      "crm_found": true,
       "event_date": "2026-10-11",
-      "event_type": "",
+      "event_type": "Свадьба",
       "guests_count": 21,
       "identifier": "7********45",
       "identifier_type": "phone",
@@ -95,16 +113,16 @@
       "manager_username": "Olesyagozhina",
       "name": "Анастасия",
       "source": "САЙТ ТИЛЬДА",
-      "status": "ALARM_NO_CRM",
+      "status": "LATE_CRM",
       "violations": [
-        "ALARM_NO_CRM"
+        "LATE_CRM"
       ]
     },
     {
       "created_at": "2026-09-30T15:00:09+03:00",
-      "crm_entity_id": null,
-      "crm_entity_type": null,
-      "crm_found": false,
+      "crm_entity_id": 49134153,
+      "crm_entity_type": "lead",
+      "crm_found": true,
       "event_date": "",
       "event_type": "Свадьба",
       "guests_count": 30,
@@ -115,9 +133,9 @@
       "manager_username": "",
       "name": "Артём",
       "source": "Заявки хост",
-      "status": "ALARM_NO_CRM",
+      "status": "LATE_CRM",
       "violations": [
-        "ALARM_NO_CRM"
+        "LATE_CRM"
       ]
     },
     {
@@ -230,11 +248,11 @@
     },
     {
       "created_at": "2026-09-30T11:11:38+03:00",
-      "crm_entity_id": null,
-      "crm_entity_type": null,
-      "crm_found": false,
+      "crm_entity_id": 49134113,
+      "crm_entity_type": "lead",
+      "crm_found": true,
       "event_date": "2026-11-26",
-      "event_type": "Конференция",
+      "event_type": "Бизнес мероприятие",
       "guests_count": null,
       "identifier": "7********53",
       "identifier_type": "phone",
@@ -243,9 +261,9 @@
       "manager_username": "",
       "name": "Анастасия",
       "source": "Заявки хост",
-      "status": "ALARM_NO_CRM",
+      "status": "LATE_CRM",
       "violations": [
-        "ALARM_NO_CRM"
+        "LATE_CRM"
       ]
     },
     {
@@ -403,31 +421,11 @@
       "violations": [
         "LATE_CRM"
       ]
-    },
-    {
-      "created_at": "2026-09-29T13:14:44+03:00",
-      "crm_entity_id": 49105183,
-      "crm_entity_type": "lead",
-      "crm_found": true,
-      "event_date": "2027-06-04",
-      "event_type": "Свадьба",
-      "guests_count": 30,
-      "identifier": "7********12",
-      "identifier_type": "phone",
-      "lead_id": "542bb3c4973e515a",
-      "manager": "Олеся",
-      "manager_username": "Olesyagozhina",
-      "name": "Андрея",
-      "source": "САЙТ ТИЛЬДА",
-      "status": "LATE_CRM",
-      "violations": [
-        "LATE_CRM"
-      ]
     }
   ],
   "needs_review": 135,
   "no_reaction": 0,
   "ok": 519,
-  "total_leads": 718,
-  "updated_at": "2026-10-01T08:44:59+03:00"
+  "total_leads": 719,
+  "updated_at": "2026-10-01T11:24:35+03:00"
 }
