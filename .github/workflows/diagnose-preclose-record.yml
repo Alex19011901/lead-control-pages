@@ -1,4 +1,4 @@
-# rerun-marker: diagnose-tatiana-79152636030-20261001
+# rerun-marker: latest-record-v5c-20260929
 name: Diagnose pre-close record (read only)
 on:
   push:
@@ -18,77 +18,53 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Diagnose Tatiana CRM match read only
+      - name: Test exact pre-close manager record
+        working-directory: app
+        run: PYTHONPATH=.:src python -m unittest tests.test_preclose_record_recovery tests.test_preclose_snapshot_regression tests.test_closed_not_realized tests.test_closed_not_realized_widget -v
+      - name: Validate real closed leads without changing data
         env:
           AMOCRM_TOKEN: ${{ secrets.AMOCRM_TOKEN }}
         run: |
           PYTHONPATH=app/src python - <<'PY'
-          import json, os
-          from datetime import datetime
-          from zoneinfo import ZoneInfo
+          import hashlib
+          import json
+          import os
           from lead_control.amocrm_client import AmoCRMClient
+          from lead_control.closed_not_realized import _read_preclose_record
 
-          phone='79152636030'
-          target=1790766097
           client=AmoCRMClient('https://alex1901yaru.amocrm.ru',os.environ['AMOCRM_TOKEN'])
-          tz=ZoneInfo('Europe/Moscow')
-
-          def fmt(ts):
-              ts=int(ts or 0)
-              return datetime.fromtimestamp(ts,tz).isoformat() if ts else ''
-
-          status_names={}
-          try:
-              payload=client._request_json('/api/v4/leads/pipelines', {'limit':50})
-              for p in ((payload.get('_embedded') or {}).get('pipelines') or []):
-                  pid=int(p.get('id') or 0)
-                  for st in ((p.get('_embedded') or {}).get('statuses') or []):
-                      status_names[(pid,int(st.get('id') or 0))]=str(st.get('name') or '')
-          except Exception as exc:
-              print('PIPELINES_ERROR '+repr(exc),flush=True)
-
-          direct=client._search_collection('leads',phone,with_value=None)
-          contacts=client._search_collection('contacts',phone,with_value='leads')
-          cands=client._flatten_lead_candidates(direct,contacts)
-          uniq={}
-          for c in cands:
-              uniq[int(c['id'])]=c
-          candidates=list(uniq.values())
-          chosen=client._choose_lead_candidate(candidates,target) if candidates else None
-          result=client.search(phone,'diagnostic-tatiana','phone',target_created_at=target)
-
-          print('TARGET '+json.dumps({
-              'phone':phone,'target_created_at':target,'target_msk':fmt(target),
-              'direct_leads':[int(x.get('id') or 0) for x in direct],
-              'contacts':[int(x.get('id') or 0) for x in contacts],
-              'candidate_count':len(candidates),
-              'chosen_id':int(chosen.get('id') or 0) if chosen else None,
-              'search_result':result.as_dict(),
-          },ensure_ascii=False),flush=True)
-
-          rows=[]
-          for c in sorted(candidates,key=lambda x:int(x.get('created_at') or 0)):
-              lid=int(c['id'])
-              full=client._get_entity('leads',lid) or c
-              mid=int(full.get('responsible_user_id') or 0)
-              pid=int(full.get('pipeline_id') or 0)
-              sid=int(full.get('status_id') or 0)
-              created=int(full.get('created_at') or 0)
-              rows.append({
-                  'id':lid,
-                  'name':full.get('name'),
-                  'created_at':created,
-                  'created_msk':fmt(created),
-                  'distance_sec':abs(created-target) if created else None,
-                  'updated_at':int(full.get('updated_at') or 0),
-                  'updated_msk':fmt(full.get('updated_at')),
-                  'closed_at':int(full.get('closed_at') or 0),
-                  'closed_msk':fmt(full.get('closed_at')),
-                  'pipeline_id':pid,
-                  'status_id':sid,
-                  'status_name':status_names.get((pid,sid),''),
-                  'responsible_user_id':mid,
-                  'responsible_user_name':client._get_user_name(mid) if mid else '',
-              })
-          print('CANDIDATES '+json.dumps(rows,ensure_ascii=False),flush=True)
+          targets=[
+              (48813485,1790580620),
+              (48855703,1790579990),
+              (49047285,1790607245),
+          ]
+          for lead_id,closed_at in targets:
+              card=client._get_entity('leads',lead_id) or {}
+              manager_id=int(card.get('responsible_user_id') or 0)
+              record=_read_preclose_record(
+                  client,
+                  lead_id,
+                  closed_at,
+                  responsible_user_id=manager_id or None,
+              )
+              text=str(record.get('last_comment') or '')
+              print(json.dumps({
+                  'lead_id':lead_id,
+                  'manager_id':manager_id,
+                  'status':record.get('last_record_status'),
+                  'type':record.get('last_record_type'),
+                  'record_at':record.get('last_record_at'),
+                  'closed_at':closed_at,
+                  'author':record.get('last_record_author'),
+                  'text_len':len(text),
+                  'text_sha256':hashlib.sha256(text.encode()).hexdigest() if text else None,
+              },ensure_ascii=False),flush=True)
+              assert record.get('last_record_status')=='VERIFIED'
+              assert text
+              assert 0 < int(record.get('last_record_at') or 0)
+              if lead_id == 49047285:
+                  print('ELIZABETH_TEXT ' + text, flush=True)
+                  assert 'отмените заявку' in text.casefold()
           PY
+
+# rerun: validate-manager-text-v4
