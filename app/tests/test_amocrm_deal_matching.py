@@ -88,6 +88,62 @@ class AmoCRMDealMatchingTests(unittest.TestCase):
         self.assertEqual(result.event_type, "Юбилей")
 
 
+    def test_deal_closed_before_source_is_not_a_candidate(self):
+        client = FakeAmoCRMClient(
+            leads=[
+                {
+                    "id": 30,
+                    "created_at": 1000,
+                    "updated_at": 2000,
+                    "closed_at": 2000,
+                },
+                {
+                    "id": 31,
+                    "created_at": 3369,
+                    "updated_at": 3400,
+                    "closed_at": None,
+                },
+            ],
+            entities={
+                ("leads", 31): {
+                    "id": 31,
+                    "created_at": 3369,
+                    "updated_at": 3400,
+                    "closed_at": None,
+                    "responsible_user_id": 7,
+                },
+            },
+        )
+        result = client.search(
+            "79990000000",
+            "lead-new",
+            "phone",
+            target_created_at=3000,
+        )
+        self.assertTrue(result.found)
+        self.assertEqual(result.entity_id, 31)
+
+    def test_only_deals_closed_before_source_return_not_found(self):
+        client = FakeAmoCRMClient(
+            leads=[
+                {
+                    "id": 30,
+                    "created_at": 1000,
+                    "updated_at": 2000,
+                    "closed_at": 2000,
+                },
+            ],
+        )
+        result = client.search(
+            "79990000000",
+            "lead-new",
+            "phone",
+            target_created_at=3000,
+        )
+        self.assertFalse(result.found)
+        self.assertIsNone(result.entity_id)
+
+
 class StaleAggregatorClient:
     def __init__(self):
         self.search_calls = 0
@@ -113,6 +169,64 @@ class StaleAggregatorClient:
                 {"field_name": "Количество гостей", "values": [{"value": 20}]}
             ],
         }
+
+
+class FastRefreshClosedMatchTests(unittest.TestCase):
+    def test_closed_before_source_is_researched_in_fast_refresh(self):
+        class Client:
+            def __init__(self):
+                self.search_calls = 0
+
+            def search(self, query, lead_id, identifier_type, target_created_at=None):
+                self.search_calls += 1
+                return AmoCRMSearchResult(
+                    found=True,
+                    entity_type="lead",
+                    entity_id=49108667,
+                    created_at=3369,
+                    updated_at=4000,
+                    responsible_user_id=13009530,
+                    responsible_user_name="Олеся",
+                    event_type="Корпоратив",
+                )
+
+            def _get_entity(self, entity_type, entity_id):
+                return {
+                    "id": entity_id,
+                    "created_at": 3369,
+                    "custom_fields_values": [],
+                }
+
+        lead = {
+            "id": "MAX:new-request",
+            "first_seen_ts": 3000,
+            "identifier": {"type": "phone", "value": "79152636030"},
+            "crm_required": True,
+            "status": "PENDING",
+            "violations": [],
+        }
+        previous = {
+            **lead,
+            "crm": {
+                "found": True,
+                "entity_type": "lead",
+                "entity_id": 38088633,
+                "created_at": 1000,
+                "responsible_user_name": "Максим",
+            },
+            "crm_feedback": {
+                "status_id": 143,
+                "status_name": "Закрыто и не реализовано",
+                "closed_at": 2000,
+            },
+        }
+        client = Client()
+
+        apply_crm([lead], client, previous_leads=[previous], reuse_confirmed=True)
+
+        self.assertEqual(client.search_calls, 1)
+        self.assertEqual(lead["crm"]["entity_id"], 49108667)
+        self.assertEqual(lead["crm"]["responsible_user_name"], "Олеся")
 
 
 class AggregatorCRMRecencyTests(unittest.TestCase):
