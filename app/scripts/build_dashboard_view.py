@@ -6,6 +6,11 @@ import re
 from collections import Counter
 from datetime import date, datetime, timedelta
 from pathlib import Path
+
+LEGACY_NOT_ENTERED_EXCLUSIONS = {
+    ("2026-08-24", "79636698819"),
+    ("2026-07-01", "79099171059"),
+}
 from zoneinfo import ZoneInfo
 
 
@@ -129,6 +134,14 @@ def merge_range(daily: dict[str, dict], start: date, end: date) -> dict:
     }
 
 
+def _exclude_from_not_entered(lead: dict) -> bool:
+    key = (
+        str(lead.get("date") or ""),
+        str(lead.get("identifier") or ""),
+    )
+    return key in LEGACY_NOT_ENTERED_EXCLUSIONS
+
+
 def compact_lead(lead: dict) -> dict:
     return {
         "date": lead.get("date") or "",
@@ -179,7 +192,12 @@ def build(input_path: Path, output_path: Path) -> None:
 
     all_leads = snap.get("leads") or []
     latest = [compact_lead(lead) for lead in all_leads[:60]]
-    not_entered = [compact_lead(lead) for lead in all_leads if (lead.get("status") or "") == "ALARM_NO_CRM"]
+    not_entered = [
+        compact_lead(lead)
+        for lead in all_leads
+        if (lead.get("status") or "") == "ALARM_NO_CRM"
+        and not _exclude_from_not_entered(lead)
+    ]
 
     out = {
         "ranges": ranges,
