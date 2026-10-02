@@ -325,6 +325,33 @@ class DashboardSnapshotTests(unittest.TestCase):
             self.assertEqual(view["not_entered"][0]["identifier"], "79850000000")
             self.assertEqual(view["not_entered"][0]["guests"], "35")
 
+    def test_technical_message_identifier_is_not_shown_as_contact(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            input_path = root / "leads.json"
+            daily_path = root / "dashboard_daily.json"
+            input_path.write_text(
+                json.dumps(
+                    {
+                        "leads": [
+                            {
+                                "received_at": "2026-09-29T10:36:56+03:00",
+                                "source": "ЗАЯВКА ПОЧТА",
+                                "status": "ALARM_NO_CRM",
+                                "channel": "TELEGRAM",
+                                "identifier": {"type": "telegram_message", "value": "6052"},
+                            }
+                        ]
+                    },
+                    ensure_ascii=False,
+                ),
+                encoding="utf-8",
+            )
+
+            build(input_path, daily_path)
+            daily = json.loads(daily_path.read_text(encoding="utf-8"))
+            self.assertEqual(daily["latest"][0]["identifier"], "")
+
     def test_tatiana_leads_are_removed_before_dashboard_generation(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
