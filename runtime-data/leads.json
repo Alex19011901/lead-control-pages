@@ -21777,7 +21777,7 @@
         "crm_lead_id": 49047111,
         "deadline_at": 1790888400,
         "excluded": false,
-        "first_activity_at": null,
+        "first_activity_at": 1790924371,
         "lead_created_at": 1790607086,
         "loss_reason_checked": true,
         "loss_reason_id": null,
@@ -21785,9 +21785,9 @@
         "pipeline_id": 10081590,
         "responsible_user_id": 12982830,
         "rule_version": 6,
-        "state": "NO_FEEDBACK",
-        "status_id": 79927038,
-        "status_name": "Выслано предложение"
+        "state": "CLEAR",
+        "status_id": 88382034,
+        "status_name": "Запрошена ос"
       },
       "crm_found": true,
       "crm_required": true,
@@ -34704,29 +34704,73 @@
     {
       "category": "HOST",
       "channel": "MAX",
-      "crm": {
-        "ambiguity_count": 0,
-        "created_at": null,
-        "entity_id": null,
-        "entity_type": null,
-        "event_type": null,
-        "found": false,
-        "responsible_user_id": null,
-        "responsible_user_name": null,
-        "updated_at": null
+      "closed_not_realized": {
+        "closed_at": 1790924838,
+        "crm_lead_id": 49163387,
+        "last_comment": "",
+        "last_comment_at": null,
+        "last_record_at": null,
+        "last_record_author": "",
+        "last_record_display": "",
+        "last_record_errors": [],
+        "last_record_id": "",
+        "last_record_rule_version": 5,
+        "last_record_status": "EMPTY",
+        "last_record_type": "",
+        "loss_reason_id": 21779738,
+        "loss_reason_name": "Пропала потребность"
       },
-      "crm_created_at": null,
-      "crm_found": false,
+      "crm": {
+        "ambiguity_count": 1,
+        "created_at": 1790924829,
+        "entity_id": 49163387,
+        "entity_type": "lead",
+        "event_type": "Бизнес мероприятие",
+        "found": true,
+        "guests": "10",
+        "guests_source": "CRM",
+        "responsible_user_id": 13009530,
+        "responsible_user_name": "Олеся",
+        "updated_at": 1790924838
+      },
+      "crm_created_at": 1790924829,
+      "crm_feedback": {
+        "closed_at": 1790924838,
+        "crm_lead_id": 49163387,
+        "excluded": true,
+        "first_activity_at": null,
+        "lead_created_at": 1790924829,
+        "loss_reason_checked": true,
+        "loss_reason_id": 21779738,
+        "loss_reason_name": "Пропала потребность",
+        "pipeline_id": 10081590,
+        "responsible_user_id": 13009530,
+        "rule_version": 6,
+        "state": "EXCLUDED",
+        "status_id": 143,
+        "status_name": "Закрыто и не реализовано"
+      },
+      "crm_found": true,
+      "crm_outcome": {
+        "closed_at": 1790924838,
+        "loss_reason_id": 21779738,
+        "loss_reason_name": "Пропала потребность",
+        "result": "LOST",
+        "status_id": 143,
+        "status_name": "Закрыто и не реализовано"
+      },
       "crm_required": true,
-      "crm_responsible": null,
+      "crm_responsible": 13009530,
       "deadline_msk_ts": 1785185999,
       "event_date": "2026-08-15",
+      "event_type": "Бизнес мероприятие",
+      "event_type_source": "CRM",
       "fields": {
         "category": "HOST",
         "email": "",
         "event_date": "2026-08-15",
         "event_date_raw": "15 августа",
-        "event_type": "",
+        "event_type": "Бизнес мероприятие",
         "guests_count": 10,
         "guests_max": null,
         "guests_min": null,
@@ -34763,14 +34807,28 @@
       "message_id": "mid.ffffbec8f345ffab019fa46ffa5447b7",
       "name": "Евгения",
       "phone": "89151988786",
+      "preclose_record_cache": {
+        "closed_at": 1790924838,
+        "crm_lead_id": 49163387,
+        "last_comment": "",
+        "last_comment_at": null,
+        "last_record_at": null,
+        "last_record_author": "",
+        "last_record_display": "",
+        "last_record_errors": [],
+        "last_record_id": "",
+        "last_record_rule_version": 5,
+        "last_record_status": "EMPTY",
+        "last_record_type": ""
+      },
       "received_at": "2026-07-27T19:37:09+03:00",
       "sender_name": "David Romanov",
       "sender_user_id": 297178198,
       "source": "Заявки хост",
-      "status": "ALARM_NO_CRM",
+      "status": "LATE_CRM",
       "username": "",
       "violations": [
-        "ALARM_NO_CRM"
+        "LATE_CRM"
       ]
     },
     {
@@ -38938,28 +38996,53 @@
       "category": "HOST",
       "channel": "MAX",
       "crm": {
-        "ambiguity_count": 0,
-        "created_at": null,
-        "entity_id": null,
-        "entity_type": null,
-        "event_type": null,
-        "found": false,
-        "responsible_user_id": null,
-        "responsible_user_name": null,
-        "updated_at": null
+        "ambiguity_count": 1,
+        "created_at": 1790924743,
+        "entity_id": 49163341,
+        "entity_type": "lead",
+        "event_type": "Бизнес мероприятие",
+        "found": true,
+        "guests": "10",
+        "guests_source": "CRM",
+        "responsible_user_id": 13009530,
+        "responsible_user_name": "Олеся",
+        "updated_at": 1790924750
       },
-      "crm_created_at": null,
-      "crm_found": false,
+      "crm_created_at": 1790924743,
+      "crm_feedback": {
+        "closed_at": 1790924751,
+        "crm_lead_id": 49163341,
+        "excluded": true,
+        "first_activity_at": null,
+        "lead_created_at": 1790924743,
+        "loss_reason_checked": true,
+        "loss_reason_id": null,
+        "loss_reason_name": "",
+        "pipeline_id": 10081590,
+        "responsible_user_id": 13009530,
+        "rule_version": 6,
+        "state": "EXCLUDED",
+        "status_id": 142,
+        "status_name": "Успешно реализовано"
+      },
+      "crm_found": true,
+      "crm_outcome": {
+        "result": "SUCCESS",
+        "status_id": 142,
+        "status_name": "Успешно реализовано"
+      },
       "crm_required": true,
-      "crm_responsible": null,
+      "crm_responsible": 13009530,
       "deadline_msk_ts": 1786136399,
       "event_date": "2026-08-12",
+      "event_type": "Бизнес мероприятие",
+      "event_type_source": "CRM",
       "fields": {
         "category": "HOST",
         "email": "",
         "event_date": "2026-08-12",
         "event_date_raw": "12.08",
-        "event_type": "",
+        "event_type": "Бизнес мероприятие",
         "guests_count": 9,
         "guests_max": null,
         "guests_min": null,
@@ -39000,10 +39083,10 @@
       "sender_name": "Олеся",
       "sender_user_id": 48906491,
       "source": "Заявки хост",
-      "status": "ALARM_NO_CRM",
+      "status": "LATE_CRM",
       "username": "",
       "violations": [
-        "ALARM_NO_CRM"
+        "LATE_CRM"
       ]
     },
     {
@@ -67540,7 +67623,7 @@
         "crm_lead_id": 49031979,
         "deadline_at": 1790888400,
         "excluded": false,
-        "first_activity_at": null,
+        "first_activity_at": 1790923819,
         "lead_created_at": 1790595970,
         "loss_reason_checked": true,
         "loss_reason_id": null,
@@ -67548,9 +67631,9 @@
         "pipeline_id": 10081590,
         "responsible_user_id": 12982830,
         "rule_version": 6,
-        "state": "NO_FEEDBACK",
-        "status_id": 79927038,
-        "status_name": "Выслано предложение"
+        "state": "CLEAR",
+        "status_id": 88382034,
+        "status_name": "Запрошена ос"
       },
       "crm_found": true,
       "crm_required": true,
@@ -67635,7 +67718,7 @@
         "crm_lead_id": 49039121,
         "deadline_at": 1790888400,
         "excluded": false,
-        "first_activity_at": null,
+        "first_activity_at": 1790924306,
         "lead_created_at": 1790599425,
         "loss_reason_checked": true,
         "loss_reason_id": null,
@@ -67643,9 +67726,9 @@
         "pipeline_id": 10081590,
         "responsible_user_id": 12982830,
         "rule_version": 6,
-        "state": "NO_FEEDBACK",
-        "status_id": 79927038,
-        "status_name": "Выслано предложение"
+        "state": "CLEAR",
+        "status_id": 88382034,
+        "status_name": "Запрошена ос"
       },
       "crm_found": true,
       "crm_required": true,
@@ -71204,8 +71287,9 @@
         "88382034": 4
       },
       "2026-10-02": {
-        "143": 1,
-        "88382034": 1
+        "142": 1,
+        "143": 2,
+        "88382034": 4
       }
     },
     "pipeline_id": 10081590,
@@ -71288,7 +71372,7 @@
       }
     ],
     "today": "2026-10-02",
-    "total_movements": 315,
+    "total_movements": 320,
     "weeks": [
       {
         "dates": [
