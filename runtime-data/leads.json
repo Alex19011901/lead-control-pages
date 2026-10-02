@@ -21852,68 +21852,6 @@
       "violations": []
     },
     {
-      "category": "ЗАЯВКА ПОЧТА",
-      "channel": "TELEGRAM",
-      "crm": {
-        "ambiguity_count": 0,
-        "created_at": null,
-        "entity_id": null,
-        "entity_type": null,
-        "event_type": null,
-        "found": false,
-        "responsible_user_id": null,
-        "responsible_user_name": null,
-        "updated_at": null
-      },
-      "crm_created_at": null,
-      "crm_found": false,
-      "crm_required": true,
-      "crm_responsible": null,
-      "deadline_msk_ts": 1790715599,
-      "fields": {
-        "category": "ЗАЯВКА ПОЧТА",
-        "description": "Заявка почта:",
-        "event_date": "",
-        "event_date_raw": "",
-        "event_type": "",
-        "guests_count": null,
-        "has_photo": false,
-        "name": "",
-        "phone_digits": "",
-        "phone_raw": "",
-        "source": "ЗАЯВКА ПОЧТА",
-        "telegram_username": ""
-      },
-      "first_seen_at": "2026-09-29T10:36:56+03:00",
-      "first_seen_ts": 1790667416,
-      "id": "83d0aadd8b13875e",
-      "identifier": {
-        "type": "telegram_message",
-        "value": "6052"
-      },
-      "last_seen_at": "2026-09-29T10:36:56+03:00",
-      "last_seen_ts": 1790667416,
-      "manager_reaction": null,
-      "received_at": "2026-09-29T10:36:56+03:00",
-      "sender_name": "Group",
-      "sender_user_id": 1087968824,
-      "sender_username": "GroupAnonymousBot",
-      "source": "ЗАЯВКА ПОЧТА",
-      "status": "ALARM_NO_CRM",
-      "telegram": {
-        "chat_id": -1001645768111,
-        "message_ids": [
-          6052
-        ],
-        "update_ids": [
-          185608609
-        ]
-      },
-      "violations": [
-        "ALARM_NO_CRM"
-      ]
-    },
-    {
       "category": "САЙТ ТИЛЬДА",
       "channel": "TELEGRAM",
       "crm": {
