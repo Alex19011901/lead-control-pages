@@ -958,6 +958,10 @@ def _needs_review_key(item: dict[str, Any]) -> str:
 
 
 def _telegram_ignored_text_reason(text: str) -> str:
+    normalized = re.sub(r"\s+", " ", str(text or "").casefold()).strip(" .:-")
+    if normalized == "заявка почта":
+        return "empty_mail_header"
+
     upper_lines = {line.strip().upper() for line in text.splitlines() if line.strip()}
     if "TEST" in upper_lines or "ТЕСТ" in upper_lines:
         return "test_marker"
