@@ -40,6 +40,8 @@ def normalize_known_source_events(events: list[dict[str, Any]]) -> list[dict[str
 
         if event.get("type") == "telegram_lead":
             lead = dict(event.get("lead") or {})
+            if _is_empty_mail_header_event(event, lead):
+                continue
             source = canonical_source(
                 lead.get("source"),
                 event.get("sender_name"),
@@ -54,6 +56,38 @@ def normalize_known_source_events(events: list[dict[str, Any]]) -> list[dict[str
 
         normalized.append(event)
     return normalized
+
+
+def _is_empty_mail_header_event(
+    event: dict[str, Any],
+    lead: dict[str, Any],
+) -> bool:
+    source = canonical_source(
+        lead.get("source") or event.get("source"),
+        event.get("sender_name"),
+        event.get("sender_username"),
+    )
+    if source != MAIL_LEAD:
+        return False
+    if lead.get("has_photo"):
+        return False
+
+    meaningful = (
+        lead.get("phone_digits"),
+        lead.get("phone_raw"),
+        lead.get("telegram_username"),
+        lead.get("name"),
+        lead.get("event_date"),
+        lead.get("event_date_raw"),
+        lead.get("guests_count"),
+        lead.get("event_type"),
+    )
+    if any(value not in ("", None) for value in meaningful):
+        return False
+
+    description = str(lead.get("description") or "").casefold()
+    description = " ".join(description.split()).strip(" .:-")
+    return description == "заявка почта"
 
 
 def normalize_lead_sources(leads: list[dict[str, Any]]) -> None:
