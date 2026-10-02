@@ -1,4 +1,4 @@
-# rerun-marker: latest-record-v5c-20260929
+# rerun-marker: validate-mail-artifact-and-old-leads-20261002
 name: Diagnose pre-close record (read only)
 on:
   push:
@@ -18,53 +18,44 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Test exact pre-close manager record
+      - name: Run mail and dashboard regressions
         working-directory: app
-        run: PYTHONPATH=.:src python -m unittest tests.test_preclose_record_recovery tests.test_preclose_snapshot_regression tests.test_closed_not_realized tests.test_closed_not_realized_widget -v
-      - name: Validate real closed leads without changing data
+        run: PYTHONPATH=.:src python -m unittest tests.test_mail_parser tests.test_source_categories tests.test_telegram_needs_review tests.test_dashboard_snapshot tests.test_amocrm_deal_matching -v
+      - name: Check old mail leads in amoCRM read only
         env:
           AMOCRM_TOKEN: ${{ secrets.AMOCRM_TOKEN }}
         run: |
           PYTHONPATH=app/src python - <<'PY'
-          import hashlib
-          import json
-          import os
+          import json, os
           from lead_control.amocrm_client import AmoCRMClient
-          from lead_control.closed_not_realized import _read_preclose_record
 
           client=AmoCRMClient('https://alex1901yaru.amocrm.ru',os.environ['AMOCRM_TOKEN'])
           targets=[
-              (48813485,1790580620),
-              (48855703,1790579990),
-              (49047285,1790607245),
+              ('79636698819',1787581949,'2026-08-24 17:32:29'),
+              ('79099171059',1782902955,'2026-07-01 13:49:15'),
           ]
-          for lead_id,closed_at in targets:
-              card=client._get_entity('leads',lead_id) or {}
-              manager_id=int(card.get('responsible_user_id') or 0)
-              record=_read_preclose_record(
-                  client,
-                  lead_id,
-                  closed_at,
-                  responsible_user_id=manager_id or None,
-              )
-              text=str(record.get('last_comment') or '')
-              print(json.dumps({
-                  'lead_id':lead_id,
-                  'manager_id':manager_id,
-                  'status':record.get('last_record_status'),
-                  'type':record.get('last_record_type'),
-                  'record_at':record.get('last_record_at'),
-                  'closed_at':closed_at,
-                  'author':record.get('last_record_author'),
-                  'text_len':len(text),
-                  'text_sha256':hashlib.sha256(text.encode()).hexdigest() if text else None,
+          for phone,target,label in targets:
+              direct=client._search_collection('leads',phone,with_value=None)
+              contacts=client._search_collection('contacts',phone,with_value='leads')
+              candidates=client._flatten_lead_candidates(direct,contacts)
+              unique={}
+              for c in candidates:
+                  unique[int(c['id'])]=c
+              rows=[]
+              for c in unique.values():
+                  rows.append({
+                      'id':int(c.get('id') or 0),
+                      'created_at':int(c.get('created_at') or 0),
+                      'updated_at':int(c.get('updated_at') or 0),
+                      'closed_at':int(c.get('closed_at') or 0),
+                      'responsible_user_id':c.get('responsible_user_id'),
+                  })
+              result=client.search(phone,'old-mail-diagnostic','phone',target_created_at=target)
+              print('OLD_MAIL_CHECK '+json.dumps({
+                  'phone':phone,
+                  'source_time':label,
+                  'candidate_count':len(rows),
+                  'candidates':sorted(rows,key=lambda x:x['created_at']),
+                  'selected':result.as_dict(),
               },ensure_ascii=False),flush=True)
-              assert record.get('last_record_status')=='VERIFIED'
-              assert text
-              assert 0 < int(record.get('last_record_at') or 0)
-              if lead_id == 49047285:
-                  print('ELIZABETH_TEXT ' + text, flush=True)
-                  assert 'отмените заявку' in text.casefold()
           PY
-
-# rerun: validate-manager-text-v4
