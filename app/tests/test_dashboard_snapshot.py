@@ -352,6 +352,62 @@ class DashboardSnapshotTests(unittest.TestCase):
             daily = json.loads(daily_path.read_text(encoding="utf-8"))
             self.assertEqual(daily["latest"][0]["identifier"], "")
 
+    def test_two_legacy_not_entered_rows_are_hidden_by_exact_date_and_phone(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            input_path = root / "dashboard_daily.json"
+            view_path = root / "dashboard_view.json"
+            input_path.write_text(
+                json.dumps(
+                    {
+                        "snapshot_generated_at": "2026-10-02T10:00:00Z",
+                        "generated_at": "2026-10-02T12:00:00+03:00",
+                        "min_date": "2026-07-01",
+                        "max_date": "2026-10-02",
+                        "daily": {
+                            "2026-07-01": {"total": 1, "status": {"ALARM_NO_CRM": 1}, "source": {}, "guest_ranges": {}, "event_types": {}, "channel": {}},
+                            "2026-08-24": {"total": 1, "status": {"ALARM_NO_CRM": 1}, "source": {}, "guest_ranges": {}, "event_types": {}, "channel": {}},
+                            "2026-10-02": {"total": 1, "status": {"ALARM_NO_CRM": 1}, "source": {}, "guest_ranges": {}, "event_types": {}, "channel": {}},
+                        },
+                        "leads": [
+                            {
+                                "date": "2026-10-02",
+                                "ts": "2026-10-02T12:00:00+03:00",
+                                "source": "ЗАЯВКА ПОЧТА",
+                                "status": "ALARM_NO_CRM",
+                                "channel": "MAX",
+                                "identifier": "79636698819",
+                            },
+                            {
+                                "date": "2026-08-24",
+                                "ts": "2026-08-24T17:32:29+03:00",
+                                "source": "ЗАЯВКА ПОЧТА",
+                                "status": "ALARM_NO_CRM",
+                                "channel": "MAX",
+                                "identifier": "79636698819",
+                            },
+                            {
+                                "date": "2026-07-01",
+                                "ts": "2026-07-01T13:49:15+03:00",
+                                "source": "ЗАЯВКА ПОЧТА",
+                                "status": "ALARM_NO_CRM",
+                                "channel": "TELEGRAM",
+                                "identifier": "79099171059",
+                            },
+                        ],
+                    },
+                    ensure_ascii=False,
+                ),
+                encoding="utf-8",
+            )
+
+            build_view(input_path, view_path)
+            view = json.loads(view_path.read_text(encoding="utf-8"))
+
+            self.assertEqual(len(view["not_entered"]), 1)
+            self.assertEqual(view["not_entered"][0]["date"], "2026-10-02")
+            self.assertEqual(view["not_entered"][0]["identifier"], "79636698819")
+
     def test_tatiana_leads_are_removed_before_dashboard_generation(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
