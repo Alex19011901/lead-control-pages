@@ -1,4 +1,4 @@
-# rerun-marker: latest-record-v5c-20260929
+# rerun-marker: validate-legacy-not-entered-exclusions-20261002
 name: Diagnose pre-close record (read only)
 on:
   push:
@@ -18,53 +18,6 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Test exact pre-close manager record
+      - name: Test dashboard not-entered exclusions
         working-directory: app
-        run: PYTHONPATH=.:src python -m unittest tests.test_preclose_record_recovery tests.test_preclose_snapshot_regression tests.test_closed_not_realized tests.test_closed_not_realized_widget -v
-      - name: Validate real closed leads without changing data
-        env:
-          AMOCRM_TOKEN: ${{ secrets.AMOCRM_TOKEN }}
-        run: |
-          PYTHONPATH=app/src python - <<'PY'
-          import hashlib
-          import json
-          import os
-          from lead_control.amocrm_client import AmoCRMClient
-          from lead_control.closed_not_realized import _read_preclose_record
-
-          client=AmoCRMClient('https://alex1901yaru.amocrm.ru',os.environ['AMOCRM_TOKEN'])
-          targets=[
-              (48813485,1790580620),
-              (48855703,1790579990),
-              (49047285,1790607245),
-          ]
-          for lead_id,closed_at in targets:
-              card=client._get_entity('leads',lead_id) or {}
-              manager_id=int(card.get('responsible_user_id') or 0)
-              record=_read_preclose_record(
-                  client,
-                  lead_id,
-                  closed_at,
-                  responsible_user_id=manager_id or None,
-              )
-              text=str(record.get('last_comment') or '')
-              print(json.dumps({
-                  'lead_id':lead_id,
-                  'manager_id':manager_id,
-                  'status':record.get('last_record_status'),
-                  'type':record.get('last_record_type'),
-                  'record_at':record.get('last_record_at'),
-                  'closed_at':closed_at,
-                  'author':record.get('last_record_author'),
-                  'text_len':len(text),
-                  'text_sha256':hashlib.sha256(text.encode()).hexdigest() if text else None,
-              },ensure_ascii=False),flush=True)
-              assert record.get('last_record_status')=='VERIFIED'
-              assert text
-              assert 0 < int(record.get('last_record_at') or 0)
-              if lead_id == 49047285:
-                  print('ELIZABETH_TEXT ' + text, flush=True)
-                  assert 'отмените заявку' in text.casefold()
-          PY
-
-# rerun: validate-manager-text-v4
+        run: PYTHONPATH=.:src python -m unittest tests.test_dashboard_snapshot -v
