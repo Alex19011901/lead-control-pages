@@ -105,6 +105,33 @@ class SourceCategoryTests(unittest.TestCase):
         ]
         self.assertEqual(normalize_known_source_events(events), [])
 
+    def test_historical_bare_mail_header_lead_is_excluded(self) -> None:
+        event = {
+            "type": "telegram_lead",
+            "update_id": 185608609,
+            "chat_id": -1001645768111,
+            "message_id": 6052,
+            "telegram_date": 1790667416,
+            "telegram_date_msk": "2026-09-29T10:36:56+03:00",
+            "source": "ЗАЯВКА ПОЧТА",
+            "ignored": False,
+            "ignored_reason": "",
+            "lead": {
+                "description": "Заявка почта:",
+                "event_date": "",
+                "event_date_raw": "",
+                "event_type": "",
+                "guests_count": None,
+                "has_photo": False,
+                "name": "",
+                "phone_digits": "",
+                "phone_raw": "",
+                "source": "ЗАЯВКА ПОЧТА",
+                "telegram_username": "",
+            },
+        }
+        self.assertEqual(normalize_known_source_events([event]), [])
+
     def test_existing_tatiana_lead_removed_but_normal_lead_kept(self) -> None:
         leads = [
             {
