@@ -25,6 +25,13 @@ class MailParserTests(unittest.TestCase):
         self.assertEqual(lead["source"], "Заявка почта")
         self.assertTrue(lead["has_photo"])
 
+    def test_bare_mail_header_without_photo_is_not_a_lead(self) -> None:
+        message = {
+            "text": "Заявка почта:",
+        }
+
+        self.assertIsNone(parse_mail_message(message))
+
     def test_confirmed_historical_photo_is_added_once(self) -> None:
         first = missing_manual_history_events([])
         photo_events = [item for item in first if item.get("message_id") == MAIL_PHOTO_MESSAGE_ID]
