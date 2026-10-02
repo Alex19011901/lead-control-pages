@@ -34266,29 +34266,71 @@
     {
       "category": "HOST",
       "channel": "MAX",
-      "crm": {
-        "ambiguity_count": 2,
-        "created_at": null,
-        "entity_id": null,
-        "entity_type": null,
-        "event_type": null,
-        "found": false,
-        "responsible_user_id": null,
-        "responsible_user_name": null,
-        "updated_at": null
+      "closed_not_realized": {
+        "closed_at": 1790931900,
+        "crm_lead_id": 49167783,
+        "last_comment": "2е приезжали - крыша понравилась - выбрали других - без ос",
+        "last_comment_at": 1790931901,
+        "last_record_at": 1790931901,
+        "last_record_author": "",
+        "last_record_display": "2е приезжали - крыша понравилась - выбрали других - без ос",
+        "last_record_errors": [],
+        "last_record_id": "320414863",
+        "last_record_rule_version": 5,
+        "last_record_status": "VERIFIED",
+        "last_record_type": "common",
+        "loss_reason_id": 21779746,
+        "loss_reason_name": "Выбрали других"
       },
-      "crm_created_at": null,
-      "crm_found": false,
+      "crm": {
+        "ambiguity_count": 3,
+        "created_at": 1790931900,
+        "entity_id": 49167783,
+        "entity_type": "lead",
+        "event_type": "Съёмки",
+        "found": true,
+        "responsible_user_id": 12982830,
+        "responsible_user_name": "Максим",
+        "updated_at": 1790931900
+      },
+      "crm_created_at": 1790931900,
+      "crm_feedback": {
+        "closed_at": 1790931900,
+        "crm_lead_id": 49167783,
+        "excluded": true,
+        "first_activity_at": null,
+        "lead_created_at": 1790931900,
+        "loss_reason_checked": true,
+        "loss_reason_id": 21779746,
+        "loss_reason_name": "Выбрали других",
+        "pipeline_id": 10081590,
+        "responsible_user_id": 12982830,
+        "rule_version": 6,
+        "state": "EXCLUDED",
+        "status_id": 143,
+        "status_name": "Закрыто и не реализовано"
+      },
+      "crm_found": true,
+      "crm_outcome": {
+        "closed_at": 1790931900,
+        "loss_reason_id": 21779746,
+        "loss_reason_name": "Выбрали других",
+        "result": "LOST",
+        "status_id": 143,
+        "status_name": "Закрыто и не реализовано"
+      },
       "crm_required": true,
-      "crm_responsible": null,
+      "crm_responsible": 12982830,
       "deadline_msk_ts": 1785013199,
       "event_date": "",
+      "event_type": "Съёмки",
+      "event_type_source": "CRM",
       "fields": {
         "category": "HOST",
         "email": "",
         "event_date": "",
         "event_date_raw": "",
-        "event_type": "Съемки",
+        "event_type": "Съёмки",
         "guests_count": null,
         "guests_max": null,
         "guests_min": null,
@@ -34325,14 +34367,28 @@
       "message_id": "mid.ffffbec8f345ffab019f99f668bd2dbd",
       "name": "Сафонова Анна",
       "phone": "+79776654961",
+      "preclose_record_cache": {
+        "closed_at": 1790931900,
+        "crm_lead_id": 49167783,
+        "last_comment": "2е приезжали - крыша понравилась - выбрали других - без ос",
+        "last_comment_at": 1790931901,
+        "last_record_at": 1790931901,
+        "last_record_author": "",
+        "last_record_display": "2е приезжали - крыша понравилась - выбрали других - без ос",
+        "last_record_errors": [],
+        "last_record_id": "320414863",
+        "last_record_rule_version": 5,
+        "last_record_status": "VERIFIED",
+        "last_record_type": "common"
+      },
       "received_at": "2026-07-25T18:48:10+03:00",
       "sender_name": "Дмитрий Жуков",
       "sender_user_id": 201560258,
       "source": "Заявки хост",
-      "status": "ALARM_NO_CRM",
+      "status": "LATE_CRM",
       "username": "",
       "violations": [
-        "ALARM_NO_CRM"
+        "LATE_CRM"
       ]
     },
     {
@@ -71552,7 +71608,7 @@
       },
       "2026-10-02": {
         "142": 1,
-        "143": 8,
+        "143": 9,
         "79927042": 3,
         "79927914": 2,
         "88382034": 6
@@ -71638,7 +71694,7 @@
       }
     ],
     "today": "2026-10-02",
-    "total_movements": 333,
+    "total_movements": 334,
     "weeks": [
       {
         "dates": [
