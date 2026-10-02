@@ -1,7 +1,7 @@
 {
   "alarm_no_crm": 3,
   "by_manager": {
-    "no_manager_reaction": 605,
+    "no_manager_reaction": 606,
     "Максим": 67,
     "Олеся": 55
   },
@@ -10,7 +10,7 @@
     "Restoran.Cafe": 3,
     "WedWed": 12,
     "ЗАЯВКА ПОЧТА": 18,
-    "Заявка с ТГ": 29,
+    "Заявка с ТГ": 30,
     "Заявка сайт": 3,
     "Заявки хост": 393,
     "С улицы": 2,
@@ -29,18 +29,36 @@
     "Поминки": 1,
     "Свадьба": 223,
     "Съёмки": 2,
-    "Юбилей": 139
+    "Юбилей": 140
   },
   "guest_ranges": {
     "1-20": 205,
     "101-150": 48,
     "151+": 26,
-    "21-50": 209,
+    "21-50": 208,
     "51-100": 110,
-    "unknown": 129
+    "unknown": 131
   },
   "late_crm": 153,
   "latest_leads": [
+    {
+      "created_at": "2026-10-02T12:43:10+03:00",
+      "crm_entity_id": 49169929,
+      "crm_entity_type": "lead",
+      "crm_found": true,
+      "event_date": "2026-11-06",
+      "event_type": "Юбилей",
+      "guests_count": null,
+      "identifier": "@misslinet",
+      "identifier_type": "telegram_username",
+      "lead_id": "b679503a781a0518",
+      "manager": "",
+      "manager_username": "",
+      "name": "",
+      "source": "Заявка с ТГ",
+      "status": "OK",
+      "violations": []
+    },
     {
       "created_at": "2026-10-01T20:22:33+03:00",
       "crm_entity_id": 49153823,
@@ -388,31 +406,11 @@
       "source": "Заявки хост",
       "status": "OK",
       "violations": []
-    },
-    {
-      "created_at": "2026-09-30T11:11:38+03:00",
-      "crm_entity_id": 49134113,
-      "crm_entity_type": "lead",
-      "crm_found": true,
-      "event_date": "2026-11-26",
-      "event_type": "Бизнес мероприятие",
-      "guests_count": null,
-      "identifier": "7********53",
-      "identifier_type": "phone",
-      "lead_id": "9eb50cce32f41a23",
-      "manager": "",
-      "manager_username": "",
-      "name": "Анастасия",
-      "source": "Заявки хост",
-      "status": "LATE_CRM",
-      "violations": [
-        "LATE_CRM"
-      ]
     }
   ],
   "needs_review": 134,
   "no_reaction": 0,
   "ok": 519,
-  "total_leads": 727,
-  "updated_at": "2026-10-02T12:15:48+03:00"
+  "total_leads": 728,
+  "updated_at": "2026-10-02T13:21:36+03:00"
 }
