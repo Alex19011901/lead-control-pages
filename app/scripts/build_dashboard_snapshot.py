@@ -177,7 +177,7 @@ def identifier_value(lead: dict) -> str:
     ident = lead.get("identifier")
     if isinstance(ident, dict):
         ident_type = str(ident.get("type") or "")
-        ident = "" if ident_type == "review_message" else (ident.get("value") or "")
+        ident = "" if ident_type in {"review_message", "telegram_message", "max_message"} else (ident.get("value") or "")
     return str(ident or lead.get("phone") or lead.get("username") or "")
 
 
