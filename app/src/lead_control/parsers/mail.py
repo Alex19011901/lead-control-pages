@@ -14,6 +14,11 @@ def parse_mail_message(message: dict[str, Any]) -> dict[str, Any] | None:
     if not _is_mail_label(text):
         return None
 
+    # A bare service header such as "Заявка почта:" without a photo or
+    # any lead details is not a lead by itself.
+    if _is_bare_mail_header(text) and not message.get("photo"):
+        return None
+
     phone_raw = _label_value(text, ("телефон", "тел", "phone")) or _extract_phone(text)
     name = _label_value(text, ("имя клиента", "имя", "name"))
     event_date_raw = _label_value(text, ("дата", "date"))
@@ -33,6 +38,11 @@ def parse_mail_message(message: dict[str, Any]) -> dict[str, Any] | None:
         "description": text,
         "has_photo": bool(message.get("photo")),
     }
+
+
+def _is_bare_mail_header(text: str) -> bool:
+    normalized = re.sub(r"\s+", " ", str(text or "").casefold()).strip(" .:-")
+    return normalized == "заявка почта"
 
 
 def _is_mail_label(text: str) -> bool:
