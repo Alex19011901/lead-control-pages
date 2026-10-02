@@ -88,6 +88,19 @@ class TelegramNeedsReviewTests(unittest.TestCase):
         self.assertEqual(leads, [])
         self.assertEqual(review, [])
 
+    def test_bare_mail_header_is_ignored_not_reviewed(self) -> None:
+        events = normalize_updates(
+            [_message_update(10, 6052, "Заявка почта:")],
+            CHAT_ID,
+            set(),
+        )
+
+        leads, review = rebuild_leads_and_needs_review(events)
+
+        self.assertEqual(events, [])
+        self.assertEqual(leads, [])
+        self.assertEqual(review, [])
+
     def test_unknown_text_message_goes_to_needs_review(self) -> None:
         events = normalize_updates(
             [_message_update(4, 102, "Добрый день, нужен зал на 12.09, кто ответит?")],
