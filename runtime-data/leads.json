@@ -21785,7 +21785,7 @@
         "pipeline_id": 10081590,
         "responsible_user_id": 12982830,
         "rule_version": 6,
-        "state": "WAITING",
+        "state": "NO_FEEDBACK",
         "status_id": 79927038,
         "status_name": "Выслано предложение"
       },
@@ -48983,6 +48983,22 @@
     {
       "category": "HOST",
       "channel": "MAX",
+      "closed_not_realized": {
+        "closed_at": 1790923387,
+        "crm_lead_id": 47997779,
+        "last_comment": "давно не акт - дорого",
+        "last_comment_at": 1790923341,
+        "last_record_at": 1790923341,
+        "last_record_author": "Лаура",
+        "last_record_display": "давно не акт - дорого",
+        "last_record_errors": [],
+        "last_record_id": "8cb496b7-8e4f-4c81-a6ef-b1296d09a61f",
+        "last_record_rule_version": 5,
+        "last_record_status": "VERIFIED",
+        "last_record_type": "entity_direct_message",
+        "loss_reason_id": 21779734,
+        "loss_reason_name": "Слишком дорого"
+      },
       "crm": {
         "ambiguity_count": 1,
         "created_at": 1787836457,
@@ -48998,23 +49014,30 @@
       },
       "crm_created_at": 1787836457,
       "crm_feedback": {
-        "closed_at": null,
+        "closed_at": 1790923387,
         "crm_lead_id": 47997779,
-        "deadline_at": 1788123600,
-        "excluded": false,
+        "excluded": true,
         "first_activity_at": null,
         "lead_created_at": 1787836457,
         "loss_reason_checked": true,
-        "loss_reason_id": null,
-        "loss_reason_name": "",
+        "loss_reason_id": 21779734,
+        "loss_reason_name": "Слишком дорого",
         "pipeline_id": 10081590,
         "responsible_user_id": 12982830,
         "rule_version": 6,
-        "state": "NO_FEEDBACK",
-        "status_id": 79927038,
-        "status_name": "Выслано предложение"
+        "state": "EXCLUDED",
+        "status_id": 143,
+        "status_name": "Закрыто и не реализовано"
       },
       "crm_found": true,
+      "crm_outcome": {
+        "closed_at": 1790923387,
+        "loss_reason_id": 21779734,
+        "loss_reason_name": "Слишком дорого",
+        "result": "LOST",
+        "status_id": 143,
+        "status_name": "Закрыто и не реализовано"
+      },
       "crm_required": true,
       "crm_responsible": 12982830,
       "deadline_msk_ts": 1787864399,
@@ -49063,6 +49086,20 @@
       "message_id": "mid.ffffbec8f345ffab01a04348c82d7126",
       "name": "Яна",
       "phone": "89773142320",
+      "preclose_record_cache": {
+        "closed_at": 1790923387,
+        "crm_lead_id": 47997779,
+        "last_comment": "давно не акт - дорого",
+        "last_comment_at": 1790923341,
+        "last_record_at": 1790923341,
+        "last_record_author": "Лаура",
+        "last_record_display": "давно не акт - дорого",
+        "last_record_errors": [],
+        "last_record_id": "8cb496b7-8e4f-4c81-a6ef-b1296d09a61f",
+        "last_record_rule_version": 5,
+        "last_record_status": "VERIFIED",
+        "last_record_type": "entity_direct_message"
+      },
       "received_at": "2026-08-27T15:53:58+03:00",
       "sender_name": "Аня",
       "sender_user_id": 193173819,
@@ -62306,7 +62343,7 @@
         "crm_lead_id": 48735005,
         "deadline_at": 1790110800,
         "excluded": false,
-        "first_activity_at": null,
+        "first_activity_at": 1790923268,
         "lead_created_at": 1789808086,
         "loss_reason_checked": true,
         "loss_reason_id": null,
@@ -62314,9 +62351,9 @@
         "pipeline_id": 10081590,
         "responsible_user_id": 12982830,
         "rule_version": 6,
-        "state": "NO_FEEDBACK",
-        "status_id": 79927034,
-        "status_name": "Первичный контакт"
+        "state": "CLEAR",
+        "status_id": 88382034,
+        "status_name": "Запрошена ос"
       },
       "crm_found": true,
       "crm_required": true,
@@ -67511,7 +67548,7 @@
         "pipeline_id": 10081590,
         "responsible_user_id": 12982830,
         "rule_version": 6,
-        "state": "WAITING",
+        "state": "NO_FEEDBACK",
         "status_id": 79927038,
         "status_name": "Выслано предложение"
       },
@@ -67606,7 +67643,7 @@
         "pipeline_id": 10081590,
         "responsible_user_id": 12982830,
         "rule_version": 6,
-        "state": "WAITING",
+        "state": "NO_FEEDBACK",
         "status_id": 79927038,
         "status_name": "Выслано предложение"
       },
@@ -67825,7 +67862,7 @@
         "pipeline_id": 10081590,
         "responsible_user_id": 12982830,
         "rule_version": 6,
-        "state": "WAITING",
+        "state": "NO_FEEDBACK",
         "status_id": 79927034,
         "status_name": "Первичный контакт"
       },
@@ -67916,7 +67953,7 @@
         "pipeline_id": 10081590,
         "responsible_user_id": 12982830,
         "rule_version": 6,
-        "state": "WAITING",
+        "state": "NO_FEEDBACK",
         "status_id": 79927034,
         "status_name": "Первичный контакт"
       },
@@ -71165,6 +71202,10 @@
         "79927038": 2,
         "79927914": 1,
         "88382034": 4
+      },
+      "2026-10-02": {
+        "143": 1,
+        "88382034": 1
       }
     },
     "pipeline_id": 10081590,
@@ -71246,8 +71287,8 @@
         "sort": 11000
       }
     ],
-    "today": "2026-10-01",
-    "total_movements": 313,
+    "today": "2026-10-02",
+    "total_movements": 315,
     "weeks": [
       {
         "dates": [
