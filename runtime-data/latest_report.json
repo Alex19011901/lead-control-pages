@@ -1,7 +1,7 @@
 {
   "alarm_no_crm": 2,
   "by_manager": {
-    "no_manager_reaction": 605,
+    "no_manager_reaction": 607,
     "Максим": 67,
     "Олеся": 55
   },
@@ -12,7 +12,7 @@
     "ЗАЯВКА ПОЧТА": 17,
     "Заявка с ТГ": 30,
     "Заявка сайт": 3,
-    "Заявки хост": 393,
+    "Заявки хост": 395,
     "С улицы": 2,
     "САЙТ ТИЛЬДА": 183,
     "Тильда Веранда": 48,
@@ -20,7 +20,7 @@
   },
   "event_types": {
     "unknown": 116,
-    "Бизнес мероприятие": 26,
+    "Бизнес мероприятие": 27,
     "Выпускной": 7,
     "ДР": 2,
     "Детский праздник": 5,
@@ -29,18 +29,54 @@
     "Поминки": 1,
     "Свадьба": 223,
     "Съёмки": 2,
-    "Юбилей": 140
+    "Юбилей": 141
   },
   "guest_ranges": {
-    "1-20": 205,
+    "1-20": 206,
     "101-150": 48,
     "151+": 26,
     "21-50": 209,
-    "51-100": 110,
+    "51-100": 111,
     "unknown": 129
   },
   "late_crm": 153,
   "latest_leads": [
+    {
+      "created_at": "2026-10-02T17:35:57+03:00",
+      "crm_entity_id": 49181621,
+      "crm_entity_type": "lead",
+      "crm_found": true,
+      "event_date": "2026-11-06",
+      "event_type": "Юбилей",
+      "guests_count": 70,
+      "identifier": "7********71",
+      "identifier_type": "phone",
+      "lead_id": "71d144d6f10f12a0",
+      "manager": "",
+      "manager_username": "",
+      "name": "Виктория",
+      "source": "Заявки хост",
+      "status": "OK",
+      "violations": []
+    },
+    {
+      "created_at": "2026-10-02T15:51:14+03:00",
+      "crm_entity_id": 49178831,
+      "crm_entity_type": "lead",
+      "crm_found": true,
+      "event_date": "2026-10-07",
+      "event_type": "Бизнес мероприятие",
+      "guests_count": 11,
+      "identifier": "7********80",
+      "identifier_type": "phone",
+      "lead_id": "be853fa02843c357",
+      "manager": "",
+      "manager_username": "",
+      "name": "Анастасия",
+      "source": "Заявки хост",
+      "status": "OK",
+      "violations": []
+    },
     {
       "created_at": "2026-10-02T12:43:10+03:00",
       "crm_entity_id": 49169929,
@@ -370,47 +406,11 @@
       "source": "Заявки хост",
       "status": "OK",
       "violations": []
-    },
-    {
-      "created_at": "2026-09-30T11:53:47+03:00",
-      "crm_entity_id": 49105945,
-      "crm_entity_type": "lead",
-      "crm_found": true,
-      "event_date": "2026-10-11",
-      "event_type": "Юбилей",
-      "guests_count": 30,
-      "identifier": "7********17",
-      "identifier_type": "phone",
-      "lead_id": "92ce28bfbda5781f",
-      "manager": "",
-      "manager_username": "",
-      "name": "Алеся",
-      "source": "Заявки хост",
-      "status": "OK",
-      "violations": []
-    },
-    {
-      "created_at": "2026-09-30T11:38:29+03:00",
-      "crm_entity_id": 49108323,
-      "crm_entity_type": "lead",
-      "crm_found": true,
-      "event_date": "",
-      "event_type": "Корпоратив",
-      "guests_count": 100,
-      "identifier": "7********03",
-      "identifier_type": "phone",
-      "lead_id": "a39439779b218c64",
-      "manager": "",
-      "manager_username": "",
-      "name": "София",
-      "source": "Заявки хост",
-      "status": "OK",
-      "violations": []
     }
   ],
-  "needs_review": 134,
+  "needs_review": 137,
   "no_reaction": 0,
-  "ok": 520,
-  "total_leads": 727,
-  "updated_at": "2026-10-02T14:01:25+03:00"
+  "ok": 522,
+  "total_leads": 729,
+  "updated_at": "2026-10-03T10:50:44+03:00"
 }
