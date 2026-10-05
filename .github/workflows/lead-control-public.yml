@@ -139,6 +139,9 @@ jobs:
           cp runtime-data/dashboard_view.json dashboard_view.json
           cp dashboard_view.json public-site/dashboard_view.json
           cp runtime-data/advertising_leads.json public-site/advertising_leads.json
+          mkdir -p public-site/pl-control
+          cp pl-control/index.html public-site/pl-control/index.html
+          cp pl-control/data.json public-site/pl-control/data.json
 
       - name: Save refreshed data
         run: |
