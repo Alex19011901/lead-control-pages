@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>P&L Control</title>
+<style>
+:root{--bg:#08111d;--p:#101b2a;--p2:#0d1825;--l:#263549;--l2:#223146;--t:#f5f7fb;--m:#9fb0c5;--g:#36d16b;--o:#ffae42;--r:#ff5f67;--u:#7d5cff;--b:#4ea1ff}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--t);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif}
+.app{max-width:1180px;margin:auto;padding:16px}.top{display:flex;justify-content:space-between;gap:12px;align-items:center;position:sticky;top:0;background:#08111df2;padding:12px 0;z-index:5}
+h1{font-size:24px;margin:0}.sub,.note{color:var(--m);font-size:12px}.filters{display:flex;gap:8px;flex-wrap:wrap}
+button,select{background:#111d2c;color:#fff;border:1px solid #2a3b50;border-radius:10px;padding:10px 12px;font-weight:600}button{cursor:pointer}button.active{background:var(--u);border-color:var(--u)}
+.card{background:linear-gradient(180deg,#111d2b,#0d1825);border:1px solid var(--l2);border-radius:14px}.section{margin-top:10px}
+.kpis{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;margin:12px 0}.kpi{padding:14px}.label{color:#c4cfdb;font-size:12px}.val{font-size:26px;font-weight:800;margin-top:8px}.hint{color:var(--m);font-size:11px;margin-top:4px}.green{color:var(--g)}.red{color:var(--r)}.orange{color:var(--o)}.blue{color:var(--b)}
+.two{display:grid;grid-template-columns:1.15fr .85fr;gap:10px}.title{font-size:16px;font-weight:800;margin-bottom:10px}.pad{padding:14px}
+table{width:100%;border-collapse:collapse;font-size:12px}th,td{padding:10px 8px;border-bottom:1px solid var(--l2);text-align:right;vertical-align:top}th:first-child,td:first-child{text-align:left}th{color:#aebdd0;font-weight:600}.scroll{overflow:auto}
+.badge{display:inline-block;border-radius:8px;padding:5px 8px;font-weight:700;font-size:11px}.good{background:#36d16b26;color:#62e58c}.bad{background:#ff5f6729;color:#ff7f86}.neutral{background:#ffffff12;color:#c4cfdb}
+.chart{height:240px;display:flex;align-items:flex-end;gap:9px;padding:12px 8px 28px;border-bottom:1px solid var(--l);position:relative}.barwrap{flex:1;display:flex;gap:4px;align-items:flex-end;height:100%;position:relative}.bar{flex:1;border-radius:5px 5px 0 0;min-height:2px}.rev{background:linear-gradient(180deg,#8d74ff,#5f46dd)}.ebp{background:linear-gradient(180deg,#59dd88,#25b85b)}.ebn{background:linear-gradient(180deg,#ff7f86,#da4048)}.xlabel{position:absolute;bottom:-22px;left:0;right:0;text-align:center;color:var(--m);font-size:10px}
+.legend{display:flex;gap:14px;color:var(--m);font-size:11px;margin-top:10px}.dot{width:8px;height:8px;border-radius:50%;display:inline-block;margin-right:5px}.dot.rev{background:#7d5cff}.dot.eb{background:#36d16b}
+.expense{display:grid;gap:10px}.erow{display:grid;grid-template-columns:120px 1fr 72px;gap:10px;align-items:center;font-size:12px}.track{height:10px;background:#1c2939;border-radius:20px;overflow:hidden}.fill{height:100%;background:linear-gradient(90deg,var(--u),#4d83ff)}.pct{font-weight:800;text-align:right}
+.qgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.qcard{padding:14px}.qname{font-weight:800;font-size:18px}.qmonths{color:var(--m);font-size:11px;margin-top:3px}.qbig{font-size:28px;font-weight:800;margin-top:10px}.qmeta{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px}.qmini{background:#0d1825;border:1px solid var(--l2);border-radius:10px;padding:10px}.qmini b{display:block;font-size:16px;margin-top:4px}
+.headrow{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:10px}.delta{font-weight:800}
+@media(max-width:900px){.app{padding:10px}.top{align-items:flex-start;flex-direction:column}.filters{width:100%;overflow-x:auto;flex-wrap:nowrap}.kpis{grid-template-columns:repeat(2,1fr)}.two{grid-template-columns:1fr}.qgrid{grid-template-columns:1fr}.val{font-size:24px}.erow{grid-template-columns:100px 1fr 65px}}
+</style>
+</head>
+<body><div class="app">
+<div class="top"><div><h1>P&amp;L Control</h1><div class="sub">Светлый · сравнительный анализ P&amp;L 2026</div></div>
+<div class="filters"><button id="momBtn" class="active">Месяц к месяцу</button><button id="qoqBtn">Квартал к кварталу</button><select id="monthSel"></select></div></div>
+
+<div class="card pad"><div class="headrow"><div><span class="badge neutral" id="periodBadge">—</span> <span class="note">данные из вкладки PL</span></div><div class="note">Факт: январь–июнь 2026</div></div><div class="note">Суммы округлены для отображения; расчёты выполнены по исходным значениям P&amp;L.</div></div>
+
+<div id="momView">
+<div class="kpis">
+<div class="card kpi"><div class="label">Выручка</div><div class="val" id="kRev">—</div><div class="hint" id="kRevD">—</div></div>
+<div class="card kpi"><div class="label">EBITDA</div><div class="val" id="kEbitda">—</div><div class="hint" id="kEbitdaD">—</div></div>
+<div class="card kpi"><div class="label">EBITDA margin</div><div class="val" id="kEbitdaPct">—</div><div class="hint" id="kEbitdaPctD">—</div></div>
+<div class="card kpi"><div class="label">Food Cost</div><div class="val" id="kFood">—</div><div class="hint" id="kFoodD">—</div></div>
+<div class="card kpi"><div class="label">ФОТ / выручка</div><div class="val" id="kFot">—</div><div class="hint" id="kFotD">—</div></div>
+<div class="card kpi"><div class="label">Аренда / выручка</div><div class="val" id="kRent">—</div><div class="hint" id="kRentD">—</div></div>
+</div>
+
+<div class="two">
+<div class="card pad"><div class="title">Динамика: выручка и EBITDA</div><div class="chart" id="chart"></div><div class="legend"><span><i class="dot rev"></i>Выручка</span><span><i class="dot eb"></i>EBITDA</span></div></div>
+<div class="card pad"><div class="title">Структура расходов · <span id="expMonth">—</span></div><div class="expense" id="expense"></div></div>
+</div>
+
+<div class="card section pad"><div class="title">Сравнение с предыдущим месяцем</div><div class="scroll"><table><thead><tr><th>Показатель</th><th id="prevHead">Пред.</th><th id="curHead">Тек.</th><th>Δ ₽ / п.п.</th><th>Δ %</th></tr></thead><tbody id="momTable"></tbody></table></div></div>
+
+<div class="card section pad"><div class="title">Все месяцы · ключевые показатели</div><div class="scroll"><table><thead><tr><th>Показатель</th><th>Янв</th><th>Фев</th><th>Мар</th><th>Апр</th><th>Май</th><th>Июн</th></tr></thead><tbody id="allMonths"></tbody></table></div></div>
+</div>
+
+<div id="qoqView" style="display:none">
+<div class="qgrid section" id="qcards"></div>
+<div class="card section pad"><div class="title">Q1 → Q2: сравнительный анализ</div><div class="scroll"><table><thead><tr><th>Показатель</th><th>Q1</th><th>Q2</th><th>Δ ₽ / п.п.</th><th>Δ %</th></tr></thead><tbody id="qtable"></tbody></table></div></div>
+</div>
+
+</div>
+<script>
+const DATA_URL='./data.json';let D=null,idx=5;
+const $=x=>document.getElementById(x);
+const rub=n=>Number(n||0).toLocaleString('ru-RU',{maximumFractionDigits:0})+' ₽';
+const mln=n=>(Number(n||0)/1000000).toLocaleString('ru-RU',{minimumFractionDigits:1,maximumFractionDigits:1})+' млн ₽';
+const pct=n=>(Number(n||0)*100).toLocaleString('ru-RU',{minimumFractionDigits:1,maximumFractionDigits:1})+'%';
+const pp=n=>(Number(n||0)*100).toLocaleString('ru-RU',{minimumFractionDigits:1,maximumFractionDigits:1})+' п.п.';
+const sgn=n=>(n>0?'+':'')+Number(n||0).toLocaleString('ru-RU',{maximumFractionDigits:0});
+function cls(n,goodWhenUp=true){if(!n)return'';return (n>0)===goodWhenUp?'green':'red'}
+function deltaText(a,b,percent=false){const d=a-b;return percent?((d>0?'+':'')+pp(d)):((d>0?'+':'')+rub(d))}
+function rel(a,b){return b?((a-b)/Math.abs(b)):null}
+function relText(a,b){const r=rel(a,b);return r==null?'—':((r>0?'+':'')+(r*100).toLocaleString('ru-RU',{minimumFractionDigits:1,maximumFractionDigits:1})+'%')}
+function setVal(id,val,c=''){const e=$(id);e.textContent=val;e.className='val '+c}
+const metrics=[
+['Выручка','revenue','money',true],['Себестоимость','cogs','money',false],['Маржинальный доход','gross','money',true],
+['Постоянные расходы','fixed','money',false],['Аренда','rent','money',false],['ФОТ','payroll','money',false],['АХО','aho','money',false],
+['IT, лицензии','it','money',false],['Реклама / маркетинг','marketing','money',false],['Финансы и банки','finance','money',false],
+['Инвентарь и прочее','inventory','money',false],['Налоги','taxes','money',false],['EBITDA','ebitda','money',true],
+['Food Cost','food_cost_pct','pct',false],['EBITDA margin','ebitda_pct','pct',true],['ФОТ / выручка','payroll_pct','pct',false],['Аренда / выручка','rent_pct','pct',false],['АХО / выручка','aho_pct','pct',false]
+];
+function fmt(v,t){return t==='pct'?pct(v):rub(v)}
+function renderMom(){
+ const m=D.months[idx],p=D.months[Math.max(0,idx-1)],hasPrev=idx>0;
+ $('periodBadge').textContent=m.name+' 2026';$('expMonth').textContent=m.name;$('curHead').textContent=m.short;$('prevHead').textContent=hasPrev?p.short:'—';
+ setVal('kRev',mln(m.revenue));$('kRevD').textContent=hasPrev?'к '+p.short+': '+relText(m.revenue,p.revenue):'первый месяц';
+ setVal('kEbitda',mln(m.ebitda),m.ebitda>=0?'green':'red');$('kEbitdaD').textContent=hasPrev?'к '+p.short+': '+deltaText(m.ebitda,p.ebitda):'—';
+ setVal('kEbitdaPct',pct(m.ebitda_pct),m.ebitda_pct>=0?'green':'red');$('kEbitdaPctD').textContent=hasPrev?'Δ '+deltaText(m.ebitda_pct,p.ebitda_pct,true):'—';
+ setVal('kFood',pct(m.food_cost_pct));$('kFoodD').textContent=hasPrev?'Δ '+deltaText(m.food_cost_pct,p.food_cost_pct,true):'—';
+ setVal('kFot',pct(m.payroll_pct));$('kFotD').textContent=hasPrev?'Δ '+deltaText(m.payroll_pct,p.payroll_pct,true):'—';
+ setVal('kRent',pct(m.rent_pct));$('kRentD').textContent=hasPrev?'Δ '+deltaText(m.rent_pct,p.rent_pct,true):'—';
+ renderChart();renderExpense(m);renderMomTable(m,p,hasPrev);renderAllMonths();
+}
+function renderChart(){
+ const max=Math.max(...D.months.map(x=>x.revenue),...D.months.map(x=>Math.abs(x.ebitda)));let s='';
+ D.months.forEach((m,i)=>{const rh=Math.max(3,m.revenue/max*100),eh=Math.max(3,Math.abs(m.ebitda)/max*100);
+ s+='<div class="barwrap"><div class="bar rev" title="'+m.name+' · выручка '+rub(m.revenue)+'" style="height:'+rh+'%"></div><div class="bar '+(m.ebitda>=0?'ebp':'ebn')+'" title="'+m.name+' · EBITDA '+rub(m.ebitda)+'" style="height:'+eh+'%"></div><div class="xlabel">'+m.short+'</div></div>'});$('chart').innerHTML=s;
+}
+function renderExpense(m){
+ const a=[['ФОТ',m.payroll_pct],['Аренда',m.rent_pct],['АХО',m.aho_pct],['Маркетинг',m.marketing_pct],['Food Cost',m.food_cost_pct],['IT',m.it_pct]];
+ const mx=Math.max(...a.map(x=>x[1]));$('expense').innerHTML=a.map(x=>'<div class="erow"><span>'+x[0]+'</span><div class="track"><div class="fill" style="width:'+Math.max(2,x[1]/mx*100)+'%"></div></div><span class="pct">'+pct(x[1])+'</span></div>').join('');
+}
+function renderMomTable(m,p,hasPrev){
+ $('momTable').innerHTML=metrics.map(x=>{const [label,key,t,upGood]=x,a=m[key],b=p[key],d=a-b,r=rel(a,b);return '<tr><td>'+label+'</td><td>'+(hasPrev?fmt(b,t):'—')+'</td><td><b>'+fmt(a,t)+'</b></td><td class="'+(hasPrev?cls(d,upGood):'')+'">'+(hasPrev?(t==='pct'?deltaText(a,b,true):deltaText(a,b)):'—')+'</td><td class="'+(hasPrev&&r!=null?cls(r,upGood):'')+'">'+(hasPrev?relText(a,b):'—')+'</td></tr>'}).join('');
+}
+function renderAllMonths(){
+ const use=[['Выручка','revenue','money'],['EBITDA','ebitda','money'],['EBITDA margin','ebitda_pct','pct'],['Food Cost','food_cost_pct','pct'],['ФОТ / выручка','payroll_pct','pct'],['Аренда / выручка','rent_pct','pct'],['АХО / выручка','aho_pct','pct']];
+ $('allMonths').innerHTML=use.map(x=>'<tr><td>'+x[0]+'</td>'+D.months.map(m=>'<td class="'+(x[1]==='ebitda'||x[1]==='ebitda_pct'?(m[x[1]]>=0?'green':'red'):'')+'">'+fmt(m[x[1]],x[2])+'</td>').join('')+'</tr>').join('');
+}
+function renderQ(){
+ const a=D.quarters[0],b=D.quarters[1];
+ $('periodBadge').textContent='Q1 vs Q2 · 2026';
+ $('qcards').innerHTML=[a,b].map(q=>'<div class="card qcard"><div class="qname">'+q.name+'</div><div class="qmonths">'+q.months.join(' · ')+'</div><div class="qbig">'+mln(q.revenue)+'</div><div class="hint">выручка</div><div class="qmeta"><div class="qmini"><span class="label">EBITDA</span><b class="'+(q.ebitda>=0?'green':'red')+'">'+mln(q.ebitda)+'</b></div><div class="qmini"><span class="label">Margin</span><b class="'+(q.ebitda_pct>=0?'green':'red')+'">'+pct(q.ebitda_pct)+'</b></div><div class="qmini"><span class="label">Food Cost</span><b>'+pct(q.food_cost_pct)+'</b></div></div></div>').join('');
+ $('qtable').innerHTML=metrics.map(x=>{const [label,key,t,upGood]=x,v1=a[key],v2=b[key],d=v2-v1,r=rel(v2,v1);return '<tr><td>'+label+'</td><td>'+fmt(v1,t)+'</td><td><b>'+fmt(v2,t)+'</b></td><td class="'+cls(d,upGood)+'">'+(t==='pct'?deltaText(v2,v1,true):deltaText(v2,v1))+'</td><td class="'+(r==null?'':cls(r,upGood))+'">'+relText(v2,v1)+'</td></tr>'}).join('');
+}
+async function init(){
+ D=await fetch(DATA_URL+'?v='+Date.now(),{cache:'no-store'}).then(r=>r.json());
+ $('monthSel').innerHTML=D.months.map((m,i)=>'<option value="'+i+'">'+m.name+' 2026</option>').join('');$('monthSel').value=idx;
+ $('monthSel').onchange=()=>{idx=Number($('monthSel').value);renderMom()};
+ $('momBtn').onclick=()=>{$('momBtn').classList.add('active');$('qoqBtn').classList.remove('active');$('momView').style.display='';$('qoqView').style.display='none';$('monthSel').style.display='';renderMom()};
+ $('qoqBtn').onclick=()=>{$('qoqBtn').classList.add('active');$('momBtn').classList.remove('active');$('momView').style.display='none';$('qoqView').style.display='';$('monthSel').style.display='none';renderQ()};
+ renderMom();
+}
+init().catch(()=>{$('periodBadge').textContent='Ошибка загрузки данных'});
+</script>
+</body></html>
