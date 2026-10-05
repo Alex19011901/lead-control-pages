@@ -1,7 +1,7 @@
 {
   "alarm_no_crm": 2,
   "by_manager": {
-    "no_manager_reaction": 617,
+    "no_manager_reaction": 618,
     "Максим": 68,
     "Олеся": 56
   },
@@ -12,7 +12,7 @@
     "ЗАЯВКА ПОЧТА": 17,
     "Заявка с ТГ": 30,
     "Заявка сайт": 3,
-    "Заявки хост": 404,
+    "Заявки хост": 405,
     "С улицы": 3,
     "САЙТ ТИЛЬДА": 185,
     "Тильда Веранда": 48,
@@ -26,7 +26,7 @@
     "ДР": 2,
     "Детский праздник": 5,
     "Конференция": 1,
-    "Корпоратив": 206,
+    "Корпоратив": 207,
     "Поминки": 1,
     "Свадьба": 225,
     "Съёмки": 2,
@@ -37,11 +37,29 @@
     "101-150": 48,
     "151+": 26,
     "21-50": 210,
-    "51-100": 111,
+    "51-100": 112,
     "unknown": 134
   },
   "late_crm": 154,
   "latest_leads": [
+    {
+      "created_at": "2026-10-05T15:17:28+03:00",
+      "crm_entity_id": 49253497,
+      "crm_entity_type": "lead",
+      "crm_found": true,
+      "event_date": "2026-12-18",
+      "event_type": "Корпоратив",
+      "guests_count": 100,
+      "identifier": "7********95",
+      "identifier_type": "phone",
+      "lead_id": "0705b0004319a0a3",
+      "manager": "",
+      "manager_username": "",
+      "name": "корпоратив. Александр",
+      "source": "Заявки хост",
+      "status": "OK",
+      "violations": []
+    },
     {
       "created_at": "2026-10-05T14:26:30+03:00",
       "crm_entity_id": 49251613,
@@ -385,29 +403,11 @@
       "source": "Заявки хост",
       "status": "OK",
       "violations": []
-    },
-    {
-      "created_at": "2026-10-01T14:49:38+03:00",
-      "crm_entity_id": 49142355,
-      "crm_entity_type": "lead",
-      "crm_found": true,
-      "event_date": "2026-12-18",
-      "event_type": "Корпоратив",
-      "guests_count": 100,
-      "identifier": "7********36",
-      "identifier_type": "phone",
-      "lead_id": "67d04ee4e0cc7422",
-      "manager": "",
-      "manager_username": "",
-      "name": "Валерия",
-      "source": "Заявки хост",
-      "status": "OK",
-      "violations": []
     }
   ],
-  "needs_review": 141,
+  "needs_review": 134,
   "no_reaction": 0,
-  "ok": 532,
-  "total_leads": 741,
-  "updated_at": "2026-10-05T15:13:30+03:00"
+  "ok": 533,
+  "total_leads": 742,
+  "updated_at": "2026-10-05T16:08:32+03:00"
 }
