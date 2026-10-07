@@ -3,10 +3,10 @@
   "by_manager": {
     "no_manager_reaction": 634,
     "Максим": 69,
-    "Олеся": 56
+    "Олеся": 57
   },
   "by_source": {
-    "MARQUIZ": 36,
+    "MARQUIZ": 37,
     "Restoran.Cafe": 3,
     "WedWed": 13,
     "ЗАЯВКА ПОЧТА": 17,
@@ -27,7 +27,7 @@
     "Конференция": 1,
     "Корпоратив": 217,
     "Поминки": 1,
-    "Свадьба": 229,
+    "Свадьба": 230,
     "Съёмки": 2,
     "Юбилей": 146
   },
@@ -36,11 +36,29 @@
     "101-150": 51,
     "151+": 26,
     "21-50": 214,
-    "51-100": 117,
+    "51-100": 118,
     "unknown": 137
   },
   "late_crm": 154,
   "latest_leads": [
+    {
+      "created_at": "2026-10-07T12:32:14+03:00",
+      "crm_entity_id": null,
+      "crm_entity_type": null,
+      "crm_found": false,
+      "event_date": "2026-11-21",
+      "event_type": "Свадьба",
+      "guests_count": 65,
+      "identifier": "7********75",
+      "identifier_type": "phone",
+      "lead_id": "af3d14a4d5398936",
+      "manager": "Олеся",
+      "manager_username": "Olesyagozhina",
+      "name": "Нина",
+      "source": "MARQUIZ",
+      "status": "PENDING",
+      "violations": []
+    },
     {
       "created_at": "2026-10-07T11:44:14+03:00",
       "crm_entity_id": null,
@@ -382,29 +400,11 @@
       "source": "Заявки хост",
       "status": "OK",
       "violations": []
-    },
-    {
-      "created_at": "2026-10-05T14:24:36+03:00",
-      "crm_entity_id": 49251273,
-      "crm_entity_type": "lead",
-      "crm_found": true,
-      "event_date": "",
-      "event_type": "Свадьба",
-      "guests_count": null,
-      "identifier": "7********48",
-      "identifier_type": "phone",
-      "lead_id": "9b2cdf9271f6cc3f",
-      "manager": "",
-      "manager_username": "",
-      "name": "свадьба. Тимофей",
-      "source": "Заявки хост",
-      "status": "OK",
-      "violations": []
     }
   ],
   "needs_review": 135,
   "no_reaction": 0,
   "ok": 550,
-  "total_leads": 759,
-  "updated_at": "2026-10-07T12:24:27+03:00"
+  "total_leads": 760,
+  "updated_at": "2026-10-07T12:57:53+03:00"
 }
