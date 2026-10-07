@@ -1324,8 +1324,8 @@
       "name": "Галина",
       "identifier": "79651575723",
       "manager": "Олеся",
-      "crm_status": "Выслано предложение",
-      "crm_loss_reason": ""
+      "crm_status": "Закрыто и не реализовано",
+      "crm_loss_reason": "Не устроили условия"
     },
     {
       "date": "2026-10-04",
@@ -1339,7 +1339,7 @@
       "name": "Римма",
       "identifier": "79293929472",
       "manager": "Олеся",
-      "crm_status": "Выслано предложение",
+      "crm_status": "Приедут на просмотр",
       "crm_loss_reason": ""
     },
     {
@@ -1384,8 +1384,8 @@
       "name": "Василий/Елена",
       "identifier": "79654171987",
       "manager": "Олеся",
-      "crm_status": "Выслано предложение",
-      "crm_loss_reason": ""
+      "crm_status": "Закрыто и не реализовано",
+      "crm_loss_reason": "Выбрали других"
     },
     {
       "date": "2026-10-02",
@@ -1794,17 +1794,17 @@
     }
   ],
   "not_entered": [],
-  "snapshot_generated_at": "2026-10-07T09:57:54Z",
+  "snapshot_generated_at": "2026-10-07T10:08:55Z",
   "snapshot_at": "2026-10-07T12:32:14+03:00",
   "min_date": "2026-07-01",
   "max_date": "2026-10-07",
   "feedback_summary": {
-    "total": 7,
+    "total": 4,
     "no_feedback": 1,
-    "waiting": 18,
-    "waiting_blue": 3,
+    "waiting": 15,
+    "waiting_blue": 0,
     "waiting_yellow": 3,
-    "clear": 117
+    "clear": 118
   },
   "feedback": [
     {
@@ -1820,56 +1820,8 @@
       "crm_status": "Принимают решение",
       "first_activity_at": "",
       "first_activity_ts": null,
-      "age_seconds": 598319,
+      "age_seconds": 598980,
       "feedback_state": "NO_FEEDBACK"
-    },
-    {
-      "crm_lead_id": 49232703,
-      "created_at": "2026-10-04T22:57:09+03:00",
-      "created_ts": 1791143829,
-      "source": "Заявки хост",
-      "name": "Василий/Елена",
-      "identifier": "79654171987",
-      "guests": "15",
-      "event_type": "Юбилей",
-      "manager": "Олеся",
-      "crm_status": "Выслано предложение",
-      "first_activity_at": "",
-      "first_activity_ts": null,
-      "age_seconds": 223245,
-      "feedback_state": "WAITING_BLUE"
-    },
-    {
-      "crm_lead_id": 49232657,
-      "created_at": "2026-10-04T22:53:29+03:00",
-      "created_ts": 1791143609,
-      "source": "САЙТ ТИЛЬДА",
-      "name": "Галина",
-      "identifier": "79651575723",
-      "guests": "10",
-      "event_type": "Юбилей",
-      "manager": "Олеся",
-      "crm_status": "Выслано предложение",
-      "first_activity_at": "",
-      "first_activity_ts": null,
-      "age_seconds": 223465,
-      "feedback_state": "WAITING_BLUE"
-    },
-    {
-      "crm_lead_id": 49232555,
-      "created_at": "2026-10-04T22:43:48+03:00",
-      "created_ts": 1791143028,
-      "source": "Заявки хост",
-      "name": "Римма",
-      "identifier": "79293929472",
-      "guests": "60",
-      "event_type": "unknown",
-      "manager": "Олеся",
-      "crm_status": "Выслано предложение",
-      "first_activity_at": "",
-      "first_activity_ts": null,
-      "age_seconds": 224046,
-      "feedback_state": "WAITING_BLUE"
     },
     {
       "crm_lead_id": 49251273,
@@ -1884,7 +1836,7 @@
       "crm_status": "Выслано предложение",
       "first_activity_at": "",
       "first_activity_ts": null,
-      "age_seconds": 167079,
+      "age_seconds": 167740,
       "feedback_state": "WAITING_YELLOW"
     },
     {
@@ -1900,7 +1852,7 @@
       "crm_status": "Первичный контакт",
       "first_activity_at": "",
       "first_activity_ts": null,
-      "age_seconds": 167822,
+      "age_seconds": 168483,
       "feedback_state": "WAITING_YELLOW"
     },
     {
@@ -1916,7 +1868,7 @@
       "crm_status": "Выслано предложение",
       "first_activity_at": "",
       "first_activity_ts": null,
-      "age_seconds": 169311,
+      "age_seconds": 169972,
       "feedback_state": "WAITING_YELLOW"
     }
   ],
@@ -2091,6 +2043,40 @@
     }
   ],
   "closed_not_realized": [
+    {
+      "crm_lead_id": 49232657,
+      "closed_at": "2026-10-07T13:03:27+03:00",
+      "closed_ts": 1791367407,
+      "source": "САЙТ ТИЛЬДА",
+      "name": "Галина",
+      "identifier": "79651575723",
+      "guests": "10",
+      "event_type": "Юбилей",
+      "manager": "Олеся",
+      "reason": "Не устроили условия",
+      "last_comment": "не актуально",
+      "last_record": "не актуально",
+      "last_record_at": "2026-10-07T13:03:15+03:00",
+      "last_record_type": "entity_direct_message",
+      "last_record_status": "VERIFIED"
+    },
+    {
+      "crm_lead_id": 49232703,
+      "closed_at": "2026-10-07T12:59:15+03:00",
+      "closed_ts": 1791367155,
+      "source": "Заявки хост",
+      "name": "Василий/Елена",
+      "identifier": "79654171987",
+      "guests": "15",
+      "event_type": "Юбилей",
+      "manager": "Олеся",
+      "reason": "Выбрали других",
+      "last_comment": "выбрали другой зал",
+      "last_record": "выбрали другой зал",
+      "last_record_at": "2026-10-07T12:59:08+03:00",
+      "last_record_type": "entity_direct_message",
+      "last_record_status": "VERIFIED"
+    },
     {
       "crm_lead_id": 49092129,
       "closed_at": "2026-10-07T12:55:42+03:00",
@@ -2535,7 +2521,7 @@
     }
   ],
   "closed_not_realized_summary": {
-    "total": 26,
+    "total": 28,
     "days": 5
   },
   "outcomes": [
@@ -2604,10 +2590,24 @@
     },
     {
       "date": "2026-10-04",
+      "ts": "2026-10-04T21:25:14+03:00",
+      "manager": "Олеся",
+      "result": "LOST",
+      "reason": "Не устроили условия"
+    },
+    {
+      "date": "2026-10-04",
       "ts": "2026-10-04T13:58:25+03:00",
       "manager": "Олеся",
       "result": "LOST",
       "reason": "Не устроили условия"
+    },
+    {
+      "date": "2026-10-03",
+      "ts": "2026-10-03T11:00:48+03:00",
+      "manager": "Олеся",
+      "result": "LOST",
+      "reason": "Выбрали других"
     },
     {
       "date": "2026-10-02",
@@ -6422,8 +6422,9 @@
         "88382034": 1
       },
       "2026-10-07": {
-        "143": 10,
+        "143": 12,
         "79927042": 4,
+        "79927914": 1,
         "80331318": 1
       }
     },
@@ -6507,7 +6508,7 @@
       }
     ],
     "today": "2026-10-07",
-    "total_movements": 291,
+    "total_movements": 294,
     "weeks": [
       {
         "dates": [

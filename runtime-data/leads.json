@@ -22747,6 +22747,22 @@
     {
       "category": "САЙТ ТИЛЬДА",
       "channel": "TELEGRAM",
+      "closed_not_realized": {
+        "closed_at": 1791367407,
+        "crm_lead_id": 49232657,
+        "last_comment": "не актуально",
+        "last_comment_at": 1791367395,
+        "last_record_at": 1791367395,
+        "last_record_author": "Олеся",
+        "last_record_display": "не актуально",
+        "last_record_errors": [],
+        "last_record_id": "ac8b26d7-3f41-4edb-adab-6dfbf94cc88a",
+        "last_record_rule_version": 5,
+        "last_record_status": "VERIFIED",
+        "last_record_type": "entity_direct_message",
+        "loss_reason_id": 21779742,
+        "loss_reason_name": "Не устроили условия"
+      },
       "crm": {
         "ambiguity_count": 0,
         "created_at": 1791143609,
@@ -22762,23 +22778,30 @@
       },
       "crm_created_at": 1791143609,
       "crm_feedback": {
-        "closed_at": null,
+        "closed_at": 1791367407,
         "crm_lead_id": 49232657,
-        "deadline_at": 1791406800,
-        "excluded": false,
+        "excluded": true,
         "first_activity_at": null,
         "lead_created_at": 1791143609,
         "loss_reason_checked": true,
-        "loss_reason_id": null,
-        "loss_reason_name": "",
+        "loss_reason_id": 21779742,
+        "loss_reason_name": "Не устроили условия",
         "pipeline_id": 10081590,
         "responsible_user_id": 13009530,
         "rule_version": 6,
-        "state": "WAITING",
-        "status_id": 79927038,
-        "status_name": "Выслано предложение"
+        "state": "EXCLUDED",
+        "status_id": 143,
+        "status_name": "Закрыто и не реализовано"
       },
       "crm_found": true,
+      "crm_outcome": {
+        "closed_at": 1791367407,
+        "loss_reason_id": 21779742,
+        "loss_reason_name": "Не устроили условия",
+        "result": "LOST",
+        "status_id": 143,
+        "status_name": "Закрыто и не реализовано"
+      },
       "crm_required": true,
       "crm_responsible": 13009530,
       "deadline_msk_ts": 1791205200,
@@ -22822,6 +22845,20 @@
         "update_id": 185608664,
         "user_id": 328611361,
         "username": "Olesyagozhina"
+      },
+      "preclose_record_cache": {
+        "closed_at": 1791367407,
+        "crm_lead_id": 49232657,
+        "last_comment": "не актуально",
+        "last_comment_at": 1791367395,
+        "last_record_at": 1791367395,
+        "last_record_author": "Олеся",
+        "last_record_display": "не актуально",
+        "last_record_errors": [],
+        "last_record_id": "ac8b26d7-3f41-4edb-adab-6dfbf94cc88a",
+        "last_record_rule_version": 5,
+        "last_record_status": "VERIFIED",
+        "last_record_type": "entity_direct_message"
       },
       "received_at": "2026-10-04T21:25:14+03:00",
       "sender_name": "TildaForms",
@@ -72270,6 +72307,22 @@
     {
       "category": "HOST",
       "channel": "MAX",
+      "closed_not_realized": {
+        "closed_at": 1791367155,
+        "crm_lead_id": 49232703,
+        "last_comment": "выбрали другой зал",
+        "last_comment_at": 1791367148,
+        "last_record_at": 1791367148,
+        "last_record_author": "Олеся",
+        "last_record_display": "выбрали другой зал",
+        "last_record_errors": [],
+        "last_record_id": "bf2df8b4-38a9-44be-90d7-0b914e697675",
+        "last_record_rule_version": 5,
+        "last_record_status": "VERIFIED",
+        "last_record_type": "entity_direct_message",
+        "loss_reason_id": 21779746,
+        "loss_reason_name": "Выбрали других"
+      },
       "crm": {
         "ambiguity_count": 0,
         "created_at": 1791143829,
@@ -72285,23 +72338,30 @@
       },
       "crm_created_at": 1791143829,
       "crm_feedback": {
-        "closed_at": null,
+        "closed_at": 1791367155,
         "crm_lead_id": 49232703,
-        "deadline_at": 1791406800,
-        "excluded": false,
+        "excluded": true,
         "first_activity_at": null,
         "lead_created_at": 1791143829,
         "loss_reason_checked": true,
-        "loss_reason_id": null,
-        "loss_reason_name": "",
+        "loss_reason_id": 21779746,
+        "loss_reason_name": "Выбрали других",
         "pipeline_id": 10081590,
         "responsible_user_id": 13009530,
         "rule_version": 6,
-        "state": "WAITING",
-        "status_id": 79927038,
-        "status_name": "Выслано предложение"
+        "state": "EXCLUDED",
+        "status_id": 143,
+        "status_name": "Закрыто и не реализовано"
       },
       "crm_found": true,
+      "crm_outcome": {
+        "closed_at": 1791367155,
+        "loss_reason_id": 21779746,
+        "loss_reason_name": "Выбрали других",
+        "result": "LOST",
+        "status_id": 143,
+        "status_name": "Закрыто и не реализовано"
+      },
       "crm_required": true,
       "crm_responsible": 13009530,
       "deadline_msk_ts": 1791061199,
@@ -72350,6 +72410,20 @@
       "message_id": "mid.ffffbec8f345ffab01a100c7abbc6e82",
       "name": "Василий/Елена",
       "phone": "79654171987",
+      "preclose_record_cache": {
+        "closed_at": 1791367155,
+        "crm_lead_id": 49232703,
+        "last_comment": "выбрали другой зал",
+        "last_comment_at": 1791367148,
+        "last_record_at": 1791367148,
+        "last_record_author": "Олеся",
+        "last_record_display": "выбрали другой зал",
+        "last_record_errors": [],
+        "last_record_id": "bf2df8b4-38a9-44be-90d7-0b914e697675",
+        "last_record_rule_version": 5,
+        "last_record_status": "VERIFIED",
+        "last_record_type": "entity_direct_message"
+      },
       "received_at": "2026-10-03T11:00:48+03:00",
       "sender_name": "Алёна",
       "sender_user_id": 432412696,
@@ -72600,7 +72674,7 @@
         "crm_lead_id": 49232555,
         "deadline_at": 1791406800,
         "excluded": false,
-        "first_activity_at": null,
+        "first_activity_at": 1791367552,
         "lead_created_at": 1791143028,
         "loss_reason_checked": true,
         "loss_reason_id": null,
@@ -72608,9 +72682,9 @@
         "pipeline_id": 10081590,
         "responsible_user_id": 13009530,
         "rule_version": 6,
-        "state": "WAITING",
-        "status_id": 79927038,
-        "status_name": "Выслано предложение"
+        "state": "CLEAR",
+        "status_id": 79927914,
+        "status_name": "Приедут на просмотр"
       },
       "crm_found": true,
       "crm_required": true,
@@ -75103,8 +75177,9 @@
         "88382034": 1
       },
       "2026-10-07": {
-        "143": 10,
+        "143": 12,
         "79927042": 4,
+        "79927914": 1,
         "80331318": 1
       }
     },
@@ -75188,7 +75263,7 @@
       }
     ],
     "today": "2026-10-07",
-    "total_movements": 291,
+    "total_movements": 294,
     "weeks": [
       {
         "dates": [
