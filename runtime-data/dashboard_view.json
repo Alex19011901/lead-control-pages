@@ -5,8 +5,8 @@
       "end": "2026-10-07",
       "total": 7,
       "status": {
-        "OK": 1,
-        "PENDING": 6
+        "OK": 4,
+        "PENDING": 3
       },
       "source": {
         "MARQUIZ": 2,
@@ -25,8 +25,9 @@
       "event": {
         "Свадьба": 2,
         "Корпоратив": 2,
+        "Юбилей": 1,
         "Выпускной": 1,
-        "Не определено": 2
+        "Не определено": 1
       },
       "days": [
         [
@@ -78,9 +79,9 @@
       "end": "2026-10-07",
       "total": 48,
       "status": {
-        "OK": 41,
+        "OK": 44,
         "LATE_CRM": 1,
-        "PENDING": 6
+        "PENDING": 3
       },
       "source": {
         "САЙТ ТИЛЬДА": 5,
@@ -104,9 +105,9 @@
       "event": {
         "Свадьба": 11,
         "Корпоратив": 20,
-        "Юбилей": 7,
+        "Юбилей": 8,
         "Бизнес мероприятие": 5,
-        "Не определено": 3,
+        "Не определено": 2,
         "Детский праздник": 1,
         "Выпускной": 1
       },
@@ -146,10 +147,10 @@
       "end": "2026-10-07",
       "total": 272,
       "status": {
-        "OK": 225,
+        "OK": 228,
         "LATE_CRM": 37,
         "-": 4,
-        "PENDING": 6
+        "PENDING": 3
       },
       "source": {
         "САЙТ ТИЛЬДА": 59,
@@ -174,11 +175,11 @@
         "Не указано": 1
       },
       "event": {
-        "Юбилей": 56,
+        "Юбилей": 57,
         "Свадьба": 75,
         "Корпоратив": 101,
         "Выпускной": 6,
-        "Не определено": 14,
+        "Не определено": 13,
         "Бизнес мероприятие": 14,
         "Конференция": 1,
         "Детский праздник": 1
@@ -314,8 +315,8 @@
         "LATE_CRM": 154,
         "ALARM_NO_CRM": 2,
         "-": 52,
-        "OK": 551,
-        "PENDING": 6
+        "OK": 554,
+        "PENDING": 3
       },
       "source": {
         "САЙТ ТИЛЬДА": 186,
@@ -343,10 +344,10 @@
         "Не указано": 11
       },
       "event": {
-        "Юбилей": 148,
+        "Юбилей": 149,
         "Корпоратив": 219,
         "Свадьба": 230,
-        "Не определено": 71,
+        "Не определено": 70,
         "Бизнес мероприятие": 31,
         "Детский праздник": 6,
         "Съёмки": 2,
@@ -933,15 +934,15 @@
       "date": "2026-10-07",
       "ts": "2026-10-07T13:46:56+03:00",
       "source": "Заявки хост",
-      "status": "PENDING",
+      "status": "OK",
       "channel": "MAX",
       "guest_range": "120",
       "guests": "120",
       "event_type": "Выпускной",
       "name": "Надежда",
       "identifier": "79036850834",
-      "manager": "",
-      "crm_status": "",
+      "manager": "Олеся",
+      "crm_status": "Выслано предложение",
       "crm_loss_reason": ""
     },
     {
@@ -963,15 +964,15 @@
       "date": "2026-10-07",
       "ts": "2026-10-07T13:13:15+03:00",
       "source": "Заявки хост",
-      "status": "PENDING",
+      "status": "OK",
       "channel": "MAX",
       "guest_range": "40",
       "guests": "40",
-      "event_type": "unknown",
+      "event_type": "Юбилей",
       "name": "Андрей",
       "identifier": "79032792523",
-      "manager": "",
-      "crm_status": "",
+      "manager": "Олеся",
+      "crm_status": "Выслано предложение",
       "crm_loss_reason": ""
     },
     {
@@ -993,15 +994,15 @@
       "date": "2026-10-07",
       "ts": "2026-10-07T11:44:14+03:00",
       "source": "Заявки хост",
-      "status": "PENDING",
+      "status": "OK",
       "channel": "MAX",
       "guest_range": "20",
       "guests": "20",
       "event_type": "Свадьба",
       "name": "Алина",
       "identifier": "79152284664",
-      "manager": "",
-      "crm_status": "",
+      "manager": "Олеся",
+      "crm_status": "Выслано предложение",
       "crm_loss_reason": ""
     },
     {
@@ -1801,14 +1802,14 @@
     }
   ],
   "not_entered": [],
-  "snapshot_generated_at": "2026-10-07T12:50:34Z",
+  "snapshot_generated_at": "2026-10-07T13:12:40Z",
   "snapshot_at": "2026-10-07T15:48:01+03:00",
   "min_date": "2026-07-01",
   "max_date": "2026-10-07",
   "feedback_summary": {
     "total": 4,
     "no_feedback": 1,
-    "waiting": 16,
+    "waiting": 19,
     "waiting_blue": 0,
     "waiting_yellow": 3,
     "clear": 118
@@ -1827,7 +1828,7 @@
       "crm_status": "Принимают решение",
       "first_activity_at": "",
       "first_activity_ts": null,
-      "age_seconds": 608680,
+      "age_seconds": 610005,
       "feedback_state": "NO_FEEDBACK"
     },
     {
@@ -1843,7 +1844,7 @@
       "crm_status": "Выслано предложение",
       "first_activity_at": "",
       "first_activity_ts": null,
-      "age_seconds": 177440,
+      "age_seconds": 178765,
       "feedback_state": "WAITING_YELLOW"
     },
     {
@@ -1859,7 +1860,7 @@
       "crm_status": "Первичный контакт",
       "first_activity_at": "",
       "first_activity_ts": null,
-      "age_seconds": 178183,
+      "age_seconds": 179508,
       "feedback_state": "WAITING_YELLOW"
     },
     {
@@ -1875,7 +1876,7 @@
       "crm_status": "Выслано предложение",
       "first_activity_at": "",
       "first_activity_ts": null,
-      "age_seconds": 179672,
+      "age_seconds": 180997,
       "feedback_state": "WAITING_YELLOW"
     }
   ],
@@ -6430,7 +6431,7 @@
       },
       "2026-10-07": {
         "143": 12,
-        "79927038": 1,
+        "79927038": 4,
         "79927042": 4,
         "79927914": 1,
         "80331318": 1
@@ -6516,7 +6517,7 @@
       }
     ],
     "today": "2026-10-07",
-    "total_movements": 295,
+    "total_movements": 298,
     "weeks": [
       {
         "dates": [
