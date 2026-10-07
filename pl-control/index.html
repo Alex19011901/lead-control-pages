@@ -1,44 +1,26 @@
 <!doctype html>
-<html lang="ru">
-<head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>P&L Control</title>
+<html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>P&L Control</title>
 <style>
-:root{--bg:#08111d;--p:#101b2a;--p2:#0d1825;--l:#223146;--t:#f5f7fb;--m:#9fb0c5;--g:#36d16b;--r:#ff5f67;--o:#ffae42;--u:#7d5cff;--b:#4ea1ff}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--t);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif}
-.app{max-width:1240px;margin:auto;padding:14px}.top{position:sticky;top:0;z-index:5;background:#08111df3;padding:10px 0 12px;display:flex;justify-content:space-between;align-items:center;gap:12px}
-h1{margin:0;font-size:24px}.sub,.note{color:var(--m);font-size:12px}.card{background:linear-gradient(180deg,#111d2b,#0d1825);border:1px solid var(--l);border-radius:14px}.pad{padding:14px}.section{margin-top:10px}
-.kpis{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;margin:10px 0}.kpi{padding:13px}.label{color:#c4cfdb;font-size:11px}.val{font-size:23px;font-weight:800;margin-top:6px}.hint{font-size:11px;color:var(--m);margin-top:5px}.green{color:var(--g)!important}.red{color:var(--r)!important}.orange{color:var(--o)!important}
-.title{font-size:16px;font-weight:800;margin-bottom:10px}.scroll{overflow:auto}table{width:100%;border-collapse:collapse;font-size:12px;min-width:900px}th,td{padding:9px 8px;border-bottom:1px solid var(--l);text-align:right;vertical-align:middle}th:first-child,td:first-child{text-align:left;position:sticky;left:0;background:#0f1a28;z-index:2}th{color:#aebdd0;background:#0f1a28;position:sticky;top:0;z-index:1}.metric{font-weight:700}.subrow{color:var(--m);font-size:10px}.cellmain{font-weight:700}.delta{font-size:10px;margin-top:3px}.best{background:#36d16b12}.worst{background:#ff5f6710}
-.two{display:grid;grid-template-columns:1.15fr .85fr;gap:10px}.chart{height:230px;display:flex;align-items:flex-end;gap:8px;padding:8px 8px 28px;border-bottom:1px solid var(--l)}.bw{flex:1;height:100%;display:flex;align-items:flex-end;gap:4px;position:relative}.bar{flex:1;min-height:2px;border-radius:5px 5px 0 0}.rev{background:linear-gradient(180deg,#8d74ff,#5f46dd)}.ebp{background:linear-gradient(180deg,#59dd88,#25b85b)}.ebn{background:linear-gradient(180deg,#ff7f86,#da4048)}.x{position:absolute;bottom:-21px;left:0;right:0;text-align:center;color:var(--m);font-size:10px}
-.legend{display:flex;gap:15px;font-size:11px;color:var(--m);margin-top:9px}.dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:5px}.dot.r{background:var(--u)}.dot.e{background:var(--g)}
-.qgrid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}.qitem{background:var(--p2);border:1px solid var(--l);border-radius:11px;padding:11px}.qitem b{display:block;font-size:18px;margin-top:5px}.badge{display:inline-block;padding:5px 8px;border-radius:8px;background:#ffffff12;color:#c4cfdb;font-size:11px;font-weight:700}
-.mini-table{min-width:0}.mini-table th,.mini-table td{position:static!important;background:transparent!important}
+:root{--bg:#08111d;--p:#101b2a;--p2:#0d1825;--l:#223146;--t:#f5f7fb;--m:#9fb0c5;--g:#36d16b;--r:#ff5f67;--u:#7d5cff}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--t);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif}.app{max-width:1440px;margin:auto;padding:14px}
+.top{position:sticky;top:0;z-index:5;background:#08111df3;padding:10px 0 12px;display:flex;justify-content:space-between;align-items:center;gap:12px}h1{margin:0;font-size:24px}.sub,.note{color:var(--m);font-size:12px}
+.card{background:linear-gradient(180deg,#111d2b,#0d1825);border:1px solid var(--l);border-radius:14px}.pad{padding:14px}.section{margin-top:10px}.badge{display:inline-block;padding:5px 8px;border-radius:8px;background:#ffffff12;color:#c4cfdb;font-size:11px;font-weight:700}
+.kpis{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;margin:10px 0}.kpi{padding:13px}.label{color:#c4cfdb;font-size:11px}.val{font-size:22px;font-weight:800;margin-top:6px}.hint{font-size:11px;color:var(--m);margin-top:5px}.green{color:var(--g)!important}.red{color:var(--r)!important}
+.title{font-size:16px;font-weight:800;margin-bottom:10px}.scroll{overflow:auto}table{border-collapse:collapse;font-size:12px;width:max-content;min-width:100%}th,td{padding:9px 8px;border-bottom:1px solid var(--l);text-align:right;vertical-align:middle;white-space:nowrap}
+th:first-child,td:first-child{text-align:left;position:sticky;left:0;background:#0f1a28;z-index:3;min-width:185px}.yearhead{background:#142236;color:#fff;text-align:center!important;font-weight:800;border-left:1px solid #31435b}.monthhead{background:#0f1a28;color:#aebdd0;font-weight:700}.year-start{border-left:2px solid #405776!important}
+.metric{font-weight:700}.cellmain{font-weight:700}.delta{font-size:10px;margin-top:3px}.two{display:grid;grid-template-columns:1.2fr .8fr;gap:10px}
+.chart-scroll{overflow-x:auto}.chart{height:230px;display:flex;align-items:flex-end;gap:7px;padding:8px 8px 28px;border-bottom:1px solid var(--l);min-width:1080px}.bw{width:48px;flex:0 0 48px;height:100%;display:flex;align-items:flex-end;gap:3px;position:relative}.bar{flex:1;min-height:2px;border-radius:5px 5px 0 0}.rev{background:linear-gradient(180deg,#8d74ff,#5f46dd)}.ebp{background:linear-gradient(180deg,#59dd88,#25b85b)}.ebn{background:linear-gradient(180deg,#ff7f86,#da4048)}.x{position:absolute;bottom:-21px;left:0;right:0;text-align:center;color:var(--m);font-size:9px}.legend{display:flex;gap:15px;font-size:11px;color:var(--m);margin-top:9px}.dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:5px}.dot.r{background:var(--u)}.dot.e{background:var(--g)}
+.qgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.qitem{background:var(--p2);border:1px solid var(--l);border-radius:11px;padding:11px}.qitem b{display:block;font-size:17px;margin-top:5px}.qyear{color:#fff;font-weight:800}.qdelta{font-size:10px;margin-top:4px}
 @media(max-width:900px){.app{padding:10px}.top{align-items:flex-start}.kpis{grid-template-columns:repeat(2,1fr)}.two{grid-template-columns:1fr}.qgrid{grid-template-columns:repeat(2,1fr)}.val{font-size:20px}}
-</style></head>
-<body><div class="app">
-<div class="top"><div><h1>P&amp;L Control</h1><div class="sub">Светлый · все месяцы и кварталы на одном экране</div></div><span class="badge">Январь–июнь 2026</span></div>
-
+</style></head><body><div class="app">
+<div class="top"><div><h1>P&amp;L Control</h1><div class="sub">Светлый · сравнительный анализ всех периодов</div></div><span class="badge">Январь 2025 — июнь 2026</span></div>
 <div class="kpis" id="summary"></div>
-
-<div class="card pad">
-<div class="title">Все месяцы · сравнительный P&amp;L</div>
-<div class="note" style="margin-bottom:8px">Под каждой суммой показано изменение к предыдущему месяцу. Для долей — изменение в п.п.</div>
-<div class="scroll"><table><thead><tr><th>Показатель</th><th>Янв</th><th>Фев</th><th>Мар</th><th>Апр</th><th>Май</th><th>Июн</th></tr></thead><tbody id="matrix"></tbody></table></div>
-</div>
-
-<div class="two section">
-<div class="card pad"><div class="title">Выручка и EBITDA по месяцам</div><div id="chart" class="chart"></div><div class="legend"><span><i class="dot r"></i>Выручка</span><span><i class="dot e"></i>EBITDA</span></div></div>
-<div class="card pad"><div class="title">Q1 → Q2 · главное</div><div class="qgrid" id="qgrid"></div></div>
-</div>
-
-<div class="card pad section">
-<div class="title">Q1 против Q2 · полный разбор</div>
-<div class="scroll"><table class="mini-table"><thead><tr><th>Показатель</th><th>Q1</th><th>Q2</th><th>Изменение</th><th>Изменение %</th></tr></thead><tbody id="qtable"></tbody></table></div>
-</div>
+<div class="card pad"><div class="title">Все месяцы · сравнительный P&amp;L</div><div class="note" style="margin-bottom:8px">Под каждой суммой — изменение к предыдущему месяцу. Для долей — изменение в п.п. 2025 расположен раньше 2026.</div><div class="scroll"><table><thead id="matrixHead"></thead><tbody id="matrix"></tbody></table></div></div>
+<div class="two section"><div class="card pad"><div class="title">Выручка и EBITDA · весь период</div><div class="chart-scroll"><div id="chart" class="chart"></div></div><div class="legend"><span><i class="dot r"></i>Выручка</span><span><i class="dot e"></i>EBITDA</span></div></div><div class="card pad"><div class="title">Кварталы · по порядку</div><div class="qgrid" id="qgrid"></div></div></div>
+<div class="card pad section"><div class="title">Все кварталы · сравнительный анализ</div><div class="scroll"><table><thead id="qhead"></thead><tbody id="qtable"></tbody></table></div></div>
 </div>
 <script>
-const $=x=>document.getElementById(x), DATA='./data.json'; let D;
+const $=x=>document.getElementById(x),DATA='./data.json';let D;
 const rub=n=>Number(n||0).toLocaleString('ru-RU',{maximumFractionDigits:0})+' ₽';
 const mln=n=>(Number(n||0)/1e6).toLocaleString('ru-RU',{minimumFractionDigits:1,maximumFractionDigits:1})+' млн ₽';
 const pct=n=>(Number(n||0)*100).toLocaleString('ru-RU',{minimumFractionDigits:1,maximumFractionDigits:1})+'%';
@@ -46,54 +28,14 @@ const pp=n=>(Number(n||0)*100).toLocaleString('ru-RU',{minimumFractionDigits:1,m
 const rel=(a,b)=>b?((a-b)/Math.abs(b)):null;
 const reltxt=(a,b)=>{const r=rel(a,b);return r==null?'—':(r>0?'+':'')+(r*100).toLocaleString('ru-RU',{minimumFractionDigits:1,maximumFractionDigits:1})+'%'};
 const cls=(d,up)=>!d?'':((d>0)===up?'green':'red');
-const metrics=[
-['Выручка','revenue','money',true],['Себестоимость','cogs','money',false],['Маржинальный доход','gross','money',true],
-['Постоянные расходы','fixed','money',false],['Аренда','rent','money',false],['ФОТ','payroll','money',false],['АХО','aho','money',false],
-['IT, лицензии','it','money',false],['Реклама / маркетинг','marketing','money',false],['Финансы и банки','finance','money',false],
-['Инвентарь и прочее','inventory','money',false],['Налоги','taxes','money',false],['EBITDA','ebitda','money',true],
-['Food Cost','food_cost_pct','pct',false],['EBITDA margin','ebitda_pct','pct',true],['ФОТ / выручка','payroll_pct','pct',false],
-['Аренда / выручка','rent_pct','pct',false],['АХО / выручка','aho_pct','pct',false],['Маркетинг / выручка','marketing_pct','pct',false]
-];
+const metrics=[['Выручка','revenue','money',true],['Себестоимость','cogs','money',false],['Маржинальный доход','gross','money',true],['Постоянные расходы','fixed','money',false],['Аренда','rent','money',false],['ФОТ','payroll','money',false],['АХО','aho','money',false],['IT, лицензии','it','money',false],['Реклама / маркетинг','marketing','money',false],['Финансы и банки','finance','money',false],['Инвентарь и прочее','inventory','money',false],['Налоги','taxes','money',false],['EBITDA','ebitda','money',true],['Food Cost','food_cost_pct','pct',false],['EBITDA margin','ebitda_pct','pct',true],['ФОТ / выручка','payroll_pct','pct',false],['Аренда / выручка','rent_pct','pct',false],['АХО / выручка','aho_pct','pct',false],['Маркетинг / выручка','marketing_pct','pct',false]];
 const fmt=(v,t)=>t==='pct'?pct(v):rub(v);
-function matrix(){
- $('matrix').innerHTML=metrics.map(([name,key,type,up])=>{
-   let cells=D.months.map((m,i)=>{
-     const v=m[key], prev=i?D.months[i-1][key]:null, d=i?v-prev:0;
-     let sub='—', c='';
-     if(i){sub=type==='pct'?((d>0?'+':'')+pp(d)):reltxt(v,prev); c=cls(d,up)}
-     if(key==='ebitda'||key==='ebitda_pct') c=v>=0?'green':'red';
-     return '<td><div class="cellmain '+c+'">'+fmt(v,type)+'</div><div class="delta '+(i?cls(d,up):'')+'">'+sub+'</div></td>'
-   }).join('');
-   return '<tr><td class="metric">'+name+'</td>'+cells+'</tr>';
- }).join('');
-}
-function summary(){
- const q1=D.quarters[0],q2=D.quarters[1],jun=D.months[5],may=D.months[4];
- const items=[
- ['Выручка июня',mln(jun.revenue),'к маю '+reltxt(jun.revenue,may.revenue),jun.revenue>=may.revenue],
- ['EBITDA июня',mln(jun.ebitda),'к маю '+reltxt(jun.ebitda,may.ebitda),jun.ebitda>=0],
- ['EBITDA margin',pct(jun.ebitda_pct),'май '+pct(may.ebitda_pct),jun.ebitda_pct>=may.ebitda_pct],
- ['Food Cost',pct(jun.food_cost_pct),'май '+pct(may.food_cost_pct),jun.food_cost_pct<=may.food_cost_pct],
- ['Q2 выручка',mln(q2.revenue),'к Q1 '+reltxt(q2.revenue,q1.revenue),q2.revenue>=q1.revenue],
- ['Q2 EBITDA',mln(q2.ebitda),'Q1 '+mln(q1.ebitda),q2.ebitda>=q1.ebitda]
- ];
- $('summary').innerHTML=items.map(x=>'<div class="card kpi"><div class="label">'+x[0]+'</div><div class="val '+(x[3]?'green':'red')+'">'+x[1]+'</div><div class="hint">'+x[2]+'</div></div>').join('');
-}
-function chart(){
- const max=Math.max(...D.months.map(x=>x.revenue),...D.months.map(x=>Math.abs(x.ebitda)));
- $('chart').innerHTML=D.months.map(m=>'<div class="bw"><div class="bar rev" style="height:'+Math.max(3,m.revenue/max*100)+'%" title="'+m.name+' выручка '+rub(m.revenue)+'"></div><div class="bar '+(m.ebitda>=0?'ebp':'ebn')+'" style="height:'+Math.max(3,Math.abs(m.ebitda)/max*100)+'%" title="'+m.name+' EBITDA '+rub(m.ebitda)+'"></div><div class="x">'+m.short+'</div></div>').join('');
-}
-function quarters(){
- const a=D.quarters[0],b=D.quarters[1];
- const qi=[
- ['Выручка Q2',mln(b.revenue),reltxt(b.revenue,a.revenue),true],
- ['EBITDA Q2',mln(b.ebitda),reltxt(b.ebitda,a.ebitda),true],
- ['EBITDA margin',pct(b.ebitda_pct),(b.ebitda_pct-a.ebitda_pct>=0?'+':'')+pp(b.ebitda_pct-a.ebitda_pct),true],
- ['Food Cost',pct(b.food_cost_pct),(b.food_cost_pct-a.food_cost_pct>=0?'+':'')+pp(b.food_cost_pct-a.food_cost_pct),false],
- ['ФОТ / выручка',pct(b.payroll_pct),(b.payroll_pct-a.payroll_pct>=0?'+':'')+pp(b.payroll_pct-a.payroll_pct),false]
- ];
- $('qgrid').innerHTML=qi.map(x=>{const key=x[0],d=x[2],good=x[3];let numeric=0;if(key==='Выручка Q2')numeric=b.revenue-a.revenue;else if(key==='EBITDA Q2')numeric=b.ebitda-a.ebitda;else if(key==='EBITDA margin')numeric=b.ebitda_pct-a.ebitda_pct;else if(key==='Food Cost')numeric=b.food_cost_pct-a.food_cost_pct;else numeric=b.payroll_pct-a.payroll_pct;return '<div class="qitem"><span class="label">'+x[0]+'</span><b>'+x[1]+'</b><div class="hint '+cls(numeric,good)+'">Q1 → Q2: '+d+'</div></div>'}).join('');
- $('qtable').innerHTML=metrics.map(([name,key,type,up])=>{const v1=a[key],v2=b[key],d=v2-v1;return '<tr><td>'+name+'</td><td>'+fmt(v1,type)+'</td><td><b>'+fmt(v2,type)+'</b></td><td class="'+cls(d,up)+'">'+(type==='pct'?((d>0?'+':'')+pp(d)):((d>0?'+':'')+rub(d)))+'</td><td class="'+cls(rel(v2,v1)||0,up)+'">'+reltxt(v2,v1)+'</td></tr>'}).join('');
-}
-fetch(DATA+'?v='+Date.now(),{cache:'no-store'}).then(r=>r.json()).then(x=>{D=x;summary();matrix();chart();quarters()}).catch(()=>{$('matrix').innerHTML='<tr><td>Ошибка загрузки данных</td></tr>'});
+function buildMonthHead(){const years=[];D.months.forEach(m=>{let y=years.find(x=>x.year===m.year);if(!y){y={year:m.year,count:0};years.push(y)}y.count++});$('matrixHead').innerHTML='<tr><th rowspan="2">Показатель</th>'+years.map(y=>'<th class="yearhead" colspan="'+y.count+'">'+y.year+'</th>').join('')+'</tr><tr>'+D.months.map((m,i)=>'<th class="monthhead '+(i&&D.months[i-1].year!==m.year?'year-start':'')+'">'+m.short+'</th>').join('')+'</tr>'}
+function matrix(){$('matrix').innerHTML=metrics.map(([name,key,type,up])=>{const cells=D.months.map((m,i)=>{const v=m[key],prev=i?D.months[i-1][key]:null,d=i?v-prev:0;let sub='—',c='';if(i){sub=type==='pct'?((d>0?'+':'')+pp(d)):reltxt(v,prev);c=cls(d,up)}if(key==='ebitda'||key==='ebitda_pct')c=v>=0?'green':'red';const ys=i&&D.months[i-1].year!==m.year?'year-start':'';return '<td class="'+ys+'"><div class="cellmain '+c+'">'+fmt(v,type)+'</div><div class="delta '+(i?cls(d,up):'')+'">'+sub+'</div></td>'}).join('');return '<tr><td class="metric">'+name+'</td>'+cells+'</tr>'}).join('')}
+function summary(){const latest=D.months[D.months.length-1],prev=D.months[D.months.length-2],lq=D.quarters[D.quarters.length-1],pq=D.quarters[D.quarters.length-2];const items=[['Выручка '+latest.short+' '+latest.year,mln(latest.revenue),'к '+prev.short+': '+reltxt(latest.revenue,prev.revenue),latest.revenue>=prev.revenue],['EBITDA '+latest.short,mln(latest.ebitda),'к '+prev.short+': '+reltxt(latest.ebitda,prev.ebitda),latest.ebitda>=0],['EBITDA margin',pct(latest.ebitda_pct),prev.short+' '+pct(prev.ebitda_pct),latest.ebitda_pct>=prev.ebitda_pct],['Food Cost',pct(latest.food_cost_pct),prev.short+' '+pct(prev.food_cost_pct),latest.food_cost_pct<=prev.food_cost_pct],[lq.name+' выручка',mln(lq.revenue),'к '+pq.name+': '+reltxt(lq.revenue,pq.revenue),lq.revenue>=pq.revenue],[lq.name+' EBITDA',mln(lq.ebitda),'пред. '+mln(pq.ebitda),lq.ebitda>=pq.ebitda]];$('summary').innerHTML=items.map(x=>'<div class="card kpi"><div class="label">'+x[0]+'</div><div class="val '+(x[3]?'green':'red')+'">'+x[1]+'</div><div class="hint">'+x[2]+'</div></div>').join('')}
+function chart(){const max=Math.max(...D.months.map(x=>x.revenue),...D.months.map(x=>Math.abs(x.ebitda)));$('chart').innerHTML=D.months.map(m=>'<div class="bw"><div class="bar rev" style="height:'+Math.max(3,m.revenue/max*100)+'%" title="'+m.name+' '+m.year+' · выручка '+rub(m.revenue)+'"></div><div class="bar '+(m.ebitda>=0?'ebp':'ebn')+'" style="height:'+Math.max(3,Math.abs(m.ebitda)/max*100)+'%" title="'+m.name+' '+m.year+' · EBITDA '+rub(m.ebitda)+'"></div><div class="x">'+m.short+'<br>'+String(m.year).slice(2)+'</div></div>').join('')}
+function quarters(){const qs=D.quarters;$('qgrid').innerHTML=qs.map((q,i)=>{const p=i?qs[i-1]:null;return '<div class="qitem"><div class="qyear">'+q.name+'</div><b>'+mln(q.revenue)+'</b><div class="hint">Выручка</div><div class="qdelta '+(p?cls(q.revenue-p.revenue,true):'')+'">'+(p?'к '+p.name+': '+reltxt(q.revenue,p.revenue):'первый квартал')+'</div><div class="hint">EBITDA: <span class="'+(q.ebitda>=0?'green':'red')+'">'+mln(q.ebitda)+'</span> · '+pct(q.ebitda_pct)+'</div></div>'}).join('');
+$('qhead').innerHTML='<tr><th>Показатель</th>'+qs.map((q,i)=>'<th class="'+(i&&qs[i-1].year!==q.year?'year-start':'')+'">'+q.name+'</th>').join('')+'</tr>';
+$('qtable').innerHTML=metrics.map(([name,key,type,up])=>'<tr><td class="metric">'+name+'</td>'+qs.map((q,i)=>{const p=i?qs[i-1]:null,d=p?q[key]-p[key]:0;const ys=i&&qs[i-1].year!==q.year?'year-start':'';return '<td class="'+ys+'"><div class="cellmain '+((key==='ebitda'||key==='ebitda_pct')?(q[key]>=0?'green':'red'):'')+'">'+fmt(q[key],type)+'</div><div class="delta '+(p?cls(d,up):'')+'">'+(p?(type==='pct'?((d>0?'+':'')+pp(d)):reltxt(q[key],p[key])):'—')+'</div></td>'}).join('')+'</tr>').join('')}
+fetch(DATA+'?v='+Date.now(),{cache:'no-store'}).then(r=>r.json()).then(x=>{D=x;summary();buildMonthHead();matrix();chart();quarters()}).catch(()=>{$('matrix').innerHTML='<tr><td>Ошибка загрузки данных</td></tr>'});
 </script></body></html>
