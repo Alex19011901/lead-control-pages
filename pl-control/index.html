@@ -42,33 +42,35 @@ function chart(){
  const bottom=Math.floor(minNeg/5000000)*5000000;
  const range=top-bottom||top;
  const plotTop=8,plotH=232;
- const y=v=>plotTop+((top-v)/range)*plotH;
- const zeroY=y(0);
+ const yChart=v=>plotTop+((top-v)/range)*plotH;
+ const yBar=v=>((top-v)/range)*plotH;
+ const zeroChartY=yChart(0);
+ const zeroBarY=yBar(0);
  const ticks=[];for(let v=bottom;v<=top;v+=5000000)ticks.push(v);
 
  $('yaxis').innerHTML=ticks.map(v=>
-   '<div class="ytick '+(v===0?'zero':'')+'" style="top:'+y(v)+'px">'+
+   '<div class="ytick '+(v===0?'zero':'')+'" style="top:'+yChart(v)+'px">'+
    (v/1000000).toLocaleString('ru-RU',{maximumFractionDigits:0})+' млн</div>'
  ).join('');
 
  const gridHtml=ticks.filter(v=>v!==0).map(v=>
-   '<div class="gridline" style="top:'+y(v)+'px"></div>'
+   '<div class="gridline" style="top:'+yChart(v)+'px"></div>'
  ).join('');
- const zeroHtml='<div class="zero-line" style="top:'+zeroY+'px"></div>';
+ const zeroHtml='<div class="zero-line" style="top:'+zeroChartY+'px"></div>';
 
  const barsHtml=D.months.map(m=>{
-   const revTop=y(m.revenue);
-   const revHeight=Math.max(2,zeroY-revTop);
+   const revTop=yBar(m.revenue);
+   const revHeight=Math.max(2,zeroBarY-revTop);
 
    let ebitdaHtml='';
    if(m.ebitda>=0){
-     const ebTop=y(m.ebitda);
-     const ebHeight=Math.max(2,zeroY-ebTop);
+     const ebTop=yBar(m.ebitda);
+     const ebHeight=Math.max(2,zeroBarY-ebTop);
      ebitdaHtml='<div class="bar ebp" style="top:'+ebTop+'px;height:'+ebHeight+'px" title="'+m.name+' '+m.year+' · EBITDA '+rub(m.ebitda)+'"></div>';
    }else{
-     const ebBottom=y(m.ebitda);
-     const ebHeight=Math.max(2,ebBottom-zeroY);
-     ebitdaHtml='<div class="bar ebn" style="top:'+zeroY+'px;height:'+ebHeight+'px" title="'+m.name+' '+m.year+' · EBITDA '+rub(m.ebitda)+'"></div>';
+     const ebBottom=yBar(m.ebitda);
+     const ebHeight=Math.max(2,ebBottom-zeroBarY);
+     ebitdaHtml='<div class="bar ebn" style="top:'+zeroBarY+'px;height:'+ebHeight+'px" title="'+m.name+' '+m.year+' · EBITDA '+rub(m.ebitda)+'"></div>';
    }
 
    return '<div class="bw">'+
