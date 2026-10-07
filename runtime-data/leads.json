@@ -23298,20 +23298,41 @@
       "channel": "TELEGRAM",
       "crm": {
         "ambiguity_count": 0,
-        "created_at": null,
-        "entity_id": null,
-        "entity_type": null,
-        "event_type": null,
-        "found": false,
-        "responsible_user_id": null,
-        "responsible_user_name": null,
-        "updated_at": null
+        "created_at": 1791372257,
+        "entity_id": 49331791,
+        "entity_type": "lead",
+        "event_type": "Свадьба",
+        "found": true,
+        "guests": "65",
+        "guests_source": "CRM",
+        "responsible_user_id": 13009530,
+        "responsible_user_name": "Олеся",
+        "updated_at": 1791372262
       },
-      "crm_created_at": null,
-      "crm_found": false,
+      "crm_created_at": 1791372257,
+      "crm_feedback": {
+        "closed_at": null,
+        "crm_lead_id": 49331791,
+        "deadline_at": 1791666000,
+        "excluded": false,
+        "first_activity_at": null,
+        "lead_created_at": 1791372257,
+        "loss_reason_checked": true,
+        "loss_reason_id": null,
+        "loss_reason_name": "",
+        "pipeline_id": 10081590,
+        "responsible_user_id": 13009530,
+        "rule_version": 6,
+        "state": "WAITING",
+        "status_id": 79927038,
+        "status_name": "Выслано предложение"
+      },
+      "crm_found": true,
       "crm_required": true,
-      "crm_responsible": null,
+      "crm_responsible": 13009530,
       "deadline_msk_ts": 1791406799,
+      "event_type": "Свадьба",
+      "event_type_source": "CRM",
       "fields": {
         "category": "MARQUIZ",
         "description": "🎯 Заявка на квиз \"Организуйте идеальное мероприятие в ресторане «Светлый».\"\n\nИмя: Нина\nТелефон: +79163518475\n\nКакое мероприятие вы планируете?\nСвадьба\n\nСколько гостей ожидается?\n65\n\nУточните дату Вашего мероприятия?\n21.11.2026\n\nКакой формат мероприятия интересует?\nБанкет\n\nТовары:\n\nТовары не выбраны\n\n\nБонусы: Бесплатная дегустация, Без арендной платы\n\nМестоположение: Россия, Москва\nUTM-метки:\ncampaign: Bankety_poisk_quiz\nmedium: cpc\nsource: yandex_direct\n\nСтраница: https://mrqz.me/moscowbanket?callibri=yd_c:712849433_gb:5773918675_ad:1915822986185365516_ph:57675183320_st:search_s:none_dt:mobile&utm_source=yandex_direct&utm_medium=cpc&utm_campaign=Bankety_poisk_quiz&type=search&source=none&added=no&block=premium&position=4&keyword=%D0%B1%D0%B0%D0%BD%D0%BA%D0%B5%D1%82%D0%BD%D1%8B%D0%B5%20%D0%B7%D0%B0%D0%BB%D1%8B&etext=2202.ZWDtj-IVHWD4afzwbHjVhjKj0aunj8UVURfRMERpQNUt9TjayiufeYZvwMmhXSiiZW54d3pxbWdhZmRxcXN4Zw.f1e5455e36b73167bb53032a64fe6e04901b3ecd&ybaip=1\n\nСогласия:\nЯ согласен на обработку персональных данных: Да",
@@ -23355,7 +23376,7 @@
       "sender_user_id": 446491725,
       "sender_username": "MarquizBot",
       "source": "MARQUIZ",
-      "status": "PENDING",
+      "status": "OK",
       "telegram": {
         "chat_id": -1001645768111,
         "message_ids": [
@@ -23363,6 +23384,67 @@
         ],
         "update_ids": [
           185608717
+        ]
+      },
+      "violations": []
+    },
+    {
+      "category": "MARQUIZ",
+      "channel": "TELEGRAM",
+      "crm": {
+        "ambiguity_count": 0,
+        "created_at": null,
+        "entity_id": null,
+        "entity_type": null,
+        "event_type": null,
+        "found": false,
+        "responsible_user_id": null,
+        "responsible_user_name": null,
+        "updated_at": null
+      },
+      "crm_created_at": null,
+      "crm_found": false,
+      "crm_required": true,
+      "crm_responsible": null,
+      "deadline_msk_ts": 1791406799,
+      "fields": {
+        "category": "MARQUIZ",
+        "description": "🎯 Заявка на квиз \"Организуйте идеальное мероприятие в ресторане «Светлый».\"\n\nИмя: Алина\nТелефон: +79659384872\n\nКакое мероприятие вы планируете?\nКорпоратив\n\nСколько гостей ожидается?\n85\n\nУточните дату Вашего мероприятия?\n11.12.2026\n\nКакой формат мероприятия интересует?\nБанкет\n\nТовары:\n\nТовары не выбраны\n\n\nБонусы: Бесплатная дегустация, Без арендной платы\n\nМестоположение: Украина, Феодосия\nUTM-метки:\ncampaign: Bankety_poisk_quiz\nmedium: cpc\nsource: yandex_direct\n\nСтраница: https://mrqz.me/moscowbanket?callibri=yd_c:712849433_gb:5773918673_ad:1915822986185365514_ph:205773918673_st:search_s:none_dt:desktop&utm_source=yandex_direct&utm_medium=cpc&utm_campaign=Bankety_poisk_quiz&type=search&source=none&added=no&block=premium&position=3&keyword=---autotargeting&etext=2202.1CBLCs84fAkcJSN18WoP3B-2ewo0sMfwYNKPxn8fWN63GgrVEeAc49Ti95-HJJu61o2joTOzUhLEms04gLgC-nhoaWZlcm5ucmd0anF5aG4.4057e7db3a197a9c110c0d7948fe786e875de5d5&yclid=6875243896489639935&ybaip=1\n\nСогласия:\nЯ согласен на обработку персональных данных: Да",
+        "event_date": "2026-12-11",
+        "event_date_raw": "11.12.2026",
+        "event_format": "Банкет",
+        "event_type": "Корпоратив",
+        "guests_count": 85,
+        "guests_raw": "85",
+        "name": "Алина",
+        "phone_digits": "79659384872",
+        "phone_raw": "+79659384872",
+        "source": "MARQUIZ",
+        "telegram_username": ""
+      },
+      "first_seen_at": "2026-10-07T14:16:01+03:00",
+      "first_seen_ts": 1791371761,
+      "id": "6cc8cc85913ce3db",
+      "identifier": {
+        "type": "phone",
+        "value": "79659384872"
+      },
+      "last_seen_at": "2026-10-07T14:16:01+03:00",
+      "last_seen_ts": 1791371761,
+      "manager_reaction": null,
+      "received_at": "2026-10-07T14:16:01+03:00",
+      "sender_name": "MarquizBot",
+      "sender_user_id": 446491725,
+      "sender_username": "MarquizBot",
+      "source": "MARQUIZ",
+      "status": "PENDING",
+      "telegram": {
+        "chat_id": -1001645768111,
+        "message_ids": [
+          6121
+        ],
+        "update_ids": [
+          185608719
         ]
       },
       "violations": []
@@ -75391,6 +75473,7 @@
       },
       "2026-10-07": {
         "143": 12,
+        "79927038": 1,
         "79927042": 4,
         "79927914": 1,
         "80331318": 1
@@ -75476,7 +75559,7 @@
       }
     ],
     "today": "2026-10-07",
-    "total_movements": 294,
+    "total_movements": 295,
     "weeks": [
       {
         "dates": [

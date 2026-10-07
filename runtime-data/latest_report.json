@@ -1,12 +1,12 @@
 {
   "alarm_no_crm": 2,
   "by_manager": {
-    "no_manager_reaction": 637,
+    "no_manager_reaction": 638,
     "Максим": 69,
     "Олеся": 57
   },
   "by_source": {
-    "MARQUIZ": 37,
+    "MARQUIZ": 38,
     "Restoran.Cafe": 3,
     "WedWed": 13,
     "ЗАЯВКА ПОЧТА": 17,
@@ -25,7 +25,7 @@
     "ДР": 2,
     "Детский праздник": 6,
     "Конференция": 1,
-    "Корпоратив": 217,
+    "Корпоратив": 218,
     "Поминки": 1,
     "Свадьба": 230,
     "Съёмки": 2,
@@ -36,11 +36,29 @@
     "101-150": 52,
     "151+": 26,
     "21-50": 215,
-    "51-100": 118,
+    "51-100": 119,
     "unknown": 138
   },
   "late_crm": 154,
   "latest_leads": [
+    {
+      "created_at": "2026-10-07T14:16:01+03:00",
+      "crm_entity_id": null,
+      "crm_entity_type": null,
+      "crm_found": false,
+      "event_date": "2026-12-11",
+      "event_type": "Корпоратив",
+      "guests_count": 85,
+      "identifier": "7********72",
+      "identifier_type": "phone",
+      "lead_id": "6cc8cc85913ce3db",
+      "manager": "",
+      "manager_username": "",
+      "name": "Алина",
+      "source": "MARQUIZ",
+      "status": "PENDING",
+      "violations": []
+    },
     {
       "created_at": "2026-10-07T13:46:56+03:00",
       "crm_entity_id": null,
@@ -97,9 +115,9 @@
     },
     {
       "created_at": "2026-10-07T12:32:14+03:00",
-      "crm_entity_id": null,
-      "crm_entity_type": null,
-      "crm_found": false,
+      "crm_entity_id": 49331791,
+      "crm_entity_type": "lead",
+      "crm_found": true,
       "event_date": "2026-11-21",
       "event_type": "Свадьба",
       "guests_count": 65,
@@ -110,7 +128,7 @@
       "manager_username": "Olesyagozhina",
       "name": "Нина",
       "source": "MARQUIZ",
-      "status": "PENDING",
+      "status": "OK",
       "violations": []
     },
     {
@@ -382,29 +400,11 @@
       "source": "Заявки хост",
       "status": "OK",
       "violations": []
-    },
-    {
-      "created_at": "2026-10-06T11:07:02+03:00",
-      "crm_entity_id": 49280183,
-      "crm_entity_type": "lead",
-      "crm_found": true,
-      "event_date": "2026-12-25",
-      "event_type": "Корпоратив",
-      "guests_count": 120,
-      "identifier": "7********75",
-      "identifier_type": "phone",
-      "lead_id": "10daac0c454d1fd6",
-      "manager": "",
-      "manager_username": "",
-      "name": "Нина Станиславовна Макарова",
-      "source": "САЙТ ТИЛЬДА",
-      "status": "OK",
-      "violations": []
     }
   ],
   "needs_review": 134,
   "no_reaction": 0,
-  "ok": 550,
-  "total_leads": 763,
-  "updated_at": "2026-10-07T14:04:32+03:00"
+  "ok": 551,
+  "total_leads": 764,
+  "updated_at": "2026-10-07T14:39:30+03:00"
 }
