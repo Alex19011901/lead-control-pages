@@ -75347,6 +75347,76 @@
       "status": "PENDING",
       "username": "",
       "violations": []
+    },
+    {
+      "category": "HOST",
+      "channel": "MAX",
+      "crm": {
+        "ambiguity_count": 0,
+        "created_at": null,
+        "entity_id": null,
+        "entity_type": null,
+        "event_type": null,
+        "found": false,
+        "responsible_user_id": null,
+        "responsible_user_name": null,
+        "updated_at": null
+      },
+      "crm_created_at": null,
+      "crm_found": false,
+      "crm_required": true,
+      "crm_responsible": null,
+      "deadline_msk_ts": 1791406799,
+      "event_date": "2026-12-18",
+      "fields": {
+        "category": "HOST",
+        "email": "",
+        "event_date": "2026-12-18",
+        "event_date_raw": "18.12",
+        "event_type": "Корпоратив",
+        "guests_count": 25,
+        "guests_max": null,
+        "guests_min": null,
+        "guests_raw": "25п.",
+        "name": "Елена",
+        "phone_digits": "79688615407",
+        "phone_raw": "89688615407",
+        "source": "Заявки хост",
+        "telegram_username": ""
+      },
+      "first_seen_at": "2026-10-07T15:48:01+03:00",
+      "first_seen_ts": 1791377281,
+      "guests": 25,
+      "guests_max": null,
+      "guests_min": null,
+      "guests_raw": "25п.",
+      "id": "bd3206a25e23a9e6",
+      "identifier": {
+        "type": "phone",
+        "value": "79688615407"
+      },
+      "last_seen_at": "2026-10-07T15:48:01+03:00",
+      "last_seen_ts": 1791377281,
+      "manager_reaction": null,
+      "max": {
+        "chat_id": -71704692523093,
+        "message_ids": [
+          "mid.ffffbec8f345ffab01a1166811591197"
+        ],
+        "sender_name": "Елена",
+        "sender_user_id": 121513620,
+        "sender_username": null
+      },
+      "message_id": "mid.ffffbec8f345ffab01a1166811591197",
+      "name": "Елена",
+      "phone": "89688615407",
+      "received_at": "2026-10-07T15:48:01+03:00",
+      "sender_name": "Елена",
+      "sender_user_id": 121513620,
+      "source": "Заявки хост",
+      "status": "PENDING",
+      "username": "",
+      "violations": []
     }
   ],
   "pipeline_activity": {
