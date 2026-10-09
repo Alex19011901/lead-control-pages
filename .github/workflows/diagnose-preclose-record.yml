@@ -1,4 +1,4 @@
-# rerun-marker: diagnose-yaroslav-mail-20261009
+# rerun-marker: latest-record-v5c-20260929
 name: Diagnose pre-close record (read only)
 on:
   push:
@@ -18,28 +18,53 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Find Yaroslav mail lead
+      - name: Test exact pre-close manager record
+        working-directory: app
+        run: PYTHONPATH=.:src python -m unittest tests.test_preclose_record_recovery tests.test_preclose_snapshot_regression tests.test_closed_not_realized tests.test_closed_not_realized_widget -v
+      - name: Validate real closed leads without changing data
+        env:
+          AMOCRM_TOKEN: ${{ secrets.AMOCRM_TOKEN }}
         run: |
-          python - <<'PY'
+          PYTHONPATH=app/src python - <<'PY'
+          import hashlib
           import json
-          from pathlib import Path
-          data=json.loads(Path('runtime-data/leads.json').read_text(encoding='utf-8'))
-          rows=data.get('leads',[])
-          for lead in rows:
-              ts=str(lead.get('received_at') or lead.get('first_seen_at') or '')
-              source=str(lead.get('source') or lead.get('category') or '')
-              name=str(lead.get('name') or (lead.get('fields') or {}).get('name') or '')
-              if ts.startswith('2026-10-09T16:41:25') and 'ПОЧТА' in source.upper() and name=='Ярослав':
-                  print('FOUND '+json.dumps({
-                      'id':lead.get('id'),
-                      'channel':lead.get('channel'),
-                      'message_id':lead.get('message_id'),
-                      'max':lead.get('max'),
-                      'telegram':lead.get('telegram'),
-                      'identifier':lead.get('identifier'),
-                      'fields':lead.get('fields'),
-                      'source':source,
-                      'name':name,
-                      'received_at':ts,
-                  },ensure_ascii=False),flush=True)
+          import os
+          from lead_control.amocrm_client import AmoCRMClient
+          from lead_control.closed_not_realized import _read_preclose_record
+
+          client=AmoCRMClient('https://alex1901yaru.amocrm.ru',os.environ['AMOCRM_TOKEN'])
+          targets=[
+              (48813485,1790580620),
+              (48855703,1790579990),
+              (49047285,1790607245),
+          ]
+          for lead_id,closed_at in targets:
+              card=client._get_entity('leads',lead_id) or {}
+              manager_id=int(card.get('responsible_user_id') or 0)
+              record=_read_preclose_record(
+                  client,
+                  lead_id,
+                  closed_at,
+                  responsible_user_id=manager_id or None,
+              )
+              text=str(record.get('last_comment') or '')
+              print(json.dumps({
+                  'lead_id':lead_id,
+                  'manager_id':manager_id,
+                  'status':record.get('last_record_status'),
+                  'type':record.get('last_record_type'),
+                  'record_at':record.get('last_record_at'),
+                  'closed_at':closed_at,
+                  'author':record.get('last_record_author'),
+                  'text_len':len(text),
+                  'text_sha256':hashlib.sha256(text.encode()).hexdigest() if text else None,
+              },ensure_ascii=False),flush=True)
+              assert record.get('last_record_status')=='VERIFIED'
+              assert text
+              assert 0 < int(record.get('last_record_at') or 0)
+              if lead_id == 49047285:
+                  print('ELIZABETH_TEXT ' + text, flush=True)
+                  assert 'отмените заявку' in text.casefold()
           PY
+
+# rerun: validate-manager-text-v4
