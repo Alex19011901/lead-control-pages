@@ -23668,7 +23668,7 @@
       "sender_user_id": 265299531,
       "sender_username": "TildaFormsBot",
       "source": "САЙТ ТИЛЬДА",
-      "status": "PENDING",
+      "status": "ALARM_NO_CRM",
       "telegram": {
         "chat_id": -1001645768111,
         "message_ids": [
@@ -23678,7 +23678,9 @@
           185608743
         ]
       },
-      "violations": []
+      "violations": [
+        "ALARM_NO_CRM"
+      ]
     },
     {
       "category": "САЙТ ТИЛЬДА",
@@ -23724,13 +23726,26 @@
       },
       "last_seen_at": "2026-10-08T18:45:22+03:00",
       "last_seen_ts": 1791474322,
-      "manager_reaction": null,
+      "manager_reaction": {
+        "name": "Олеся",
+        "reacted_at": "2026-10-08T21:23:34+03:00",
+        "reacted_ts": 1791483814,
+        "reaction": [
+          {
+            "emoji": "❤",
+            "type": "emoji"
+          }
+        ],
+        "update_id": 185608751,
+        "user_id": 328611361,
+        "username": "Olesyagozhina"
+      },
       "received_at": "2026-10-08T18:45:22+03:00",
       "sender_name": "TildaForms",
       "sender_user_id": 265299531,
       "sender_username": "TildaFormsBot",
       "source": "САЙТ ТИЛЬДА",
-      "status": "PENDING",
+      "status": "ALARM_NO_CRM",
       "telegram": {
         "chat_id": -1001645768111,
         "message_ids": [
@@ -23740,7 +23755,9 @@
           185608750
         ]
       },
-      "violations": []
+      "violations": [
+        "ALARM_NO_CRM"
+      ]
     },
     {
       "category": "TG_LEAD",
@@ -59590,22 +59607,6 @@
     {
       "category": "ЗАЯВКА ПОЧТА",
       "channel": "MAX",
-      "closed_not_realized": {
-        "closed_at": 1791093444,
-        "crm_lead_id": 48586565,
-        "last_comment": "11-12-26",
-        "last_comment_at": 1789713258,
-        "last_record_at": 1789713258,
-        "last_record_author": "Лаура",
-        "last_record_display": "11-12-26",
-        "last_record_errors": [],
-        "last_record_id": "1257ad66-6aa9-4f62-a1db-b62370f7240e",
-        "last_record_rule_version": 5,
-        "last_record_status": "VERIFIED",
-        "last_record_type": "entity_direct_message",
-        "loss_reason_id": 24466294,
-        "loss_reason_name": "Нет обратной связи"
-      },
       "crm": {
         "ambiguity_count": 0,
         "created_at": 1789460266,
@@ -73014,22 +73015,6 @@
     {
       "category": "HOST",
       "channel": "MAX",
-      "closed_not_realized": {
-        "closed_at": 1791143193,
-        "crm_lead_id": 49232583,
-        "last_comment": "",
-        "last_comment_at": null,
-        "last_record_at": null,
-        "last_record_author": "",
-        "last_record_display": "",
-        "last_record_errors": [],
-        "last_record_id": "",
-        "last_record_rule_version": 5,
-        "last_record_status": "EMPTY",
-        "last_record_type": "",
-        "loss_reason_id": 21779742,
-        "loss_reason_name": "Не устроили условия"
-      },
       "crm": {
         "ambiguity_count": 0,
         "created_at": 1791143130,
@@ -73326,7 +73311,7 @@
         "pipeline_id": 10081590,
         "responsible_user_id": 12982830,
         "rule_version": 6,
-        "state": "WAITING",
+        "state": "NO_FEEDBACK",
         "status_id": 79927038,
         "status_name": "Выслано предложение"
       },
@@ -73417,7 +73402,7 @@
         "pipeline_id": 10081590,
         "responsible_user_id": 12982830,
         "rule_version": 6,
-        "state": "WAITING",
+        "state": "NO_FEEDBACK",
         "status_id": 79927034,
         "status_name": "Первичный контакт"
       },
@@ -73765,7 +73750,7 @@
         "pipeline_id": 10081590,
         "responsible_user_id": 12982830,
         "rule_version": 6,
-        "state": "WAITING",
+        "state": "NO_FEEDBACK",
         "status_id": 79927038,
         "status_name": "Выслано предложение"
       },
@@ -77403,7 +77388,7 @@
         "sort": 11000
       }
     ],
-    "today": "2026-10-08",
+    "today": "2026-10-09",
     "total_movements": 318,
     "weeks": [
       {
