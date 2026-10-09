@@ -23989,22 +23989,66 @@
     {
       "category": "САЙТ ТИЛЬДА",
       "channel": "TELEGRAM",
+      "closed_not_realized": {
+        "closed_at": 1791548160,
+        "crm_lead_id": 49395225,
+        "last_comment": "сказала что не делала заявку",
+        "last_comment_at": 1791548177,
+        "last_record_at": 1791548177,
+        "last_record_author": "Лаура",
+        "last_record_display": "сказала что не делала заявку",
+        "last_record_errors": [],
+        "last_record_id": "6ef464fc-3ddd-497c-b29c-a35415b76719",
+        "last_record_rule_version": 5,
+        "last_record_status": "VERIFIED",
+        "last_record_type": "entity_direct_message",
+        "loss_reason_id": 24466290,
+        "loss_reason_name": "Спам"
+      },
       "crm": {
         "ambiguity_count": 0,
-        "created_at": null,
-        "entity_id": null,
-        "entity_type": null,
-        "event_type": null,
-        "found": false,
-        "responsible_user_id": null,
-        "responsible_user_name": null,
-        "updated_at": null
+        "created_at": 1791548160,
+        "entity_id": 49395225,
+        "entity_type": "lead",
+        "event_type": "Корпоратив",
+        "found": true,
+        "guests": "50",
+        "guests_source": "CRM",
+        "responsible_user_id": 12982830,
+        "responsible_user_name": "Максим",
+        "updated_at": 1791548177
       },
-      "crm_created_at": null,
-      "crm_found": false,
+      "crm_created_at": 1791548160,
+      "crm_feedback": {
+        "closed_at": 1791548160,
+        "crm_lead_id": 49395225,
+        "excluded": true,
+        "first_activity_at": null,
+        "lead_created_at": 1791548160,
+        "loss_reason_checked": true,
+        "loss_reason_id": 24466290,
+        "loss_reason_name": "Спам",
+        "pipeline_id": 10081590,
+        "responsible_user_id": 12982830,
+        "rule_version": 6,
+        "state": "EXCLUDED",
+        "status_id": 143,
+        "status_name": "Закрыто и не реализовано"
+      },
+      "crm_found": true,
+      "crm_outcome": {
+        "closed_at": 1791548160,
+        "loss_reason_id": 24466290,
+        "loss_reason_name": "Спам",
+        "result": "LOST",
+        "status_id": 143,
+        "status_name": "Закрыто и не реализовано"
+      },
       "crm_required": true,
-      "crm_responsible": null,
+      "crm_responsible": 12982830,
       "deadline_msk_ts": 1791579599,
+      "event_type": "Корпоратив",
+      "event_type_source": "CRM",
       "fields": {
         "category": "САЙТ ТИЛЬДА",
         "description": "Содержание заявки:\nName: Людмила\nPhone: +79254941231\nДата: 25-12-2026\nКол-во_гостей: 50\nCheckbox: yes\nyclid: 9124565146365067263\nutm_source: yandex_direct\nutm_medium: cpc\nutm_campaign: Korporativy_RSYA\nutm_term: корпоратив на 30 человек москва\npage_url: https://moscowbanket.ru/corporate/?utm_source=yandex_direct&utm_medium=cpc&utm_campaign=Korporativy_RSYA&type=context&source=e.mail.ru&added=no&block=none&position=0&keyword=%D0%BA%D0%BE%D1%80%D0%BF%D0%BE%D1%80%D0%B0%D1%82%D0%B8%D0%B2%20%D0%BD%D0%B0%2030%20%D1%87%D0%B5%D0%BB%D0%BE%D0%B2%D0%B5%D0%BA%20%D0%BC%D0%BE%D1%81%D0%BA%D0%B2%D0%B0&utm_term=%D0%BA%D0%BE%D1%80%D0%BF%D0%BE%D1%80%D0%B0%D1%82%D0%B8%D0%B2%20%D0%BD%D0%B0%2030%20%D1%87%D0%B5%D0%BB%D0%BE%D0%B2%D0%B5%D0%BA%20%D0%BC%D0%BE%D1%81%D0%BA%D0%B2%D0%B0&callibri=yd_c:700792082_gb:5598457321_ad:17085710362_ph:54982636700_st:context_s:e.mail.ru_dt:desktop&yclid=9124565146365067263#dati\npage_referrer: https://e.mail.ru/\nform_submit_timestamp: 1791545901\nmetrika_client_id: 1791545762956988600\nym_client_id: 1791545762956988600\nym_clientid: 1791545762956988600\nym_uid: 1791545762956988600\n_ym_uid: 1791545762956988600\nclient_id: 1791545762956988600\nclientid: 1791545762956988600\nyandex_client_id: 1791545762956988600\nya_client_id: 1791545762956988600\n\nДополнительная информация:\nКод заявки: 2925975:8730876172\nКод блока: rec1193957381\nhttps://moscowbanket.ru/corporate/#dati\nUTM source: yandex_direct\nUTM medium: cpc\nUTM campaign: Korporativy_RSYA\nUTM term: корпоратив на 30 человек москва\n-----",
@@ -24044,12 +24088,26 @@
         "user_id": 392177002,
         "username": "empairbey"
       },
+      "preclose_record_cache": {
+        "closed_at": 1791548160,
+        "crm_lead_id": 49395225,
+        "last_comment": "сказала что не делала заявку",
+        "last_comment_at": 1791548177,
+        "last_record_at": 1791548177,
+        "last_record_author": "Лаура",
+        "last_record_display": "сказала что не делала заявку",
+        "last_record_errors": [],
+        "last_record_id": "6ef464fc-3ddd-497c-b29c-a35415b76719",
+        "last_record_rule_version": 5,
+        "last_record_status": "VERIFIED",
+        "last_record_type": "entity_direct_message"
+      },
       "received_at": "2026-10-09T14:38:22+03:00",
       "sender_name": "TildaForms",
       "sender_user_id": 265299531,
       "sender_username": "TildaFormsBot",
       "source": "САЙТ ТИЛЬДА",
-      "status": "PENDING",
+      "status": "OK",
       "telegram": {
         "chat_id": -1001645768111,
         "message_ids": [
@@ -73586,6 +73644,22 @@
     {
       "category": "HOST",
       "channel": "MAX",
+      "closed_not_realized": {
+        "closed_at": 1791548200,
+        "crm_lead_id": 49249681,
+        "last_comment": "Ос вечером",
+        "last_comment_at": 1791197839,
+        "last_record_at": 1791197839,
+        "last_record_author": "Лаура",
+        "last_record_display": "Ос вечером",
+        "last_record_errors": [],
+        "last_record_id": "25ba77d3-9395-49cd-8f10-2fb5d0b1bef0",
+        "last_record_rule_version": 5,
+        "last_record_status": "VERIFIED",
+        "last_record_type": "entity_direct_message",
+        "loss_reason_id": 21779746,
+        "loss_reason_name": "Выбрали других"
+      },
       "crm": {
         "ambiguity_count": 0,
         "created_at": 1791197763,
@@ -73601,23 +73675,30 @@
       },
       "crm_created_at": 1791197763,
       "crm_feedback": {
-        "closed_at": null,
+        "closed_at": 1791548200,
         "crm_lead_id": 49249681,
-        "deadline_at": 1791493200,
-        "excluded": false,
+        "excluded": true,
         "first_activity_at": null,
         "lead_created_at": 1791197763,
         "loss_reason_checked": true,
-        "loss_reason_id": null,
-        "loss_reason_name": "",
+        "loss_reason_id": 21779746,
+        "loss_reason_name": "Выбрали других",
         "pipeline_id": 10081590,
         "responsible_user_id": 12982830,
         "rule_version": 6,
-        "state": "NO_FEEDBACK",
-        "status_id": 79927038,
-        "status_name": "Выслано предложение"
+        "state": "EXCLUDED",
+        "status_id": 143,
+        "status_name": "Закрыто и не реализовано"
       },
       "crm_found": true,
+      "crm_outcome": {
+        "closed_at": 1791548200,
+        "loss_reason_id": 21779746,
+        "loss_reason_name": "Выбрали других",
+        "result": "LOST",
+        "status_id": 143,
+        "status_name": "Закрыто и не реализовано"
+      },
       "crm_required": true,
       "crm_responsible": 12982830,
       "deadline_msk_ts": 1791233999,
@@ -73666,6 +73747,20 @@
       "message_id": "mid.ffffbec8f345ffab01a10b9c9ec35c8d",
       "name": "с 12 до 16/17. бизнес-завтрак. Екатерина",
       "phone": "89677750975",
+      "preclose_record_cache": {
+        "closed_at": 1791548200,
+        "crm_lead_id": 49249681,
+        "last_comment": "Ос вечером",
+        "last_comment_at": 1791197839,
+        "last_record_at": 1791197839,
+        "last_record_author": "Лаура",
+        "last_record_display": "Ос вечером",
+        "last_record_errors": [],
+        "last_record_id": "25ba77d3-9395-49cd-8f10-2fb5d0b1bef0",
+        "last_record_rule_version": 5,
+        "last_record_status": "VERIFIED",
+        "last_record_type": "entity_direct_message"
+      },
       "received_at": "2026-10-05T13:29:36+03:00",
       "sender_name": "Алёна",
       "sender_user_id": 432412696,
@@ -78032,7 +78127,7 @@
         "88382034": 1
       },
       "2026-10-09": {
-        "143": 5,
+        "143": 7,
         "88382034": 1
       }
     },
@@ -78116,7 +78211,7 @@
       }
     ],
     "today": "2026-10-09",
-    "total_movements": 324,
+    "total_movements": 326,
     "weeks": [
       {
         "dates": [
