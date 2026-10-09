@@ -24120,6 +24120,138 @@
       "violations": []
     },
     {
+      "category": "MARQUIZ",
+      "channel": "TELEGRAM",
+      "closed_not_realized": {
+        "closed_at": 1791560071,
+        "crm_lead_id": 49400495,
+        "last_comment": "Мало места",
+        "last_comment_at": 1791560079,
+        "last_record_at": 1791560079,
+        "last_record_author": "Лаура",
+        "last_record_display": "Мало места",
+        "last_record_errors": [],
+        "last_record_id": "38fc3771-23a3-48eb-b18d-7310ec3aea67",
+        "last_record_rule_version": 5,
+        "last_record_status": "VERIFIED",
+        "last_record_type": "entity_direct_message",
+        "loss_reason_id": 21779742,
+        "loss_reason_name": "Не устроили условия"
+      },
+      "crm": {
+        "ambiguity_count": 0,
+        "created_at": 1791560071,
+        "entity_id": 49400495,
+        "entity_type": "lead",
+        "event_type": "Корпоратив",
+        "found": true,
+        "guests": "40",
+        "guests_source": "CRM",
+        "responsible_user_id": 12982830,
+        "responsible_user_name": "Максим",
+        "updated_at": 1791560079
+      },
+      "crm_created_at": 1791560071,
+      "crm_feedback": {
+        "closed_at": 1791560071,
+        "crm_lead_id": 49400495,
+        "excluded": true,
+        "first_activity_at": null,
+        "lead_created_at": 1791560071,
+        "loss_reason_checked": true,
+        "loss_reason_id": 21779742,
+        "loss_reason_name": "Не устроили условия",
+        "pipeline_id": 10081590,
+        "responsible_user_id": 12982830,
+        "rule_version": 6,
+        "state": "EXCLUDED",
+        "status_id": 143,
+        "status_name": "Закрыто и не реализовано"
+      },
+      "crm_found": true,
+      "crm_outcome": {
+        "closed_at": 1791560071,
+        "loss_reason_id": 21779742,
+        "loss_reason_name": "Не устроили условия",
+        "result": "LOST",
+        "status_id": 143,
+        "status_name": "Закрыто и не реализовано"
+      },
+      "crm_required": true,
+      "crm_responsible": 12982830,
+      "deadline_msk_ts": 1791579599,
+      "event_type": "Корпоратив",
+      "event_type_source": "CRM",
+      "fields": {
+        "category": "MARQUIZ",
+        "description": "🎯 Заявка на квиз \"Организуйте идеальное мероприятие в ресторане «Светлый».\"\n\nИмя: Анастасия\nТелефон: +79777107472\n\nКакое мероприятие вы планируете?\nКорпоратив\n\nСколько гостей ожидается?\n40\n\nУточните дату Вашего мероприятия?\n24.12.2026\n\nКакой формат мероприятия интересует?\nБанкет\n\nТовары:\n\nТовары не выбраны\n\n\nБонусы: Бесплатная дегустация, Без арендной платы\n\nМестоположение: Россия, Москва\nUTM-метки:\ncampaign: Bankety_poisk_quiz\nmedium: cpc\nsource: yandex_direct\n\nСтраница: https://mrqz.me/moscowbanket?callibri=yd_c:712849433_gb:5773918659_ad:1915822986185365500_ph:205773918659_st:search_s:none_dt:mobile&utm_source=yandex_direct&utm_medium=cpc&utm_campaign=Bankety_poisk_quiz&type=search&source=none&added=no&block=premium&position=2&keyword=---autotargeting&etext=2202.8s8FmscsXF_VhgCEi279rGux4cx8D-V7sO3mkyEkiL2aFFnmwq915EnpjVC5fsrvX3oIijMWa-P6CZreFV9oo3Zxd3d0bWZqZWxicWRsbmQ.7ce324dece2404032eb128e5caa83546b4bf71a5&yclid=17057653784242290687&ybaip=1\n\nСогласия:\nЯ согласен на обработку персональных данных: Да",
+        "event_date": "2026-12-24",
+        "event_date_raw": "24.12.2026",
+        "event_format": "Банкет",
+        "event_type": "Корпоратив",
+        "guests_count": 40,
+        "guests_raw": "40",
+        "name": "Анастасия",
+        "phone_digits": "79777107472",
+        "phone_raw": "+79777107472",
+        "source": "MARQUIZ",
+        "telegram_username": ""
+      },
+      "first_seen_at": "2026-10-09T18:13:43+03:00",
+      "first_seen_ts": 1791558823,
+      "id": "9d681746f8fe242c",
+      "identifier": {
+        "type": "phone",
+        "value": "79777107472"
+      },
+      "last_seen_at": "2026-10-09T18:13:43+03:00",
+      "last_seen_ts": 1791558823,
+      "manager_reaction": {
+        "name": "Максим",
+        "reacted_at": "2026-10-09T18:17:31+03:00",
+        "reacted_ts": 1791559051,
+        "reaction": [
+          {
+            "emoji": "👍",
+            "type": "emoji"
+          }
+        ],
+        "update_id": 185608771,
+        "user_id": 392177002,
+        "username": "empairbey"
+      },
+      "preclose_record_cache": {
+        "closed_at": 1791560071,
+        "crm_lead_id": 49400495,
+        "last_comment": "Мало места",
+        "last_comment_at": 1791560079,
+        "last_record_at": 1791560079,
+        "last_record_author": "Лаура",
+        "last_record_display": "Мало места",
+        "last_record_errors": [],
+        "last_record_id": "38fc3771-23a3-48eb-b18d-7310ec3aea67",
+        "last_record_rule_version": 5,
+        "last_record_status": "VERIFIED",
+        "last_record_type": "entity_direct_message"
+      },
+      "received_at": "2026-10-09T18:13:43+03:00",
+      "sender_name": "MarquizBot",
+      "sender_user_id": 446491725,
+      "sender_username": "MarquizBot",
+      "source": "MARQUIZ",
+      "status": "OK",
+      "telegram": {
+        "chat_id": -1001645768111,
+        "message_ids": [
+          6152
+        ],
+        "update_ids": [
+          185608770
+        ]
+      },
+      "violations": []
+    },
+    {
       "category": "TG_LEAD",
       "channel": "TELEGRAM",
       "crm": {
@@ -75818,7 +75950,7 @@
         "crm_lead_id": 49294273,
         "deadline_at": 1791579600,
         "excluded": false,
-        "first_activity_at": null,
+        "first_activity_at": 1791550384,
         "lead_created_at": 1791308747,
         "loss_reason_checked": true,
         "loss_reason_id": null,
@@ -75826,9 +75958,9 @@
         "pipeline_id": 10081590,
         "responsible_user_id": 12982830,
         "rule_version": 6,
-        "state": "WAITING",
-        "status_id": 79927038,
-        "status_name": "Выслано предложение"
+        "state": "CLEAR",
+        "status_id": 88382034,
+        "status_name": "Запрошена ос"
       },
       "crm_found": true,
       "crm_required": true,
@@ -77601,9 +77733,11 @@
       "sender_name": "Алёна",
       "sender_user_id": 432412696,
       "source": "Заявки хост",
-      "status": "PENDING",
+      "status": "ALARM_NO_CRM",
       "username": "",
-      "violations": []
+      "violations": [
+        "ALARM_NO_CRM"
+      ]
     },
     {
       "category": "HOST",
@@ -77988,6 +78122,441 @@
       "status": "OK",
       "username": "",
       "violations": []
+    },
+    {
+      "category": "ЗАЯВКА ПОЧТА",
+      "channel": "MAX",
+      "crm": {
+        "ambiguity_count": 0,
+        "created_at": null,
+        "entity_id": null,
+        "entity_type": null,
+        "event_type": null,
+        "found": false,
+        "responsible_user_id": null,
+        "responsible_user_name": null,
+        "updated_at": null
+      },
+      "crm_created_at": null,
+      "crm_found": false,
+      "crm_required": true,
+      "crm_responsible": null,
+      "deadline_msk_ts": 1791579599,
+      "event_date": "",
+      "fields": {
+        "attachment_message_id": "mid.ffffbec8f345ffab01a120ca37390fb4",
+        "attachment_ocr_text": "16:10 © @ % co 9 MAF ll и 100% @\n< Vv\nзаказ новогоднего корпоратива\nМария Машкова 0.\n09 окт. 2026, 15:53 91 —\nДобрый день! Ищем площадку под проведение\nновогоднего корпоратива, подскажите\nпожалуйста условия и по датам.\nУ нас около 150 чел. желаемая дата 18 декабря\nС уважением,\nМашкова Мария\nПомощник генерального директора\nРаб.: +7 (495) 660-35-21, доб.100\nМоб.: + 7 (926) 606-43-08\nОтветить Переслать Важное Удалить Ещё\nВ О <",
+        "category": "ЗАЯВКА ПОЧТА",
+        "description": "16:10 © @ % co 9 MAF ll и 100% @\n< Vv\nзаказ новогоднего корпоратива\nМария Машкова 0.\n09 окт. 2026, 15:53 91 —\nДобрый день! Ищем площадку под проведение\nновогоднего корпоратива, подскажите\nпожалуйста условия и по датам.\nУ нас около 150 чел. желаемая дата 18 декабря\nС уважением,\nМашкова Мария\nПомощник генерального директора\nРаб.: +7 (495) 660-35-21, доб.100\nМоб.: + 7 (926) 606-43-08\nОтветить Переслать Важное Удалить Ещё\nВ О <",
+        "email": "",
+        "event_date": "",
+        "event_date_raw": "18 декабря",
+        "event_type": "Корпоратив",
+        "guests_count": 150,
+        "guests_max": null,
+        "guests_min": null,
+        "guests_raw": "150 чел",
+        "name": "Машкова Мария",
+        "phone_digits": "74956603521",
+        "phone_raw": "+7 (495) 660-35-21",
+        "source": "ЗАЯВКА ПОЧТА",
+        "telegram_username": ""
+      },
+      "first_seen_at": "2026-10-09T16:11:23+03:00",
+      "first_seen_ts": 1791551483,
+      "guests": 150,
+      "guests_max": null,
+      "guests_min": null,
+      "guests_raw": "150 чел",
+      "id": "162cf617a1f23343",
+      "identifier": {
+        "type": "phone",
+        "value": "74956603521"
+      },
+      "last_seen_at": "2026-10-09T16:11:23+03:00",
+      "last_seen_ts": 1791551483,
+      "manager_reaction": null,
+      "max": {
+        "attachment_message_id": "mid.ffffbec8f345ffab01a120ca37390fb4",
+        "chat_id": -71704692523093,
+        "message_ids": [
+          "mid.ffffbec8f345ffab01a120ca2e0c3fd3"
+        ],
+        "sender_name": "Al",
+        "sender_user_id": 74336871,
+        "sender_username": null
+      },
+      "message_id": "mid.ffffbec8f345ffab01a120ca2e0c3fd3",
+      "name": "Машкова Мария",
+      "phone": "+7 (495) 660-35-21",
+      "received_at": "2026-10-09T16:11:23+03:00",
+      "sender_name": "Al",
+      "sender_user_id": 74336871,
+      "source": "ЗАЯВКА ПОЧТА",
+      "status": "PENDING",
+      "username": "",
+      "violations": []
+    },
+    {
+      "category": "ЗАЯВКА ПОЧТА",
+      "channel": "MAX",
+      "crm": {
+        "found": false,
+        "required": false
+      },
+      "crm_check_status": "NOT_REQUIRED",
+      "crm_created_at": null,
+      "crm_found": false,
+      "crm_required": false,
+      "crm_responsible": null,
+      "deadline_msk_ts": 1791579599,
+      "event_date": "",
+      "fields": {
+        "attachment_message_id": "mid.ffffbec8f345ffab01a120e5b3265e63",
+        "attachment_ocr_text": "16:40 © @ % © OL dell 94% №\n‹ г м\nКорпоратив\nПечёнкин Ярослав Николаевич 0\n09 окт. 2026, 16:35 ® 1 4\nДобрый день!\nМеня зовут Ярослав, обращаюсь к вам за\nинформацией и детализацией.\nПодскажите, интересует корпоратив для\nкомпании:\nКол людей - до 100\nДаты - 18.12 или 25.12\nС 18:00 до закрытия (разрешенного времени для\nмероприятий)\nПривоз собственного алкоголя разрешен?\nРасположения зала и расстановка столов.\nКакие условия для сотрудничества\nОтветить Переслать Важное Удалить Ещё\nIII O <",
+        "category": "ЗАЯВКА ПОЧТА",
+        "description": "16:40 © @ % © OL dell 94% №\n‹ г м\nКорпоратив\nПечёнкин Ярослав Николаевич 0\n09 окт. 2026, 16:35 ® 1 4\nДобрый день!\nМеня зовут Ярослав, обращаюсь к вам за\nинформацией и детализацией.\nПодскажите, интересует корпоратив для\nкомпании:\nКол людей - до 100\nДаты - 18.12 или 25.12\nС 18:00 до закрытия (разрешенного времени для\nмероприятий)\nПривоз собственного алкоголя разрешен?\nРасположения зала и расстановка столов.\nКакие условия для сотрудничества\nОтветить Переслать Важное Удалить Ещё\nIII O <",
+        "email": "",
+        "event_date": "",
+        "event_date_raw": "18.12",
+        "event_type": "Корпоратив",
+        "guests_count": null,
+        "guests_max": null,
+        "guests_min": null,
+        "guests_raw": "",
+        "name": "Ярослав",
+        "phone_digits": "",
+        "phone_raw": "",
+        "source": "ЗАЯВКА ПОЧТА",
+        "telegram_username": ""
+      },
+      "first_seen_at": "2026-10-09T16:41:25+03:00",
+      "first_seen_ts": 1791553285,
+      "guests": null,
+      "guests_max": null,
+      "guests_min": null,
+      "guests_raw": "",
+      "id": "aa34a036274c0a86",
+      "identifier": {
+        "type": "max_message",
+        "value": "mid.ffffbec8f345ffab01a120e5adf449e7"
+      },
+      "last_seen_at": "2026-10-09T16:41:25+03:00",
+      "last_seen_ts": 1791553285,
+      "manager_reaction": null,
+      "max": {
+        "attachment_message_id": "mid.ffffbec8f345ffab01a120e5b3265e63",
+        "chat_id": -71704692523093,
+        "message_ids": [
+          "mid.ffffbec8f345ffab01a120e5adf449e7"
+        ],
+        "sender_name": "Al",
+        "sender_user_id": 74336871,
+        "sender_username": null
+      },
+      "message_id": "mid.ffffbec8f345ffab01a120e5adf449e7",
+      "name": "Ярослав",
+      "phone": "",
+      "received_at": "2026-10-09T16:41:25+03:00",
+      "sender_name": "Al",
+      "sender_user_id": 74336871,
+      "source": "ЗАЯВКА ПОЧТА",
+      "status": "-",
+      "username": "",
+      "violations": []
+    },
+    {
+      "category": "HOST",
+      "channel": "MAX",
+      "closed_not_realized": {
+        "closed_at": 1791558575,
+        "crm_lead_id": 49399941,
+        "last_comment": "посмотрели соседние даты - дорого",
+        "last_comment_at": 1791558576,
+        "last_record_at": 1791558576,
+        "last_record_author": "",
+        "last_record_display": "посмотрели соседние даты - дорого",
+        "last_record_errors": [],
+        "last_record_id": "321359807",
+        "last_record_rule_version": 5,
+        "last_record_status": "VERIFIED",
+        "last_record_type": "common",
+        "loss_reason_id": 21779734,
+        "loss_reason_name": "Слишком дорого"
+      },
+      "crm": {
+        "ambiguity_count": 0,
+        "created_at": 1791558575,
+        "entity_id": 49399941,
+        "entity_type": "lead",
+        "event_type": "Корпоратив",
+        "found": true,
+        "guests": "90",
+        "guests_source": "CRM",
+        "responsible_user_id": 12982830,
+        "responsible_user_name": "Максим",
+        "updated_at": 1791558576
+      },
+      "crm_created_at": 1791558575,
+      "crm_feedback": {
+        "closed_at": 1791558575,
+        "crm_lead_id": 49399941,
+        "excluded": true,
+        "first_activity_at": null,
+        "lead_created_at": 1791558575,
+        "loss_reason_checked": true,
+        "loss_reason_id": 21779734,
+        "loss_reason_name": "Слишком дорого",
+        "pipeline_id": 10081590,
+        "responsible_user_id": 12982830,
+        "rule_version": 6,
+        "state": "EXCLUDED",
+        "status_id": 143,
+        "status_name": "Закрыто и не реализовано"
+      },
+      "crm_found": true,
+      "crm_outcome": {
+        "closed_at": 1791558575,
+        "loss_reason_id": 21779734,
+        "loss_reason_name": "Слишком дорого",
+        "result": "LOST",
+        "status_id": 143,
+        "status_name": "Закрыто и не реализовано"
+      },
+      "crm_required": true,
+      "crm_responsible": 12982830,
+      "deadline_msk_ts": 1791579599,
+      "event_date": "2026-12-25",
+      "event_type": "Корпоратив",
+      "event_type_source": "CRM",
+      "fields": {
+        "category": "HOST",
+        "email": "",
+        "event_date": "2026-12-25",
+        "event_date_raw": "25.12",
+        "event_type": "Корпоратив",
+        "guests_count": 90,
+        "guests_max": null,
+        "guests_min": null,
+        "guests_raw": "90п.",
+        "name": "Анна",
+        "phone_digits": "79264618202",
+        "phone_raw": "89264618202",
+        "source": "Заявки хост",
+        "telegram_username": ""
+      },
+      "first_seen_at": "2026-10-09T17:43:25+03:00",
+      "first_seen_ts": 1791557005,
+      "guests": 90,
+      "guests_max": null,
+      "guests_min": null,
+      "guests_raw": "90п.",
+      "id": "9e6564849c79e789",
+      "identifier": {
+        "type": "phone",
+        "value": "79264618202"
+      },
+      "last_seen_at": "2026-10-09T17:43:25+03:00",
+      "last_seen_ts": 1791557005,
+      "manager_reaction": null,
+      "max": {
+        "chat_id": -71704692523093,
+        "message_ids": [
+          "mid.ffffbec8f345ffab01a1211e6f3016d5"
+        ],
+        "sender_name": "Елена",
+        "sender_user_id": 121513620,
+        "sender_username": null
+      },
+      "message_id": "mid.ffffbec8f345ffab01a1211e6f3016d5",
+      "name": "Анна",
+      "phone": "89264618202",
+      "preclose_record_cache": {
+        "closed_at": 1791558575,
+        "crm_lead_id": 49399941,
+        "last_comment": "посмотрели соседние даты - дорого",
+        "last_comment_at": 1791558576,
+        "last_record_at": 1791558576,
+        "last_record_author": "",
+        "last_record_display": "посмотрели соседние даты - дорого",
+        "last_record_errors": [],
+        "last_record_id": "321359807",
+        "last_record_rule_version": 5,
+        "last_record_status": "VERIFIED",
+        "last_record_type": "common"
+      },
+      "received_at": "2026-10-09T17:43:25+03:00",
+      "sender_name": "Елена",
+      "sender_user_id": 121513620,
+      "source": "Заявки хост",
+      "status": "OK",
+      "username": "",
+      "violations": []
+    },
+    {
+      "category": "ЗАЯВКА ПОЧТА",
+      "channel": "MAX",
+      "crm": {
+        "ambiguity_count": 0,
+        "created_at": null,
+        "entity_id": null,
+        "entity_type": null,
+        "event_type": null,
+        "found": false,
+        "responsible_user_id": null,
+        "responsible_user_name": null,
+        "updated_at": null
+      },
+      "crm_created_at": null,
+      "crm_found": false,
+      "crm_required": true,
+      "crm_responsible": null,
+      "deadline_msk_ts": 1791579599,
+      "event_date": "",
+      "fields": {
+        "attachment_message_id": "mid.ffffbec8f345ffab01a12186bead0ad9",
+        "attachment_ocr_text": "19:35 @ % © ии 62%\n< ХХ м\nАренда площадки\nis Ivan.Gora@secret-point.ru хх\n09 oxr. 2026, 18:35 ® 1 THe\nДобрый день!\nМеня зовут Иван, представляю event\nагентство Secret Point\nМы скомандой участвуем в тендере и\nпланируем провести мероприятие на Вашей\nплощадке.\nДата мероприятия: 4 февраля\nКоличество участников - 100 человек\nВремя проведения мероприятия - 18.00 -\n23.00\nЕсли же от Вашей площадки эксклюзив на\nкейтеринг, то прошу сделать расчет и по кухне\n- интересует welcome фуршет + банкет\nТакже подскажите, пожалуйста:\nБазовое время аренды + монтажа и\nдемонтажа\nЕсть ли в этом зале сцена и экран (если нет,\nможем ли ее застроить самостоятельно?)\nКакое техническое оборудование входит в\nстоимость аренды и какая мебель?\nЕсть ли отдельное место для проведения\nWelcome?\nЕсть ли пробковый сбор за алкоголь? Если.\nесть, то сколько?\nКакая мебель входит в стоимость? Пришлите,\nпожалуйста, перечень.\nКакие условия парковки, сколько парковочных\nмест?\nЕсть ли доп. сбор за привлечение своих тех.\nподрядчиков?\nЕсть ли гримерные комнаты, сколько и на\nкаких условиях?\nВходит ли в стоимость аренды клининг,\n‘охрана, гардероб, гардеробщики?\nЕсть ли скрытые платежи, доп. плата за что-то\n(например, пересетапы, мебель, навигация,\nперсонал и пр)\nДо скольких можно шуметь?\nПредоставляете ли АК? Если да, то на что?\nПри оплате по безнал есть %?\n‘Очень хотели бы получить просчет с учетом\nоплаты по безналу, а также подразумевается\nли агентская комиссия?\nБудет здорово получить ответ в ТГ\n(@Angelszz3)\nЗаранее благодарю Вас за ответы Ha вопросы\nи желаю хорошего вечера!)\nС уважением,\nИван Подопригора\nМенеджер по работе с клиентами\nPOINT\n+7977 297 1599\n+7917 594 88 87\nvan.Gora@secret-point.ru\nwww.secret-point.ru\nooh 4 wf. we Ещё",
+        "category": "ЗАЯВКА ПОЧТА",
+        "description": "19:35 @ % © ии 62%\n< ХХ м\nАренда площадки\nis Ivan.Gora@secret-point.ru хх\n09 oxr. 2026, 18:35 ® 1 THe\nДобрый день!\nМеня зовут Иван, представляю event\nагентство Secret Point\nМы скомандой участвуем в тендере и\nпланируем провести мероприятие на Вашей\nплощадке.\nДата мероприятия: 4 февраля\nКоличество участников - 100 человек\nВремя проведения мероприятия - 18.00 -\n23.00\nЕсли же от Вашей площадки эксклюзив на\nкейтеринг, то прошу сделать расчет и по кухне\n- интересует welcome фуршет + банкет\nТакже подскажите, пожалуйста:\nБазовое время аренды + монтажа и\nдемонтажа\nЕсть ли в этом зале сцена и экран (если нет,\nможем ли ее застроить самостоятельно?)\nКакое техническое оборудование входит в\nстоимость аренды и какая мебель?\nЕсть ли отдельное место для проведения\nWelcome?\nЕсть ли пробковый сбор за алкоголь? Если.\nесть, то сколько?\nКакая мебель входит в стоимость? Пришлите,\nпожалуйста, перечень.\nКакие условия парковки, сколько парковочных\nмест?\nЕсть ли доп. сбор за привлечение своих тех.\nподрядчиков?\nЕсть ли гримерные комнаты, сколько и на\nкаких условиях?\nВходит ли в стоимость аренды клининг,\n‘охрана, гардероб, гардеробщики?\nЕсть ли скрытые платежи, доп. плата за что-то\n(например, пересетапы, мебель, навигация,\nперсонал и пр)\nДо скольких можно шуметь?\nПредоставляете ли АК? Если да, то на что?\nПри оплате по безнал есть %?\n‘Очень хотели бы получить просчет с учетом\nоплаты по безналу, а также подразумевается\nли агентская комиссия?\nБудет здорово получить ответ в ТГ\n(@Angelszz3)\nЗаранее благодарю Вас за ответы Ha вопросы\nи желаю хорошего вечера!)\nС уважением,\nИван Подопригора\nМенеджер по работе с клиентами\nPOINT\n+7977 297 1599\n+7917 594 88 87\nvan.Gora@secret-point.ru\nwww.secret-point.ru\nooh 4 wf. we Ещё",
+        "email": "Ivan.Gora@secret-point.ru",
+        "event_date": "",
+        "event_date_raw": "4 февраля",
+        "event_type": "",
+        "guests_count": 100,
+        "guests_max": null,
+        "guests_min": null,
+        "guests_raw": "100 человек",
+        "name": "Иван Подопригора",
+        "phone_digits": "79772971599",
+        "phone_raw": "+7977 297 1599",
+        "source": "ЗАЯВКА ПОЧТА",
+        "telegram_username": "angelszz3"
+      },
+      "first_seen_at": "2026-10-09T19:37:19+03:00",
+      "first_seen_ts": 1791563839,
+      "guests": 100,
+      "guests_max": null,
+      "guests_min": null,
+      "guests_raw": "100 человек",
+      "id": "d66cf1d5bc8f71d7",
+      "identifier": {
+        "type": "phone",
+        "value": "79772971599"
+      },
+      "last_seen_at": "2026-10-09T19:37:19+03:00",
+      "last_seen_ts": 1791563839,
+      "manager_reaction": null,
+      "max": {
+        "attachment_message_id": "mid.ffffbec8f345ffab01a12186bead0ad9",
+        "chat_id": -71704692523093,
+        "message_ids": [
+          "mid.ffffbec8f345ffab01a12186b8c449e7"
+        ],
+        "sender_name": "Al",
+        "sender_user_id": 74336871,
+        "sender_username": null
+      },
+      "message_id": "mid.ffffbec8f345ffab01a12186b8c449e7",
+      "name": "Иван Подопригора",
+      "phone": "+7977 297 1599",
+      "received_at": "2026-10-09T19:37:19+03:00",
+      "sender_name": "Al",
+      "sender_user_id": 74336871,
+      "source": "ЗАЯВКА ПОЧТА",
+      "status": "PENDING",
+      "username": "angelszz3",
+      "violations": []
+    },
+    {
+      "category": "HOST",
+      "channel": "MAX",
+      "crm": {
+        "ambiguity_count": 0,
+        "created_at": 1791567239,
+        "entity_id": 49402969,
+        "entity_type": "lead",
+        "event_type": "Юбилей",
+        "found": true,
+        "guests": "14",
+        "guests_source": "CRM",
+        "responsible_user_id": 12982830,
+        "responsible_user_name": "Максим",
+        "updated_at": 1791567785
+      },
+      "crm_created_at": 1791567239,
+      "crm_feedback": {
+        "closed_at": null,
+        "crm_lead_id": 49402969,
+        "deadline_at": 1791838800,
+        "excluded": false,
+        "first_activity_at": null,
+        "lead_created_at": 1791567239,
+        "loss_reason_checked": true,
+        "loss_reason_id": null,
+        "loss_reason_name": "",
+        "pipeline_id": 10081590,
+        "responsible_user_id": 12982830,
+        "rule_version": 6,
+        "state": "WAITING",
+        "status_id": 79927034,
+        "status_name": "Первичный контакт"
+      },
+      "crm_found": true,
+      "crm_required": true,
+      "crm_responsible": 12982830,
+      "deadline_msk_ts": 1791579599,
+      "event_date": "2026-11-21",
+      "event_type": "Юбилей",
+      "event_type_source": "CRM",
+      "fields": {
+        "category": "HOST",
+        "email": "",
+        "event_date": "2026-11-21",
+        "event_date_raw": "21.11",
+        "event_type": "Юбилей",
+        "guests_count": 14,
+        "guests_max": null,
+        "guests_min": null,
+        "guests_raw": "14п.",
+        "name": "Валерий",
+        "phone_digits": "79281881999",
+        "phone_raw": "89281881999",
+        "source": "Заявки хост",
+        "telegram_username": ""
+      },
+      "first_seen_at": "2026-10-09T19:56:47+03:00",
+      "first_seen_ts": 1791565007,
+      "guests": 14,
+      "guests_max": null,
+      "guests_min": null,
+      "guests_raw": "14п.",
+      "id": "75a19632701f8d5a",
+      "identifier": {
+        "type": "phone",
+        "value": "79281881999"
+      },
+      "last_seen_at": "2026-10-09T19:56:47+03:00",
+      "last_seen_ts": 1791565007,
+      "manager_reaction": null,
+      "max": {
+        "chat_id": -71704692523093,
+        "message_ids": [
+          "mid.ffffbec8f345ffab01a121988be7745d"
+        ],
+        "sender_name": "Елена",
+        "sender_user_id": 121513620,
+        "sender_username": null
+      },
+      "message_id": "mid.ffffbec8f345ffab01a121988be7745d",
+      "name": "Валерий",
+      "phone": "89281881999",
+      "received_at": "2026-10-09T19:56:47+03:00",
+      "sender_name": "Елена",
+      "sender_user_id": 121513620,
+      "source": "Заявки хост",
+      "status": "OK",
+      "username": "",
+      "violations": []
     }
   ],
   "pipeline_activity": {
@@ -78127,8 +78696,8 @@
         "88382034": 1
       },
       "2026-10-09": {
-        "143": 7,
-        "88382034": 1
+        "143": 9,
+        "88382034": 2
       }
     },
     "pipeline_id": 10081590,
@@ -78211,7 +78780,7 @@
       }
     ],
     "today": "2026-10-09",
-    "total_movements": 326,
+    "total_movements": 329,
     "weeks": [
       {
         "dates": [
