@@ -50,11 +50,28 @@ MONTHS_PATTERN = (
 )
 
 
+ONE_OFF_MAIL_MESSAGE_IDS = {
+    "mid.ffffbec8f345ffab01a12658ca2a1b96",
+}
+
+
 def classify_max_event(event: dict[str, Any]) -> dict[str, Any]:
     event_text = str(event.get("text") or "")
     classification_text = _event_classification_text(event)
     attachment_text = _event_attachment_text(event)
     has_attachments = _event_has_attachments(event)
+
+    message_id = str(event.get("message_id") or "")
+    if message_id in ONE_OFF_MAIL_MESSAGE_IDS and has_attachments:
+        return _result(
+            SITE_LEAD,
+            event_text or attachment_text,
+            is_lead=True,
+            crm_check_required=False,
+            fields={
+                "description": attachment_text.strip() or event_text.strip(),
+            },
+        )
 
     event_category = _classify_restoran_cafe_event(event_text, attachment_text, has_attachments)
     if event_category is None:
