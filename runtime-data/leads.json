@@ -23232,6 +23232,22 @@
     {
       "category": "MARQUIZ",
       "channel": "TELEGRAM",
+      "closed_not_realized": {
+        "closed_at": 1791712855,
+        "crm_lead_id": 49331791,
+        "last_comment": "не подходит бюджет",
+        "last_comment_at": 1791712867,
+        "last_record_at": 1791712867,
+        "last_record_author": "Олеся",
+        "last_record_display": "не подходит бюджет",
+        "last_record_errors": [],
+        "last_record_id": "e8e62af9-742e-4382-be08-5e4f71497f81",
+        "last_record_rule_version": 5,
+        "last_record_status": "VERIFIED",
+        "last_record_type": "entity_direct_message",
+        "loss_reason_id": 21779734,
+        "loss_reason_name": "Слишком дорого"
+      },
       "crm": {
         "ambiguity_count": 0,
         "created_at": 1791372257,
@@ -23247,23 +23263,30 @@
       },
       "crm_created_at": 1791372257,
       "crm_feedback": {
-        "closed_at": null,
+        "closed_at": 1791712855,
         "crm_lead_id": 49331791,
-        "deadline_at": 1791666000,
-        "excluded": false,
+        "excluded": true,
         "first_activity_at": null,
         "lead_created_at": 1791372257,
         "loss_reason_checked": true,
-        "loss_reason_id": null,
-        "loss_reason_name": "",
+        "loss_reason_id": 21779734,
+        "loss_reason_name": "Слишком дорого",
         "pipeline_id": 10081590,
         "responsible_user_id": 13009530,
         "rule_version": 6,
-        "state": "NO_FEEDBACK",
-        "status_id": 79927038,
-        "status_name": "Выслано предложение"
+        "state": "EXCLUDED",
+        "status_id": 143,
+        "status_name": "Закрыто и не реализовано"
       },
       "crm_found": true,
+      "crm_outcome": {
+        "closed_at": 1791712855,
+        "loss_reason_id": 21779734,
+        "loss_reason_name": "Слишком дорого",
+        "result": "LOST",
+        "status_id": 143,
+        "status_name": "Закрыто и не реализовано"
+      },
       "crm_required": true,
       "crm_responsible": 13009530,
       "deadline_msk_ts": 1791406799,
@@ -23306,6 +23329,20 @@
         "update_id": 185608718,
         "user_id": 328611361,
         "username": "Olesyagozhina"
+      },
+      "preclose_record_cache": {
+        "closed_at": 1791712855,
+        "crm_lead_id": 49331791,
+        "last_comment": "не подходит бюджет",
+        "last_comment_at": 1791712867,
+        "last_record_at": 1791712867,
+        "last_record_author": "Олеся",
+        "last_record_display": "не подходит бюджет",
+        "last_record_errors": [],
+        "last_record_id": "e8e62af9-742e-4382-be08-5e4f71497f81",
+        "last_record_rule_version": 5,
+        "last_record_status": "VERIFIED",
+        "last_record_type": "entity_direct_message"
       },
       "received_at": "2026-10-07T12:32:14+03:00",
       "sender_name": "MarquizBot",
@@ -23546,20 +23583,41 @@
       "channel": "TELEGRAM",
       "crm": {
         "ambiguity_count": 0,
-        "created_at": null,
-        "entity_id": null,
-        "entity_type": null,
-        "event_type": null,
-        "found": false,
-        "responsible_user_id": null,
-        "responsible_user_name": null,
-        "updated_at": null
+        "created_at": 1791711854,
+        "entity_id": 49437343,
+        "entity_type": "lead",
+        "event_type": "Свадьба",
+        "found": true,
+        "guests": "50",
+        "guests_source": "CRM",
+        "responsible_user_id": 13009530,
+        "responsible_user_name": "Олеся",
+        "updated_at": 1791711861
       },
-      "crm_created_at": null,
-      "crm_found": false,
+      "crm_created_at": 1791711854,
+      "crm_feedback": {
+        "closed_at": null,
+        "crm_lead_id": 49437343,
+        "deadline_at": 1792011600,
+        "excluded": false,
+        "first_activity_at": null,
+        "lead_created_at": 1791711854,
+        "loss_reason_checked": true,
+        "loss_reason_id": null,
+        "loss_reason_name": "",
+        "pipeline_id": 10081590,
+        "responsible_user_id": 13009530,
+        "rule_version": 6,
+        "state": "WAITING",
+        "status_id": 79927038,
+        "status_name": "Выслано предложение"
+      },
+      "crm_found": true,
       "crm_required": true,
-      "crm_responsible": null,
+      "crm_responsible": 13009530,
       "deadline_msk_ts": 1791493199,
+      "event_type": "Свадьба",
+      "event_type_source": "CRM",
       "fields": {
         "category": "САЙТ ТИЛЬДА",
         "description": "Содержание заявки:\nname: Мария\nphone: +79853040346\nDate: 31-07-2027\nInput: 50\nCheckbox: yes\nyclid: 12352424597237268479\nutm_source: yandex_direct\nutm_medium: cpc\nutm_campaign: Svadba_poisk\nutm_term: площадки для свадьбы\npage_url: https://moscowbanket.ru/weddings/?utm_source=yandex_direct&utm_medium=cpc&utm_campaign=Svadba_poisk&type=search&source=none&added=no&block=other&position=1&keyword=%D0%BF%D0%BB%D0%BE%D1%89%D0%B0%D0%B4%D0%BA%D0%B8%20%D0%B4%D0%BB%D1%8F%20%D1%81%D0%B2%D0%B0%D0%B4%D1%8C%D0%B1%D1%8B&utm_term=%D0%BF%D0%BB%D0%BE%D1%89%D0%B0%D0%B4%D0%BA%D0%B8%20%D0%B4%D0%BB%D1%8F%20%D1%81%D0%B2%D0%B0%D0%B4%D1%8C%D0%B1%D1%8B&callibri=yd_c:118776779_gb:5552984281_ad:16902921619_ph:54481851067_st:search_s:none_dt:mobile&etext=2202.54EV__CAHLoXt6hJxUF5882UmeZEELudpkTS0gpoof45gOLwdItHh4PKFlLZ7BZFaG93YWduYnhkZWVyZGFwYw.e507befc156174e7d7d6e3efd081a29174f20338&yclid=12352424597237268479\npage_referrer: https://yandex.ru/\nform_submit_timestamp: 1791455521\nmetrika_client_id: 1791455469567316995\nym_client_id: 1791455469567316995\nym_clientid: 1791455469567316995\nym_uid: 1791455469567316995\n_ym_uid: 1791455469567316995\nclient_id: 1791455469567316995\nclientid: 1791455469567316995\nyandex_client_id: 1791455469567316995\nya_client_id: 1791455469567316995\n\nДополнительная информация:\nКод заявки: 2925975:8728444732\nКод блока: rec917331922\nhttps://moscowbanket.ru/weddings/\nUTM source: yandex_direct\nUTM medium: cpc\nUTM campaign: Svadba_poisk\nUTM term: площадки для свадьбы\n-----",
@@ -23604,7 +23662,7 @@
       "sender_user_id": 265299531,
       "sender_username": "TildaFormsBot",
       "source": "САЙТ ТИЛЬДА",
-      "status": "ALARM_NO_CRM",
+      "status": "LATE_CRM",
       "telegram": {
         "chat_id": -1001645768111,
         "message_ids": [
@@ -23615,7 +23673,7 @@
         ]
       },
       "violations": [
-        "ALARM_NO_CRM"
+        "LATE_CRM"
       ]
     },
     {
@@ -23623,26 +23681,47 @@
       "channel": "TELEGRAM",
       "crm": {
         "ambiguity_count": 0,
-        "created_at": null,
-        "entity_id": null,
-        "entity_type": null,
-        "event_type": null,
-        "found": false,
-        "responsible_user_id": null,
-        "responsible_user_name": null,
-        "updated_at": null
+        "created_at": 1791711705,
+        "entity_id": 49437271,
+        "entity_type": "lead",
+        "event_type": "Корпоратив",
+        "found": true,
+        "guests": "100",
+        "guests_source": "CRM",
+        "responsible_user_id": 13009530,
+        "responsible_user_name": "Олеся",
+        "updated_at": 1791711789
       },
-      "crm_created_at": null,
-      "crm_found": false,
+      "crm_created_at": 1791711705,
+      "crm_feedback": {
+        "closed_at": null,
+        "crm_lead_id": 49437271,
+        "deadline_at": 1792011600,
+        "excluded": false,
+        "first_activity_at": null,
+        "lead_created_at": 1791711705,
+        "loss_reason_checked": true,
+        "loss_reason_id": null,
+        "loss_reason_name": "",
+        "pipeline_id": 10081590,
+        "responsible_user_id": 13009530,
+        "rule_version": 6,
+        "state": "WAITING",
+        "status_id": 79927914,
+        "status_name": "Приедут на просмотр"
+      },
+      "crm_found": true,
       "crm_required": true,
-      "crm_responsible": null,
+      "crm_responsible": 13009530,
       "deadline_msk_ts": 1791493199,
+      "event_type": "Корпоратив",
+      "event_type_source": "CRM",
       "fields": {
         "category": "САЙТ ТИЛЬДА",
         "description": "Содержание заявки:\nName: Мари\nPhone: +79260182550\nДата: 22-10-2026\nКол-во_гостей: 100\nCheckbox: yes\npage_url: https://moscowbanket.ru/page65881189.html#dati\npage_referrer: https://moscowbanket.ru/\nform_submit_timestamp: 1791474322\nmetrika_client_id: 1772462042916753624\nym_client_id: 1772462042916753624\nym_clientid: 1772462042916753624\nym_uid: 1772462042916753624\n_ym_uid: 1772462042916753624\nclient_id: 1772462042916753624\nclientid: 1772462042916753624\nyandex_client_id: 1772462042916753624\nya_client_id: 1772462042916753624\n\nДополнительная информация:\nКод заявки: 2925975:8729171623\nКод блока: rec1193957381\nhttps://moscowbanket.ru/page65881189.html#dati\n-----",
         "event_date": "2026-10-22",
         "event_date_raw": "22-10-2026",
-        "event_type": "",
+        "event_type": "Корпоратив",
         "form_submit_timestamp": 1791474322,
         "guests_count": 100,
         "metrika_client_id": "1772462042916753624",
@@ -23681,7 +23760,7 @@
       "sender_user_id": 265299531,
       "sender_username": "TildaFormsBot",
       "source": "САЙТ ТИЛЬДА",
-      "status": "ALARM_NO_CRM",
+      "status": "LATE_CRM",
       "telegram": {
         "chat_id": -1001645768111,
         "message_ids": [
@@ -23692,7 +23771,7 @@
         ]
       },
       "violations": [
-        "ALARM_NO_CRM"
+        "LATE_CRM"
       ]
     },
     {
@@ -75913,7 +75992,7 @@
         "crm_lead_id": 49334871,
         "deadline_at": 1791666000,
         "excluded": false,
-        "first_activity_at": null,
+        "first_activity_at": 1791712800,
         "lead_created_at": 1791377358,
         "loss_reason_checked": true,
         "loss_reason_id": null,
@@ -75921,9 +76000,9 @@
         "pipeline_id": 10081590,
         "responsible_user_id": 13009530,
         "rule_version": 6,
-        "state": "NO_FEEDBACK",
-        "status_id": 79927038,
-        "status_name": "Выслано предложение"
+        "state": "CLEAR",
+        "status_id": 88382034,
+        "status_name": "Запрошена ос"
       },
       "crm_found": true,
       "crm_required": true,
@@ -76004,7 +76083,7 @@
         "crm_lead_id": 49334957,
         "deadline_at": 1791666000,
         "excluded": false,
-        "first_activity_at": null,
+        "first_activity_at": 1791712503,
         "lead_created_at": 1791377490,
         "loss_reason_checked": true,
         "loss_reason_id": null,
@@ -76012,9 +76091,9 @@
         "pipeline_id": 10081590,
         "responsible_user_id": 13009530,
         "rule_version": 6,
-        "state": "NO_FEEDBACK",
-        "status_id": 79927038,
-        "status_name": "Выслано предложение"
+        "state": "CLEAR",
+        "status_id": 79927042,
+        "status_name": "Принимают решение"
       },
       "crm_found": true,
       "crm_required": true,
@@ -76189,7 +76268,7 @@
         "crm_lead_id": 49335231,
         "deadline_at": 1791666000,
         "excluded": false,
-        "first_activity_at": null,
+        "first_activity_at": 1791712439,
         "lead_created_at": 1791378053,
         "loss_reason_checked": true,
         "loss_reason_id": null,
@@ -76197,9 +76276,9 @@
         "pipeline_id": 10081590,
         "responsible_user_id": 13009530,
         "rule_version": 6,
-        "state": "NO_FEEDBACK",
-        "status_id": 79927038,
-        "status_name": "Выслано предложение"
+        "state": "CLEAR",
+        "status_id": 79927042,
+        "status_name": "Принимают решение"
       },
       "crm_found": true,
       "crm_required": true,
@@ -76670,27 +76749,52 @@
       "channel": "MAX",
       "crm": {
         "ambiguity_count": 0,
-        "created_at": null,
-        "entity_id": null,
-        "entity_type": null,
-        "event_type": null,
-        "found": false,
-        "responsible_user_id": null,
-        "responsible_user_name": null,
-        "updated_at": null
+        "created_at": 1791711944,
+        "entity_id": 49437377,
+        "entity_type": "lead",
+        "event_type": "Бизнес мероприятие",
+        "found": true,
+        "guests": "6",
+        "guests_source": "CRM",
+        "responsible_user_id": 13009530,
+        "responsible_user_name": "Олеся",
+        "updated_at": 1791711951
       },
-      "crm_created_at": null,
-      "crm_found": false,
+      "crm_created_at": 1791711944,
+      "crm_feedback": {
+        "closed_at": 1791711951,
+        "crm_lead_id": 49437377,
+        "excluded": true,
+        "first_activity_at": null,
+        "lead_created_at": 1791711944,
+        "loss_reason_checked": true,
+        "loss_reason_id": null,
+        "loss_reason_name": "",
+        "pipeline_id": 10081590,
+        "responsible_user_id": 13009530,
+        "rule_version": 6,
+        "state": "EXCLUDED",
+        "status_id": 142,
+        "status_name": "Успешно реализовано"
+      },
+      "crm_found": true,
+      "crm_outcome": {
+        "result": "SUCCESS",
+        "status_id": 142,
+        "status_name": "Успешно реализовано"
+      },
       "crm_required": true,
-      "crm_responsible": null,
+      "crm_responsible": 13009530,
       "deadline_msk_ts": 1791464400,
       "event_date": "2026-10-09",
+      "event_type": "Бизнес мероприятие",
+      "event_type_source": "CRM",
       "fields": {
         "category": "HOST",
         "email": "",
         "event_date": "2026-10-09",
         "event_date_raw": "9.10",
-        "event_type": "",
+        "event_type": "Бизнес мероприятие",
         "guests_count": 6,
         "guests_max": null,
         "guests_min": null,
@@ -76731,10 +76835,10 @@
       "sender_name": "Елена",
       "sender_user_id": 121513620,
       "source": "Заявки хост",
-      "status": "ALARM_NO_CRM",
+      "status": "LATE_CRM",
       "username": "",
       "violations": [
-        "ALARM_NO_CRM"
+        "LATE_CRM"
       ]
     },
     {
@@ -77544,27 +77648,48 @@
       "channel": "MAX",
       "crm": {
         "ambiguity_count": 0,
-        "created_at": null,
-        "entity_id": null,
-        "entity_type": null,
-        "event_type": null,
-        "found": false,
-        "responsible_user_id": null,
-        "responsible_user_name": null,
-        "updated_at": null
+        "created_at": 1791709751,
+        "entity_id": 49436567,
+        "entity_type": "lead",
+        "event_type": "Корпоратив",
+        "found": true,
+        "guests": "250",
+        "guests_source": "CRM",
+        "responsible_user_id": 13009530,
+        "responsible_user_name": "Олеся",
+        "updated_at": 1791714265
       },
-      "crm_created_at": null,
-      "crm_found": false,
+      "crm_created_at": 1791709751,
+      "crm_feedback": {
+        "closed_at": null,
+        "crm_lead_id": 49436567,
+        "deadline_at": 1792011600,
+        "excluded": false,
+        "first_activity_at": null,
+        "lead_created_at": 1791709751,
+        "loss_reason_checked": true,
+        "loss_reason_id": null,
+        "loss_reason_name": "",
+        "pipeline_id": 10081590,
+        "responsible_user_id": 13009530,
+        "rule_version": 6,
+        "state": "WAITING",
+        "status_id": 79927038,
+        "status_name": "Выслано предложение"
+      },
+      "crm_found": true,
       "crm_required": true,
-      "crm_responsible": null,
+      "crm_responsible": 13009530,
       "deadline_msk_ts": 1791550800,
       "event_date": "",
+      "event_type": "Корпоратив",
+      "event_type_source": "CRM",
       "fields": {
         "category": "HOST",
         "email": "",
         "event_date": "",
         "event_date_raw": "25.12/28",
-        "event_type": "",
+        "event_type": "Корпоратив",
         "guests_count": 250,
         "guests_max": null,
         "guests_min": null,
@@ -77605,10 +77730,10 @@
       "sender_name": "Алёна",
       "sender_user_id": 432412696,
       "source": "Заявки хост",
-      "status": "ALARM_NO_CRM",
+      "status": "LATE_CRM",
       "username": "",
       "violations": [
-        "ALARM_NO_CRM"
+        "LATE_CRM"
       ]
     },
     {
@@ -79186,7 +79311,12 @@
         "143": 2
       },
       "2026-10-11": {
-        "79927038": 1
+        "142": 1,
+        "143": 1,
+        "79927038": 3,
+        "79927042": 2,
+        "79927914": 1,
+        "88382034": 1
       }
     },
     "pipeline_id": 10081590,
@@ -79269,7 +79399,7 @@
       }
     ],
     "today": "2026-10-11",
-    "total_movements": 332,
+    "total_movements": 340,
     "weeks": [
       {
         "dates": [
