@@ -9,6 +9,9 @@ from .normalize import normalize_phone, normalize_username, parse_event_date
 
 MAIL_LEAD = "ЗАЯВКА ПОЧТА"
 HEADER_RE = re.compile(r"^\s*заявка\s+(?:сайт|почта)\s*:\s*$", re.IGNORECASE)
+ONE_OFF_MAIL_MESSAGE_IDS = {
+    "mid.ffffbec8f345ffab01a12658ca2a1b96",
+}
 
 _RUSSIAN_MONTHS = (
     "январ(?:ь|я|е)",
@@ -67,7 +70,8 @@ _RUSSIAN_MONTH_NUMBERS = {
 
 def classify_max_mail_event(event: dict[str, Any]) -> dict[str, Any] | None:
     text = str(event.get("text") or "")
-    if not HEADER_RE.match(text):
+    message_id = str(event.get("message_id") or "")
+    if not HEADER_RE.match(text) and message_id not in ONE_OFF_MAIL_MESSAGE_IDS:
         return None
     if not _has_image(event):
         return None
