@@ -78000,21 +78000,42 @@
       "channel": "MAX",
       "crm": {
         "ambiguity_count": 0,
-        "created_at": null,
-        "entity_id": null,
-        "entity_type": null,
-        "event_type": null,
-        "found": false,
-        "responsible_user_id": null,
-        "responsible_user_name": null,
-        "updated_at": null
+        "created_at": 1791558073,
+        "entity_id": 49399763,
+        "entity_type": "lead",
+        "event_type": "Корпоратив",
+        "found": true,
+        "guests": "150",
+        "guests_source": "CRM",
+        "responsible_user_id": 12982830,
+        "responsible_user_name": "Максим",
+        "updated_at": 1791702910
       },
-      "crm_created_at": null,
-      "crm_found": false,
+      "crm_created_at": 1791558073,
+      "crm_feedback": {
+        "closed_at": null,
+        "crm_lead_id": 49399763,
+        "deadline_at": 1791838800,
+        "excluded": false,
+        "first_activity_at": null,
+        "lead_created_at": 1791558073,
+        "loss_reason_checked": true,
+        "loss_reason_id": null,
+        "loss_reason_name": "",
+        "pipeline_id": 10081590,
+        "responsible_user_id": 12982830,
+        "rule_version": 6,
+        "state": "WAITING",
+        "status_id": 79927038,
+        "status_name": "Выслано предложение"
+      },
+      "crm_found": true,
       "crm_required": true,
-      "crm_responsible": null,
+      "crm_responsible": 12982830,
       "deadline_msk_ts": 1791579599,
       "event_date": "",
+      "event_type": "Корпоратив",
+      "event_type_source": "CRM",
       "fields": {
         "attachment_message_id": "mid.ffffbec8f345ffab01a120ca37390fb4",
         "attachment_ocr_text": "16:10 © @ % co 9 MAF ll и 100% @\n< Vv\nзаказ новогоднего корпоратива\nМария Машкова 0.\n09 окт. 2026, 15:53 91 —\nДобрый день! Ищем площадку под проведение\nновогоднего корпоратива, подскажите\nпожалуйста условия и по датам.\nУ нас около 150 чел. желаемая дата 18 декабря\nС уважением,\nМашкова Мария\nПомощник генерального директора\nРаб.: +7 (495) 660-35-21, доб.100\nМоб.: + 7 (926) 606-43-08\nОтветить Переслать Важное Удалить Ещё\nВ О <",
@@ -78065,11 +78086,9 @@
       "sender_name": "Al",
       "sender_user_id": 74336871,
       "source": "ЗАЯВКА ПОЧТА",
-      "status": "ALARM_NO_CRM",
+      "status": "OK",
       "username": "",
-      "violations": [
-        "ALARM_NO_CRM"
-      ]
+      "violations": []
     },
     {
       "category": "ЗАЯВКА ПОЧТА",
@@ -78307,21 +78326,42 @@
       "channel": "MAX",
       "crm": {
         "ambiguity_count": 0,
-        "created_at": null,
-        "entity_id": null,
-        "entity_type": null,
-        "event_type": null,
-        "found": false,
-        "responsible_user_id": null,
-        "responsible_user_name": null,
-        "updated_at": null
+        "created_at": 1791568441,
+        "entity_id": 49403343,
+        "entity_type": "lead",
+        "event_type": "Бизнес мероприятие",
+        "found": true,
+        "guests": "100",
+        "guests_source": "CRM",
+        "responsible_user_id": 12982830,
+        "responsible_user_name": "Максим",
+        "updated_at": 1791702767
       },
-      "crm_created_at": null,
-      "crm_found": false,
+      "crm_created_at": 1791568441,
+      "crm_feedback": {
+        "closed_at": null,
+        "crm_lead_id": 49403343,
+        "deadline_at": 1791838800,
+        "excluded": false,
+        "first_activity_at": null,
+        "lead_created_at": 1791568441,
+        "loss_reason_checked": true,
+        "loss_reason_id": null,
+        "loss_reason_name": "",
+        "pipeline_id": 10081590,
+        "responsible_user_id": 12982830,
+        "rule_version": 6,
+        "state": "WAITING",
+        "status_id": 79927038,
+        "status_name": "Выслано предложение"
+      },
+      "crm_found": true,
       "crm_required": true,
-      "crm_responsible": null,
+      "crm_responsible": 12982830,
       "deadline_msk_ts": 1791579599,
       "event_date": "",
+      "event_type": "Бизнес мероприятие",
+      "event_type_source": "CRM",
       "fields": {
         "attachment_message_id": "mid.ffffbec8f345ffab01a12186bead0ad9",
         "attachment_ocr_text": "19:35 @ % © ии 62%\n< ХХ м\nАренда площадки\nis Ivan.Gora@secret-point.ru хх\n09 oxr. 2026, 18:35 ® 1 THe\nДобрый день!\nМеня зовут Иван, представляю event\nагентство Secret Point\nМы скомандой участвуем в тендере и\nпланируем провести мероприятие на Вашей\nплощадке.\nДата мероприятия: 4 февраля\nКоличество участников - 100 человек\nВремя проведения мероприятия - 18.00 -\n23.00\nЕсли же от Вашей площадки эксклюзив на\nкейтеринг, то прошу сделать расчет и по кухне\n- интересует welcome фуршет + банкет\nТакже подскажите, пожалуйста:\nБазовое время аренды + монтажа и\nдемонтажа\nЕсть ли в этом зале сцена и экран (если нет,\nможем ли ее застроить самостоятельно?)\nКакое техническое оборудование входит в\nстоимость аренды и какая мебель?\nЕсть ли отдельное место для проведения\nWelcome?\nЕсть ли пробковый сбор за алкоголь? Если.\nесть, то сколько?\nКакая мебель входит в стоимость? Пришлите,\nпожалуйста, перечень.\nКакие условия парковки, сколько парковочных\nмест?\nЕсть ли доп. сбор за привлечение своих тех.\nподрядчиков?\nЕсть ли гримерные комнаты, сколько и на\nкаких условиях?\nВходит ли в стоимость аренды клининг,\n‘охрана, гардероб, гардеробщики?\nЕсть ли скрытые платежи, доп. плата за что-то\n(например, пересетапы, мебель, навигация,\nперсонал и пр)\nДо скольких можно шуметь?\nПредоставляете ли АК? Если да, то на что?\nПри оплате по безнал есть %?\n‘Очень хотели бы получить просчет с учетом\nоплаты по безналу, а также подразумевается\nли агентская комиссия?\nБудет здорово получить ответ в ТГ\n(@Angelszz3)\nЗаранее благодарю Вас за ответы Ha вопросы\nи желаю хорошего вечера!)\nС уважением,\nИван Подопригора\nМенеджер по работе с клиентами\nPOINT\n+7977 297 1599\n+7917 594 88 87\nvan.Gora@secret-point.ru\nwww.secret-point.ru\nooh 4 wf. we Ещё",
@@ -78330,7 +78370,7 @@
         "email": "Ivan.Gora@secret-point.ru",
         "event_date": "",
         "event_date_raw": "4 февраля",
-        "event_type": "",
+        "event_type": "Бизнес мероприятие",
         "guests_count": 100,
         "guests_max": null,
         "guests_min": null,
@@ -78372,11 +78412,9 @@
       "sender_name": "Al",
       "sender_user_id": 74336871,
       "source": "ЗАЯВКА ПОЧТА",
-      "status": "ALARM_NO_CRM",
+      "status": "OK",
       "username": "angelszz3",
-      "violations": [
-        "ALARM_NO_CRM"
-      ]
+      "violations": []
     },
     {
       "category": "HOST",
@@ -78603,21 +78641,42 @@
       "channel": "MAX",
       "crm": {
         "ambiguity_count": 0,
-        "created_at": null,
-        "entity_id": null,
-        "entity_type": null,
-        "event_type": null,
-        "found": false,
-        "responsible_user_id": null,
-        "responsible_user_name": null,
-        "updated_at": null
+        "created_at": 1791639253,
+        "entity_id": 49421237,
+        "entity_type": "lead",
+        "event_type": "Корпоратив",
+        "found": true,
+        "guests": "200",
+        "guests_source": "CRM",
+        "responsible_user_id": 12982830,
+        "responsible_user_name": "Максим",
+        "updated_at": 1791702474
       },
-      "crm_created_at": null,
-      "crm_found": false,
+      "crm_created_at": 1791639253,
+      "crm_feedback": {
+        "closed_at": null,
+        "crm_lead_id": 49421237,
+        "deadline_at": 1791925200,
+        "excluded": false,
+        "first_activity_at": null,
+        "lead_created_at": 1791639253,
+        "loss_reason_checked": true,
+        "loss_reason_id": null,
+        "loss_reason_name": "",
+        "pipeline_id": 10081590,
+        "responsible_user_id": 12982830,
+        "rule_version": 6,
+        "state": "WAITING",
+        "status_id": 79927038,
+        "status_name": "Выслано предложение"
+      },
+      "crm_found": true,
       "crm_required": true,
-      "crm_responsible": null,
+      "crm_responsible": 12982830,
       "deadline_msk_ts": 1791665999,
       "event_date": "",
+      "event_type": "Корпоратив",
+      "event_type_source": "CRM",
       "fields": {
         "attachment_message_id": "mid.ffffbec8f345ffab01a1258027df3df9",
         "attachment_ocr_text": "14:08 @ % отита 31968\n3 av\nЗапрос коммерческого,\nпредложения - мероприятие 26\nноября 2026 года\nМарина Семёнова od\n10047. 2026, 14:00 8 2 ~\nДобрый pens!\nМеня зовут Марина, ивент агентство,\nМОСКВИЧИ.\nРассматриваем вашу площадку для\nпроведения корпоративного мероприятия 26\n‘ноября 2026 года. Просим направить,\nкоммерческое предложение с учётом\nследующих параметров.\nПараметры мероприятия:\n+ Дата:26 ноября 2026 года, перенос\nневозможен,\n+ Количество гостей: 200 человек,\n+ Время мероприятия: ориентировочно с\n09:00 до21:00.\n* Формат: дневная конференция,\nвечерний фуршет и нетворкинг.\nТребования к площадке:\n1. Основной зал для конференции на 200\nчеловек с театральной рассадкой.\n2. Отдельный зал или изолированное\nпространство для питания и вечерней\nчасти мероприятия.\n3. Желательно отсутствие колонн,\nмешающих обзору сцены и экрана\n4. Возможность организовать вечернюю\nчасть в более камерной атмосфере,\n5. Наличие экрана, звукового\n‘оборудования и микрофонов.\n‘Современные цифровые решения будут\nпреимуществом.\nПросим уточнить:\n* Доступна ли площадка 26 ноября 2026\nгода?\n+ Какие залы вы можете предложитьи\nкакова их площадь?\n+ Какова стоимость аренды с учётом\nнеобходимого времени на монтажи\nдемонтаж?\n+ Чтовходит 8 стоимость аренды: экран,\nзвук, свет, сцена, работа технических\nспециалистов, мебель, клининг, охранаи\nгардероб?\n+ Если экран или другое оборудование\nоплачивается отдельно, просим указать\nстоимость и условия аренды.\n* Какие варианты кофе-брейка и фуршета\n‘доступны? Просим направить менюи\nстоимость на одного человека.\n* Есть ли пробковый сбор, сервисный\n‘сбор, минимальная сумма заказа по.\n‘меню или другие обязательные\nплатежи?\n+ Можноли организовать собственную\nразвлекательную программу или\nфоновую юипде-музыку? Есть ли.\nограничения по звуку и времени?\n+ Какие условия оплаты и бронирования.\nпредусмотрены?\nБудем благодарны за коммерческое\n‘предложение, фотографии залов, схемы\nррассадки и описание технического\nоснащения,\nСпасибо!\n‘Semenove Marna\nBusiness Development Manager\n‘Mob: +7 977 870 72.65\nemail: msemenova@moskvichl agency\n‘web: httns://moskvichi agency/,\nTo; @semmanit\na 2 A bo -\nees peta ie tee о",
@@ -78668,11 +78727,9 @@
       "sender_name": "Al",
       "sender_user_id": 74336871,
       "source": "ЗАЯВКА ПОЧТА",
-      "status": "ALARM_NO_CRM",
+      "status": "OK",
       "username": "semmanit",
-      "violations": [
-        "ALARM_NO_CRM"
-      ]
+      "violations": []
     },
     {
       "category": "HOST",
@@ -79127,6 +79184,9 @@
       },
       "2026-10-10": {
         "143": 2
+      },
+      "2026-10-11": {
+        "79927038": 1
       }
     },
     "pipeline_id": 10081590,
@@ -79209,7 +79269,7 @@
       }
     ],
     "today": "2026-10-11",
-    "total_movements": 331,
+    "total_movements": 332,
     "weeks": [
       {
         "dates": [
