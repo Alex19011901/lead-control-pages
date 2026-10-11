@@ -16,6 +16,9 @@ MAIL_HEADER_RE = re.compile(
     re.IGNORECASE,
 )
 PAIR_WINDOW_MS = 10_000
+ONE_OFF_MAIL_MESSAGE_IDS = {
+    "mid.ffffbec8f345ffab01a12658ca2a1b96",
+}
 
 
 def enrich_max_mail_attachments(events: list[dict[str, Any]], client: MaxClient) -> bool:
@@ -32,7 +35,11 @@ def enrich_max_mail_attachments(events: list[dict[str, Any]], client: MaxClient)
     }
 
     for idx, header in enumerate(ordered):
-        if not MAIL_HEADER_RE.match(str(header.get("text") or "")):
+        header_mid = str(header.get("message_id") or "")
+        if (
+            not MAIL_HEADER_RE.match(str(header.get("text") or ""))
+            and header_mid not in ONE_OFF_MAIL_MESSAGE_IDS
+        ):
             continue
 
         # Historical runs may already have copied attachment metadata onto the
