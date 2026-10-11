@@ -94,6 +94,34 @@ class MaxMailLeadTests(unittest.TestCase):
         self.assertEqual(result["business_source"], "ЗАЯВКА ПОЧТА")
         self.assertTrue(result["crm_check_required"])
 
+    def test_oct10_plain_zayavka_image_is_one_off_mail_lead(self):
+        event = {
+            "type": "max_message_created",
+            "source": "MAX",
+            "update_type": "message_created",
+            "chat_id": -71704692523093,
+            "message_id": "mid.ffffbec8f345ffab01a12658ca2a1b96",
+            "body_mid": "mid.ffffbec8f345ffab01a12658ca2a1b96",
+            "text": "Заявка",
+            "has_attachments": True,
+            "attachment_types": ["image"],
+            "attachments": [{"type": "image", "payload": {"url": "https://example.test/x.jpg"}}],
+            "attachment_ocr_text": OCR,
+            "attachment_text": OCR,
+            "sender_user_id": 74336871,
+            "sender_name": "Al",
+            "sender_username": None,
+            "timestamp": 1791644715562,
+        }
+        result = classify_max_mail_event(event)
+        self.assertIsNotNone(result)
+        self.assertEqual(result["classification"], MAIL_LEAD)
+        self.assertEqual(result["business_source"], "ЗАЯВКА ПОЧТА")
+
+        other = dict(event)
+        other["message_id"] = "mid.other.plain-zayavka"
+        self.assertIsNone(classify_max_mail_event(other))
+
     def test_attachment_fields_are_extracted(self):
         fields = parse_attachment_fields(OCR)
         self.assertEqual(fields["name"], "Анна Иванова")
