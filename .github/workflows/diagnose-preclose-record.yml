@@ -1,4 +1,4 @@
-# rerun-marker: diagnose-missing-20261010-1805
+# rerun-marker: latest-record-v5c-20260929
 name: Diagnose pre-close record (read only)
 on:
   push:
@@ -18,58 +18,53 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Inspect 10 Oct 17:55-18:15 data
+      - name: Test exact pre-close manager record
+        working-directory: app
+        run: PYTHONPATH=.:src python -m unittest tests.test_preclose_record_recovery tests.test_preclose_snapshot_regression tests.test_closed_not_realized tests.test_closed_not_realized_widget -v
+      - name: Validate real closed leads without changing data
+        env:
+          AMOCRM_TOKEN: ${{ secrets.AMOCRM_TOKEN }}
         run: |
-          python - <<'PY'
+          PYTHONPATH=app/src python - <<'PY'
+          import hashlib
           import json
-          from pathlib import Path
-          from datetime import datetime
-          from zoneinfo import ZoneInfo
+          import os
+          from lead_control.amocrm_client import AmoCRMClient
+          from lead_control.closed_not_realized import _read_preclose_record
 
-          tz=ZoneInfo('Europe/Moscow')
-          start=int(datetime(2026,10,10,17,55,tzinfo=tz).timestamp())
-          end=int(datetime(2026,10,10,18,15,tzinfo=tz).timestamp())
-
-          def sec(v):
-              try:
-                  n=int(v or 0)
-              except Exception:
-                  return 0
-              return n//1000 if n>10_000_000_000 else n
-
-          events=[]
-          for line in Path('runtime-data/events.ndjson').read_text(encoding='utf-8').splitlines():
-              if not line.strip():
-                  continue
-              try:
-                  x=json.loads(line)
-              except Exception:
-                  continue
-              ts=sec(x.get('timestamp') or x.get('telegram_date'))
-              if start <= ts <= end:
-                  events.append(x)
-          print('EVENTS '+json.dumps(events,ensure_ascii=False),flush=True)
-
-          leads=json.loads(Path('runtime-data/leads.json').read_text(encoding='utf-8')).get('leads',[])
-          lr=[]
-          for x in leads:
-              raw=x.get('first_seen_ts') or x.get('received_at') or x.get('first_seen_at')
-              if isinstance(raw,str):
-                  try:
-                      ts=int(datetime.fromisoformat(raw).timestamp())
-                  except Exception:
-                      ts=0
-              else:
-                  ts=sec(raw)
-              if start <= ts <= end:
-                  lr.append(x)
-          print('LEADS '+json.dumps(lr,ensure_ascii=False),flush=True)
-
-          review=json.loads(Path('runtime-data/needs_review.json').read_text(encoding='utf-8')).get('items',[])
-          rr=[]
-          for x in review:
-              ts=sec(x.get('timestamp') or x.get('telegram_date'))
-              if start <= ts <= end:
-                  rr.append(x)
-          print('REVIEW '+json.dumps(rr,ensure_ascii=False),flush=True)
+          client=AmoCRMClient('https://alex1901yaru.amocrm.ru',os.environ['AMOCRM_TOKEN'])
+          targets=[
+              (48813485,1790580620),
+              (48855703,1790579990),
+              (49047285,1790607245),
+          ]
+          for lead_id,closed_at in targets:
+              card=client._get_entity('leads',lead_id) or {}
+              manager_id=int(card.get('responsible_user_id') or 0)
+              record=_read_preclose_record(
+                  client,
+                  lead_id,
+                  closed_at,
+                  responsible_user_id=manager_id or None,
+              )
+              text=str(record.get('last_comment') or '')
+              print(json.dumps({
+                  'lead_id':lead_id,
+                  'manager_id':manager_id,
+                  'status':record.get('last_record_status'),
+                  'type':record.get('last_record_type'),
+                  'record_at':record.get('last_record_at'),
+                  'closed_at':closed_at,
+                  'author':record.get('last_record_author'),
+                  'text_len':len(text),
+                  'text_sha256':hashlib.sha256(text.encode()).hexdigest() if text else None,
+              },ensure_ascii=False),flush=True)
+              assert record.get('last_record_status')=='VERIFIED'
+              assert text
+              assert 0 < int(record.get('last_record_at') or 0)
+              if lead_id == 49047285:
+                  print('ELIZABETH_TEXT ' + text, flush=True)
+                  assert 'отмените заявку' in text.casefold()
           PY
+
+# rerun: validate-manager-text-v4
