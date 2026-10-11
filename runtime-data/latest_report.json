@@ -1,7 +1,7 @@
 {
   "alarm_no_crm": 2,
   "by_manager": {
-    "no_manager_reaction": 665,
+    "no_manager_reaction": 666,
     "Максим": 74,
     "Олеся": 60
   },
@@ -9,7 +9,7 @@
     "MARQUIZ": 41,
     "Restoran.Cafe": 3,
     "WedWed": 13,
-    "ЗАЯВКА ПОЧТА": 21,
+    "ЗАЯВКА ПОЧТА": 22,
     "Заявка с ТГ": 32,
     "Заявка сайт": 3,
     "Заявки хост": 443,
@@ -25,7 +25,7 @@
     "ДР": 2,
     "Детский праздник": 6,
     "Конференция": 1,
-    "Корпоратив": 240,
+    "Корпоратив": 241,
     "Поминки": 1,
     "Свадьба": 234,
     "Съёмки": 2,
@@ -37,7 +37,7 @@
     "151+": 31,
     "21-50": 224,
     "51-100": 127,
-    "unknown": 142
+    "unknown": 143
   },
   "late_crm": 164,
   "latest_leads": [
@@ -74,6 +74,24 @@
       "manager_username": "",
       "name": "Алиса",
       "source": "Заявки хост",
+      "status": "OK",
+      "violations": []
+    },
+    {
+      "created_at": "2026-10-10T18:05:15+03:00",
+      "crm_entity_id": 49423441,
+      "crm_entity_type": "lead",
+      "crm_found": true,
+      "event_date": "",
+      "event_type": "Корпоратив",
+      "guests_count": null,
+      "identifier": "7********83",
+      "identifier_type": "phone",
+      "lead_id": "c7b44ad4ba61b1de",
+      "manager": "",
+      "manager_username": "",
+      "name": "Имя Мария",
+      "source": "ЗАЯВКА ПОЧТА",
       "status": "OK",
       "violations": []
     },
@@ -384,31 +402,11 @@
       "violations": [
         "LATE_CRM"
       ]
-    },
-    {
-      "created_at": "2026-10-08T18:45:22+03:00",
-      "crm_entity_id": 49437271,
-      "crm_entity_type": "lead",
-      "crm_found": true,
-      "event_date": "2026-10-22",
-      "event_type": "Корпоратив",
-      "guests_count": 100,
-      "identifier": "7********50",
-      "identifier_type": "phone",
-      "lead_id": "b252cc02bd54b6f0",
-      "manager": "Олеся",
-      "manager_username": "Olesyagozhina",
-      "name": "Мари",
-      "source": "САЙТ ТИЛЬДА",
-      "status": "LATE_CRM",
-      "violations": [
-        "LATE_CRM"
-      ]
     }
   ],
   "needs_review": 136,
   "no_reaction": 0,
-  "ok": 581,
-  "total_leads": 799,
-  "updated_at": "2026-10-11T13:56:11+03:00"
+  "ok": 582,
+  "total_leads": 800,
+  "updated_at": "2026-10-11T14:02:51+03:00"
 }
