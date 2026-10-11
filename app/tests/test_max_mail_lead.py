@@ -118,6 +118,13 @@ class MaxMailLeadTests(unittest.TestCase):
         self.assertEqual(result["classification"], MAIL_LEAD)
         self.assertEqual(result["business_source"], "ЗАЯВКА ПОЧТА")
 
+        leads, needs_review = rebuild_leads_and_needs_review([event], existing_needs_review=[])
+        apply_max_mail_leads(leads, [event])
+        self.assertEqual(needs_review, [])
+        self.assertEqual(len(leads), 1)
+        self.assertEqual(leads[0]["source"], "ЗАЯВКА ПОЧТА")
+        self.assertEqual(leads[0]["identifier"], {"type": "phone", "value": "79991234567"})
+
         other = dict(event)
         other["message_id"] = "mid.other.plain-zayavka"
         self.assertIsNone(classify_max_mail_event(other))
