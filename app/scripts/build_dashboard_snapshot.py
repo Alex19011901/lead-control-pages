@@ -21,6 +21,12 @@ VERIFIED_EVENT_TYPE_BY_IDENTIFIER = {
     "79161553602": "Свадьба",
 }
 
+# One-off source correction verified for the 13.10.2026 17:38 MAX/TildaForms lead.
+# Keep all other MAX TildaForms leads under "Тильда Веранда".
+ONE_OFF_SITE_TILDA_MAX_MESSAGE_IDS = {
+    "mid.ffffbec8f345ffab01a135b305451922",
+}
+
 
 def guest_bucket(lead: dict) -> str:
     g = lead.get("guests")
@@ -154,6 +160,13 @@ def source_for_lead(lead: dict) -> str:
     current = str(lead.get("source") or (lead.get("fields") or {}).get("source") or "unknown").strip()
     category = str(lead.get("category") or (lead.get("fields") or {}).get("category") or "").strip().casefold()
     max_info = lead.get("max") or {}
+    message_ids = {
+        str(lead.get("message_id") or ""),
+        *{str(value or "") for value in (max_info.get("message_ids") or [])},
+    }
+    if channel == "MAX" and message_ids & ONE_OFF_SITE_TILDA_MAX_MESSAGE_IDS:
+        return "САЙТ ТИЛЬДА"
+
     sender_values = {
         str(lead.get("sender_name") or "").strip().casefold(),
         str(lead.get("sender_username") or "").strip().casefold(),
