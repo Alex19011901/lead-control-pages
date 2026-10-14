@@ -82352,25 +82352,76 @@
       "violations": []
     },
     {
-      "category": "TILDA_VERANDA",
+      "category": "САЙТ ТИЛЬДА",
       "channel": "MAX",
-      "crm": {
-        "found": false,
-        "required": false
+      "closed_not_realized": {
+        "closed_at": 1791904021,
+        "crm_lead_id": 49507679,
+        "last_comment": "нужны сборники",
+        "last_comment_at": 1791904022,
+        "last_record_at": 1791904022,
+        "last_record_author": "",
+        "last_record_display": "нужны сборники",
+        "last_record_errors": [],
+        "last_record_id": "321765379",
+        "last_record_rule_version": 5,
+        "last_record_status": "VERIFIED",
+        "last_record_type": "common",
+        "loss_reason_id": 21779742,
+        "loss_reason_name": "Не устроили условия"
       },
-      "crm_check_status": "NOT_REQUIRED",
-      "crm_created_at": null,
-      "crm_found": false,
-      "crm_required": false,
-      "crm_responsible": null,
+      "crm": {
+        "ambiguity_count": 1,
+        "created_at": 1791904021,
+        "entity_id": 49507679,
+        "entity_type": "lead",
+        "event_type": "Корпоратив",
+        "found": true,
+        "guests": "8",
+        "guests_source": "CRM",
+        "responsible_user_id": 12982830,
+        "responsible_user_name": "Максим",
+        "updated_at": 1791904022
+      },
+      "crm_check_status": "PENDING",
+      "crm_created_at": 1791904021,
+      "crm_feedback": {
+        "closed_at": 1791904021,
+        "crm_lead_id": 49507679,
+        "excluded": true,
+        "first_activity_at": null,
+        "lead_created_at": 1791904021,
+        "loss_reason_checked": true,
+        "loss_reason_id": 21779742,
+        "loss_reason_name": "Не устроили условия",
+        "pipeline_id": 10081590,
+        "responsible_user_id": 12982830,
+        "rule_version": 6,
+        "state": "EXCLUDED",
+        "status_id": 143,
+        "status_name": "Закрыто и не реализовано"
+      },
+      "crm_found": true,
+      "crm_outcome": {
+        "closed_at": 1791904021,
+        "loss_reason_id": 21779742,
+        "loss_reason_name": "Не устроили условия",
+        "result": "LOST",
+        "status_id": 143,
+        "status_name": "Закрыто и не реализовано"
+      },
+      "crm_required": true,
+      "crm_responsible": 12982830,
       "deadline_msk_ts": 1791925199,
       "event_date": "2026-12-24",
+      "event_type": "Корпоратив",
+      "event_type_source": "CRM",
       "fields": {
-        "category": "TILDA_VERANDA",
+        "category": "САЙТ ТИЛЬДА",
         "email": "",
         "event_date": "2026-12-24",
         "event_date_raw": "24-12-2026",
-        "event_type": "",
+        "event_type": "Корпоратив",
         "guests_count": null,
         "guests_max": null,
         "guests_min": null,
@@ -82378,7 +82429,7 @@
         "name": "Алина Владимировна Плетнева",
         "phone_digits": "79035665530",
         "phone_raw": "+79035665530",
-        "source": "Тильда Веранда",
+        "source": "САЙТ ТИЛЬДА",
         "telegram_username": ""
       },
       "first_seen_at": "2026-10-13T17:38:07+03:00",
@@ -82407,11 +82458,25 @@
       "message_id": "mid.ffffbec8f345ffab01a135b305451922",
       "name": "Алина Владимировна Плетнева",
       "phone": "+79035665530",
+      "preclose_record_cache": {
+        "closed_at": 1791904021,
+        "crm_lead_id": 49507679,
+        "last_comment": "нужны сборники",
+        "last_comment_at": 1791904022,
+        "last_record_at": 1791904022,
+        "last_record_author": "",
+        "last_record_display": "нужны сборники",
+        "last_record_errors": [],
+        "last_record_id": "321765379",
+        "last_record_rule_version": 5,
+        "last_record_status": "VERIFIED",
+        "last_record_type": "common"
+      },
       "received_at": "2026-10-13T17:38:07+03:00",
       "sender_name": "TildaForms",
       "sender_user_id": 162410798,
-      "source": "Тильда Веранда",
-      "status": "-",
+      "source": "САЙТ ТИЛЬДА",
+      "status": "OK",
       "username": "",
       "violations": []
     },
@@ -83847,7 +83912,7 @@
         "88382034": 7
       },
       "2026-10-13": {
-        "143": 5,
+        "143": 6,
         "79927038": 1,
         "79927042": 1,
         "88382034": 3
@@ -83937,7 +84002,7 @@
       }
     ],
     "today": "2026-10-14",
-    "total_movements": 312,
+    "total_movements": 313,
     "weeks": [
       {
         "dates": [
