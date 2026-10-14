@@ -20,6 +20,12 @@ _TILDA_TEST_NAMES = {"test", "тест"}
 # Do not generalize this exclusion by sender, wording, format, or source.
 _ONE_OFF_SKIPPED_TELEGRAM_MESSAGE_IDS = {5670}
 
+# Explicit one-off correction: this MAX/TildaForms request was verified as a
+# normal site Tilda lead, not a Veranda lead. Do not generalize by sender/source.
+_ONE_OFF_SITE_TILDA_MAX_MESSAGE_IDS = {
+    "mid.ffffbec8f345ffab01a135b305451922",
+}
+
 
 def normalize_known_source_events(events: list[dict[str, Any]]) -> list[dict[str, Any]]:
     normalized: list[dict[str, Any]] = []
@@ -97,6 +103,18 @@ def normalize_lead_sources(leads: list[dict[str, Any]]) -> None:
         max_info = lead.get("max") or {}
         current_source = lead.get("source") or lead.get("category")
 
+        if _is_one_off_site_tilda_max_lead(lead):
+            lead["source"] = SITE_TILDA
+            lead["category"] = SITE_TILDA
+            lead["crm_required"] = True
+            lead["crm_check_status"] = "PENDING"
+            lead["crm"] = {"found": False, "required": True}
+            fields = lead.get("fields")
+            if isinstance(fields, dict):
+                fields["source"] = SITE_TILDA
+                fields["category"] = SITE_TILDA
+            continue
+
         if _norm(current_source) in {"тильда веранда", "заявка тильда веранда"}:
             continue
 
@@ -115,6 +133,20 @@ def normalize_lead_sources(leads: list[dict[str, Any]]) -> None:
         if isinstance(fields, dict):
             fields["source"] = source
             fields["category"] = source
+
+
+def _is_one_off_site_tilda_max_lead(lead: dict[str, Any]) -> bool:
+    if _norm(lead.get("channel")) != "max":
+        return False
+
+    message_ids = {
+        str(lead.get("message_id") or ""),
+        *{
+            str(value or "")
+            for value in ((lead.get("max") or {}).get("message_ids") or [])
+        },
+    }
+    return bool(message_ids & _ONE_OFF_SITE_TILDA_MAX_MESSAGE_IDS)
 
 
 def filter_known_source_reviews(items: list[dict[str, Any]]) -> list[dict[str, Any]]:
