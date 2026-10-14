@@ -83794,6 +83794,77 @@
       "status": "OK",
       "username": "",
       "violations": []
+    },
+    {
+      "category": "HOST",
+      "channel": "MAX",
+      "crm": {
+        "found": false,
+        "required": false
+      },
+      "crm_check_status": "NOT_REQUIRED",
+      "crm_created_at": null,
+      "crm_found": false,
+      "crm_required": false,
+      "crm_responsible": null,
+      "deadline_msk_ts": 1792069200,
+      "duplicate_of": "42077847f69a2f8c",
+      "event_date": "",
+      "fields": {
+        "category": "HOST",
+        "event_date": "",
+        "event_date_raw": "",
+        "event_type": "",
+        "guests_count": 42,
+        "guests_max": null,
+        "guests_min": null,
+        "guests_raw": "",
+        "name": "Арина",
+        "phone_digits": "79507172982",
+        "phone_raw": "89507172982",
+        "source": "Заявки хост",
+        "telegram_username": ""
+      },
+      "first_seen_at": "2026-10-14T20:05:01+03:00",
+      "first_seen_ts": 1791997501,
+      "guests": 42,
+      "guests_max": null,
+      "guests_min": null,
+      "guests_raw": "",
+      "id": "c989ab15481d50fa",
+      "identifier": {
+        "type": "phone",
+        "value": "79507172982"
+      },
+      "is_duplicate": true,
+      "last_seen_at": "2026-10-14T20:05:01+03:00",
+      "last_seen_ts": 1791997501,
+      "manager_reaction": null,
+      "manual_review": {
+        "decided_at": "2026-10-14T22:19:00+03:00",
+        "decision": "HOST",
+        "key": "MAX:-71704692523093:mid.ffffbec8f345ffab01a13b5fe0085d18"
+      },
+      "max": {
+        "chat_id": -71704692523093,
+        "message_ids": [
+          "mid.ffffbec8f345ffab01a13b5fe0085d18"
+        ],
+        "sender_name": "Алёна",
+        "sender_user_id": 154877013,
+        "sender_username": null
+      },
+      "message_id": "mid.ffffbec8f345ffab01a13b5fe0085d18",
+      "name": "Арина",
+      "phone": "89507172982",
+      "received_at": "2026-10-14T20:05:01+03:00",
+      "sender_name": "Алёна",
+      "sender_user_id": 154877013,
+      "sender_username": null,
+      "source": "Заявки хост",
+      "status": "DUPLICATE",
+      "username": "",
+      "violations": []
     }
   ],
   "pipeline_activity": {
