@@ -6,7 +6,7 @@ import unittest
 from pathlib import Path
 
 from lead_control.source_categories import normalize_lead_sources
-from scripts.build_dashboard_snapshot import build
+from scripts.build_dashboard_snapshot import build, source_for_lead
 from scripts.build_dashboard_view import build as build_view
 
 
@@ -158,6 +158,41 @@ class DashboardSnapshotTests(unittest.TestCase):
             self.assertEqual(view["ranges"]["all"]["total"], 2)
             self.assertEqual(view["ranges"]["all"]["source"]["Тильда Веранда"], 1)
             self.assertEqual(view["ranges"]["all"]["event"], {"Не определено": 1})
+
+    def test_oct13_max_tilda_one_off_stays_site_tilda_in_dashboard(self) -> None:
+        target = {
+            "channel": "MAX",
+            "source": "САЙТ ТИЛЬДА",
+            "category": "САЙТ ТИЛЬДА",
+            "message_id": "mid.ffffbec8f345ffab01a135b305451922",
+            "max": {
+                "message_ids": ["mid.ffffbec8f345ffab01a135b305451922"],
+                "sender_name": "TildaForms",
+                "sender_username": "tildaforms_bot",
+            },
+            "fields": {
+                "source": "САЙТ ТИЛЬДА",
+                "category": "САЙТ ТИЛЬДА",
+            },
+        }
+        ordinary = {
+            "channel": "MAX",
+            "source": "Тильда Веранда",
+            "category": "TILDA_VERANDA",
+            "message_id": "mid.other.tilda.veranda",
+            "max": {
+                "message_ids": ["mid.other.tilda.veranda"],
+                "sender_name": "TildaForms",
+                "sender_username": "tildaforms_bot",
+            },
+            "fields": {
+                "source": "Тильда Веранда",
+                "category": "TILDA_VERANDA",
+            },
+        }
+
+        self.assertEqual(source_for_lead(target), "САЙТ ТИЛЬДА")
+        self.assertEqual(source_for_lead(ordinary), "Тильда Веранда")
 
     def test_dashboard_rows_use_exact_guest_value_from_text(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
