@@ -170,6 +170,55 @@ class SourceCategoryTests(unittest.TestCase):
         self.assertEqual(len(leads), 1)
         self.assertEqual(leads[0]["source"], "Заявки хост")
 
+    def test_oct13_max_tilda_veranda_is_one_off_site_tilda(self) -> None:
+        target = {
+            "source": "Тильда Веранда",
+            "category": "TILDA_VERANDA",
+            "channel": "MAX",
+            "message_id": "mid.ffffbec8f345ffab01a135b305451922",
+            "identifier": {"type": "phone", "value": "79035665530"},
+            "crm_required": False,
+            "crm_check_status": "NOT_REQUIRED",
+            "crm": {"found": False, "required": False},
+            "fields": {
+                "source": "Тильда Веранда",
+                "category": "TILDA_VERANDA",
+                "phone_digits": "79035665530",
+            },
+            "max": {
+                "message_ids": ["mid.ffffbec8f345ffab01a135b305451922"],
+            },
+        }
+        ordinary = {
+            "source": "Тильда Веранда",
+            "category": "TILDA_VERANDA",
+            "channel": "MAX",
+            "message_id": "mid.other.tilda.veranda",
+            "crm_required": False,
+            "crm_check_status": "NOT_REQUIRED",
+            "crm": {"found": False, "required": False},
+            "fields": {
+                "source": "Тильда Веранда",
+                "category": "TILDA_VERANDA",
+            },
+            "max": {"message_ids": ["mid.other.tilda.veranda"]},
+        }
+
+        leads = [target, ordinary]
+        normalize_lead_sources(leads)
+
+        self.assertEqual(target["source"], "САЙТ ТИЛЬДА")
+        self.assertEqual(target["category"], "САЙТ ТИЛЬДА")
+        self.assertTrue(target["crm_required"])
+        self.assertEqual(target["crm_check_status"], "PENDING")
+        self.assertEqual(target["crm"], {"found": False, "required": True})
+        self.assertEqual(target["fields"]["source"], "САЙТ ТИЛЬДА")
+        self.assertEqual(target["fields"]["category"], "САЙТ ТИЛЬДА")
+
+        self.assertEqual(ordinary["source"], "Тильда Веранда")
+        self.assertEqual(ordinary["category"], "TILDA_VERANDA")
+        self.assertFalse(ordinary["crm_required"])
+
     def test_existing_marquiz_and_tilda_reviews_are_promoted(self) -> None:
         events = [
             {
