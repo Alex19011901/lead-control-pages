@@ -23565,7 +23565,7 @@
         "pipeline_id": 10081590,
         "responsible_user_id": 13009530,
         "rule_version": 6,
-        "state": "WAITING",
+        "state": "NO_FEEDBACK",
         "status_id": 79927038,
         "status_name": "Выслано предложение"
       },
@@ -23663,7 +23663,7 @@
         "pipeline_id": 10081590,
         "responsible_user_id": 13009530,
         "rule_version": 6,
-        "state": "WAITING",
+        "state": "NO_FEEDBACK",
         "status_id": 79927914,
         "status_name": "Приедут на просмотр"
       },
@@ -25702,7 +25702,7 @@
       "sender_user_id": 265299531,
       "sender_username": "TildaFormsBot",
       "source": "САЙТ ТИЛЬДА",
-      "status": "PENDING",
+      "status": "ALARM_NO_CRM",
       "telegram": {
         "chat_id": -1001645768111,
         "message_ids": [
@@ -25712,7 +25712,9 @@
           185608860
         ]
       },
-      "violations": []
+      "violations": [
+        "ALARM_NO_CRM"
+      ]
     },
     {
       "category": "TG_LEAD",
@@ -79020,7 +79022,7 @@
         "pipeline_id": 10081590,
         "responsible_user_id": 13009530,
         "rule_version": 6,
-        "state": "WAITING",
+        "state": "NO_FEEDBACK",
         "status_id": 79927038,
         "status_name": "Выслано предложение"
       },
@@ -79955,22 +79957,6 @@
     {
       "category": "HOST",
       "channel": "MAX",
-      "closed_not_realized": {
-        "closed_at": 1791640087,
-        "crm_lead_id": 49421479,
-        "last_comment": "уже ранее в работе",
-        "last_comment_at": 1791640088,
-        "last_record_at": 1791640088,
-        "last_record_author": "",
-        "last_record_display": "уже ранее в работе",
-        "last_record_errors": [],
-        "last_record_id": "321436205",
-        "last_record_rule_version": 5,
-        "last_record_status": "VERIFIED",
-        "last_record_type": "common",
-        "loss_reason_id": null,
-        "loss_reason_name": "Не указана"
-      },
       "crm": {
         "ambiguity_count": 1,
         "created_at": 1791640087,
@@ -80361,22 +80347,6 @@
     {
       "category": "ЗАЯВКА ПОЧТА",
       "channel": "MAX",
-      "closed_not_realized": {
-        "closed_at": 1791645805,
-        "crm_lead_id": 49423441,
-        "last_comment": "сбор цен",
-        "last_comment_at": 1791645806,
-        "last_record_at": 1791645806,
-        "last_record_author": "",
-        "last_record_display": "сбор цен",
-        "last_record_errors": [],
-        "last_record_id": "321445501",
-        "last_record_rule_version": 5,
-        "last_record_status": "VERIFIED",
-        "last_record_type": "common",
-        "loss_reason_id": 24466294,
-        "loss_reason_name": "Нет обратной связи"
-      },
       "crm": {
         "ambiguity_count": 0,
         "created_at": 1791645805,
@@ -80493,22 +80463,6 @@
     {
       "category": "HOST",
       "channel": "MAX",
-      "closed_not_realized": {
-        "closed_at": 1791645883,
-        "crm_lead_id": 49423461,
-        "last_comment": "мало места",
-        "last_comment_at": 1791645890,
-        "last_record_at": 1791645890,
-        "last_record_author": "Лаура",
-        "last_record_display": "мало места",
-        "last_record_errors": [],
-        "last_record_id": "f252deff-b7a4-4682-8657-6c7566595430",
-        "last_record_rule_version": 5,
-        "last_record_status": "VERIFIED",
-        "last_record_type": "entity_direct_message",
-        "loss_reason_id": 21779742,
-        "loss_reason_name": "Не устроили условия"
-      },
       "crm": {
         "ambiguity_count": 0,
         "created_at": 1791645883,
@@ -80648,7 +80602,7 @@
         "pipeline_id": 10081590,
         "responsible_user_id": 13009530,
         "rule_version": 6,
-        "state": "WAITING",
+        "state": "NO_FEEDBACK",
         "status_id": 79927038,
         "status_name": "Выслано предложение"
       },
@@ -80739,7 +80693,7 @@
         "pipeline_id": 10081590,
         "responsible_user_id": 13009530,
         "rule_version": 6,
-        "state": "WAITING",
+        "state": "NO_FEEDBACK",
         "status_id": 79927038,
         "status_name": "Выслано предложение"
       },
@@ -84072,7 +84026,7 @@
         "sort": 11000
       }
     ],
-    "today": "2026-10-14",
+    "today": "2026-10-15",
     "total_movements": 313,
     "weeks": [
       {
