@@ -1,7 +1,7 @@
 {
-  "alarm_no_crm": 3,
+  "alarm_no_crm": 2,
   "by_manager": {
-    "no_manager_reaction": 698,
+    "no_manager_reaction": 699,
     "Максим": 81,
     "Олеся": 63
   },
@@ -12,35 +12,53 @@
     "ЗАЯВКА ПОЧТА": 22,
     "Заявка с ТГ": 34,
     "Заявка сайт": 3,
-    "Заявки хост": 470,
+    "Заявки хост": 471,
     "С улицы": 3,
     "САЙТ ТИЛЬДА": 203,
     "Тильда Веранда": 48,
     "ТоМесто": 1
   },
   "event_types": {
-    "unknown": 120,
+    "unknown": 119,
     "Бизнес мероприятие": 39,
     "Выпускной": 9,
     "ДР": 2,
     "Детский праздник": 6,
     "Конференция": 1,
-    "Корпоратив": 264,
+    "Корпоратив": 265,
     "Поминки": 1,
-    "Свадьба": 242,
+    "Свадьба": 243,
     "Съёмки": 2,
     "Юбилей": 156
   },
   "guest_ranges": {
     "1-20": 227,
-    "101-150": 57,
+    "101-150": 58,
     "151+": 34,
     "21-50": 235,
-    "51-100": 136,
-    "unknown": 153
+    "51-100": 137,
+    "unknown": 152
   },
-  "late_crm": 165,
+  "late_crm": 166,
   "latest_leads": [
+    {
+      "created_at": "2026-10-15T11:14:48+03:00",
+      "crm_entity_id": null,
+      "crm_entity_type": null,
+      "crm_found": false,
+      "event_date": "2026-06-26",
+      "event_type": "",
+      "guests_count": 140,
+      "identifier": "7********98",
+      "identifier_type": "phone",
+      "lead_id": "755bf828946adfe1",
+      "manager": "",
+      "manager_username": "",
+      "name": "Олеся",
+      "source": "Заявки хост",
+      "status": "PENDING",
+      "violations": []
+    },
     {
       "created_at": "2026-10-14T19:42:32+03:00",
       "crm_entity_id": 49573089,
@@ -384,29 +402,11 @@
       "source": "Заявки хост",
       "status": "OK",
       "violations": []
-    },
-    {
-      "created_at": "2026-10-13T16:38:12+03:00",
-      "crm_entity_id": 49506607,
-      "crm_entity_type": "lead",
-      "crm_found": true,
-      "event_date": "",
-      "event_type": "Корпоратив",
-      "guests_count": 89,
-      "identifier": "7********90",
-      "identifier_type": "phone",
-      "lead_id": "925bd767f49d9635",
-      "manager": "",
-      "manager_username": "",
-      "name": "Мария",
-      "source": "Заявки хост",
-      "status": "OK",
-      "violations": []
     }
   ],
   "needs_review": 136,
   "no_reaction": 0,
-  "ok": 621,
-  "total_leads": 842,
-  "updated_at": "2026-10-15T09:58:58+03:00"
+  "ok": 622,
+  "total_leads": 843,
+  "updated_at": "2026-10-15T11:52:54+03:00"
 }
