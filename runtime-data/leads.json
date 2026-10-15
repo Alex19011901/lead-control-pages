@@ -25643,27 +25643,48 @@
       "category": "САЙТ ТИЛЬДА",
       "channel": "TELEGRAM",
       "crm": {
-        "ambiguity_count": 0,
-        "created_at": null,
-        "entity_id": null,
-        "entity_type": null,
-        "event_type": null,
-        "found": false,
-        "responsible_user_id": null,
-        "responsible_user_name": null,
-        "updated_at": null
+        "ambiguity_count": 1,
+        "created_at": 1792045568,
+        "entity_id": 49573089,
+        "entity_type": "lead",
+        "event_type": "Свадьба",
+        "found": true,
+        "guests": "42",
+        "guests_source": "CRM",
+        "responsible_user_id": 12982830,
+        "responsible_user_name": "Максим",
+        "updated_at": 1792045703
       },
-      "crm_created_at": null,
-      "crm_found": false,
+      "crm_created_at": 1792045568,
+      "crm_feedback": {
+        "closed_at": null,
+        "crm_lead_id": 49573089,
+        "deadline_at": 1792357200,
+        "excluded": false,
+        "first_activity_at": null,
+        "lead_created_at": 1792045568,
+        "loss_reason_checked": true,
+        "loss_reason_id": null,
+        "loss_reason_name": "",
+        "pipeline_id": 10081590,
+        "responsible_user_id": 12982830,
+        "rule_version": 6,
+        "state": "WAITING",
+        "status_id": 79927038,
+        "status_name": "Выслано предложение"
+      },
+      "crm_found": true,
       "crm_required": true,
-      "crm_responsible": null,
+      "crm_responsible": 12982830,
       "deadline_msk_ts": 1792011599,
+      "event_type": "Свадьба",
+      "event_type_source": "CRM",
       "fields": {
         "category": "САЙТ ТИЛЬДА",
         "description": "Содержание заявки:\nname: Арина\nphone: +79507172982\nDate: 21-02-2027\nInput: 42\nCheckbox: yes\nutm_source: ig\nutm_medium: social\nutm_content: link_in_bio\npage_url: https://www.moscowbanket.ru/page65881189.html\npage_referrer: https://www.moscowbanket.ru/?utm_source=ig&utm_medium=social&utm_content=link_in_bio&fbclid=PAZXh0bgNhZW0CMTEAcGRvZgJmZGlkFlEE0Z0mG9GA1Bf5UtwcGBWcXZZeuKtzcnRjBmFwcF9pZA8xMjQwMjQ1NzQyODc0MTQAAafXZ0_lLlwz13KvdLCwMfPPkeor7-Ajt_v0ygqHQsAQaDDtfUW_bsopnKOKpg_aem_I2VjS4oycJLnGM5xX-LXZA\nform_submit_timestamp: 1791996151\nmetrika_client_id: 1791996039268690347\nym_client_id: 1791996039268690347\nym_clientid: 1791996039268690347\nym_uid: 1791996039268690347\n_ym_uid: 1791996039268690347\nclient_id: 1791996039268690347\nclientid: 1791996039268690347\nyandex_client_id: 1791996039268690347\nya_client_id: 1791996039268690347\n\nДополнительная информация:\nКод заявки: 2925975:8742035933\nКод блока: rec2245054711\nhttps://www.moscowbanket.ru/page65881189.html\n-----",
         "event_date": "2027-02-21",
         "event_date_raw": "21-02-2027",
-        "event_type": "",
+        "event_type": "Свадьба",
         "form_submit_timestamp": 1791996151,
         "guests_count": 42,
         "metrika_client_id": "1791996039268690347",
@@ -25702,7 +25723,7 @@
       "sender_user_id": 265299531,
       "sender_username": "TildaFormsBot",
       "source": "САЙТ ТИЛЬДА",
-      "status": "ALARM_NO_CRM",
+      "status": "LATE_CRM",
       "telegram": {
         "chat_id": -1001645768111,
         "message_ids": [
@@ -25713,7 +25734,7 @@
         ]
       },
       "violations": [
-        "ALARM_NO_CRM"
+        "LATE_CRM"
       ]
     },
     {

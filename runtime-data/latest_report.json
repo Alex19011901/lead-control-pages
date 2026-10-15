@@ -1,5 +1,5 @@
 {
-  "alarm_no_crm": 4,
+  "alarm_no_crm": 3,
   "by_manager": {
     "no_manager_reaction": 698,
     "Максим": 81,
@@ -19,7 +19,7 @@
     "ТоМесто": 1
   },
   "event_types": {
-    "unknown": 120,
+    "unknown": 119,
     "Бизнес мероприятие": 39,
     "Выпускной": 9,
     "ДР": 2,
@@ -27,7 +27,7 @@
     "Конференция": 1,
     "Корпоратив": 264,
     "Поминки": 1,
-    "Свадьба": 242,
+    "Свадьба": 243,
     "Съёмки": 2,
     "Юбилей": 156
   },
@@ -39,15 +39,15 @@
     "51-100": 137,
     "unknown": 152
   },
-  "late_crm": 164,
+  "late_crm": 165,
   "latest_leads": [
     {
       "created_at": "2026-10-14T19:42:32+03:00",
-      "crm_entity_id": null,
-      "crm_entity_type": null,
-      "crm_found": false,
+      "crm_entity_id": 49573089,
+      "crm_entity_type": "lead",
+      "crm_found": true,
       "event_date": "2027-02-21",
-      "event_type": "",
+      "event_type": "Свадьба",
       "guests_count": 42,
       "identifier": "7********82",
       "identifier_type": "phone",
@@ -56,9 +56,9 @@
       "manager_username": "empairbey",
       "name": "Арина",
       "source": "САЙТ ТИЛЬДА",
-      "status": "ALARM_NO_CRM",
+      "status": "LATE_CRM",
       "violations": [
-        "ALARM_NO_CRM"
+        "LATE_CRM"
       ]
     },
     {
@@ -408,5 +408,5 @@
   "no_reaction": 0,
   "ok": 622,
   "total_leads": 842,
-  "updated_at": "2026-10-15T08:56:53+03:00"
+  "updated_at": "2026-10-15T09:47:05+03:00"
 }
