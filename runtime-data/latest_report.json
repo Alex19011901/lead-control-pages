@@ -3,7 +3,7 @@
   "by_manager": {
     "no_manager_reaction": 707,
     "Максим": 81,
-    "Олеся": 69
+    "Олеся": 70
   },
   "by_source": {
     "MARQUIZ": 42,
@@ -12,20 +12,20 @@
     "ЗАЯВКА ПОЧТА": 22,
     "Заявка с ТГ": 34,
     "Заявка сайт": 3,
-    "Заявки хост": 478,
+    "Заявки хост": 479,
     "С улицы": 3,
     "САЙТ ТИЛЬДА": 210,
     "Тильда Веранда": 48,
     "ТоМесто": 1
   },
   "event_types": {
-    "unknown": 123,
+    "unknown": 122,
     "Бизнес мероприятие": 41,
     "Выпускной": 10,
     "ДР": 2,
     "Детский праздник": 6,
     "Конференция": 1,
-    "Корпоратив": 272,
+    "Корпоратив": 274,
     "Поминки": 1,
     "Свадьба": 243,
     "Съёмки": 2,
@@ -36,16 +36,16 @@
     "101-150": 60,
     "151+": 34,
     "21-50": 237,
-    "51-100": 138,
+    "51-100": 139,
     "unknown": 157
   },
   "late_crm": 168,
   "latest_leads": [
     {
       "created_at": "2026-10-16T15:32:43+03:00",
-      "crm_entity_id": null,
-      "crm_entity_type": null,
-      "crm_found": false,
+      "crm_entity_id": 49631725,
+      "crm_entity_type": "lead",
+      "crm_found": true,
       "event_date": "",
       "event_type": "Корпоратив",
       "guests_count": 100,
@@ -56,7 +56,7 @@
       "manager_username": "",
       "name": "Вероника",
       "source": "САЙТ ТИЛЬДА",
-      "status": "PENDING",
+      "status": "OK",
       "violations": []
     },
     {
@@ -75,6 +75,24 @@
       "name": "Валентина",
       "source": "Заявки хост",
       "status": "OK",
+      "violations": []
+    },
+    {
+      "created_at": "2026-10-16T14:21:20+03:00",
+      "crm_entity_id": null,
+      "crm_entity_type": null,
+      "crm_found": false,
+      "event_date": "",
+      "event_type": "",
+      "guests_count": null,
+      "identifier": "Telegram:-1001645768111:6214",
+      "identifier_type": "review_message",
+      "lead_id": "ab8d4225b89b717e",
+      "manager": "Олеся",
+      "manager_username": "Olesyagozhina",
+      "name": "Алина",
+      "source": "Заявки хост",
+      "status": "-",
       "violations": []
     },
     {
@@ -97,9 +115,9 @@
     },
     {
       "created_at": "2026-10-16T12:36:20+03:00",
-      "crm_entity_id": null,
-      "crm_entity_type": null,
-      "crm_found": false,
+      "crm_entity_id": 49631687,
+      "crm_entity_type": "lead",
+      "crm_found": true,
       "event_date": "2026-12-11",
       "event_type": "Корпоратив",
       "guests_count": 70,
@@ -110,7 +128,7 @@
       "manager_username": "",
       "name": "Анастасия",
       "source": "Заявки хост",
-      "status": "PENDING",
+      "status": "OK",
       "violations": []
     },
     {
@@ -133,11 +151,11 @@
     },
     {
       "created_at": "2026-10-16T12:18:28+03:00",
-      "crm_entity_id": null,
-      "crm_entity_type": null,
-      "crm_found": false,
+      "crm_entity_id": 49631701,
+      "crm_entity_type": "lead",
+      "crm_found": true,
       "event_date": "2026-12-25",
-      "event_type": "",
+      "event_type": "Корпоратив",
       "guests_count": 20,
       "identifier": "7********13",
       "identifier_type": "phone",
@@ -146,7 +164,7 @@
       "manager_username": "",
       "name": "Диана",
       "source": "Заявки хост",
-      "status": "PENDING",
+      "status": "OK",
       "violations": []
     },
     {
@@ -388,29 +406,11 @@
       "source": "Заявки хост",
       "status": "OK",
       "violations": []
-    },
-    {
-      "created_at": "2026-10-14T16:09:00+03:00",
-      "crm_entity_id": 49560475,
-      "crm_entity_type": "lead",
-      "crm_found": true,
-      "event_date": "2026-10-15",
-      "event_type": "Бизнес мероприятие",
-      "guests_count": null,
-      "identifier": "7********90",
-      "identifier_type": "phone",
-      "lead_id": "4164f03e7b29f979",
-      "manager": "",
-      "manager_username": "",
-      "name": "Оксана",
-      "source": "Заявки хост",
-      "status": "OK",
-      "violations": []
     }
   ],
-  "needs_review": 137,
+  "needs_review": 136,
   "no_reaction": 0,
-  "ok": 628,
-  "total_leads": 857,
-  "updated_at": "2026-10-16T21:23:45+03:00"
+  "ok": 632,
+  "total_leads": 858,
+  "updated_at": "2026-10-16T21:44:18+03:00"
 }
