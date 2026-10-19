@@ -89685,6 +89685,76 @@
       "status": "OK",
       "username": "",
       "violations": []
+    },
+    {
+      "category": "HOST",
+      "channel": "MAX",
+      "crm": {
+        "ambiguity_count": 0,
+        "created_at": null,
+        "entity_id": null,
+        "entity_type": null,
+        "event_type": null,
+        "found": false,
+        "responsible_user_id": null,
+        "responsible_user_name": null,
+        "updated_at": null
+      },
+      "crm_created_at": null,
+      "crm_found": false,
+      "crm_required": true,
+      "crm_responsible": null,
+      "deadline_msk_ts": 1792501200,
+      "event_date": "2026-12-18",
+      "fields": {
+        "category": "HOST",
+        "email": "",
+        "event_date": "2026-12-18",
+        "event_date_raw": "18.12",
+        "event_type": "",
+        "guests_count": 70,
+        "guests_max": null,
+        "guests_min": null,
+        "guests_raw": "70п.",
+        "name": "Степан",
+        "phone_digits": "79055447652",
+        "phone_raw": "89055447652",
+        "source": "Заявки хост",
+        "telegram_username": ""
+      },
+      "first_seen_at": "2026-10-19T21:15:01+03:00",
+      "first_seen_ts": 1792433701,
+      "guests": 70,
+      "guests_max": null,
+      "guests_min": null,
+      "guests_raw": "70п.",
+      "id": "25dcb43b44adb832",
+      "identifier": {
+        "type": "phone",
+        "value": "79055447652"
+      },
+      "last_seen_at": "2026-10-19T21:15:01+03:00",
+      "last_seen_ts": 1792433701,
+      "manager_reaction": null,
+      "max": {
+        "chat_id": -71704692523093,
+        "message_ids": [
+          "mid.ffffbec8f345ffab01a1555fc0b305d8"
+        ],
+        "sender_name": "Елена",
+        "sender_user_id": 121513620,
+        "sender_username": null
+      },
+      "message_id": "mid.ffffbec8f345ffab01a1555fc0b305d8",
+      "name": "Степан",
+      "phone": "89055447652",
+      "received_at": "2026-10-19T21:15:01+03:00",
+      "sender_name": "Елена",
+      "sender_user_id": 121513620,
+      "source": "Заявки хост",
+      "status": "PENDING",
+      "username": "",
+      "violations": []
     }
   ],
   "pipeline_activity": {
