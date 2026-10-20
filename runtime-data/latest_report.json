@@ -19,15 +19,15 @@
     "ТоМесто": 1
   },
   "event_types": {
-    "unknown": 124,
+    "unknown": 121,
     "Бизнес мероприятие": 43,
     "Выпускной": 11,
     "ДР": 2,
     "Детский праздник": 6,
     "Конференция": 1,
-    "Корпоратив": 284,
+    "Корпоратив": 286,
     "Поминки": 1,
-    "Свадьба": 250,
+    "Свадьба": 251,
     "Съёмки": 2,
     "Юбилей": 158
   },
@@ -39,15 +39,15 @@
     "51-100": 145,
     "unknown": 160
   },
-  "late_crm": 171,
+  "late_crm": 173,
   "latest_leads": [
     {
       "created_at": "2026-10-19T21:15:01+03:00",
-      "crm_entity_id": null,
-      "crm_entity_type": null,
-      "crm_found": false,
+      "crm_entity_id": 49702041,
+      "crm_entity_type": "lead",
+      "crm_found": true,
       "event_date": "2026-12-18",
-      "event_type": "",
+      "event_type": "Корпоратив",
       "guests_count": 70,
       "identifier": "7********52",
       "identifier_type": "phone",
@@ -56,16 +56,16 @@
       "manager_username": "",
       "name": "Степан",
       "source": "Заявки хост",
-      "status": "PENDING",
+      "status": "OK",
       "violations": []
     },
     {
       "created_at": "2026-10-19T18:32:46+03:00",
-      "crm_entity_id": null,
-      "crm_entity_type": null,
-      "crm_found": false,
+      "crm_entity_id": 49702097,
+      "crm_entity_type": "lead",
+      "crm_found": true,
       "event_date": "2026-10-22",
-      "event_type": "",
+      "event_type": "Свадьба",
       "guests_count": 12,
       "identifier": "7********49",
       "identifier_type": "phone",
@@ -74,8 +74,10 @@
       "manager_username": "",
       "name": "Екатерина",
       "source": "САЙТ ТИЛЬДА",
-      "status": "PENDING",
-      "violations": []
+      "status": "LATE_CRM",
+      "violations": [
+        "LATE_CRM"
+      ]
     },
     {
       "created_at": "2026-10-19T18:25:31+03:00",
@@ -133,11 +135,11 @@
     },
     {
       "created_at": "2026-10-19T16:24:32+03:00",
-      "crm_entity_id": null,
-      "crm_entity_type": null,
-      "crm_found": false,
+      "crm_entity_id": 49702053,
+      "crm_entity_type": "lead",
+      "crm_found": true,
       "event_date": "2026-12-30",
-      "event_type": "",
+      "event_type": "Корпоратив",
       "guests_count": 80,
       "identifier": "7********92",
       "identifier_type": "phone",
@@ -146,8 +148,10 @@
       "manager_username": "",
       "name": "Валерия",
       "source": "Заявки хост",
-      "status": "PENDING",
-      "violations": []
+      "status": "LATE_CRM",
+      "violations": [
+        "LATE_CRM"
+      ]
     },
     {
       "created_at": "2026-10-19T15:41:12+03:00",
@@ -404,7 +408,7 @@
   ],
   "needs_review": 136,
   "no_reaction": 0,
-  "ok": 652,
+  "ok": 653,
   "total_leads": 882,
-  "updated_at": "2026-10-19T21:23:45+03:00"
+  "updated_at": "2026-10-20T10:41:32+03:00"
 }
