@@ -1,5 +1,5 @@
 {
-  "alarm_no_crm": 3,
+  "alarm_no_crm": 4,
   "by_manager": {
     "no_manager_reaction": 755,
     "Максим": 90,
@@ -291,8 +291,10 @@
       "manager_username": "",
       "name": "Алла",
       "source": "Заявки хост",
-      "status": "PENDING",
-      "violations": []
+      "status": "ALARM_NO_CRM",
+      "violations": [
+        "ALARM_NO_CRM"
+      ]
     },
     {
       "created_at": "2026-10-21T17:14:33+03:00",
@@ -407,5 +409,5 @@
   "no_reaction": 0,
   "ok": 690,
   "total_leads": 923,
-  "updated_at": "2026-10-22T18:42:15+03:00"
+  "updated_at": "2026-10-23T08:22:46+03:00"
 }
