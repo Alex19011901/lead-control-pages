@@ -1,9 +1,9 @@
 {
   "alarm_no_crm": 3,
   "by_manager": {
-    "no_manager_reaction": 763,
+    "no_manager_reaction": 761,
     "Максим": 90,
-    "Олеся": 80
+    "Олеся": 83
   },
   "by_source": {
     "MARQUIZ": 45,
@@ -14,12 +14,12 @@
     "Заявка сайт": 3,
     "Заявки хост": 520,
     "С улицы": 3,
-    "САЙТ ТИЛЬДА": 235,
+    "САЙТ ТИЛЬДА": 236,
     "Тильда Веранда": 50,
     "ТоМесто": 1
   },
   "event_types": {
-    "unknown": 129,
+    "unknown": 130,
     "Бизнес мероприятие": 48,
     "Выпускной": 14,
     "ДР": 2,
@@ -37,11 +37,29 @@
     "101-150": 70,
     "151+": 38,
     "21-50": 258,
-    "51-100": 158,
+    "51-100": 159,
     "unknown": 164
   },
   "late_crm": 174,
   "latest_leads": [
+    {
+      "created_at": "2026-10-23T14:26:16+03:00",
+      "crm_entity_id": null,
+      "crm_entity_type": null,
+      "crm_found": false,
+      "event_date": "2026-12-07",
+      "event_type": "",
+      "guests_count": 100,
+      "identifier": "7********47",
+      "identifier_type": "phone",
+      "lead_id": "9956fd4da8c6fdb4",
+      "manager": "Олеся",
+      "manager_username": "Olesyagozhina",
+      "name": "Лилия",
+      "source": "САЙТ ТИЛЬДА",
+      "status": "PENDING",
+      "violations": []
+    },
     {
       "created_at": "2026-10-23T13:34:48+03:00",
       "crm_entity_id": null,
@@ -71,8 +89,8 @@
       "identifier": "7********32",
       "identifier_type": "phone",
       "lead_id": "4d398e4715f9332e",
-      "manager": "",
-      "manager_username": "",
+      "manager": "Олеся",
+      "manager_username": "Olesyagozhina",
       "name": "Ангелина",
       "source": "САЙТ ТИЛЬДА",
       "status": "PENDING",
@@ -89,8 +107,8 @@
       "identifier": "7********06",
       "identifier_type": "phone",
       "lead_id": "4464cbcd24993321",
-      "manager": "",
-      "manager_username": "",
+      "manager": "Олеся",
+      "manager_username": "Olesyagozhina",
       "name": "Анастасия",
       "source": "САЙТ ТИЛЬДА",
       "status": "PENDING",
@@ -383,29 +401,11 @@
       "source": "MARQUIZ",
       "status": "OK",
       "violations": []
-    },
-    {
-      "created_at": "2026-10-22T13:03:31+03:00",
-      "crm_entity_id": 49778163,
-      "crm_entity_type": "lead",
-      "crm_found": true,
-      "event_date": "2026-11-20",
-      "event_type": "Бизнес мероприятие",
-      "guests_count": 250,
-      "identifier": "7********61",
-      "identifier_type": "phone",
-      "lead_id": "64470a4c35e119a2",
-      "manager": "",
-      "manager_username": "",
-      "name": "Виктория",
-      "source": "Заявки хост",
-      "status": "OK",
-      "violations": []
     }
   ],
   "needs_review": 136,
   "no_reaction": 0,
   "ok": 692,
-  "total_leads": 933,
-  "updated_at": "2026-10-23T14:06:52+03:00"
+  "total_leads": 934,
+  "updated_at": "2026-10-23T15:13:25+03:00"
 }
