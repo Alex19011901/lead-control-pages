@@ -1,5 +1,5 @@
 {
-  "alarm_no_crm": 4,
+  "alarm_no_crm": 3,
   "by_manager": {
     "no_manager_reaction": 755,
     "Максим": 90,
@@ -278,9 +278,9 @@
     },
     {
       "created_at": "2026-10-22T11:13:09+03:00",
-      "crm_entity_id": null,
-      "crm_entity_type": null,
-      "crm_found": false,
+      "crm_entity_id": 49773737,
+      "crm_entity_type": "lead",
+      "crm_found": true,
       "event_date": "",
       "event_type": "Выпускной",
       "guests_count": 150,
@@ -291,10 +291,8 @@
       "manager_username": "",
       "name": "Алла",
       "source": "Заявки хост",
-      "status": "ALARM_NO_CRM",
-      "violations": [
-        "ALARM_NO_CRM"
-      ]
+      "status": "OK",
+      "violations": []
     },
     {
       "created_at": "2026-10-21T17:14:33+03:00",
@@ -407,7 +405,7 @@
   ],
   "needs_review": 136,
   "no_reaction": 0,
-  "ok": 690,
+  "ok": 691,
   "total_leads": 923,
-  "updated_at": "2026-10-23T08:22:46+03:00"
+  "updated_at": "2026-10-23T08:30:50+03:00"
 }

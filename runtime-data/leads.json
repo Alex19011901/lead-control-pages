@@ -92974,23 +92974,67 @@
     {
       "category": "HOST",
       "channel": "MAX",
+      "closed_not_realized": {
+        "closed_at": 1792658107,
+        "crm_lead_id": 49773737,
+        "last_comment": "др не",
+        "last_comment_at": 1792658108,
+        "last_record_at": 1792658108,
+        "last_record_author": "",
+        "last_record_display": "др не",
+        "last_record_errors": [],
+        "last_record_id": "322854583",
+        "last_record_rule_version": 5,
+        "last_record_status": "VERIFIED",
+        "last_record_type": "common",
+        "loss_reason_id": 21780202,
+        "loss_reason_name": "Дата занята"
+      },
       "crm": {
         "ambiguity_count": 0,
-        "created_at": null,
-        "entity_id": null,
-        "entity_type": null,
-        "event_type": null,
-        "found": false,
-        "responsible_user_id": null,
-        "responsible_user_name": null,
-        "updated_at": null
+        "created_at": 1792658107,
+        "entity_id": 49773737,
+        "entity_type": "lead",
+        "event_type": "Выпускной",
+        "found": true,
+        "guests": "150",
+        "guests_source": "CRM",
+        "responsible_user_id": 12982830,
+        "responsible_user_name": "Максим",
+        "updated_at": 1792733257
       },
-      "crm_created_at": null,
-      "crm_found": false,
+      "crm_created_at": 1792658107,
+      "crm_feedback": {
+        "closed_at": 1792658107,
+        "crm_lead_id": 49773737,
+        "excluded": true,
+        "first_activity_at": null,
+        "lead_created_at": 1792658107,
+        "loss_reason_checked": true,
+        "loss_reason_id": 21780202,
+        "loss_reason_name": "Дата занята",
+        "pipeline_id": 10081590,
+        "responsible_user_id": 12982830,
+        "rule_version": 6,
+        "state": "EXCLUDED",
+        "status_id": 143,
+        "status_name": "Закрыто и не реализовано"
+      },
+      "crm_found": true,
+      "crm_outcome": {
+        "closed_at": 1792658107,
+        "loss_reason_id": 21780202,
+        "loss_reason_name": "Дата занята",
+        "result": "LOST",
+        "status_id": 143,
+        "status_name": "Закрыто и не реализовано"
+      },
       "crm_required": true,
-      "crm_responsible": null,
+      "crm_responsible": 12982830,
       "deadline_msk_ts": 1792702799,
       "event_date": "",
+      "event_type": "Выпускной",
+      "event_type_source": "CRM",
       "fields": {
         "category": "HOST",
         "email": "",
@@ -93033,15 +93077,27 @@
       "message_id": "mid.ffffbec8f345ffab01a162abcf173e96",
       "name": "Алла",
       "phone": "89261722774",
+      "preclose_record_cache": {
+        "closed_at": 1792658107,
+        "crm_lead_id": 49773737,
+        "last_comment": "др не",
+        "last_comment_at": 1792658108,
+        "last_record_at": 1792658108,
+        "last_record_author": "",
+        "last_record_display": "др не",
+        "last_record_errors": [],
+        "last_record_id": "322854583",
+        "last_record_rule_version": 5,
+        "last_record_status": "VERIFIED",
+        "last_record_type": "common"
+      },
       "received_at": "2026-10-22T11:13:09+03:00",
       "sender_name": "Елена",
       "sender_user_id": 121513620,
       "source": "Заявки хост",
-      "status": "ALARM_NO_CRM",
+      "status": "OK",
       "username": "",
-      "violations": [
-        "ALARM_NO_CRM"
-      ]
+      "violations": []
     },
     {
       "category": "HOST",
@@ -94031,7 +94087,7 @@
         "88382034": 3
       },
       "2026-10-22": {
-        "143": 8
+        "143": 9
       }
     },
     "pipeline_id": 10081590,
@@ -94114,7 +94170,7 @@
       }
     ],
     "today": "2026-10-23",
-    "total_movements": 391,
+    "total_movements": 392,
     "weeks": [
       {
         "dates": [
