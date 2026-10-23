@@ -3,34 +3,38 @@
     "today": {
       "start": "2026-10-23",
       "end": "2026-10-23",
-      "total": 8,
+      "total": 10,
       "status": {
-        "PENDING": 8
+        "PENDING": 9,
+        "OK": 1
       },
       "source": {
-        "САЙТ ТИЛЬДА": 4,
-        "Заявки хост": 4
+        "САЙТ ТИЛЬДА": 5,
+        "Заявки хост": 5
       },
       "channel": {
-        "TELEGRAM": 4,
-        "MAX": 4
+        "TELEGRAM": 5,
+        "MAX": 5
       },
       "guest": {
         "51-100": 2,
         "21-50": 4,
-        "151+": 1,
+        "151+": 2,
         "Не указано": 1,
-        "1-20": 1
+        "1-20": 2
       },
       "event": {
+        "Корпоратив": 1,
         "Свадьба": 1,
         "Выпускной": 1,
-        "Не определено": 6
+        "Бизнес мероприятие": 1,
+        "Юбилей": 1,
+        "Не определено": 5
       },
       "days": [
         [
           "2026-10-23",
-          8
+          10
         ]
       ]
     },
@@ -75,41 +79,41 @@
     "7": {
       "start": "2026-10-17",
       "end": "2026-10-23",
-      "total": 73,
+      "total": 75,
       "status": {
-        "OK": 59,
+        "OK": 60,
         "LATE_CRM": 3,
         "-": 2,
         "ALARM_NO_CRM": 1,
-        "PENDING": 8
+        "PENDING": 9
       },
       "source": {
-        "САЙТ ТИЛЬДА": 24,
-        "Заявки хост": 40,
+        "САЙТ ТИЛЬДА": 25,
+        "Заявки хост": 41,
         "WedWed": 1,
         "Заявка с ТГ": 3,
         "Тильда Веранда": 2,
         "MARQUIZ": 3
       },
       "channel": {
-        "TELEGRAM": 27,
-        "MAX": 46
+        "TELEGRAM": 28,
+        "MAX": 47
       },
       "guest": {
         "51-100": 24,
         "21-50": 24,
         "101-150": 13,
-        "1-20": 16,
-        "151+": 3,
+        "1-20": 17,
+        "151+": 4,
         "Не указано": 1
       },
       "event": {
-        "Корпоратив": 32,
+        "Корпоратив": 33,
         "Выпускной": 4,
-        "Бизнес мероприятие": 6,
+        "Бизнес мероприятие": 7,
         "Свадьба": 15,
-        "Юбилей": 5,
-        "Не определено": 8,
+        "Юбилей": 6,
+        "Не определено": 7,
         "Деловое мероприятие": 1
       },
       "days": [
@@ -139,24 +143,24 @@
         ],
         [
           "2026-10-23",
-          8
+          10
         ]
       ]
     },
     "30": {
       "start": "2026-09-24",
       "end": "2026-10-23",
-      "total": 283,
+      "total": 285,
       "status": {
-        "OK": 234,
+        "OK": 235,
         "LATE_CRM": 37,
         "-": 3,
         "ALARM_NO_CRM": 1,
-        "PENDING": 8
+        "PENDING": 9
       },
       "source": {
-        "САЙТ ТИЛЬДА": 70,
-        "Заявки хост": 178,
+        "САЙТ ТИЛЬДА": 71,
+        "Заявки хост": 179,
         "Заявка с ТГ": 9,
         "MARQUIZ": 12,
         "С улицы": 1,
@@ -165,24 +169,24 @@
         "ЗАЯВКА ПОЧТА": 9
       },
       "channel": {
-        "TELEGRAM": 82,
-        "MAX": 201
+        "TELEGRAM": 83,
+        "MAX": 202
       },
       "guest": {
-        "1-20": 70,
+        "1-20": 71,
         "21-50": 89,
         "51-100": 88,
-        "151+": 19,
+        "151+": 20,
         "101-150": 33,
         "Не указано": 2
       },
       "event": {
-        "Юбилей": 36,
-        "Корпоратив": 130,
+        "Юбилей": 37,
+        "Корпоратив": 131,
         "Свадьба": 63,
         "Выпускной": 11,
-        "Не определено": 13,
-        "Бизнес мероприятие": 26,
+        "Не определено": 12,
+        "Бизнес мероприятие": 27,
         "Детский праздник": 1,
         "Деловое мероприятие": 1
       },
@@ -305,25 +309,25 @@
         ],
         [
           "2026-10-23",
-          8
+          10
         ]
       ]
     },
     "all": {
       "start": "2026-07-01",
       "end": "2026-10-23",
-      "total": 931,
+      "total": 933,
       "status": {
         "LATE_CRM": 174,
         "ALARM_NO_CRM": 3,
         "-": 55,
-        "OK": 691,
-        "PENDING": 8
+        "OK": 692,
+        "PENDING": 9
       },
       "source": {
-        "САЙТ ТИЛЬДА": 234,
+        "САЙТ ТИЛЬДА": 235,
         "Тильда Веранда": 50,
-        "Заявки хост": 519,
+        "Заявки хост": 520,
         "Заявка с ТГ": 37,
         "WedWed": 14,
         "С улицы": 3,
@@ -334,23 +338,23 @@
         "ЗАЯВКА ПОЧТА": 22
       },
       "channel": {
-        "TELEGRAM": 282,
-        "MAX": 649
+        "TELEGRAM": 283,
+        "MAX": 650
       },
       "guest": {
         "51-100": 203,
         "21-50": 321,
-        "1-20": 303,
+        "1-20": 304,
         "101-150": 92,
-        "151+": 48,
+        "151+": 49,
         "Не указано": 13
       },
       "event": {
-        "Юбилей": 163,
-        "Корпоратив": 307,
+        "Юбилей": 164,
+        "Корпоратив": 308,
         "Свадьба": 259,
-        "Не определено": 80,
-        "Бизнес мероприятие": 47,
+        "Не определено": 79,
+        "Бизнес мероприятие": 48,
         "Детский праздник": 6,
         "Съёмки": 2,
         "Поминки": 1,
@@ -809,7 +813,7 @@
         ],
         [
           "2026-10-23",
-          8
+          10
         ]
       ]
     }
@@ -952,13 +956,43 @@
       "Тильда Веранда": 1
     },
     "2026-10-23": {
-      "САЙТ ТИЛЬДА": 4,
-      "Заявки хост": 4
+      "САЙТ ТИЛЬДА": 5,
+      "Заявки хост": 5
     }
   },
   "source_date_start": "2026-09-24",
   "source_date_end": "2026-10-23",
   "latest": [
+    {
+      "date": "2026-10-23",
+      "ts": "2026-10-23T13:34:48+03:00",
+      "source": "Заявки хост",
+      "status": "PENDING",
+      "channel": "MAX",
+      "guest_range": "20",
+      "guests": "20",
+      "event_type": "Юбилей",
+      "name": "Наталья",
+      "identifier": "79032152767",
+      "manager": "",
+      "crm_status": "",
+      "crm_loss_reason": ""
+    },
+    {
+      "date": "2026-10-23",
+      "ts": "2026-10-23T12:52:48+03:00",
+      "source": "САЙТ ТИЛЬДА",
+      "status": "PENDING",
+      "channel": "TELEGRAM",
+      "guest_range": "157",
+      "guests": "157",
+      "event_type": "Корпоратив",
+      "name": "Ангелина",
+      "identifier": "79035070532",
+      "manager": "",
+      "crm_status": "",
+      "crm_loss_reason": ""
+    },
     {
       "date": "2026-10-23",
       "ts": "2026-10-23T12:48:12+03:00",
@@ -978,15 +1012,15 @@
       "date": "2026-10-23",
       "ts": "2026-10-23T12:30:54+03:00",
       "source": "Заявки хост",
-      "status": "PENDING",
+      "status": "OK",
       "channel": "MAX",
-      "guest_range": "15",
-      "guests": "15",
-      "event_type": "unknown",
+      "guest_range": "16",
+      "guests": "16",
+      "event_type": "Бизнес мероприятие",
       "name": "Людмила",
       "identifier": "79099618930",
-      "manager": "",
-      "crm_status": "",
+      "manager": "Олеся",
+      "crm_status": "Предбронь",
       "crm_loss_reason": ""
     },
     {
@@ -1828,36 +1862,6 @@
       "manager": "Олеся",
       "crm_status": "Приедут на просмотр",
       "crm_loss_reason": ""
-    },
-    {
-      "date": "2026-10-19",
-      "ts": "2026-10-19T18:25:31+03:00",
-      "source": "Заявки хост",
-      "status": "OK",
-      "channel": "MAX",
-      "guest_range": "30",
-      "guests": "30",
-      "event_type": "Юбилей",
-      "name": "Нэлли",
-      "identifier": "79035535700",
-      "manager": "Олеся",
-      "crm_status": "Закрыто и не реализовано",
-      "crm_loss_reason": "Дата занята"
-    },
-    {
-      "date": "2026-10-19",
-      "ts": "2026-10-19T17:31:24+03:00",
-      "source": "Заявки хост",
-      "status": "OK",
-      "channel": "MAX",
-      "guest_range": "12",
-      "guests": "12",
-      "event_type": "Свадьба",
-      "name": "Алексей",
-      "identifier": "79777134320",
-      "manager": "Олеся",
-      "crm_status": "Приедут на просмотр",
-      "crm_loss_reason": ""
     }
   ],
   "not_entered": [
@@ -1877,14 +1881,14 @@
       "crm_loss_reason": ""
     }
   ],
-  "snapshot_generated_at": "2026-10-23T09:55:33Z",
-  "snapshot_at": "2026-10-23T12:48:12+03:00",
+  "snapshot_generated_at": "2026-10-23T11:06:52Z",
+  "snapshot_at": "2026-10-23T13:34:48+03:00",
   "min_date": "2026-07-01",
   "max_date": "2026-10-23",
   "feedback_summary": {
     "total": 36,
     "no_feedback": 23,
-    "waiting": 18,
+    "waiting": 19,
     "waiting_blue": 6,
     "waiting_yellow": 7,
     "clear": 96
@@ -1903,7 +1907,7 @@
       "crm_status": "Выслано предложение",
       "first_activity_at": "",
       "first_activity_ts": null,
-      "age_seconds": 328090,
+      "age_seconds": 332369,
       "feedback_state": "NO_FEEDBACK"
     },
     {
@@ -1919,7 +1923,7 @@
       "crm_status": "Выслано предложение",
       "first_activity_at": "",
       "first_activity_ts": null,
-      "age_seconds": 328282,
+      "age_seconds": 332561,
       "feedback_state": "NO_FEEDBACK"
     },
     {
@@ -1935,7 +1939,7 @@
       "crm_status": "Выслано предложение",
       "first_activity_at": "",
       "first_activity_ts": null,
-      "age_seconds": 333622,
+      "age_seconds": 337901,
       "feedback_state": "NO_FEEDBACK"
     },
     {
@@ -1951,7 +1955,7 @@
       "crm_status": "Выслано предложение",
       "first_activity_at": "",
       "first_activity_ts": null,
-      "age_seconds": 335631,
+      "age_seconds": 339910,
       "feedback_state": "NO_FEEDBACK"
     },
     {
@@ -1967,7 +1971,7 @@
       "crm_status": "Выслано предложение",
       "first_activity_at": "",
       "first_activity_ts": null,
-      "age_seconds": 337032,
+      "age_seconds": 341311,
       "feedback_state": "NO_FEEDBACK"
     },
     {
@@ -1983,7 +1987,7 @@
       "crm_status": "Выслано предложение",
       "first_activity_at": "",
       "first_activity_ts": null,
-      "age_seconds": 337084,
+      "age_seconds": 341363,
       "feedback_state": "NO_FEEDBACK"
     },
     {
@@ -1999,7 +2003,7 @@
       "crm_status": "Выслано предложение",
       "first_activity_at": "",
       "first_activity_ts": null,
-      "age_seconds": 337592,
+      "age_seconds": 341871,
       "feedback_state": "NO_FEEDBACK"
     },
     {
@@ -2015,7 +2019,7 @@
       "crm_status": "Первичный контакт",
       "first_activity_at": "",
       "first_activity_ts": null,
-      "age_seconds": 337651,
+      "age_seconds": 341930,
       "feedback_state": "NO_FEEDBACK"
     },
     {
@@ -2031,7 +2035,7 @@
       "crm_status": "Первичный контакт",
       "first_activity_at": "",
       "first_activity_ts": null,
-      "age_seconds": 421932,
+      "age_seconds": 426211,
       "feedback_state": "NO_FEEDBACK"
     },
     {
@@ -2047,7 +2051,7 @@
       "crm_status": "Первичный контакт",
       "first_activity_at": "",
       "first_activity_ts": null,
-      "age_seconds": 423078,
+      "age_seconds": 427357,
       "feedback_state": "NO_FEEDBACK"
     },
     {
@@ -2063,7 +2067,7 @@
       "crm_status": "Первичный контакт",
       "first_activity_at": "",
       "first_activity_ts": null,
-      "age_seconds": 574320,
+      "age_seconds": 578599,
       "feedback_state": "NO_FEEDBACK"
     },
     {
@@ -2079,7 +2083,7 @@
       "crm_status": "Выслано предложение",
       "first_activity_at": "",
       "first_activity_ts": null,
-      "age_seconds": 574370,
+      "age_seconds": 578649,
       "feedback_state": "NO_FEEDBACK"
     },
     {
@@ -2095,7 +2099,7 @@
       "crm_status": "Первичный контакт",
       "first_activity_at": "",
       "first_activity_ts": null,
-      "age_seconds": 574451,
+      "age_seconds": 578730,
       "feedback_state": "NO_FEEDBACK"
     },
     {
@@ -2111,7 +2115,7 @@
       "crm_status": "Предбронь",
       "first_activity_at": "",
       "first_activity_ts": null,
-      "age_seconds": 652142,
+      "age_seconds": 656421,
       "feedback_state": "NO_FEEDBACK"
     },
     {
@@ -2127,7 +2131,7 @@
       "crm_status": "Выслано предложение",
       "first_activity_at": "",
       "first_activity_ts": null,
-      "age_seconds": 652224,
+      "age_seconds": 656503,
       "feedback_state": "NO_FEEDBACK"
     },
     {
@@ -2143,7 +2147,7 @@
       "crm_status": "Выслано предложение",
       "first_activity_at": "",
       "first_activity_ts": null,
-      "age_seconds": 652284,
+      "age_seconds": 656563,
       "feedback_state": "NO_FEEDBACK"
     },
     {
@@ -2159,7 +2163,7 @@
       "crm_status": "Выслано предложение",
       "first_activity_at": "",
       "first_activity_ts": null,
-      "age_seconds": 652356,
+      "age_seconds": 656635,
       "feedback_state": "NO_FEEDBACK"
     },
     {
@@ -2175,7 +2179,7 @@
       "crm_status": "Запрошена ос",
       "first_activity_at": "",
       "first_activity_ts": null,
-      "age_seconds": 700153,
+      "age_seconds": 704432,
       "feedback_state": "NO_FEEDBACK"
     },
     {
@@ -2191,7 +2195,7 @@
       "crm_status": "Выслано предложение",
       "first_activity_at": "",
       "first_activity_ts": null,
-      "age_seconds": 915514,
+      "age_seconds": 919793,
       "feedback_state": "NO_FEEDBACK"
     },
     {
@@ -2207,7 +2211,7 @@
       "crm_status": "Выслано предложение",
       "first_activity_at": "",
       "first_activity_ts": null,
-      "age_seconds": 915593,
+      "age_seconds": 919872,
       "feedback_state": "NO_FEEDBACK"
     },
     {
@@ -2223,7 +2227,7 @@
       "crm_status": "Выслано предложение",
       "first_activity_at": "",
       "first_activity_ts": null,
-      "age_seconds": 915793,
+      "age_seconds": 920072,
       "feedback_state": "NO_FEEDBACK"
     },
     {
@@ -2239,7 +2243,7 @@
       "crm_status": "Выслано предложение",
       "first_activity_at": "",
       "first_activity_ts": null,
-      "age_seconds": 915982,
+      "age_seconds": 920261,
       "feedback_state": "NO_FEEDBACK"
     },
     {
@@ -2255,7 +2259,7 @@
       "crm_status": "Принимают решение",
       "first_activity_at": "",
       "first_activity_ts": null,
-      "age_seconds": 1980579,
+      "age_seconds": 1984858,
       "feedback_state": "NO_FEEDBACK"
     },
     {
@@ -2271,7 +2275,7 @@
       "crm_status": "Выслано предложение",
       "first_activity_at": "",
       "first_activity_ts": null,
-      "age_seconds": 229845,
+      "age_seconds": 234124,
       "feedback_state": "WAITING_BLUE"
     },
     {
@@ -2287,7 +2291,7 @@
       "crm_status": "Выслано предложение",
       "first_activity_at": "",
       "first_activity_ts": null,
-      "age_seconds": 232213,
+      "age_seconds": 236492,
       "feedback_state": "WAITING_BLUE"
     },
     {
@@ -2303,7 +2307,7 @@
       "crm_status": "Выслано предложение",
       "first_activity_at": "",
       "first_activity_ts": null,
-      "age_seconds": 243097,
+      "age_seconds": 247376,
       "feedback_state": "WAITING_BLUE"
     },
     {
@@ -2319,7 +2323,7 @@
       "crm_status": "Выслано предложение",
       "first_activity_at": "",
       "first_activity_ts": null,
-      "age_seconds": 243476,
+      "age_seconds": 247755,
       "feedback_state": "WAITING_BLUE"
     },
     {
@@ -2335,7 +2339,7 @@
       "crm_status": "Приедут на просмотр",
       "first_activity_at": "",
       "first_activity_ts": null,
-      "age_seconds": 301431,
+      "age_seconds": 305710,
       "feedback_state": "WAITING_BLUE"
     },
     {
@@ -2351,7 +2355,7 @@
       "crm_status": "Выслано предложение",
       "first_activity_at": "",
       "first_activity_ts": null,
-      "age_seconds": 302129,
+      "age_seconds": 306408,
       "feedback_state": "WAITING_BLUE"
     },
     {
@@ -2367,7 +2371,7 @@
       "crm_status": "Выслано предложение",
       "first_activity_at": "",
       "first_activity_ts": null,
-      "age_seconds": 156445,
+      "age_seconds": 160724,
       "feedback_state": "WAITING_YELLOW"
     },
     {
@@ -2383,7 +2387,7 @@
       "crm_status": "Выслано предложение",
       "first_activity_at": "",
       "first_activity_ts": null,
-      "age_seconds": 159927,
+      "age_seconds": 164206,
       "feedback_state": "WAITING_YELLOW"
     },
     {
@@ -2399,7 +2403,7 @@
       "crm_status": "Выслано предложение",
       "first_activity_at": "",
       "first_activity_ts": null,
-      "age_seconds": 162729,
+      "age_seconds": 167008,
       "feedback_state": "WAITING_YELLOW"
     },
     {
@@ -2415,7 +2419,7 @@
       "crm_status": "Выслано предложение",
       "first_activity_at": "",
       "first_activity_ts": null,
-      "age_seconds": 164279,
+      "age_seconds": 168558,
       "feedback_state": "WAITING_YELLOW"
     },
     {
@@ -2431,7 +2435,7 @@
       "crm_status": "Первичный контакт",
       "first_activity_at": "",
       "first_activity_ts": null,
-      "age_seconds": 168681,
+      "age_seconds": 172960,
       "feedback_state": "WAITING_YELLOW"
     },
     {
@@ -2447,7 +2451,7 @@
       "crm_status": "Выслано предложение",
       "first_activity_at": "",
       "first_activity_ts": null,
-      "age_seconds": 169301,
+      "age_seconds": 173580,
       "feedback_state": "WAITING_YELLOW"
     },
     {
@@ -2463,7 +2467,7 @@
       "crm_status": "Выслано предложение",
       "first_activity_at": "",
       "first_activity_ts": null,
-      "age_seconds": 170982,
+      "age_seconds": 175261,
       "feedback_state": "WAITING_YELLOW"
     }
   ],
@@ -8275,7 +8279,8 @@
         "143": 9
       },
       "2026-10-23": {
-        "143": 1
+        "143": 1,
+        "80331318": 1
       }
     },
     "pipeline_id": 10081590,
@@ -8358,7 +8363,7 @@
       }
     ],
     "today": "2026-10-23",
-    "total_movements": 393,
+    "total_movements": 394,
     "weeks": [
       {
         "dates": [

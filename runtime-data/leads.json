@@ -30079,6 +30079,68 @@
       "violations": []
     },
     {
+      "category": "САЙТ ТИЛЬДА",
+      "channel": "TELEGRAM",
+      "crm": {
+        "ambiguity_count": 0,
+        "created_at": null,
+        "entity_id": null,
+        "entity_type": null,
+        "event_type": null,
+        "found": false,
+        "responsible_user_id": null,
+        "responsible_user_name": null,
+        "updated_at": null
+      },
+      "crm_created_at": null,
+      "crm_found": false,
+      "crm_required": true,
+      "crm_responsible": null,
+      "deadline_msk_ts": 1792789199,
+      "fields": {
+        "category": "САЙТ ТИЛЬДА",
+        "description": "Содержание заявки:\nName: Ангелина\nPhone: +79035070532\nInput: 157\nCheckbox: yes\nyclid: 17620532638664884223\nutm_source: yandex_direct\nutm_medium: cpc\nutm_campaign: Korporativy_RSYA\nutm_term: корпоратив на 30 человек\npage_url: https://moscowbanket.ru/corporate/?utm_source=yandex_direct&utm_medium=cpc&utm_campaign=Korporativy_RSYA&type=context&source=com.beckoningaccelerator.vpn&added=no&block=none&position=0&keyword=%D0%BA%D0%BE%D1%80%D0%BF%D0%BE%D1%80%D0%B0%D1%82%D0%B8%D0%B2%20%D0%BD%D0%B0%2030%20%D1%87%D0%B5%D0%BB%D0%BE%D0%B2%D0%B5%D0%BA&utm_term=%D0%BA%D0%BE%D1%80%D0%BF%D0%BE%D1%80%D0%B0%D1%82%D0%B8%D0%B2%20%D0%BD%D0%B0%2030%20%D1%87%D0%B5%D0%BB%D0%BE%D0%B2%D0%B5%D0%BA&callibri=yd_c:700792082_gb:5598457321_ad:17085710362_ph:54982636701_st:context_s:com.beckoningaccelerator.vpn_dt:mobile&yclid=17620532638664884223#rec917334361\npage_referrer: https://yandex.ru/\nform_submit_timestamp: 1792749168\nmetrika_client_id: 1792749135570634878\nym_client_id: 1792749135570634878\nym_clientid: 1792749135570634878\nym_uid: 1792749135570634878\n_ym_uid: 1792749135570634878\nclient_id: 1792749135570634878\nclientid: 1792749135570634878\nyandex_client_id: 1792749135570634878\nya_client_id: 1792749135570634878\n\nДополнительная информация:\nКод заявки: 2925975:8761956273\nКод блока: rec2244692421\nhttps://moscowbanket.ru/corporate/#rec917334361\nUTM source: yandex_direct\nUTM medium: cpc\nUTM campaign: Korporativy_RSYA\nUTM term: корпоратив на 30 человек\n-----",
+        "event_date": "",
+        "event_date_raw": "",
+        "event_type": "Корпоратив",
+        "form_submit_timestamp": 1792749168,
+        "guests_count": 157,
+        "metrika_client_id": "1792749135570634878",
+        "name": "Ангелина",
+        "phone_digits": "79035070532",
+        "phone_raw": "+79035070532",
+        "source": "САЙТ ТИЛЬДА",
+        "telegram_username": "",
+        "yclid": "17620532638664884223"
+      },
+      "first_seen_at": "2026-10-23T12:52:48+03:00",
+      "first_seen_ts": 1792749168,
+      "id": "4d398e4715f9332e",
+      "identifier": {
+        "type": "phone",
+        "value": "79035070532"
+      },
+      "last_seen_at": "2026-10-23T12:52:48+03:00",
+      "last_seen_ts": 1792749168,
+      "manager_reaction": null,
+      "received_at": "2026-10-23T12:52:48+03:00",
+      "sender_name": "TildaForms",
+      "sender_user_id": 265299531,
+      "sender_username": "TildaFormsBot",
+      "source": "САЙТ ТИЛЬДА",
+      "status": "PENDING",
+      "telegram": {
+        "chat_id": -1001645768111,
+        "message_ids": [
+          6300
+        ],
+        "update_ids": [
+          185609020
+        ]
+      },
+      "violations": []
+    },
+    {
       "category": "TG_LEAD",
       "channel": "TELEGRAM",
       "crm": {
@@ -94552,27 +94614,48 @@
       "channel": "MAX",
       "crm": {
         "ambiguity_count": 0,
-        "created_at": null,
-        "entity_id": null,
-        "entity_type": null,
-        "event_type": null,
-        "found": false,
-        "responsible_user_id": null,
-        "responsible_user_name": null,
-        "updated_at": null
+        "created_at": 1792750494,
+        "entity_id": 49809595,
+        "entity_type": "lead",
+        "event_type": "Бизнес мероприятие",
+        "found": true,
+        "guests": "16",
+        "guests_source": "CRM",
+        "responsible_user_id": 13009530,
+        "responsible_user_name": "Олеся",
+        "updated_at": 1792750602
       },
-      "crm_created_at": null,
-      "crm_found": false,
+      "crm_created_at": 1792750494,
+      "crm_feedback": {
+        "closed_at": null,
+        "crm_lead_id": 49809595,
+        "deadline_at": 1793048400,
+        "excluded": false,
+        "first_activity_at": null,
+        "lead_created_at": 1792750494,
+        "loss_reason_checked": true,
+        "loss_reason_id": null,
+        "loss_reason_name": "",
+        "pipeline_id": 10081590,
+        "responsible_user_id": 13009530,
+        "rule_version": 6,
+        "state": "WAITING",
+        "status_id": 80331318,
+        "status_name": "Предбронь"
+      },
+      "crm_found": true,
       "crm_required": true,
-      "crm_responsible": null,
+      "crm_responsible": 13009530,
       "deadline_msk_ts": 1792789199,
       "event_date": "2026-11-06",
+      "event_type": "Бизнес мероприятие",
+      "event_type_source": "CRM",
       "fields": {
         "category": "HOST",
         "email": "",
         "event_date": "2026-11-06",
         "event_date_raw": "6.11",
-        "event_type": "",
+        "event_type": "Бизнес мероприятие",
         "guests_count": 15,
         "guests_max": null,
         "guests_min": null,
@@ -94610,6 +94693,76 @@
       "name": "Людмила",
       "phone": "89099618930",
       "received_at": "2026-10-23T12:30:54+03:00",
+      "sender_name": "Eugen Deeva",
+      "sender_user_id": 32902822,
+      "source": "Заявки хост",
+      "status": "OK",
+      "username": "",
+      "violations": []
+    },
+    {
+      "category": "HOST",
+      "channel": "MAX",
+      "crm": {
+        "ambiguity_count": 0,
+        "created_at": null,
+        "entity_id": null,
+        "entity_type": null,
+        "event_type": null,
+        "found": false,
+        "responsible_user_id": null,
+        "responsible_user_name": null,
+        "updated_at": null
+      },
+      "crm_created_at": null,
+      "crm_found": false,
+      "crm_required": true,
+      "crm_responsible": null,
+      "deadline_msk_ts": 1792789199,
+      "event_date": "2026-11-14",
+      "fields": {
+        "category": "HOST",
+        "email": "",
+        "event_date": "2026-11-14",
+        "event_date_raw": "14.11",
+        "event_type": "Юбилей",
+        "guests_count": 20,
+        "guests_max": null,
+        "guests_min": null,
+        "guests_raw": "20п.",
+        "name": "Наталья",
+        "phone_digits": "79032152767",
+        "phone_raw": "89032152767",
+        "source": "Заявки хост",
+        "telegram_username": ""
+      },
+      "first_seen_at": "2026-10-23T13:34:48+03:00",
+      "first_seen_ts": 1792751688,
+      "guests": 20,
+      "guests_max": null,
+      "guests_min": null,
+      "guests_raw": "20п.",
+      "id": "c904b4ab1a1e4287",
+      "identifier": {
+        "type": "phone",
+        "value": "79032152767"
+      },
+      "last_seen_at": "2026-10-23T13:34:48+03:00",
+      "last_seen_ts": 1792751688,
+      "manager_reaction": null,
+      "max": {
+        "chat_id": -71704692523093,
+        "message_ids": [
+          "mid.ffffbec8f345ffab01a16853dc1f1be4"
+        ],
+        "sender_name": "Eugen Deeva",
+        "sender_user_id": 32902822,
+        "sender_username": null
+      },
+      "message_id": "mid.ffffbec8f345ffab01a16853dc1f1be4",
+      "name": "Наталья",
+      "phone": "89032152767",
+      "received_at": "2026-10-23T13:34:48+03:00",
       "sender_name": "Eugen Deeva",
       "sender_user_id": 32902822,
       "source": "Заявки хост",
@@ -94759,7 +94912,8 @@
         "143": 9
       },
       "2026-10-23": {
-        "143": 1
+        "143": 1,
+        "80331318": 1
       }
     },
     "pipeline_id": 10081590,
@@ -94842,7 +94996,7 @@
       }
     ],
     "today": "2026-10-23",
-    "total_movements": 393,
+    "total_movements": 394,
     "weeks": [
       {
         "dates": [
