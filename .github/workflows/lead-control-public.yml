@@ -18,6 +18,7 @@ on:
   push:
     paths:
       - ".github/workflows/lead-control-public.yml"
+      - "app/dashboard/pageshare/index.html"
 
 permissions:
   contents: write
