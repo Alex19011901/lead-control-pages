@@ -1,0 +1,27 @@
+name: Verify Oct23 lead phone correction
+
+on:
+  push:
+    branches:
+      - fix/lilia-oct23-both-phone-records
+    paths:
+      - .github/workflows/verify-lead-phone-correction.yml
+      - app/src/lead_control/lead_phone_corrections.py
+      - app/src/lead_control/main.py
+      - app/tests/test_lead_phone_corrections.py
+      - runtime-data/lead_phone_corrections.json
+
+permissions:
+  contents: read
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Test the two original event messages and resulting duplicate
+        working-directory: app
+        run: PYTHONPATH=src python -m unittest tests.test_lead_phone_corrections -v
