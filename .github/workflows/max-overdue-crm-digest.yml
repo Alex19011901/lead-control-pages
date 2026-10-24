@@ -1,0 +1,70 @@
+name: MAX overdue CRM digest (09:00 Moscow)
+
+on:
+  schedule:
+    # Europe/Moscow is UTC+3 all year: 06:00 UTC = 09:00 Moscow.
+    - cron: '0 6 * * *'
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - '.github/workflows/max-overdue-crm-digest.yml'
+      - 'app/scripts/max_overdue_crm_digest.py'
+      - 'app/tests/test_max_overdue_crm_digest.py'
+  push:
+    paths:
+      - '.github/workflows/max-overdue-crm-digest.yml'
+      - 'app/scripts/max_overdue_crm_digest.py'
+      - 'app/tests/test_max_overdue_crm_digest.py'
+
+# Reuse the existing concurrency lock, so 08:00 refresh and 09:00
+# verification cannot read/write the same production data simultaneously.
+concurrency:
+  group: lead-control-production
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validate MAX morning digest without real requests
+        working-directory: app
+        run: PYTHONPATH=src python -m unittest tests.test_max_overdue_crm_digest -v
+
+  send:
+    needs: tests
+    # A code push must NEVER send a message. Only schedule/manual execution.
+    if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Recheck each overdue CRM lead and send the approved MAX message
+        env:
+          MAX_BOT_TOKEN: ${{ secrets.MAX_BOT_TOKEN }}
+          MAX_CHAT_ID: '-71704692523093'
+          AMOCRM_TOKEN: ${{ secrets.AMOCRM_TOKEN }}
+          AMOCRM_DOMAIN: 'https://alex1901yaru.amocrm.ru'
+        run: PYTHONPATH=app/src python app/scripts/max_overdue_crm_digest.py
+      - name: Save once-per-day marker (no contacts)
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add runtime-data/max_overdue_digest_state.json
+          if ! git diff --cached --quiet; then
+            git commit -m 'Record morning overdue CRM MAX digest check'
+            git pull --rebase --autostash origin main
+            git push origin main
+          fi
