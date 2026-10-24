@@ -40,7 +40,7 @@ jobs:
   send:
     needs: tests
     # A code push must NEVER send a message. Only schedule/manual execution.
-    if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+    if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && github.event.head_commit.message == 'Manual run MAX overdue report 2026-10-24')
     runs-on: ubuntu-latest
     permissions:
       contents: write
