@@ -1,12 +1,23 @@
 {
   "ranges": {
     "today": {
+      "start": "2026-10-24",
+      "end": "2026-10-24",
+      "total": 0,
+      "status": {},
+      "source": {},
+      "channel": {},
+      "guest": {},
+      "event": {},
+      "days": []
+    },
+    "yesterday": {
       "start": "2026-10-23",
       "end": "2026-10-23",
       "total": 12,
       "status": {
-        "OK": 10,
-        "PENDING": 2
+        "OK": 11,
+        "ALARM_NO_CRM": 1
       },
       "source": {
         "САЙТ ТИЛЬДА": 5,
@@ -38,88 +49,45 @@
         ]
       ]
     },
-    "yesterday": {
-      "start": "2026-10-22",
-      "end": "2026-10-22",
-      "total": 14,
-      "status": {
-        "OK": 13,
-        "-": 1
-      },
-      "source": {
-        "MARQUIZ": 1,
-        "САЙТ ТИЛЬДА": 4,
-        "Заявки хост": 8,
-        "Тильда Веранда": 1
-      },
-      "channel": {
-        "TELEGRAM": 5,
-        "MAX": 9
-      },
-      "guest": {
-        "21-50": 3,
-        "1-20": 6,
-        "101-150": 3,
-        "51-100": 1,
-        "151+": 1
-      },
-      "event": {
-        "Корпоратив": 8,
-        "Свадьба": 2,
-        "Выпускной": 1,
-        "Бизнес мероприятие": 2
-      },
-      "days": [
-        [
-          "2026-10-22",
-          14
-        ]
-      ]
-    },
     "7": {
-      "start": "2026-10-17",
-      "end": "2026-10-23",
-      "total": 77,
+      "start": "2026-10-18",
+      "end": "2026-10-24",
+      "total": 72,
       "status": {
-        "OK": 69,
+        "OK": 65,
         "LATE_CRM": 4,
         "-": 2,
-        "PENDING": 2
+        "ALARM_NO_CRM": 1
       },
       "source": {
-        "САЙТ ТИЛЬДА": 25,
-        "Заявки хост": 43,
-        "WedWed": 1,
-        "Заявка с ТГ": 3,
+        "Заявки хост": 41,
+        "САЙТ ТИЛЬДА": 24,
         "Тильда Веранда": 2,
-        "MARQUIZ": 3
+        "MARQUIZ": 3,
+        "Заявка с ТГ": 2
       },
       "channel": {
-        "TELEGRAM": 28,
-        "MAX": 49
+        "MAX": 45,
+        "TELEGRAM": 27
       },
       "guest": {
-        "51-100": 26,
-        "21-50": 24,
+        "21-50": 22,
         "101-150": 12,
         "1-20": 18,
-        "151+": 5,
+        "51-100": 24,
+        "151+": 4,
         "Не указано": 1
       },
       "event": {
-        "Корпоратив": 38,
-        "Выпускной": 4,
-        "Бизнес мероприятие": 7,
-        "Свадьба": 16,
         "Юбилей": 7,
+        "Свадьба": 15,
+        "Корпоратив": 36,
+        "Бизнес мероприятие": 6,
+        "Выпускной": 3,
         "Не определено": 2,
         "Деловое мероприятие": 1
       },
       "days": [
-        [
-          "2026-10-17",
-          5
-        ],
         [
           "2026-10-18",
           1
@@ -147,52 +115,48 @@
       ]
     },
     "30": {
-      "start": "2026-09-24",
-      "end": "2026-10-23",
-      "total": 287,
+      "start": "2026-09-25",
+      "end": "2026-10-24",
+      "total": 273,
       "status": {
-        "OK": 244,
+        "OK": 231,
         "LATE_CRM": 38,
         "-": 3,
-        "PENDING": 2
+        "ALARM_NO_CRM": 1
       },
       "source": {
-        "САЙТ ТИЛЬДА": 71,
-        "Заявки хост": 181,
-        "Заявка с ТГ": 9,
+        "САЙТ ТИЛЬДА": 66,
         "MARQUIZ": 12,
+        "Заявки хост": 173,
+        "Заявка с ТГ": 8,
         "С улицы": 1,
         "WedWed": 2,
         "Тильда Веранда": 2,
         "ЗАЯВКА ПОЧТА": 9
       },
       "channel": {
-        "TELEGRAM": 83,
-        "MAX": 204
+        "TELEGRAM": 78,
+        "MAX": 195
       },
       "guest": {
-        "1-20": 72,
-        "21-50": 89,
-        "51-100": 90,
+        "51-100": 87,
+        "1-20": 69,
+        "21-50": 82,
         "151+": 21,
-        "101-150": 32,
+        "101-150": 31,
         "Не указано": 2
       },
       "event": {
-        "Юбилей": 38,
-        "Корпоратив": 136,
-        "Свадьба": 64,
+        "Корпоратив": 135,
+        "Юбилей": 32,
         "Выпускной": 11,
+        "Свадьба": 57,
         "Не определено": 7,
         "Бизнес мероприятие": 27,
         "Детский праздник": 1,
         "Деловое мероприятие": 1
       },
       "days": [
-        [
-          "2026-09-24",
-          14
-        ],
         [
           "2026-09-25",
           6
@@ -317,10 +281,9 @@
       "total": 935,
       "status": {
         "LATE_CRM": 175,
-        "ALARM_NO_CRM": 2,
+        "ALARM_NO_CRM": 3,
         "-": 55,
-        "OK": 701,
-        "PENDING": 2
+        "OK": 702
       },
       "source": {
         "САЙТ ТИЛЬДА": 235,
@@ -817,11 +780,6 @@
     }
   },
   "source_days": {
-    "2026-09-24": {
-      "САЙТ ТИЛЬДА": 5,
-      "Заявки хост": 8,
-      "Заявка с ТГ": 1
-    },
     "2026-09-25": {
       "САЙТ ТИЛЬДА": 2,
       "MARQUIZ": 1,
@@ -956,24 +914,25 @@
     "2026-10-23": {
       "САЙТ ТИЛЬДА": 5,
       "Заявки хост": 7
-    }
+    },
+    "2026-10-24": {}
   },
-  "source_date_start": "2026-09-24",
-  "source_date_end": "2026-10-23",
+  "source_date_start": "2026-09-25",
+  "source_date_end": "2026-10-24",
   "latest": [
     {
       "date": "2026-10-23",
       "ts": "2026-10-23T18:05:39+03:00",
       "source": "Заявки хост",
-      "status": "PENDING",
+      "status": "OK",
       "channel": "MAX",
       "guest_range": "50",
       "guests": "50",
       "event_type": "Свадьба",
       "name": "Игорь",
       "identifier": "79688043730",
-      "manager": "",
-      "crm_status": "",
+      "manager": "Олеся",
+      "crm_status": "Выслано предложение",
       "crm_loss_reason": ""
     },
     {
@@ -1070,7 +1029,7 @@
       "date": "2026-10-23",
       "ts": "2026-10-23T12:27:03+03:00",
       "source": "Заявки хост",
-      "status": "PENDING",
+      "status": "ALARM_NO_CRM",
       "channel": "MAX",
       "guest_range": "unknown",
       "guests": "",
@@ -1123,7 +1082,7 @@
       "name": "Стефания",
       "identifier": "79885625929",
       "manager": "Олеся",
-      "crm_status": "Первичный контакт",
+      "crm_status": "Приедут на просмотр",
       "crm_loss_reason": ""
     },
     {
@@ -1738,7 +1697,7 @@
       "name": "ВАНДА ГУБИЕВА",
       "identifier": "74951059496",
       "manager": "Олеся",
-      "crm_status": "Выслано предложение",
+      "crm_status": "Принимают решение",
       "crm_loss_reason": ""
     },
     {
@@ -1862,18 +1821,34 @@
       "crm_loss_reason": ""
     }
   ],
-  "not_entered": [],
-  "snapshot_generated_at": "2026-10-23T17:18:41Z",
+  "not_entered": [
+    {
+      "date": "2026-10-23",
+      "ts": "2026-10-23T12:27:03+03:00",
+      "source": "Заявки хост",
+      "status": "ALARM_NO_CRM",
+      "channel": "MAX",
+      "guest_range": "unknown",
+      "guests": "",
+      "event_type": "unknown",
+      "name": "Лилия",
+      "identifier": "79104554247",
+      "manager": "",
+      "crm_status": "",
+      "crm_loss_reason": ""
+    }
+  ],
+  "snapshot_generated_at": "2026-10-24T08:24:21Z",
   "snapshot_at": "2026-10-23T18:05:39+03:00",
   "min_date": "2026-07-01",
   "max_date": "2026-10-23",
   "feedback_summary": {
-    "total": 8,
+    "total": 12,
     "no_feedback": 0,
     "waiting": 17,
-    "waiting_blue": 0,
-    "waiting_yellow": 8,
-    "clear": 111
+    "waiting_blue": 7,
+    "waiting_yellow": 5,
+    "clear": 83
   },
   "feedback": [
     {
@@ -1889,8 +1864,8 @@
       "crm_status": "Выслано предложение",
       "first_activity_at": "",
       "first_activity_ts": null,
-      "age_seconds": 183033,
-      "feedback_state": "WAITING_YELLOW"
+      "age_seconds": 237372,
+      "feedback_state": "WAITING_BLUE"
     },
     {
       "crm_lead_id": 49756491,
@@ -1905,8 +1880,8 @@
       "crm_status": "Выслано предложение",
       "first_activity_at": "",
       "first_activity_ts": null,
-      "age_seconds": 186515,
-      "feedback_state": "WAITING_YELLOW"
+      "age_seconds": 240854,
+      "feedback_state": "WAITING_BLUE"
     },
     {
       "crm_lead_id": 49755165,
@@ -1921,8 +1896,8 @@
       "crm_status": "Выслано предложение",
       "first_activity_at": "",
       "first_activity_ts": null,
-      "age_seconds": 189317,
-      "feedback_state": "WAITING_YELLOW"
+      "age_seconds": 243656,
+      "feedback_state": "WAITING_BLUE"
     },
     {
       "crm_lead_id": 49754411,
@@ -1937,8 +1912,8 @@
       "crm_status": "Выслано предложение",
       "first_activity_at": "",
       "first_activity_ts": null,
-      "age_seconds": 190867,
-      "feedback_state": "WAITING_YELLOW"
+      "age_seconds": 245206,
+      "feedback_state": "WAITING_BLUE"
     },
     {
       "crm_lead_id": 49751703,
@@ -1953,8 +1928,8 @@
       "crm_status": "Первичный контакт",
       "first_activity_at": "",
       "first_activity_ts": null,
-      "age_seconds": 195269,
-      "feedback_state": "WAITING_YELLOW"
+      "age_seconds": 249608,
+      "feedback_state": "WAITING_BLUE"
     },
     {
       "crm_lead_id": 49751431,
@@ -1969,8 +1944,8 @@
       "crm_status": "Выслано предложение",
       "first_activity_at": "",
       "first_activity_ts": null,
-      "age_seconds": 195889,
-      "feedback_state": "WAITING_YELLOW"
+      "age_seconds": 250228,
+      "feedback_state": "WAITING_BLUE"
     },
     {
       "crm_lead_id": 49750767,
@@ -1985,23 +1960,87 @@
       "crm_status": "Выслано предложение",
       "first_activity_at": "",
       "first_activity_ts": null,
-      "age_seconds": 197570,
-      "feedback_state": "WAITING_YELLOW"
+      "age_seconds": 251909,
+      "feedback_state": "WAITING_BLUE"
     },
     {
-      "crm_lead_id": 49736123,
-      "created_at": "2026-10-21T09:26:46+03:00",
-      "created_ts": 1792564006,
-      "source": "САЙТ ТИЛЬДА",
-      "name": "ВАНДА ГУБИЕВА",
-      "identifier": "74951059496",
-      "guests": "60",
-      "event_type": "Корпоратив",
-      "manager": "Олеся",
+      "crm_lead_id": 49783199,
+      "created_at": "2026-10-22T16:04:11+03:00",
+      "created_ts": 1792674251,
+      "source": "Заявки хост",
+      "name": "Карина",
+      "identifier": "79258080577",
+      "guests": "20",
+      "event_type": "Бизнес мероприятие",
+      "manager": "Максим",
       "crm_status": "Выслано предложение",
       "first_activity_at": "",
       "first_activity_ts": null,
-      "age_seconds": 211916,
+      "age_seconds": 156010,
+      "feedback_state": "WAITING_YELLOW"
+    },
+    {
+      "crm_lead_id": 49780481,
+      "created_at": "2026-10-22T14:34:10+03:00",
+      "created_ts": 1792668850,
+      "source": "САЙТ ТИЛЬДА",
+      "name": "олег",
+      "identifier": "74993977922",
+      "guests": "15",
+      "event_type": "Корпоратив",
+      "manager": "Максим",
+      "crm_status": "Первичный контакт",
+      "first_activity_at": "",
+      "first_activity_ts": null,
+      "age_seconds": 161411,
+      "feedback_state": "WAITING_YELLOW"
+    },
+    {
+      "crm_lead_id": 49780115,
+      "created_at": "2026-10-22T14:22:52+03:00",
+      "created_ts": 1792668172,
+      "source": "Заявки хост",
+      "name": "Жанна",
+      "identifier": "79688362184",
+      "guests": "40",
+      "event_type": "Свадьба",
+      "manager": "Максим",
+      "crm_status": "Выслано предложение",
+      "first_activity_at": "",
+      "first_activity_ts": null,
+      "age_seconds": 162089,
+      "feedback_state": "WAITING_YELLOW"
+    },
+    {
+      "crm_lead_id": 49779177,
+      "created_at": "2026-10-22T13:52:35+03:00",
+      "created_ts": 1792666355,
+      "source": "САЙТ ТИЛЬДА",
+      "name": "Мария",
+      "identifier": "79774089601",
+      "guests": "25",
+      "event_type": "Свадьба",
+      "manager": "Максим",
+      "crm_status": "Выслано предложение",
+      "first_activity_at": "",
+      "first_activity_ts": null,
+      "age_seconds": 163906,
+      "feedback_state": "WAITING_YELLOW"
+    },
+    {
+      "crm_lead_id": 49777901,
+      "created_at": "2026-10-22T13:16:54+03:00",
+      "created_ts": 1792664214,
+      "source": "Заявки хост",
+      "name": "Анастасия",
+      "identifier": "79630387598",
+      "guests": "80",
+      "event_type": "Корпоратив",
+      "manager": "Максим",
+      "crm_status": "Выслано предложение",
+      "first_activity_at": "",
+      "first_activity_ts": null,
+      "age_seconds": 166047,
       "feedback_state": "WAITING_YELLOW"
     }
   ],
@@ -2151,18 +2190,6 @@
       "crm_status": "ЖДУНЫ"
     },
     {
-      "crm_lead_id": 48070679,
-      "created_at": "2026-08-30T08:16:22+03:00",
-      "created_ts": 1788066982,
-      "source": "Заявки хост",
-      "name": "Оксана",
-      "identifier": "79165076009",
-      "guests": "5",
-      "event_type": "Бизнес мероприятие",
-      "manager": "Олеся",
-      "crm_status": "ЖДУНЫ"
-    },
-    {
       "crm_lead_id": 47351833,
       "created_at": "2026-08-10T10:50:30+03:00",
       "created_ts": 1786348230,
@@ -2173,21 +2200,502 @@
       "event_type": "Свадьба",
       "manager": "Олеся",
       "crm_status": "ЖДУНЫ"
+    }
+  ],
+  "closed_not_realized": [
+    {
+      "crm_lead_id": 49361261,
+      "closed_at": "2026-10-23T23:21:55+03:00",
+      "closed_ts": 1792786915,
+      "source": "Заявки хост",
+      "name": "Лилия",
+      "identifier": "74959891098",
+      "guests": "100",
+      "event_type": "Корпоратив",
+      "manager": "Олеся",
+      "reason": "Дата занята",
+      "last_comment": "запрошена ос",
+      "last_record": "запрошена ос",
+      "last_record_at": "2026-10-15T11:31:02+03:00",
+      "last_record_type": "entity_direct_message",
+      "last_record_status": "VERIFIED"
+    },
+    {
+      "crm_lead_id": 49370219,
+      "closed_at": "2026-10-23T23:20:57+03:00",
+      "closed_ts": 1792786857,
+      "source": "Заявки хост",
+      "name": "Владислав",
+      "identifier": "79154735901",
+      "guests": "15",
+      "event_type": "Юбилей",
+      "manager": "Олеся",
+      "reason": "Выбрали других",
+      "last_comment": "отправила запрос по ос",
+      "last_record": "отправила запрос по ос",
+      "last_record_at": "2026-10-15T10:57:46+03:00",
+      "last_record_type": "entity_direct_message",
+      "last_record_status": "VERIFIED"
+    },
+    {
+      "crm_lead_id": 49360827,
+      "closed_at": "2026-10-23T23:19:59+03:00",
+      "closed_ts": 1792786799,
+      "source": "MARQUIZ",
+      "name": "Алина",
+      "identifier": "79659384872",
+      "guests": "85",
+      "event_type": "Корпоратив",
+      "manager": "Олеся",
+      "reason": "Слишком дорого",
+      "last_comment": "запрошена ос",
+      "last_record": "запрошена ос",
+      "last_record_at": "2026-10-15T11:32:20+03:00",
+      "last_record_type": "entity_direct_message",
+      "last_record_status": "VERIFIED"
+    },
+    {
+      "crm_lead_id": 49369381,
+      "closed_at": "2026-10-23T23:18:59+03:00",
+      "closed_ts": 1792786739,
+      "source": "Заявки хост",
+      "name": "Манана",
+      "identifier": "79032318298",
+      "guests": "160",
+      "event_type": "Бизнес мероприятие",
+      "manager": "Олеся",
+      "reason": "Нет обратной связи",
+      "last_comment": "запросила ос",
+      "last_record": "запросила ос",
+      "last_record_at": "2026-10-15T11:17:42+03:00",
+      "last_record_type": "entity_direct_message",
+      "last_record_status": "VERIFIED"
+    },
+    {
+      "crm_lead_id": 49360777,
+      "closed_at": "2026-10-23T23:18:12+03:00",
+      "closed_ts": 1792786692,
+      "source": "Заявки хост",
+      "name": "Александра",
+      "identifier": "79654120101",
+      "guests": "50",
+      "event_type": "Корпоратив",
+      "manager": "Олеся",
+      "reason": "Выбрали других",
+      "last_comment": "запрошена ос",
+      "last_record": "запрошена ос",
+      "last_record_at": "2026-10-15T11:33:10+03:00",
+      "last_record_type": "entity_direct_message",
+      "last_record_status": "VERIFIED"
+    },
+    {
+      "crm_lead_id": 48962651,
+      "closed_at": "2026-10-23T23:17:08+03:00",
+      "closed_ts": 1792786628,
+      "source": "Заявки хост",
+      "name": "Татьяна",
+      "identifier": "79266965888",
+      "guests": "90",
+      "event_type": "Корпоратив",
+      "manager": "Олеся",
+      "reason": "Не указана",
+      "last_comment": "24-е хотят",
+      "last_record": "24-е хотят",
+      "last_record_at": "2026-10-23T23:17:05+03:00",
+      "last_record_type": "entity_direct_message",
+      "last_record_status": "VERIFIED"
+    },
+    {
+      "crm_lead_id": 49369603,
+      "closed_at": "2026-10-23T23:15:42+03:00",
+      "closed_ts": 1792786542,
+      "source": "Заявки хост",
+      "name": "Алексей",
+      "identifier": "79104169767",
+      "guests": "15",
+      "event_type": "Корпоратив",
+      "manager": "Олеся",
+      "reason": "Пропала потребность",
+      "last_comment": "запрошена ос",
+      "last_record": "запрошена ос",
+      "last_record_at": "2026-10-15T11:43:43+03:00",
+      "last_record_type": "entity_direct_message",
+      "last_record_status": "VERIFIED"
     },
     {
       "crm_lead_id": 47203267,
-      "created_at": "2026-08-05T19:14:05+03:00",
-      "created_ts": 1785946445,
+      "closed_at": "2026-10-23T23:08:59+03:00",
+      "closed_ts": 1792786139,
       "source": "САЙТ ТИЛЬДА",
       "name": "Марина",
       "identifier": "79107959139",
       "guests": "15",
       "event_type": "Свадьба",
       "manager": "Олеся",
-      "crm_status": "ЖДУНЫ"
-    }
-  ],
-  "closed_not_realized": [
+      "reason": "Пропала потребность",
+      "last_comment": "ждем недельного срока или брони основного зала",
+      "last_record": "ждем недельного срока или брони основного зала",
+      "last_record_at": "2026-08-28T09:43:50+03:00",
+      "last_record_type": "entity_direct_message",
+      "last_record_status": "VERIFIED"
+    },
+    {
+      "crm_lead_id": 48713037,
+      "closed_at": "2026-10-23T23:04:18+03:00",
+      "closed_ts": 1792785858,
+      "source": "Заявки хост",
+      "name": "Сергей",
+      "identifier": "79258612290",
+      "guests": "100",
+      "event_type": "Корпоратив",
+      "manager": "Олеся",
+      "reason": "Пропала потребность",
+      "last_comment": "принимают решение",
+      "last_record": "принимают решение",
+      "last_record_at": "2026-09-21T11:53:45+03:00",
+      "last_record_type": "entity_direct_message",
+      "last_record_status": "VERIFIED"
+    },
+    {
+      "crm_lead_id": 48586183,
+      "closed_at": "2026-10-23T23:00:52+03:00",
+      "closed_ts": 1792785652,
+      "source": "Заявки хост",
+      "name": "Ольга",
+      "identifier": "79276055066",
+      "guests": "50",
+      "event_type": "Свадьба",
+      "manager": "Олеся",
+      "reason": "Выбрали других",
+      "last_comment": "принимает решение",
+      "last_record": "принимает решение",
+      "last_record_at": "2026-09-21T11:13:05+03:00",
+      "last_record_type": "entity_direct_message",
+      "last_record_status": "VERIFIED"
+    },
+    {
+      "crm_lead_id": 48569115,
+      "closed_at": "2026-10-23T22:59:27+03:00",
+      "closed_ts": 1792785567,
+      "source": "Заявки хост",
+      "name": "Лиана",
+      "identifier": "79621895260",
+      "guests": "25",
+      "event_type": "Корпоратив",
+      "manager": "Олеся",
+      "reason": "Выбрали других",
+      "last_comment": "принимают решение",
+      "last_record": "принимают решение",
+      "last_record_at": "2026-09-21T11:11:22+03:00",
+      "last_record_type": "entity_direct_message",
+      "last_record_status": "VERIFIED"
+    },
+    {
+      "crm_lead_id": 48435191,
+      "closed_at": "2026-10-23T22:54:47+03:00",
+      "closed_ts": 1792785287,
+      "source": "САЙТ ТИЛЬДА",
+      "name": "Юлия",
+      "identifier": "79163242032",
+      "guests": "150",
+      "event_type": "Корпоратив",
+      "manager": "Олеся",
+      "reason": "Нет обратной связи",
+      "last_comment": "рассматривает 11.12",
+      "last_record": "рассматривает 11.12",
+      "last_record_at": "2026-09-14T16:14:38+03:00",
+      "last_record_type": "entity_direct_message",
+      "last_record_status": "VERIFIED"
+    },
+    {
+      "crm_lead_id": 48988729,
+      "closed_at": "2026-10-23T22:53:27+03:00",
+      "closed_ts": 1792785207,
+      "source": "Заявки хост",
+      "name": "Любовь",
+      "identifier": "79167833521",
+      "guests": "50",
+      "event_type": "Свадьба",
+      "manager": "Олеся",
+      "reason": "Нет обратной связи",
+      "last_comment": "рассматривают варианты",
+      "last_record": "рассматривают варианты",
+      "last_record_at": "2026-10-02T10:23:42+03:00",
+      "last_record_type": "entity_direct_message",
+      "last_record_status": "VERIFIED"
+    },
+    {
+      "crm_lead_id": 48988757,
+      "closed_at": "2026-10-23T22:52:27+03:00",
+      "closed_ts": 1792785147,
+      "source": "Заявки хост",
+      "name": "Дмитрий",
+      "identifier": "79037977544",
+      "guests": "25",
+      "event_type": "Юбилей",
+      "manager": "Олеся",
+      "reason": "Нет обратной связи",
+      "last_comment": "принимают решение",
+      "last_record": "принимают решение",
+      "last_record_at": "2026-10-02T10:20:41+03:00",
+      "last_record_type": "entity_direct_message",
+      "last_record_status": "VERIFIED"
+    },
+    {
+      "crm_lead_id": 49105109,
+      "closed_at": "2026-10-23T22:49:01+03:00",
+      "closed_ts": 1792784941,
+      "source": "Заявки хост",
+      "name": "",
+      "identifier": "79166795745",
+      "guests": "35",
+      "event_type": "Свадьба",
+      "manager": "Олеся",
+      "reason": "Нет обратной связи",
+      "last_comment": "принимают решение",
+      "last_record": "принимают решение",
+      "last_record_at": "2026-10-07T12:45:40+03:00",
+      "last_record_type": "entity_direct_message",
+      "last_record_status": "VERIFIED"
+    },
+    {
+      "crm_lead_id": 49105183,
+      "closed_at": "2026-10-23T22:47:46+03:00",
+      "closed_ts": 1792784866,
+      "source": "САЙТ ТИЛЬДА",
+      "name": "Андрея",
+      "identifier": "79014614412",
+      "guests": "30",
+      "event_type": "Свадьба",
+      "manager": "Олеся",
+      "reason": "Выбрали других",
+      "last_comment": "принимает решение",
+      "last_record": "принимает решение",
+      "last_record_at": "2026-10-07T12:41:45+03:00",
+      "last_record_type": "entity_direct_message",
+      "last_record_status": "VERIFIED"
+    },
+    {
+      "crm_lead_id": 48427197,
+      "closed_at": "2026-10-23T22:43:22+03:00",
+      "closed_ts": 1792784602,
+      "source": "Заявки хост",
+      "name": "Ксения",
+      "identifier": "79168064122",
+      "guests": "40",
+      "event_type": "Свадьба",
+      "manager": "Олеся",
+      "reason": "Дата занята",
+      "last_comment": "принимает решение",
+      "last_record": "принимает решение",
+      "last_record_at": "2026-09-15T16:44:13+03:00",
+      "last_record_type": "entity_direct_message",
+      "last_record_status": "VERIFIED"
+    },
+    {
+      "crm_lead_id": 48310391,
+      "closed_at": "2026-10-23T22:41:59+03:00",
+      "closed_ts": 1792784519,
+      "source": "САЙТ ТИЛЬДА",
+      "name": "Софья",
+      "identifier": "79958847843",
+      "guests": "60",
+      "event_type": "Свадьба",
+      "manager": "Олеся",
+      "reason": "Нет обратной связи",
+      "last_comment": "связалась повторно, принимает решение",
+      "last_record": "связалась повторно, принимает решение",
+      "last_record_at": "2026-09-09T11:28:36+03:00",
+      "last_record_type": "entity_direct_message",
+      "last_record_status": "VERIFIED"
+    },
+    {
+      "crm_lead_id": 48310337,
+      "closed_at": "2026-10-23T22:40:52+03:00",
+      "closed_ts": 1792784452,
+      "source": "САЙТ ТИЛЬДА",
+      "name": "Дарья",
+      "identifier": "79023808922",
+      "guests": "34",
+      "event_type": "Свадьба",
+      "manager": "Олеся",
+      "reason": "Не указана",
+      "last_comment": "нет обратной связи",
+      "last_record": "нет обратной связи",
+      "last_record_at": "2026-10-23T22:40:47+03:00",
+      "last_record_type": "entity_direct_message",
+      "last_record_status": "VERIFIED"
+    },
+    {
+      "crm_lead_id": 48399981,
+      "closed_at": "2026-10-23T22:39:18+03:00",
+      "closed_ts": 1792784358,
+      "source": "Заявки хост",
+      "name": "Яна",
+      "identifier": "79250779787",
+      "guests": "60",
+      "event_type": "Свадьба",
+      "manager": "Олеся",
+      "reason": "Нет обратной связи",
+      "last_comment": "принимает решение",
+      "last_record": "принимает решение",
+      "last_record_at": "2026-09-14T16:37:44+03:00",
+      "last_record_type": "entity_direct_message",
+      "last_record_status": "VERIFIED"
+    },
+    {
+      "crm_lead_id": 48855721,
+      "closed_at": "2026-10-23T21:39:39+03:00",
+      "closed_ts": 1792780779,
+      "source": "Заявки хост",
+      "name": "Ольга",
+      "identifier": "79162619035",
+      "guests": "150",
+      "event_type": "Корпоратив",
+      "manager": "Олеся",
+      "reason": "Пропала потребность",
+      "last_comment": "обсуждают с руководителем, пока нет решения",
+      "last_record": "обсуждают с руководителем, пока нет решения",
+      "last_record_at": "2026-09-28T10:17:24+03:00",
+      "last_record_type": "entity_direct_message",
+      "last_record_status": "VERIFIED"
+    },
+    {
+      "crm_lead_id": 48672477,
+      "closed_at": "2026-10-23T21:39:05+03:00",
+      "closed_ts": 1792780745,
+      "source": "Заявки хост",
+      "name": "Станислав",
+      "identifier": "79032062553",
+      "guests": "80",
+      "event_type": "Корпоратив",
+      "manager": "Олеся",
+      "reason": "Пропала потребность",
+      "last_comment": "принимают решение",
+      "last_record": "принимают решение",
+      "last_record_at": "2026-09-21T10:53:06+03:00",
+      "last_record_type": "entity_direct_message",
+      "last_record_status": "VERIFIED"
+    },
+    {
+      "crm_lead_id": 48204577,
+      "closed_at": "2026-10-23T21:38:32+03:00",
+      "closed_ts": 1792780712,
+      "source": "ТоМесто",
+      "name": "Илья Земсков",
+      "identifier": "79271560085",
+      "guests": "50",
+      "event_type": "Юбилей",
+      "manager": "Олеся",
+      "reason": "Пропала потребность",
+      "last_comment": "принимают решение",
+      "last_record": "принимают решение",
+      "last_record_at": "2026-09-05T20:09:03+03:00",
+      "last_record_type": "entity_direct_message",
+      "last_record_status": "VERIFIED"
+    },
+    {
+      "crm_lead_id": 48196869,
+      "closed_at": "2026-10-23T21:38:02+03:00",
+      "closed_ts": 1792780682,
+      "source": "САЙТ ТИЛЬДА",
+      "name": "Анна",
+      "identifier": "79264304917",
+      "guests": "50",
+      "event_type": "Свадьба",
+      "manager": "Олеся",
+      "reason": "Пропала потребность",
+      "last_comment": "повторно написала, жду ответ",
+      "last_record": "повторно написала, жду ответ",
+      "last_record_at": "2026-09-05T20:08:36+03:00",
+      "last_record_type": "entity_direct_message",
+      "last_record_status": "VERIFIED"
+    },
+    {
+      "crm_lead_id": 48196549,
+      "closed_at": "2026-10-23T21:36:21+03:00",
+      "closed_ts": 1792780581,
+      "source": "САЙТ ТИЛЬДА",
+      "name": "Валерия",
+      "identifier": "79017061103",
+      "guests": "30",
+      "event_type": "Свадьба",
+      "manager": "Олеся",
+      "reason": "Нет обратной связи",
+      "last_comment": "принимает решение",
+      "last_record": "принимает решение",
+      "last_record_at": "2026-09-05T20:08:04+03:00",
+      "last_record_type": "entity_direct_message",
+      "last_record_status": "VERIFIED"
+    },
+    {
+      "crm_lead_id": 48166465,
+      "closed_at": "2026-10-23T21:35:29+03:00",
+      "closed_ts": 1792780529,
+      "source": "Restoran.Cafe",
+      "name": "Кристина",
+      "identifier": "79028041547",
+      "guests": "70",
+      "event_type": "Корпоратив",
+      "manager": "Олеся",
+      "reason": "Выбрали других",
+      "last_comment": "принимают решение",
+      "last_record": "принимают решение",
+      "last_record_at": "2026-09-05T20:03:27+03:00",
+      "last_record_type": "entity_direct_message",
+      "last_record_status": "VERIFIED"
+    },
+    {
+      "crm_lead_id": 48162461,
+      "closed_at": "2026-10-23T21:25:38+03:00",
+      "closed_ts": 1792779938,
+      "source": "Заявки хост",
+      "name": "Анастасия",
+      "identifier": "79262301131",
+      "guests": "200",
+      "event_type": "Корпоратив",
+      "manager": "Олеся",
+      "reason": "Выбрали других",
+      "last_comment": "принимают решение",
+      "last_record": "принимают решение",
+      "last_record_at": "2026-09-05T20:02:07+03:00",
+      "last_record_type": "entity_direct_message",
+      "last_record_status": "VERIFIED"
+    },
+    {
+      "crm_lead_id": 48070751,
+      "closed_at": "2026-10-23T21:22:32+03:00",
+      "closed_ts": 1792779752,
+      "source": "MARQUIZ",
+      "name": "Асия",
+      "identifier": "79915667345",
+      "guests": "50",
+      "event_type": "Свадьба",
+      "manager": "Олеся",
+      "reason": "Выбрали других",
+      "last_comment": "написала еще раз, принимают решение",
+      "last_record": "написала еще раз, принимают решение",
+      "last_record_at": "2026-09-02T09:39:19+03:00",
+      "last_record_type": "entity_direct_message",
+      "last_record_status": "VERIFIED"
+    },
+    {
+      "crm_lead_id": 48040593,
+      "closed_at": "2026-10-23T21:21:20+03:00",
+      "closed_ts": 1792779680,
+      "source": "Заявки хост",
+      "name": "Свадьба",
+      "identifier": "79057316512",
+      "guests": "25",
+      "event_type": "Свадьба",
+      "manager": "Олеся",
+      "reason": "Нет обратной связи",
+      "last_comment": "нет обратной связи",
+      "last_record": "нет обратной связи",
+      "last_record_at": "2026-10-23T21:21:13+03:00",
+      "last_record_type": "entity_direct_message",
+      "last_record_status": "VERIFIED"
+    },
     {
       "crm_lead_id": 49722191,
       "closed_at": "2026-10-23T19:42:12+03:00",
@@ -2969,112 +3477,10 @@
       "last_record_at": "",
       "last_record_type": "",
       "last_record_status": "EMPTY"
-    },
-    {
-      "crm_lead_id": 49696391,
-      "closed_at": "2026-10-19T18:46:43+03:00",
-      "closed_ts": 1792424803,
-      "source": "Заявки хост",
-      "name": "Нэлли",
-      "identifier": "79035535700",
-      "guests": "30",
-      "event_type": "Юбилей",
-      "manager": "Олеся",
-      "reason": "Дата занята",
-      "last_comment": "",
-      "last_record": "",
-      "last_record_at": "",
-      "last_record_type": "",
-      "last_record_status": "EMPTY"
-    },
-    {
-      "crm_lead_id": 49560537,
-      "closed_at": "2026-10-19T17:03:15+03:00",
-      "closed_ts": 1792418595,
-      "source": "Заявка с ТГ",
-      "name": "Кристина",
-      "identifier": "79182480919",
-      "guests": "15",
-      "event_type": "Свадьба",
-      "manager": "Максим",
-      "reason": "Дата занята",
-      "last_comment": "мах",
-      "last_record": "мах",
-      "last_record_at": "2026-10-14T18:06:50+03:00",
-      "last_record_type": "entity_direct_message",
-      "last_record_status": "VERIFIED"
-    },
-    {
-      "crm_lead_id": 49573089,
-      "closed_at": "2026-10-19T17:01:36+03:00",
-      "closed_ts": 1792418496,
-      "source": "САЙТ ТИЛЬДА",
-      "name": "Арина",
-      "identifier": "79507172982",
-      "guests": "42",
-      "event_type": "Свадьба",
-      "manager": "Максим",
-      "reason": "Слишком дорого",
-      "last_comment": "нл",
-      "last_record": "нл",
-      "last_record_at": "2026-10-19T16:52:58+03:00",
-      "last_record_type": "entity_direct_message",
-      "last_record_status": "VERIFIED"
-    },
-    {
-      "crm_lead_id": 49690293,
-      "closed_at": "2026-10-19T16:08:08+03:00",
-      "closed_ts": 1792415288,
-      "source": "Заявки хост",
-      "name": "Мадина",
-      "identifier": "79096975316",
-      "guests": "100",
-      "event_type": "Корпоратив",
-      "manager": "Олеся",
-      "reason": "Дата занята",
-      "last_comment": "",
-      "last_record": "",
-      "last_record_at": "",
-      "last_record_type": "",
-      "last_record_status": "EMPTY"
-    },
-    {
-      "crm_lead_id": 49688651,
-      "closed_at": "2026-10-19T15:10:58+03:00",
-      "closed_ts": 1792411858,
-      "source": "Заявки хост",
-      "name": "Маргарита",
-      "identifier": "79684716582",
-      "guests": "15",
-      "event_type": "Корпоратив",
-      "manager": "Олеся",
-      "reason": "Не устроили условия",
-      "last_comment": "",
-      "last_record": "",
-      "last_record_at": "",
-      "last_record_type": "",
-      "last_record_status": "EMPTY"
-    },
-    {
-      "crm_lead_id": 49688623,
-      "closed_at": "2026-10-19T15:10:06+03:00",
-      "closed_ts": 1792411806,
-      "source": "Заявки хост",
-      "name": "Ольга",
-      "identifier": "79163967276",
-      "guests": "45",
-      "event_type": "Свадьба",
-      "manager": "Олеся",
-      "reason": "Дата занята",
-      "last_comment": "",
-      "last_record": "",
-      "last_record_at": "",
-      "last_record_type": "",
-      "last_record_status": "EMPTY"
     }
   ],
   "closed_not_realized_summary": {
-    "total": 52,
+    "total": 75,
     "days": 5
   },
   "outcomes": [
@@ -3294,6 +3700,13 @@
       "manager": "Олеся",
       "result": "LOST",
       "reason": "Дата занята"
+    },
+    {
+      "date": "2026-10-19",
+      "ts": "2026-10-19T17:31:24+03:00",
+      "manager": "Олеся",
+      "result": "SUCCESS",
+      "reason": ""
     },
     {
       "date": "2026-10-19",
@@ -3717,10 +4130,31 @@
     },
     {
       "date": "2026-10-08",
+      "ts": "2026-10-08T17:08:14+03:00",
+      "manager": "Олеся",
+      "result": "LOST",
+      "reason": "Выбрали других"
+    },
+    {
+      "date": "2026-10-08",
+      "ts": "2026-10-08T15:32:43+03:00",
+      "manager": "Олеся",
+      "result": "LOST",
+      "reason": "Пропала потребность"
+    },
+    {
+      "date": "2026-10-08",
       "ts": "2026-10-08T14:57:28+03:00",
       "manager": "Олеся",
       "result": "LOST",
       "reason": "Дата занята"
+    },
+    {
+      "date": "2026-10-08",
+      "ts": "2026-10-08T13:14:36+03:00",
+      "manager": "Олеся",
+      "result": "LOST",
+      "reason": "Нет обратной связи"
     },
     {
       "date": "2026-10-08",
@@ -3759,10 +4193,31 @@
     },
     {
       "date": "2026-10-07",
+      "ts": "2026-10-07T16:15:54+03:00",
+      "manager": "Олеся",
+      "result": "LOST",
+      "reason": "Дата занята"
+    },
+    {
+      "date": "2026-10-07",
       "ts": "2026-10-07T15:48:01+03:00",
       "manager": "Олеся",
       "result": "LOST",
       "reason": "Дата занята"
+    },
+    {
+      "date": "2026-10-07",
+      "ts": "2026-10-07T14:16:01+03:00",
+      "manager": "Олеся",
+      "result": "LOST",
+      "reason": "Слишком дорого"
+    },
+    {
+      "date": "2026-10-07",
+      "ts": "2026-10-07T13:33:49+03:00",
+      "manager": "Олеся",
+      "result": "LOST",
+      "reason": "Выбрали других"
     },
     {
       "date": "2026-10-07",
@@ -4151,6 +4606,13 @@
     },
     {
       "date": "2026-09-29",
+      "ts": "2026-09-29T13:14:44+03:00",
+      "manager": "Олеся",
+      "result": "LOST",
+      "reason": "Выбрали других"
+    },
+    {
+      "date": "2026-09-29",
       "ts": "2026-09-29T12:33:46+03:00",
       "manager": "Олеся",
       "result": "LOST",
@@ -4159,6 +4621,13 @@
     {
       "date": "2026-09-29",
       "ts": "2026-09-29T11:20:50+03:00",
+      "manager": "Олеся",
+      "result": "LOST",
+      "reason": "Нет обратной связи"
+    },
+    {
+      "date": "2026-09-29",
+      "ts": "2026-09-29T10:44:05+03:00",
       "manager": "Олеся",
       "result": "LOST",
       "reason": "Нет обратной связи"
@@ -4298,6 +4767,20 @@
     },
     {
       "date": "2026-09-26",
+      "ts": "2026-09-26T14:02:22+03:00",
+      "manager": "Олеся",
+      "result": "LOST",
+      "reason": "Нет обратной связи"
+    },
+    {
+      "date": "2026-09-26",
+      "ts": "2026-09-26T12:21:35+03:00",
+      "manager": "Олеся",
+      "result": "LOST",
+      "reason": "Нет обратной связи"
+    },
+    {
+      "date": "2026-09-26",
       "ts": "2026-09-26T12:07:35+03:00",
       "manager": "Олеся",
       "result": "SUCCESS",
@@ -4323,6 +4806,13 @@
       "manager": "Олеся",
       "result": "LOST",
       "reason": "Нет обратной связи"
+    },
+    {
+      "date": "2026-09-25",
+      "ts": "2026-09-25T11:56:30+03:00",
+      "manager": "Олеся",
+      "result": "LOST",
+      "reason": "Не указана"
     },
     {
       "date": "2026-09-24",
@@ -4585,6 +5075,13 @@
     },
     {
       "date": "2026-09-21",
+      "ts": "2026-09-21T13:23:08+03:00",
+      "manager": "Олеся",
+      "result": "LOST",
+      "reason": "Пропала потребность"
+    },
+    {
+      "date": "2026-09-21",
       "ts": "2026-09-21T12:23:38+03:00",
       "manager": "Олеся",
       "result": "LOST",
@@ -4631,6 +5128,13 @@
       "manager": "Олеся",
       "result": "LOST",
       "reason": "Нет обратной связи"
+    },
+    {
+      "date": "2026-09-18",
+      "ts": "2026-09-18T15:37:09+03:00",
+      "manager": "Олеся",
+      "result": "LOST",
+      "reason": "Пропала потребность"
     },
     {
       "date": "2026-09-18",
@@ -4694,6 +5198,13 @@
       "manager": "Олеся",
       "result": "LOST",
       "reason": "Выбрали других"
+    },
+    {
+      "date": "2026-09-17",
+      "ts": "2026-09-17T11:18:06+03:00",
+      "manager": "Олеся",
+      "result": "LOST",
+      "reason": "Пропала потребность"
     },
     {
       "date": "2026-09-16",
@@ -4893,6 +5404,13 @@
     },
     {
       "date": "2026-09-14",
+      "ts": "2026-09-14T19:37:11+03:00",
+      "manager": "Олеся",
+      "result": "LOST",
+      "reason": "Выбрали других"
+    },
+    {
+      "date": "2026-09-14",
       "ts": "2026-09-14T18:35:46+03:00",
       "manager": "Олеся",
       "result": "LOST",
@@ -4911,6 +5429,13 @@
       "manager": "Олеся",
       "result": "LOST",
       "reason": "Не устроили условия"
+    },
+    {
+      "date": "2026-09-14",
+      "ts": "2026-09-14T15:44:05+03:00",
+      "manager": "Олеся",
+      "result": "LOST",
+      "reason": "Выбрали других"
     },
     {
       "date": "2026-09-14",
@@ -5103,6 +5628,20 @@
     },
     {
       "date": "2026-09-10",
+      "ts": "2026-09-10T13:19:26+03:00",
+      "manager": "Олеся",
+      "result": "LOST",
+      "reason": "Нет обратной связи"
+    },
+    {
+      "date": "2026-09-10",
+      "ts": "2026-09-10T12:35:03+03:00",
+      "manager": "Олеся",
+      "result": "LOST",
+      "reason": "Дата занята"
+    },
+    {
+      "date": "2026-09-10",
       "ts": "2026-09-10T12:16:44+03:00",
       "manager": "Олеся",
       "result": "LOST",
@@ -5149,6 +5688,13 @@
       "manager": "Олеся",
       "result": "LOST",
       "reason": "Не устроили условия"
+    },
+    {
+      "date": "2026-09-09",
+      "ts": "2026-09-09T13:04:37+03:00",
+      "manager": "Олеся",
+      "result": "LOST",
+      "reason": "Нет обратной связи"
     },
     {
       "date": "2026-09-09",
@@ -5313,6 +5859,13 @@
     },
     {
       "date": "2026-09-06",
+      "ts": "2026-09-06T18:15:41+03:00",
+      "manager": "Олеся",
+      "result": "LOST",
+      "reason": "Не указана"
+    },
+    {
+      "date": "2026-09-06",
       "ts": "2026-09-06T13:49:03+03:00",
       "manager": "Олеся",
       "result": "LOST",
@@ -5324,6 +5877,13 @@
       "manager": "Олеся",
       "result": "LOST",
       "reason": "Дата занята"
+    },
+    {
+      "date": "2026-09-06",
+      "ts": "2026-09-06T12:25:14+03:00",
+      "manager": "Олеся",
+      "result": "LOST",
+      "reason": "Нет обратной связи"
     },
     {
       "date": "2026-09-05",
@@ -5383,6 +5943,20 @@
     },
     {
       "date": "2026-09-02",
+      "ts": "2026-09-02T22:14:55+03:00",
+      "manager": "Олеся",
+      "result": "LOST",
+      "reason": "Пропала потребность"
+    },
+    {
+      "date": "2026-09-02",
+      "ts": "2026-09-02T18:30:30+03:00",
+      "manager": "Олеся",
+      "result": "LOST",
+      "reason": "Нет обратной связи"
+    },
+    {
+      "date": "2026-09-02",
       "ts": "2026-09-02T17:32:03+03:00",
       "manager": "Олеся",
       "result": "LOST",
@@ -5425,10 +5999,31 @@
     },
     {
       "date": "2026-09-01",
+      "ts": "2026-09-01T21:37:41+03:00",
+      "manager": "Олеся",
+      "result": "LOST",
+      "reason": "Выбрали других"
+    },
+    {
+      "date": "2026-09-01",
+      "ts": "2026-09-01T21:37:10+03:00",
+      "manager": "Олеся",
+      "result": "LOST",
+      "reason": "Пропала потребность"
+    },
+    {
+      "date": "2026-09-01",
       "ts": "2026-09-01T21:36:38+03:00",
       "manager": "Олеся",
       "result": "LOST",
       "reason": "Дата занята"
+    },
+    {
+      "date": "2026-09-01",
+      "ts": "2026-09-01T16:48:32+03:00",
+      "manager": "Олеся",
+      "result": "LOST",
+      "reason": "Выбрали других"
     },
     {
       "date": "2026-09-01",
@@ -5565,10 +6160,31 @@
     },
     {
       "date": "2026-08-29",
+      "ts": "2026-08-29T13:07:25+03:00",
+      "manager": "Олеся",
+      "result": "LOST",
+      "reason": "Выбрали других"
+    },
+    {
+      "date": "2026-08-29",
+      "ts": "2026-08-29T12:20:50+03:00",
+      "manager": "Олеся",
+      "result": "SUCCESS",
+      "reason": ""
+    },
+    {
+      "date": "2026-08-29",
       "ts": "2026-08-29T11:52:04+03:00",
       "manager": "Олеся",
       "result": "LOST",
       "reason": "Не указана"
+    },
+    {
+      "date": "2026-08-28",
+      "ts": "2026-08-28T20:22:46+03:00",
+      "manager": "Олеся",
+      "result": "LOST",
+      "reason": "Нет обратной связи"
     },
     {
       "date": "2026-08-28",
@@ -6633,6 +7249,13 @@
       "manager": "Олеся",
       "result": "SUCCESS",
       "reason": ""
+    },
+    {
+      "date": "2026-08-05",
+      "ts": "2026-08-05T17:17:59+03:00",
+      "manager": "Олеся",
+      "result": "LOST",
+      "reason": "Пропала потребность"
     },
     {
       "date": "2026-08-05",
@@ -8212,11 +8835,12 @@
         "143": 9
       },
       "2026-10-23": {
-        "142": 2,
-        "143": 17,
-        "79927038": 3,
-        "79927042": 3,
-        "80331318": 1,
+        "142": 4,
+        "143": 46,
+        "79927038": 4,
+        "79927042": 5,
+        "79927914": 1,
+        "80331318": 2,
         "84995274": 1,
         "88382034": 14
       }
@@ -8300,8 +8924,8 @@
         "sort": 11000
       }
     ],
-    "today": "2026-10-23",
-    "total_movements": 434,
+    "today": "2026-10-24",
+    "total_movements": 470,
     "weeks": [
       {
         "dates": [

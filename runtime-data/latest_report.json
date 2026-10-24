@@ -1,5 +1,5 @@
 {
-  "alarm_no_crm": 2,
+  "alarm_no_crm": 3,
   "by_manager": {
     "no_manager_reaction": 763,
     "Максим": 90,
@@ -44,9 +44,9 @@
   "latest_leads": [
     {
       "created_at": "2026-10-23T18:05:39+03:00",
-      "crm_entity_id": null,
-      "crm_entity_type": null,
-      "crm_found": false,
+      "crm_entity_id": 49820479,
+      "crm_entity_type": "lead",
+      "crm_found": true,
       "event_date": "",
       "event_type": "Свадьба",
       "guests_count": 50,
@@ -57,7 +57,7 @@
       "manager_username": "",
       "name": "Игорь",
       "source": "Заявки хост",
-      "status": "PENDING",
+      "status": "OK",
       "violations": []
     },
     {
@@ -165,8 +165,10 @@
       "manager_username": "",
       "name": "Лилия",
       "source": "Заявки хост",
-      "status": "PENDING",
-      "violations": []
+      "status": "ALARM_NO_CRM",
+      "violations": [
+        "ALARM_NO_CRM"
+      ]
     },
     {
       "created_at": "2026-10-23T12:05:41+03:00",
@@ -405,7 +407,7 @@
   ],
   "needs_review": 136,
   "no_reaction": 0,
-  "ok": 701,
+  "ok": 702,
   "total_leads": 935,
-  "updated_at": "2026-10-23T20:18:41+03:00"
+  "updated_at": "2026-10-24T11:24:20+03:00"
 }
