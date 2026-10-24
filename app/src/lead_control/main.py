@@ -16,6 +16,7 @@ from .daily_duplicates import apply_daily_phone_duplicate_policy
 from .data_branch import commit_data_if_changed, prepare_data_worktree
 from .explicit_client_name import apply_explicit_client_names
 from .lead_enrichment import enrich_leads_from_events
+from .lead_phone_corrections import apply_lead_phone_corrections
 from .linked_contact_followup import remove_linked_contact_followup_leads
 from .manual_history import missing_manual_history_events
 from .manual_review_fields import enrich_manual_review_fields
@@ -174,21 +175,25 @@ def main() -> None:
         max_state.get("marker"),
     )
 
-    leads, needs_review_items = rebuild_leads_and_needs_review(
+    working_events = apply_lead_phone_corrections(
         events,
+        load_json(data_dir / "lead_phone_corrections.json", {"schema_version": 1, "phone_corrections": []}),
+    )
+    leads, needs_review_items = rebuild_leads_and_needs_review(
+        working_events,
         old_needs_review_payload.get("items", []),
         review_overrides_payload.get("items", []),
     )
-    removed_contact_followups = remove_linked_contact_followup_leads(leads, events)
+    removed_contact_followups = remove_linked_contact_followup_leads(leads, working_events)
     if removed_contact_followups:
         LOG.info("Linked MAX contact follow-up false leads removed: %s", removed_contact_followups)
     normalize_lead_sources(leads)
-    apply_max_mail_leads(leads, events)
-    enrich_leads_from_events(leads, events)
-    apply_explicit_client_names(leads, events)
+    apply_max_mail_leads(leads, working_events)
+    enrich_leads_from_events(leads, working_events)
+    apply_explicit_client_names(leads, working_events)
     enrich_manual_review_fields(leads, review_overrides_payload.get("items", []))
-    enrich_wedwed_leads(leads, events)
-    apply_daily_phone_duplicate_policy(leads, events)
+    enrich_wedwed_leads(leads, working_events)
+    apply_daily_phone_duplicate_policy(leads, working_events)
     needs_review_items = filter_known_source_reviews(needs_review_items)
 
     leads_payload = {"schema_version": 1, "leads": leads}
