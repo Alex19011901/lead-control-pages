@@ -1,4 +1,5 @@
 name: Lead Control Public Runner
+# pl-control-analysis-indicators: enabled
 # pl-control-yoy-layout-fix: enabled
 # pl-control-yoy-runtime-fix: enabled
 # pl-control-yoy-stacked-years: enabled
@@ -162,6 +163,8 @@ jobs:
           mkdir -p public-site/pl-control
           cp pl-control/index.html public-site/pl-control/index.html
           cp pl-control/data.json public-site/pl-control/data.json
+          cp pl-control/indicators-2025.json public-site/pl-control/indicators-2025.json
+          cp pl-control/indicators-2026.json public-site/pl-control/indicators-2026.json
 
       - name: Save refreshed data
         run: |
