@@ -137,6 +137,24 @@ function quarters(){
           '<tr class="qcompare-delta"><td class="metric">Δ YoY</td>'+rowDelta+'</tr>';
  }).join('');
 }
+function aggregatePeriod(months){
+ const s={revenue:0,cogs:0,gross:0,fixed:0,rent:0,payroll:0,aho:0,it:0,marketing:0,finance:0,inventory:0,taxes:0,ebitda:0,foodCostWeighted:0};
+ months.forEach(m=>{
+   ['revenue','cogs','gross','fixed','rent','payroll','aho','it','marketing','finance','inventory','taxes','ebitda'].forEach(k=>s[k]+=Number(m[k]||0));
+   s.foodCostWeighted+=Number(m.revenue||0)*Number(m.food_cost_pct||0);
+ });
+ const r=s.revenue||1;
+ return {...s,
+   cogs_pct:s.cogs/r,
+   gross_pct:s.gross/r,
+   food_cost_pct:s.foodCostWeighted/r,
+   rent_pct:s.rent/r,
+   payroll_pct:s.payroll/r,
+   aho_pct:s.aho/r,
+   marketing_pct:s.marketing/r,
+   ebitda_pct:s.ebitda/r
+ };
+}
 function yoyDelta(a,b,type){
  const d=b-a;
  return type==='pct'?((d>0?'+':'')+pp(d)):((d>0?'+':'')+rub(d));
