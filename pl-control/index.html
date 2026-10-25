@@ -28,12 +28,12 @@ th:first-child,td:first-child{text-align:left;position:sticky;left:0;background:
 </div>
 
 <div class="card pad section" id="yoyQuarterWidget">
-  <div class="yoy-head"><div><div class="title" style="margin-bottom:3px">Год к году · кварталы</div><div class="yoy-sub">Q1, Q2 и Q3 2026 против соответствующих кварталов 2025</div></div></div>
+  <div class="yoy-head"><div><div class="title" style="margin-bottom:3px">Год к году · кварталы</div><div class="yoy-sub">2025 сверху, 2026 под ним, затем Δ YoY по одинаковому кварталу</div></div></div>
   <div class="scroll"><table><thead id="yoyQuarterHead"></thead><tbody id="yoyQuarterTable"></tbody></table></div>
 </div>
 
 <div class="card pad section" id="yoyMonthWidget">
-  <div class="yoy-head"><div><div class="title" style="margin-bottom:3px">Год к году · месяцы</div><div class="yoy-sub">Каждый месяц: значение 2025, значение 2026 и изменение год к году</div></div></div>
+  <div class="yoy-head"><div><div class="title" style="margin-bottom:3px">Год к году · месяцы</div><div class="yoy-sub">2025 сверху, 2026 под ним, затем Δ YoY по одинаковому месяцу</div></div></div>
   <div class="scroll"><table><thead id="yoyMonthHead"></thead><tbody id="yoyMonthTable"></tbody></table></div>
 </div>
 </div>
@@ -162,11 +162,27 @@ function renderYoyQuarters(){
    a:D.quarters.find(x=>x.year===2025&&x.quarter===q),
    b:D.quarters.find(x=>x.year===2026&&x.quarter===q)
  })).filter(x=>x.a&&x.b);
- $('yoyQuarterHead').innerHTML='<tr><th>Показатель</th>'+pairs.map(x=>'<th>Q'+x.q+' YoY</th>').join('')+'</tr>';
- $('yoyQuarterTable').innerHTML=metrics.map(([name,key,type,up])=>'<tr><td class="metric">'+name+'</td>'+pairs.map(x=>{
-   const v25=x.a[key],v26=x.b[key],d=v26-v25;
-   return '<td><div class="yoy-cell-main '+cls(d,up)+'">'+(type==='pct'?((d>0?'+':'')+pp(d)):reltxt(v26,v25))+'</div><div class="yoy-pair"><span>2025: '+fmt(v25,type)+'</span><span>2026: '+fmt(v26,type)+'</span></div></td>';
- }).join('')+'</tr>').join('');
+
+ $('yoyQuarterHead').innerHTML='<tr><th>Показатель</th><th>Год</th>'+pairs.map(x=>'<th>Q'+x.q+'</th>').join('')+'</tr>';
+
+ $('yoyQuarterTable').innerHTML=metrics.map(([name,key,type,up])=>{
+   const row25=pairs.map(x=>'<td>'+fmt(x.a[key],type)+'</td>').join('');
+   const row26=pairs.map(x=>{
+     const v=x.b[key];
+     const c=(key==='ebitda'||key==='ebitda_pct')?(v>=0?'green':'red'):'';
+     return '<td class="'+c+'">'+fmt(v,type)+'</td>';
+   }).join('');
+   const rowDelta=pairs.map(x=>{
+     const v25=x.a[key],v26=x.b[key],d=v26-v25;
+     const main=type==='pct'?((d>0?'+':'')+pp(d)):reltxt(v26,v25);
+     const sub=type==='pct'?'':((d>0?'+':'')+rub(d));
+     return '<td><div class="yoy-cell-main '+cls(d,up)+'">'+main+'</div>'+(sub?'<div class="yoy-cell-sub">'+sub+'</div>':'')+'</td>';
+   }).join('');
+
+   return '<tr class="qcompare-group"><td class="qcompare-metric" rowspan="3">'+name+'</td><td class="qcompare-year">2025</td>'+row25+'</tr>'+
+          '<tr class="qcompare-group"><td class="qcompare-year">2026</td>'+row26+'</tr>'+
+          '<tr class="qcompare-delta"><td class="metric">Δ YoY</td>'+rowDelta+'</tr>';
+ }).join('');
 }
 function renderYoyMonths(){
  const pairs=D.months.filter(m=>m.year===2026&&m.month<=9).map(m26=>({
@@ -174,27 +190,26 @@ function renderYoyMonths(){
    m25:D.months.find(x=>x.year===2025&&x.month===m26.month)
  })).filter(x=>x.m25);
 
- $('yoyMonthHead').innerHTML=
-   '<tr><th rowspan="2">Показатель</th>'+
-   pairs.map(x=>'<th class="yearhead" colspan="3">'+x.m26.name+'</th>').join('')+
-   '</tr><tr>'+
-   pairs.map(x=>'<th class="monthhead">'+x.m25.short+' 25</th><th class="monthhead">'+x.m26.short+' 26</th><th class="monthhead">Δ YoY</th>').join('')+
-   '</tr>';
+ $('yoyMonthHead').innerHTML='<tr><th>Показатель</th><th>Год</th>'+pairs.map(x=>'<th>'+x.m26.short+'</th>').join('')+'</tr>';
 
- $('yoyMonthTable').innerHTML=metrics.map(([name,key,type,up])=>
-   '<tr><td class="metric">'+name+'</td>'+
-   pairs.map(x=>{
-     const v25=x.m25[key],v26=x.m26[key],d=v26-v25,r=rel(v26,v25);
-     const deltaMain=type==='pct'?((d>0?'+':'')+pp(d)):reltxt(v26,v25);
-     const deltaSub=type==='pct'?'':((d>0?'+':'')+rub(d));
-     return '<td>'+fmt(v25,type)+'</td>'+
-            '<td><b>'+fmt(v26,type)+'</b></td>'+
-            '<td><div class="yoy-cell-main '+cls(d,up)+'">'+deltaMain+'</div>'+
-            (deltaSub?'<div class="yoy-cell-sub">'+deltaSub+'</div>':'')+
-            '</td>';
-   }).join('')+
-   '</tr>'
- ).join('');
+ $('yoyMonthTable').innerHTML=metrics.map(([name,key,type,up])=>{
+   const row25=pairs.map(x=>'<td>'+fmt(x.m25[key],type)+'</td>').join('');
+   const row26=pairs.map(x=>{
+     const v=x.m26[key];
+     const c=(key==='ebitda'||key==='ebitda_pct')?(v>=0?'green':'red'):'';
+     return '<td class="'+c+'">'+fmt(v,type)+'</td>';
+   }).join('');
+   const rowDelta=pairs.map(x=>{
+     const v25=x.m25[key],v26=x.m26[key],d=v26-v25;
+     const main=type==='pct'?((d>0?'+':'')+pp(d)):reltxt(v26,v25);
+     const sub=type==='pct'?'':((d>0?'+':'')+rub(d));
+     return '<td><div class="yoy-cell-main '+cls(d,up)+'">'+main+'</div>'+(sub?'<div class="yoy-cell-sub">'+sub+'</div>':'')+'</td>';
+   }).join('');
+
+   return '<tr class="qcompare-group"><td class="qcompare-metric" rowspan="3">'+name+'</td><td class="qcompare-year">2025</td>'+row25+'</tr>'+
+          '<tr class="qcompare-group"><td class="qcompare-year">2026</td>'+row26+'</tr>'+
+          '<tr class="qcompare-delta"><td class="metric">Δ YoY</td>'+rowDelta+'</tr>';
+ }).join('');
 }
 fetch(DATA+'?v='+Date.now(),{cache:'no-store'}).then(r=>r.json()).then(x=>{D=x;summary();buildMonthHead();matrix();chart();quarters();renderYoyYtd();renderYoyQuarters();renderYoyMonths()}).catch(()=>{$('matrix').innerHTML='<tr><td>Ошибка загрузки данных</td></tr>'});
 </script></body></html>
