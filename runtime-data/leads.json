@@ -25890,22 +25890,6 @@
     {
       "category": "САЙТ ТИЛЬДА",
       "channel": "TELEGRAM",
-      "closed_not_realized": {
-        "closed_at": 1792485589,
-        "crm_lead_id": 49520491,
-        "last_comment": "тг",
-        "last_comment_at": 1791957367,
-        "last_record_at": 1791957367,
-        "last_record_author": "Лаура",
-        "last_record_display": "тг",
-        "last_record_errors": [],
-        "last_record_id": "a501ea83-c92e-4e82-8ca6-021cf2bb7f7b",
-        "last_record_rule_version": 5,
-        "last_record_status": "VERIFIED",
-        "last_record_type": "entity_direct_message",
-        "loss_reason_id": 21779734,
-        "loss_reason_name": "Слишком дорого"
-      },
       "crm": {
         "ambiguity_count": 0,
         "created_at": 1791957354,
@@ -28234,22 +28218,6 @@
     {
       "category": "САЙТ ТИЛЬДА",
       "channel": "TELEGRAM",
-      "closed_not_realized": {
-        "closed_at": 1792516957,
-        "crm_lead_id": 49725963,
-        "last_comment": "Номер не существует",
-        "last_comment_at": 1792516961,
-        "last_record_at": 1792516961,
-        "last_record_author": "Олеся",
-        "last_record_display": "Номер не существует",
-        "last_record_errors": [],
-        "last_record_id": "f97424a5-597b-4381-959b-05ecfb50dc72",
-        "last_record_rule_version": 5,
-        "last_record_status": "VERIFIED",
-        "last_record_type": "entity_direct_message",
-        "loss_reason_id": 24466290,
-        "loss_reason_name": "Спам"
-      },
       "crm": {
         "ambiguity_count": 0,
         "created_at": 1792516951,
@@ -28365,22 +28333,6 @@
     {
       "category": "САЙТ ТИЛЬДА",
       "channel": "TELEGRAM",
-      "closed_not_realized": {
-        "closed_at": 1792516734,
-        "crm_lead_id": 49725909,
-        "last_comment": "",
-        "last_comment_at": null,
-        "last_record_at": null,
-        "last_record_author": "",
-        "last_record_display": "",
-        "last_record_errors": [],
-        "last_record_id": "",
-        "last_record_rule_version": 5,
-        "last_record_status": "EMPTY",
-        "last_record_type": "",
-        "loss_reason_id": 21780202,
-        "loss_reason_name": "Дата занята"
-      },
       "crm": {
         "ambiguity_count": 1,
         "created_at": 1792516729,
@@ -28652,22 +28604,6 @@
     {
       "category": "САЙТ ТИЛЬДА",
       "channel": "TELEGRAM",
-      "closed_not_realized": {
-        "closed_at": 1792516805,
-        "crm_lead_id": 49725925,
-        "last_comment": "Заявка передана хостес",
-        "last_comment_at": 1792516813,
-        "last_record_at": 1792516813,
-        "last_record_author": "Олеся",
-        "last_record_display": "Заявка передана хостес",
-        "last_record_errors": [],
-        "last_record_id": "1709a032-36db-4ca1-9756-6e46ad9b0ff5",
-        "last_record_rule_version": 5,
-        "last_record_status": "VERIFIED",
-        "last_record_type": "entity_direct_message",
-        "loss_reason_id": null,
-        "loss_reason_name": "Не указана"
-      },
       "crm": {
         "ambiguity_count": 0,
         "created_at": 1792516790,
@@ -29381,7 +29317,7 @@
         "pipeline_id": 10081590,
         "responsible_user_id": 12982830,
         "rule_version": 6,
-        "state": "WAITING",
+        "state": "NO_FEEDBACK",
         "status_id": 79927038,
         "status_name": "Выслано предложение"
       },
@@ -29477,7 +29413,7 @@
         "pipeline_id": 10081590,
         "responsible_user_id": 12982830,
         "rule_version": 6,
-        "state": "WAITING",
+        "state": "NO_FEEDBACK",
         "status_id": 79927038,
         "status_name": "Выслано предложение"
       },
@@ -30871,29 +30807,73 @@
     {
       "category": "MARQUIZ",
       "channel": "TELEGRAM",
+      "closed_not_realized": {
+        "closed_at": 1792842707,
+        "crm_lead_id": 49833725,
+        "last_comment": "",
+        "last_comment_at": null,
+        "last_record_at": null,
+        "last_record_author": "",
+        "last_record_display": "",
+        "last_record_errors": [],
+        "last_record_id": "",
+        "last_record_rule_version": 5,
+        "last_record_status": "EMPTY",
+        "last_record_type": "",
+        "loss_reason_id": 21780202,
+        "loss_reason_name": "Дата занята"
+      },
       "crm": {
         "ambiguity_count": 0,
-        "created_at": null,
-        "entity_id": null,
-        "entity_type": null,
-        "event_type": null,
-        "found": false,
-        "responsible_user_id": null,
-        "responsible_user_name": null,
-        "updated_at": null
+        "created_at": 1792842696,
+        "entity_id": 49833725,
+        "entity_type": "lead",
+        "event_type": "Юбилей",
+        "found": true,
+        "guests": "25",
+        "guests_source": "CRM",
+        "responsible_user_id": 13009530,
+        "responsible_user_name": "Олеся",
+        "updated_at": 1792842707
       },
-      "crm_created_at": null,
-      "crm_found": false,
+      "crm_created_at": 1792842696,
+      "crm_feedback": {
+        "closed_at": 1792842707,
+        "crm_lead_id": 49833725,
+        "excluded": true,
+        "first_activity_at": null,
+        "lead_created_at": 1792842696,
+        "loss_reason_checked": true,
+        "loss_reason_id": 21780202,
+        "loss_reason_name": "Дата занята",
+        "pipeline_id": 10081590,
+        "responsible_user_id": 13009530,
+        "rule_version": 6,
+        "state": "EXCLUDED",
+        "status_id": 143,
+        "status_name": "Закрыто и не реализовано"
+      },
+      "crm_found": true,
+      "crm_outcome": {
+        "closed_at": 1792842707,
+        "loss_reason_id": 21780202,
+        "loss_reason_name": "Дата занята",
+        "result": "LOST",
+        "status_id": 143,
+        "status_name": "Закрыто и не реализовано"
+      },
       "crm_required": true,
-      "crm_responsible": null,
+      "crm_responsible": 13009530,
       "deadline_msk_ts": 1792875599,
+      "event_type": "Юбилей",
+      "event_type_source": "CRM",
       "fields": {
         "category": "MARQUIZ",
         "description": "🎯 Заявка на квиз \"Организуйте идеальное мероприятие в ресторане «Светлый».\"\n\nИмя: Светлана\nТелефон: +79263314591\n\nКакое мероприятие вы планируете?\nДень рождения / юбилей\n\nСколько гостей ожидается?\n25\n\nУточните дату Вашего мероприятия?\n14.11.2026\n\nКакой формат мероприятия интересует?\nБанкет\n\nТовары:\n\nТовары не выбраны\n\n\nБонусы: Бесплатная дегустация, Без арендной платы\n\nМестоположение: Россия, Москва\nUTM-метки:\ncampaign: Bankety_poisk_quiz\nmedium: cpc\nsource: yandex_direct\n\nСтраница: https://mrqz.me/moscowbanket?callibri=yd_c:712849433_gb:5773918655_ad:1915822986185365496_ph:205773918655_st:search_s:none_dt:mobile&utm_source=yandex_direct&utm_medium=cpc&utm_campaign=Bankety_poisk_quiz&type=search&source=none&added=no&block=premium&position=1&keyword=---autotargeting&etext=2202.OuZJIFM84qExe58VXloaI4qta5TU9xrq4h2cs1UYq06cjlNTJqAfQjgLdY19cjfJduFoSuJmAcgRrCPBVSq44GZ1c3ltYW92cnVvYnFjeXQ.af0f20a58fdf8d8d652caae91fe985f2f88a8cee&yclid=5964577112753700863\n\nСогласия:\nЯ согласен на обработку персональных данных: Да",
         "event_date": "2026-11-14",
         "event_date_raw": "14.11.2026",
         "event_format": "Банкет",
-        "event_type": "День рождения / юбилей",
+        "event_type": "Юбилей",
         "guests_count": 25,
         "guests_raw": "25",
         "name": "Светлана",
@@ -30911,13 +30891,40 @@
       },
       "last_seen_at": "2026-10-24T12:10:16+03:00",
       "last_seen_ts": 1792833016,
-      "manager_reaction": null,
+      "manager_reaction": {
+        "name": "Олеся",
+        "reacted_at": "2026-10-24T14:37:27+03:00",
+        "reacted_ts": 1792841847,
+        "reaction": [
+          {
+            "emoji": "❤",
+            "type": "emoji"
+          }
+        ],
+        "update_id": 185609026,
+        "user_id": 328611361,
+        "username": "Olesyagozhina"
+      },
+      "preclose_record_cache": {
+        "closed_at": 1792842707,
+        "crm_lead_id": 49833725,
+        "last_comment": "",
+        "last_comment_at": null,
+        "last_record_at": null,
+        "last_record_author": "",
+        "last_record_display": "",
+        "last_record_errors": [],
+        "last_record_id": "",
+        "last_record_rule_version": 5,
+        "last_record_status": "EMPTY",
+        "last_record_type": ""
+      },
       "received_at": "2026-10-24T12:10:16+03:00",
       "sender_name": "MarquizBot",
       "sender_user_id": 446491725,
       "sender_username": "MarquizBot",
       "source": "MARQUIZ",
-      "status": "PENDING",
+      "status": "OK",
       "telegram": {
         "chat_id": -1001645768111,
         "message_ids": [
@@ -86302,22 +86309,6 @@
     {
       "category": "ЗАЯВКА ПОЧТА",
       "channel": "MAX",
-      "closed_not_realized": {
-        "closed_at": 1792485661,
-        "crm_lead_id": 49399763,
-        "last_comment": "1",
-        "last_comment_at": 1792485471,
-        "last_record_at": 1792485471,
-        "last_record_author": "",
-        "last_record_display": "1",
-        "last_record_errors": [],
-        "last_record_id": "51814605",
-        "last_record_rule_version": 5,
-        "last_record_status": "VERIFIED",
-        "last_record_type": "task_result",
-        "loss_reason_id": 21779746,
-        "loss_reason_name": "Выбрали других"
-      },
       "crm": {
         "ambiguity_count": 0,
         "created_at": 1791558073,
@@ -93313,22 +93304,6 @@
     {
       "category": "HOST",
       "channel": "MAX",
-      "closed_not_realized": {
-        "closed_at": 1792447067,
-        "crm_lead_id": 49702041,
-        "last_comment": "",
-        "last_comment_at": null,
-        "last_record_at": null,
-        "last_record_author": "",
-        "last_record_display": "",
-        "last_record_errors": [],
-        "last_record_id": "",
-        "last_record_rule_version": 5,
-        "last_record_status": "EMPTY",
-        "last_record_type": "",
-        "loss_reason_id": 21780202,
-        "loss_reason_name": "Дата занята"
-      },
       "crm": {
         "ambiguity_count": 0,
         "created_at": 1792447058,
@@ -93441,22 +93416,6 @@
     {
       "category": "HOST",
       "channel": "MAX",
-      "closed_not_realized": {
-        "closed_at": 1792519572,
-        "crm_lead_id": 49726699,
-        "last_comment": "",
-        "last_comment_at": null,
-        "last_record_at": null,
-        "last_record_author": "",
-        "last_record_display": "",
-        "last_record_errors": [],
-        "last_record_id": "",
-        "last_record_rule_version": 5,
-        "last_record_status": "EMPTY",
-        "last_record_type": "",
-        "loss_reason_id": 21780202,
-        "loss_reason_name": "Дата занята"
-      },
       "crm": {
         "ambiguity_count": 0,
         "created_at": 1792519565,
@@ -93660,22 +93619,6 @@
     {
       "category": "HOST",
       "channel": "MAX",
-      "closed_not_realized": {
-        "closed_at": 1792519437,
-        "crm_lead_id": 49726659,
-        "last_comment": "",
-        "last_comment_at": null,
-        "last_record_at": null,
-        "last_record_author": "",
-        "last_record_display": "",
-        "last_record_errors": [],
-        "last_record_id": "",
-        "last_record_rule_version": 5,
-        "last_record_status": "EMPTY",
-        "last_record_type": "",
-        "loss_reason_id": 21780202,
-        "loss_reason_name": "Дата занята"
-      },
       "crm": {
         "ambiguity_count": 0,
         "created_at": 1792519405,
@@ -94176,22 +94119,6 @@
     {
       "category": "HOST",
       "channel": "MAX",
-      "closed_not_realized": {
-        "closed_at": 1792518415,
-        "crm_lead_id": 49726359,
-        "last_comment": "",
-        "last_comment_at": null,
-        "last_record_at": null,
-        "last_record_author": "",
-        "last_record_display": "",
-        "last_record_errors": [],
-        "last_record_id": "",
-        "last_record_rule_version": 5,
-        "last_record_status": "EMPTY",
-        "last_record_type": "",
-        "loss_reason_id": 21779742,
-        "loss_reason_name": "Не устроили условия"
-      },
       "crm": {
         "ambiguity_count": 0,
         "created_at": 1792518409,
@@ -94331,7 +94258,7 @@
         "pipeline_id": 10081590,
         "responsible_user_id": 12982830,
         "rule_version": 6,
-        "state": "WAITING",
+        "state": "NO_FEEDBACK",
         "status_id": 79927038,
         "status_name": "Выслано предложение"
       },
@@ -94423,7 +94350,7 @@
         "pipeline_id": 10081590,
         "responsible_user_id": 12982830,
         "rule_version": 6,
-        "state": "WAITING",
+        "state": "NO_FEEDBACK",
         "status_id": 79927034,
         "status_name": "Первичный контакт"
       },
@@ -94520,7 +94447,7 @@
         "pipeline_id": 10081590,
         "responsible_user_id": 12982830,
         "rule_version": 6,
-        "state": "WAITING",
+        "state": "NO_FEEDBACK",
         "status_id": 79927038,
         "status_name": "Выслано предложение"
       },
@@ -94612,7 +94539,7 @@
         "pipeline_id": 10081590,
         "responsible_user_id": 12982830,
         "rule_version": 6,
-        "state": "WAITING",
+        "state": "NO_FEEDBACK",
         "status_id": 79927038,
         "status_name": "Выслано предложение"
       },
@@ -95026,7 +94953,7 @@
         "pipeline_id": 10081590,
         "responsible_user_id": 12982830,
         "rule_version": 6,
-        "state": "WAITING",
+        "state": "NO_FEEDBACK",
         "status_id": 79927038,
         "status_name": "Выслано предложение"
       },
@@ -97028,6 +96955,9 @@
         "80331318": 2,
         "84995274": 1,
         "88382034": 14
+      },
+      "2026-10-24": {
+        "143": 1
       }
     },
     "pipeline_id": 10081590,
@@ -97109,8 +97039,8 @@
         "sort": 11000
       }
     ],
-    "today": "2026-10-24",
-    "total_movements": 470,
+    "today": "2026-10-25",
+    "total_movements": 471,
     "weeks": [
       {
         "dates": [

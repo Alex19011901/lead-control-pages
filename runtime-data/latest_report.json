@@ -1,9 +1,9 @@
 {
   "alarm_no_crm": 3,
   "by_manager": {
-    "no_manager_reaction": 764,
+    "no_manager_reaction": 763,
     "Максим": 90,
-    "Олеся": 82
+    "Олеся": 83
   },
   "by_source": {
     "MARQUIZ": 46,
@@ -24,14 +24,13 @@
     "Выпускной": 14,
     "ДР": 2,
     "Деловое мероприятие": 1,
-    "День рождения / юбилей": 1,
     "Детский праздник": 6,
     "Конференция": 1,
     "Корпоратив": 313,
     "Поминки": 1,
     "Свадьба": 260,
     "Съёмки": 2,
-    "Юбилей": 163
+    "Юбилей": 164
   },
   "guest_ranges": {
     "1-20": 245,
@@ -45,20 +44,20 @@
   "latest_leads": [
     {
       "created_at": "2026-10-24T12:10:16+03:00",
-      "crm_entity_id": null,
-      "crm_entity_type": null,
-      "crm_found": false,
+      "crm_entity_id": 49833725,
+      "crm_entity_type": "lead",
+      "crm_found": true,
       "event_date": "2026-11-14",
-      "event_type": "День рождения / юбилей",
+      "event_type": "Юбилей",
       "guests_count": 25,
       "identifier": "7********91",
       "identifier_type": "phone",
       "lead_id": "6f84306d46b1a327",
-      "manager": "",
-      "manager_username": "",
+      "manager": "Олеся",
+      "manager_username": "Olesyagozhina",
       "name": "Светлана",
       "source": "MARQUIZ",
-      "status": "PENDING",
+      "status": "OK",
       "violations": []
     },
     {
@@ -406,9 +405,9 @@
       "violations": []
     }
   ],
-  "needs_review": 148,
+  "needs_review": 136,
   "no_reaction": 0,
-  "ok": 702,
+  "ok": 703,
   "total_leads": 936,
-  "updated_at": "2026-10-24T12:47:50+03:00"
+  "updated_at": "2026-10-25T12:42:47+03:00"
 }
