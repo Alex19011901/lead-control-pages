@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>P&L Control</title>
 <style>
-:root{--bg:#08111d;--p:#101b2a;--p2:#0d1825;--l:#223146;--t:#f5f7fb;--m:#9fb0c5;--g:#36d16b;--r:#ff5f67;--u:#7d5cff}
+:root{--bg:#08111d;--p:#101b2a;--p2:#0d1825;--l:#223146;--t:#f5f7fb;--m:#9fb0c5;--g:#36d16b;--r:#ff5f67;--u:#7d5cff;--b:#4ea1ff;--o:#ffae42;--c:#20c6b7}
 *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--t);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif}.app{max-width:1440px;margin:auto;padding:14px}
 .top{position:sticky;top:0;z-index:5;background:#08111df3;padding:10px 0 12px;display:flex;justify-content:space-between;align-items:center;gap:12px}h1{margin:0;font-size:24px}.sub,.note{color:var(--m);font-size:12px}
 .card{background:linear-gradient(180deg,#111d2b,#0d1825);border:1px solid var(--l);border-radius:14px}.pad{padding:14px}.section{margin-top:10px}.badge{display:inline-block;padding:5px 8px;border-radius:8px;background:#ffffff12;color:#c4cfdb;font-size:11px;font-weight:700}
@@ -12,7 +12,8 @@ th:first-child,td:first-child{text-align:left;position:sticky;left:0;background:
 .chart-scroll{overflow-x:auto}.chart-frame{display:grid;grid-template-columns:56px minmax(1080px,1fr);gap:8px;align-items:stretch}.yaxis{height:270px;position:relative;color:var(--m);font-size:10px}.ytick{position:absolute;right:0;transform:translateY(-50%);padding-right:6px}.ytick.zero{color:#f5f7fb;font-weight:800}.chart{height:270px;position:relative;display:flex;gap:7px;padding:8px 8px 30px;min-width:1080px}.zero-line{position:absolute;left:0;right:0;height:2px;background:#d7e0ea;opacity:1;z-index:4;box-shadow:0 0 0 1px #d7e0ea22}.gridline{position:absolute;left:0;right:0;height:1px;background:#607086;opacity:.07;z-index:1}.bw{width:48px;flex:0 0 48px;height:100%;position:relative}.bar{position:absolute;width:20px;min-height:2px}.bar.rev{left:2px;background:linear-gradient(180deg,#8d74ff,#5f46dd);border-radius:6px 6px 0 0}.bar.ebp{right:2px;background:linear-gradient(180deg,#59dd88,#25b85b);border-radius:6px 6px 0 0}.bar.ebn{right:2px;background:linear-gradient(180deg,#ff7f86,#da4048);border-radius:0 0 6px 6px}.x{position:absolute;bottom:-22px;left:0;right:0;text-align:center;color:var(--m);font-size:9px}.legend{display:flex;gap:15px;font-size:11px;color:var(--m);margin-top:9px;flex-wrap:wrap}.dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:5px}.dot.r{background:var(--u)}.dot.ep{background:var(--g)}.dot.en{background:var(--r)}
 .qgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.qcompare-group td{border-bottom:0}.qcompare-year{font-weight:800;color:#c4cfdb}.qcompare-delta td{border-bottom:1px solid var(--l);padding-bottom:13px}.qcompare-delta .metric{color:var(--m);font-weight:600}.qcompare-metric{background:#0f1a28!important;font-weight:800;vertical-align:top!important}.qcompare-group>td.qcompare-year:first-child,.qcompare-delta>td.metric:first-child{position:static;left:auto;z-index:auto;min-width:auto;background:transparent;text-align:right}.qitem{background:var(--p2);border:1px solid var(--l);border-radius:11px;padding:11px}.qitem b{display:block;font-size:17px;margin-top:5px}.qyear{color:#fff;font-weight:800}.qdelta{font-size:10px;margin-top:4px}
 .yoy-kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:12px}.yoy-kpi{background:var(--p2);border:1px solid var(--l);border-radius:11px;padding:11px}.yoy-kpi b{display:block;font-size:18px;margin-top:5px}.yoy-head{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:8px}.yoy-sub{color:var(--m);font-size:11px}.yoy-cell-main{font-weight:700}.yoy-cell-sub{font-size:10px;color:var(--m);margin-top:3px}.yoy-pair{display:grid;grid-template-columns:1fr 1fr;gap:3px;font-size:10px;color:var(--m);margin-top:3px}.yoy-pair span:last-child{text-align:right}
-@media(max-width:900px){.app{padding:10px}.top{align-items:flex-start}.kpis{grid-template-columns:repeat(2,1fr)}.widget-separate{margin-top:14px}.qgrid{grid-template-columns:repeat(2,1fr)}.val{font-size:20px}.yoy-kpis{grid-template-columns:repeat(2,1fr)}}
+.ind-section-title{font-size:21px;font-weight:800;margin:22px 0 3px}.ind-kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:10px 0}.ind-kpi{padding:12px}.ind-kpi .val{font-size:20px}.ind-two{display:grid;grid-template-columns:1fr 1fr;gap:10px}.ib-scroll{overflow-x:auto}.ib-frame{display:grid;grid-template-columns:58px minmax(760px,1fr);gap:8px;align-items:stretch}.ib-axis{height:242px;position:relative;color:var(--m);font-size:10px}.ib-tick{position:absolute;right:0;transform:translateY(-50%);padding-right:5px}.ib-chart{height:242px;position:relative;display:flex;gap:7px;padding:8px 8px 32px;min-width:760px}.ib-grid{position:absolute;left:0;right:0;height:1px;background:#607086;opacity:.10;z-index:1}.ib-zero{position:absolute;left:0;right:0;height:1px;background:#607086;opacity:.35;z-index:2}.ib-group{height:202px;min-width:46px;flex:1;display:flex;align-items:flex-end;justify-content:center;gap:3px;position:relative;z-index:3}.ib-bar{width:12px;min-height:1px;border-radius:4px 4px 0 0}.ib-s1{background:linear-gradient(180deg,#8d74ff,#5f46dd)}.ib-s2{background:linear-gradient(180deg,#63b0ff,#3485df)}.ib-s3{background:linear-gradient(180deg,#58d9ad,#20a981)}.ib-s4{background:linear-gradient(180deg,#ffc56f,#e69a2f)}.ib-x{position:absolute;bottom:-25px;left:-6px;right:-6px;text-align:center;color:var(--m);font-size:9px;line-height:1.1}.ind-legend{display:flex;gap:14px;flex-wrap:wrap;color:var(--m);font-size:11px;margin-top:8px}.ind-dot{width:8px;height:8px;border-radius:50%;display:inline-block;margin-right:5px}.ind-dot.s1{background:#7d5cff}.ind-dot.s2{background:#4ea1ff}.ind-dot.s3{background:#20c6b7}.ind-dot.s4{background:#ffae42}.ind-note{color:var(--m);font-size:11px;margin-top:7px}.ind-table-note{color:var(--m);font-size:11px;margin-bottom:8px}
+@media(max-width:900px){.app{padding:10px}.top{align-items:flex-start}.kpis{grid-template-columns:repeat(2,1fr)}.widget-separate{margin-top:14px}.qgrid{grid-template-columns:repeat(2,1fr)}.val{font-size:20px}.yoy-kpis{grid-template-columns:repeat(2,1fr)}.ind-kpis{grid-template-columns:repeat(2,1fr)}.ind-two{grid-template-columns:1fr}}
 </style></head><body><div class="app">
 <div class="top"><div><h1>P&amp;L Control</h1><div class="sub">Светлый · сравнительный анализ всех периодов</div></div><span class="badge">Январь 2025 — сентябрь 2026</span></div>
 <div class="kpis" id="summary"></div>
@@ -35,7 +36,65 @@ th:first-child,td:first-child{text-align:left;position:sticky;left:0;background:
 <div class="card pad section" id="yoyMonthWidget">
   <div class="yoy-head"><div><div class="title" style="margin-bottom:3px">Год к году · месяцы</div><div class="yoy-sub">2025 сверху, 2026 под ним, затем Δ YoY по одинаковому месяцу</div></div></div>
   <div class="scroll"><table><thead id="yoyMonthHead"></thead><tbody id="yoyMonthTable"></tbody></table></div>
+
 </div>
+
+<div class="ind-section-title">Показатели для анализа</div>
+<div class="note">Отдельный аналитический блок по одноимённой вкладке Excel: 2025 целиком и январь–сентябрь 2026. Q1 2026 сверено с отдельным ранним файлом — используемые показатели совпадают.</div>
+
+<div class="ind-kpis" id="indKpis"></div>
+
+<div class="ind-two section">
+  <div class="card pad">
+    <div class="title">Средний чек · весь период</div>
+    <div class="ib-scroll"><div class="ib-frame"><div class="ib-axis" id="avgCheckAxis"></div><div class="ib-chart" id="avgCheckChart"></div></div></div>
+    <div class="ind-legend"><span><i class="ind-dot s1"></i>2025</span><span><i class="ind-dot s2"></i>2026</span></div>
+  </div>
+  <div class="card pad">
+    <div class="title">Количество чеков · весь период</div>
+    <div class="ib-scroll"><div class="ib-frame"><div class="ib-axis" id="checksAxis"></div><div class="ib-chart" id="checksChart"></div></div></div>
+    <div class="ind-legend"><span><i class="ind-dot s1"></i>2025</span><span><i class="ind-dot s2"></i>2026</span></div>
+  </div>
+</div>
+
+<div class="card pad section">
+  <div class="title">Структура выручки · бар / кухня / допуслуги</div>
+  <div class="ib-scroll"><div class="ib-frame"><div class="ib-axis" id="mixAxis"></div><div class="ib-chart" id="mixChart"></div></div></div>
+  <div class="ind-legend"><span><i class="ind-dot s1"></i>Бар</span><span><i class="ind-dot s2"></i>Кухня</span><span><i class="ind-dot s3"></i>Допуслуги</span></div>
+  <div class="ind-note">В источнике за 2025 допуслуги заполнены с августа; пустые ранние месяцы не подменяются нулём.</div>
+</div>
+
+<div class="ind-two section">
+  <div class="card pad">
+    <div class="title">Себестоимость бара и кухни · %</div>
+    <div class="ib-scroll"><div class="ib-frame"><div class="ib-axis" id="costAxis"></div><div class="ib-chart" id="costChart"></div></div></div>
+    <div class="ind-legend"><span><i class="ind-dot s1"></i>Бар</span><span><i class="ind-dot s2"></i>Кухня</span></div>
+  </div>
+  <div class="card pad">
+    <div class="title">Списания · доля от выручки</div>
+    <div class="ib-scroll"><div class="ib-frame"><div class="ib-axis" id="writeoffAxis"></div><div class="ib-chart" id="writeoffChart"></div></div></div>
+    <div class="ind-legend"><span><i class="ind-dot s4"></i>Итого списания / выручка</span></div>
+  </div>
+</div>
+
+<div class="card pad section">
+  <div class="title">Списания по категориям · январь–сентябрь 2025 vs 2026</div>
+  <div class="ib-scroll"><div class="ib-frame"><div class="ib-axis" id="writeoffCatAxis"></div><div class="ib-chart" id="writeoffCatChart"></div></div></div>
+  <div class="ind-legend"><span><i class="ind-dot s1"></i>2025</span><span><i class="ind-dot s2"></i>2026</span></div>
+</div>
+
+<div class="card pad section">
+  <div class="title">Показатели · год к году январь–сентябрь</div>
+  <div class="ind-table-note">Все доступные показатели из вкладки: 2025, 2026 и изменение год к году.</div>
+  <div class="scroll"><table><thead><tr><th>Показатель</th><th>Янв–сен 2025</th><th>Янв–сен 2026</th><th>Δ</th><th>Δ %</th></tr></thead><tbody id="indYoyTable"></tbody></table></div>
+</div>
+
+<div class="card pad section">
+  <div class="title">Показатели · по кварталам</div>
+  <div class="ind-table-note">2025 сверху, 2026 под ним, затем Δ YoY; Q4 2026 появится после фактических данных.</div>
+  <div class="scroll"><table><thead><tr><th>Показатель</th><th>Год</th><th>Q1</th><th>Q2</th><th>Q3</th><th>Q4</th></tr></thead><tbody id="indQuarterTable"></tbody></table></div>
+</div>
+
 </div>
 <script>
 const $=x=>document.getElementById(x),DATA='./data.json';let D;
@@ -229,5 +288,145 @@ function renderYoyMonths(){
           '<tr class="qcompare-delta"><td class="metric">Δ YoY</td>'+rowDelta+'</tr>';
  }).join('');
 }
-fetch(DATA+'?v='+Date.now(),{cache:'no-store'}).then(r=>r.json()).then(x=>{D=x;summary();buildMonthHead();matrix();chart();quarters();renderYoyYtd();renderYoyQuarters();renderYoyMonths()}).catch(()=>{$('matrix').innerHTML='<tr><td>Ошибка загрузки данных</td></tr>'});
+
+let IND=null;
+const IND_URL_25='./indicators-2025.json',IND_URL_26='./indicators-2026.json';
+function unpackIndicatorFile(p){
+ return p.rows.map(row=>{
+   const o={year:p.year};
+   p.fields.forEach((k,i)=>o[k]=row[i]);
+   return o;
+ });
+}
+function indMoney(n){return n==null?'—':Number(n).toLocaleString('ru-RU',{maximumFractionDigits:0})+' ₽'}
+function indCount(n){return n==null?'—':Number(n).toLocaleString('ru-RU',{maximumFractionDigits:0})}
+function indPct(n){return n==null?'—':(Number(n)*100).toLocaleString('ru-RU',{minimumFractionDigits:1,maximumFractionDigits:1})+'%'}
+function indFmt(v,t){return t==='pct'?indPct(v):t==='count'?indCount(v):indMoney(v)}
+function indAxis(v,mode){
+ if(mode==='pct')return (v*100).toLocaleString('ru-RU',{maximumFractionDigits:0})+'%';
+ if(mode==='count')return Number(v).toLocaleString('ru-RU',{maximumFractionDigits:0});
+ if(Math.abs(v)>=1000000)return (v/1000000).toLocaleString('ru-RU',{maximumFractionDigits:1})+' млн';
+ if(Math.abs(v)>=1000)return (v/1000).toLocaleString('ru-RU',{maximumFractionDigits:0})+' тыс';
+ return Number(v).toLocaleString('ru-RU',{maximumFractionDigits:0});
+}
+function renderIndicatorBars(chartId,axisId,groups,series,mode){
+ const vals=[];
+ groups.forEach(g=>series.forEach(s=>{const v=s.value(g);if(typeof v==='number'&&isFinite(v)&&v>=0)vals.push(v)}));
+ const max=Math.max.apply(null,vals.concat([1]))*1.08;
+ const plotTop=8,plotH=202,ticks=[0,.25,.5,.75,1];
+ $(axisId).innerHTML=ticks.map(t=>'<div class="ib-tick" style="top:'+(plotTop+(1-t)*plotH)+'px">'+indAxis(max*t,mode)+'</div>').join('');
+ const grid=ticks.map(t=>'<div class="'+(t===0?'ib-zero':'ib-grid')+'" style="top:'+(plotTop+(1-t)*plotH)+'px"></div>').join('');
+ const body=groups.map(g=>{
+   const bars=series.map((s,i)=>{
+     const v=s.value(g);
+     if(!(typeof v==='number')||!isFinite(v))return '';
+     const h=Math.max(1,(v/max)*plotH);
+     return '<div class="ib-bar ib-s'+(i+1)+'" style="height:'+h+'px" title="'+s.label+': '+s.tip(v)+'"></div>';
+   }).join('');
+   return '<div class="ib-group">'+bars+'<div class="ib-x">'+g.label+'</div></div>';
+ }).join('');
+ $(chartId).innerHTML=grid+body;
+}
+function aggregateInd(ms){
+ const s={revenue:0,checks:0,bar_revenue:0,kitchen_revenue:0,extra_revenue:0,ebitda:0,
+ household_amt:0,staff_food_amt:0,spoilage_amt:0,grind_amt:0,testing_amt:0,inventory_amt:0,representation_amt:0,total_writeoff_amt:0};
+ ms.forEach(m=>{
+  ['revenue','checks','bar_revenue','kitchen_revenue','ebitda','household_amt','staff_food_amt','spoilage_amt','grind_amt','testing_amt','inventory_amt','representation_amt','total_writeoff_amt'].forEach(k=>s[k]+=Number(m[k]||0));
+  if(m.extra_revenue!=null)s.extra_revenue+=Number(m.extra_revenue||0);
+ });
+ s.avg_check=s.checks?s.revenue/s.checks:null;
+ s.ebitda_pct=s.revenue?s.ebitda/s.revenue:null;
+ const br=s.bar_revenue,kr=s.kitchen_revenue;
+ s.bar_cost_pct=br?ms.reduce((a,m)=>a+Number(m.bar_revenue||0)*Number(m.bar_cost_pct||0),0)/br:null;
+ s.kitchen_cost_pct=kr?ms.reduce((a,m)=>a+Number(m.kitchen_revenue||0)*Number(m.kitchen_cost_pct||0),0)/kr:null;
+ ['household','staff_food','spoilage','grind','testing','inventory','representation','total_writeoff'].forEach(k=>{s[k+'_pct']=s.revenue?s[k+'_amt']/s.revenue:null});
+ return s;
+}
+const indMetrics=[
+ ['Выручка','revenue','money',true],['Средний чек','avg_check','money',true],['Количество чеков','checks','count',true],
+ ['Выручка бар','bar_revenue','money',true],['Выручка кухня','kitchen_revenue','money',true],['Доп. услуги','extra_revenue','money',true],
+ ['EBITDA','ebitda','money',true],['EBITDA %','ebitda_pct','pct',true],['Себестоимость бара','bar_cost_pct','pct',false],['Себестоимость кухни','kitchen_cost_pct','pct',false],
+ ['Хозы','household_amt','money',false],['Хозы / выручка','household_pct','pct',false],['Питание персонала','staff_food_amt','money',false],['Питание персонала / выручка','staff_food_pct','pct',false],
+ ['Порча','spoilage_amt','money',false],['Порча / выручка','spoilage_pct','pct',false],['Помол','grind_amt','money',false],['Помол / выручка','grind_pct','pct',false],
+ ['Проработка','testing_amt','money',false],['Проработка / выручка','testing_pct','pct',false],['Результат инвентаризации','inventory_amt','money',false],['Инвентаризация / выручка','inventory_pct','pct',false],
+ ['Представительские','representation_amt','money',false],['Представительские / выручка','representation_pct','pct',false],['Итого списания','total_writeoff_amt','money',false],['Списания / выручка','total_writeoff_pct','pct',false]
+];
+function renderIndicators(){
+ const all=IND.months,allGroups=all.map(m=>({m,label:m.short+' '+String(m.year).slice(2)}));
+ const y25=all.filter(m=>m.year===2025&&m.month<=9),y26=all.filter(m=>m.year===2026&&m.month<=9);
+ const a=aggregateInd(y25),b=aggregateInd(y26);
+ const cards=[
+  ['Средний чек',b.avg_check,indMoney(b.avg_check),reltxt(b.avg_check,a.avg_check),b.avg_check-a.avg_check,true],
+  ['Количество чеков',b.checks,indCount(b.checks),reltxt(b.checks,a.checks),b.checks-a.checks,true],
+  ['Выручка бара',b.bar_revenue,mln(b.bar_revenue),reltxt(b.bar_revenue,a.bar_revenue),b.bar_revenue-a.bar_revenue,true],
+  ['Выручка кухни',b.kitchen_revenue,mln(b.kitchen_revenue),reltxt(b.kitchen_revenue,a.kitchen_revenue),b.kitchen_revenue-a.kitchen_revenue,true],
+  ['Себестоимость бара',b.bar_cost_pct,indPct(b.bar_cost_pct),(b.bar_cost_pct-a.bar_cost_pct>=0?'+':'')+pp(b.bar_cost_pct-a.bar_cost_pct),b.bar_cost_pct-a.bar_cost_pct,false],
+  ['Себестоимость кухни',b.kitchen_cost_pct,indPct(b.kitchen_cost_pct),(b.kitchen_cost_pct-a.kitchen_cost_pct>=0?'+':'')+pp(b.kitchen_cost_pct-a.kitchen_cost_pct),b.kitchen_cost_pct-a.kitchen_cost_pct,false],
+  ['Списания / выручка',b.total_writeoff_pct,indPct(b.total_writeoff_pct),(b.total_writeoff_pct-a.total_writeoff_pct>=0?'+':'')+pp(b.total_writeoff_pct-a.total_writeoff_pct),b.total_writeoff_pct-a.total_writeoff_pct,false],
+  ['Итого списания',b.total_writeoff_amt,indMoney(b.total_writeoff_amt),reltxt(b.total_writeoff_amt,a.total_writeoff_amt),b.total_writeoff_amt-a.total_writeoff_amt,false]
+ ];
+ $('indKpis').innerHTML=cards.map(x=>'<div class="card ind-kpi"><div class="label">'+x[0]+'</div><div class="val '+cls(x[4],x[5])+'">'+x[2]+'</div><div class="hint '+cls(x[4],x[5])+'">год к году: '+x[3]+'</div></div>').join('');
+
+ renderIndicatorBars('avgCheckChart','avgCheckAxis',allGroups,[
+  {label:'2025',value:g=>g.m.year===2025?g.m.avg_check:null,tip:indMoney},
+  {label:'2026',value:g=>g.m.year===2026?g.m.avg_check:null,tip:indMoney}
+ ],'money');
+ renderIndicatorBars('checksChart','checksAxis',allGroups,[
+  {label:'2025',value:g=>g.m.year===2025?g.m.checks:null,tip:indCount},
+  {label:'2026',value:g=>g.m.year===2026?g.m.checks:null,tip:indCount}
+ ],'count');
+ renderIndicatorBars('mixChart','mixAxis',allGroups,[
+  {label:'Бар',value:g=>g.m.bar_revenue,tip:indMoney},
+  {label:'Кухня',value:g=>g.m.kitchen_revenue,tip:indMoney},
+  {label:'Допуслуги',value:g=>g.m.extra_revenue,tip:indMoney}
+ ],'money');
+ renderIndicatorBars('costChart','costAxis',allGroups,[
+  {label:'Бар',value:g=>g.m.bar_cost_pct,tip:indPct},
+  {label:'Кухня',value:g=>g.m.kitchen_cost_pct,tip:indPct}
+ ],'pct');
+ renderIndicatorBars('writeoffChart','writeoffAxis',allGroups,[
+  {label:'Списания / выручка',value:g=>g.m.total_writeoff_pct,tip:indPct}
+ ],'pct');
+
+ const cats=[
+  ['Хозы','household_amt'],['Питание','staff_food_amt'],['Порча','spoilage_amt'],['Помол','grind_amt'],
+  ['Проработка','testing_amt'],['Инвентаризация','inventory_amt'],['Представительские','representation_amt']
+ ].map(x=>({label:x[0],key:x[1]}));
+ renderIndicatorBars('writeoffCatChart','writeoffCatAxis',cats,[
+  {label:'2025',value:g=>a[g.key],tip:indMoney},{label:'2026',value:g=>b[g.key],tip:indMoney}
+ ],'money');
+
+ $('indYoyTable').innerHTML=indMetrics.map(x=>{
+  const name=x[0],key=x[1],type=x[2],up=x[3],v25=a[key],v26=b[key],d=(v26==null||v25==null)?null:v26-v25,r=(v26==null||v25==null)?null:rel(v26,v25);
+  const delta=d==null?'—':(type==='pct'?((d>0?'+':'')+pp(d)):((d>0?'+':'')+indMoney(d)));
+  return '<tr><td class="metric">'+name+'</td><td>'+indFmt(v25,type)+'</td><td><b>'+indFmt(v26,type)+'</b></td><td class="'+(d==null?'':cls(d,up))+'">'+delta+'</td><td class="'+(r==null?'':cls(r,up))+'">'+(r==null?'—':reltxt(v26,v25))+'</td></tr>';
+ }).join('');
+
+ const quarters=[];
+ [2025,2026].forEach(y=>[1,2,3,4].forEach(q=>{
+  const ms=all.filter(m=>m.year===y&&Math.floor((m.month-1)/3)+1===q);
+  if(ms.length===3)quarters.push({year:y,quarter:q,data:aggregateInd(ms)});
+ }));
+ function qind(y,q,k){const z=quarters.find(x=>x.year===y&&x.quarter===q);return z?z.data[k]:null}
+ $('indQuarterTable').innerHTML=indMetrics.map(x=>{
+  const name=x[0],key=x[1],type=x[2],up=x[3];
+  const row25=[1,2,3,4].map(q=>'<td>'+indFmt(qind(2025,q,key),type)+'</td>').join('');
+  const row26=[1,2,3,4].map(q=>'<td>'+indFmt(qind(2026,q,key),type)+'</td>').join('');
+  const rowD=[1,2,3,4].map(q=>{const v25=qind(2025,q,key),v26=qind(2026,q,key);if(v25==null||v26==null)return '<td>—</td>';const d=v26-v25;const main=type==='pct'?((d>0?'+':'')+pp(d)):reltxt(v26,v25);return '<td><div class="yoy-cell-main '+cls(d,up)+'">'+main+'</div></td>'}).join('');
+  return '<tr class="qcompare-group"><td class="qcompare-metric" rowspan="3">'+name+'</td><td class="qcompare-year">2025</td>'+row25+'</tr>'+
+   '<tr class="qcompare-group"><td class="qcompare-year">2026</td>'+row26+'</tr>'+
+   '<tr class="qcompare-delta"><td class="metric">Δ YoY</td>'+rowD+'</tr>';
+ }).join('');
+}
+async function loadIndicators(){
+ try{
+  const p=await Promise.all([fetch(IND_URL_25+'?v='+Date.now(),{cache:'no-store'}).then(r=>r.json()),fetch(IND_URL_26+'?v='+Date.now(),{cache:'no-store'}).then(r=>r.json())]);
+  IND={months:unpackIndicatorFile(p[0]).concat(unpackIndicatorFile(p[1]))};
+  IND.months.sort((a,b)=>a.year-b.year||a.month-b.month);
+  renderIndicators();
+ }catch(e){
+  $('indKpis').innerHTML='<div class="card ind-kpi"><div class="label">Показатели</div><div class="hint red">Ошибка загрузки данных</div></div>';
+ }
+}
+fetch(DATA+'?v='+Date.now(),{cache:'no-store'}).then(r=>r.json()).then(x=>{D=x;summary();buildMonthHead();matrix();chart();quarters();renderYoyYtd();renderYoyQuarters();renderYoyMonths();loadIndicators()}).catch(()=>{$('matrix').innerHTML='<tr><td>Ошибка загрузки данных</td></tr>'});
 </script></body></html>
