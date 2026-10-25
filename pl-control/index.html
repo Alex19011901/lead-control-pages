@@ -33,7 +33,7 @@ th:first-child,td:first-child{text-align:left;position:sticky;left:0;background:
 </div>
 
 <div class="card pad section" id="yoyMonthWidget">
-  <div class="yoy-head"><div><div class="title" style="margin-bottom:3px">Год к году · месяцы</div><div class="yoy-sub">Каждый месяц 2026 против того же месяца 2025; крупно — изменение, ниже — значения 2025 → 2026</div></div></div>
+  <div class="yoy-head"><div><div class="title" style="margin-bottom:3px">Год к году · месяцы</div><div class="yoy-sub">Каждый месяц: значение 2025, значение 2026 и изменение год к году</div></div></div>
   <div class="scroll"><table><thead id="yoyMonthHead"></thead><tbody id="yoyMonthTable"></tbody></table></div>
 </div>
 </div>
@@ -150,11 +150,28 @@ function renderYoyMonths(){
    m26,
    m25:D.months.find(x=>x.year===2025&&x.month===m26.month)
  })).filter(x=>x.m25);
- $('yoyMonthHead').innerHTML='<tr><th>Показатель</th>'+pairs.map(x=>'<th>'+x.m26.short+'</th>').join('')+'</tr>';
- $('yoyMonthTable').innerHTML=metrics.map(([name,key,type,up])=>'<tr><td class="metric">'+name+'</td>'+pairs.map(x=>{
-   const v25=x.m25[key],v26=x.m26[key],d=v26-v25;
-   return '<td><div class="yoy-cell-main '+cls(d,up)+'">'+(type==='pct'?((d>0?'+':'')+pp(d)):reltxt(v26,v25))+'</div><div class="yoy-cell-sub">'+fmt(v25,type)+' → '+fmt(v26,type)+'</div></td>';
- }).join('')+'</tr>').join('');
+
+ $('yoyMonthHead').innerHTML=
+   '<tr><th rowspan="2">Показатель</th>'+
+   pairs.map(x=>'<th class="yearhead" colspan="3">'+x.m26.name+'</th>').join('')+
+   '</tr><tr>'+
+   pairs.map(x=>'<th class="monthhead">'+x.m25.short+' 25</th><th class="monthhead">'+x.m26.short+' 26</th><th class="monthhead">Δ YoY</th>').join('')+
+   '</tr>';
+
+ $('yoyMonthTable').innerHTML=metrics.map(([name,key,type,up])=>
+   '<tr><td class="metric">'+name+'</td>'+
+   pairs.map(x=>{
+     const v25=x.m25[key],v26=x.m26[key],d=v26-v25,r=rel(v26,v25);
+     const deltaMain=type==='pct'?((d>0?'+':'')+pp(d)):reltxt(v26,v25);
+     const deltaSub=type==='pct'?'':((d>0?'+':'')+rub(d));
+     return '<td>'+fmt(v25,type)+'</td>'+
+            '<td><b>'+fmt(v26,type)+'</b></td>'+
+            '<td><div class="yoy-cell-main '+cls(d,up)+'">'+deltaMain+'</div>'+
+            (deltaSub?'<div class="yoy-cell-sub">'+deltaSub+'</div>':'')+
+            '</td>';
+   }).join('')+
+   '</tr>'
+ ).join('');
 }
 fetch(DATA+'?v='+Date.now(),{cache:'no-store'}).then(r=>r.json()).then(x=>{D=x;summary();buildMonthHead();matrix();chart();quarters();renderYoyYtd();renderYoyQuarters();renderYoyMonths()}).catch(()=>{$('matrix').innerHTML='<tr><td>Ошибка загрузки данных</td></tr>'});
 </script></body></html>
