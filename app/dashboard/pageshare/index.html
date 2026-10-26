@@ -10,9 +10,9 @@
 .hm-head .title{margin:0}
 .hm-nav{display:flex;align-items:center;gap:5px}
 .hm-nav button{min-width:32px;padding:6px 8px;border-radius:7px;font-size:15px}
-.hm-months{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.hm-months{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px}
 .hm-month{min-width:0;padding:9px;border:1px solid #263549;border-radius:10px;background:#0d1825}
-.hm-month-title{text-align:center;font-size:13px;line-height:18px;font-weight:800;margin:0 0 6px}
+.hm-month-title{text-align:center;font-size:13px;line-height:18px;font-weight:800;margin:0 0 6px}.hm-month-title-short{display:none}
 .hm-days{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:3px}
 .hm-weekday{text-align:center;font-size:10px;color:#9fb0c5;line-height:16px}
 .hm-gap{height:38px}
@@ -34,22 +34,32 @@
 .hm-detail{border:1px solid #2e465f;border-radius:8px;background:#142437;padding:8px 10px;text-align:center;font-size:12px;margin-top:10px}
 .hm-foot{font-size:11px;color:#9fb0c5;margin-top:7px;line-height:1.5}
 @media(max-width:760px){
- .hm-months{gap:5px}
- .hm-month{padding:6px 4px;border-radius:7px}
- .hm-month-title{font-size:10px;line-height:14px;margin-bottom:4px}
+ .hm-months{gap:3px}
+ .hm-month{padding:4px 2px;border-radius:6px}
+ .hm-month-title{font-size:10px;line-height:13px;margin-bottom:3px}
  .hm-days{gap:1px}
- .hm-weekday{font-size:8px;line-height:12px}
+ .hm-weekday{font-size:7px;line-height:11px}
  .hm-gap,.hm-day-cell{height:29px}
  .hm-day-cell{padding:0}
- .hm-day{font-size:10px;line-height:13px}
- .hm-count{font-size:7px;line-height:9px}
+ .hm-day{font-size:9px;line-height:12px}
+ .hm-count{font-size:6px;line-height:8px}
  .hm-head .title{font-size:14px}
 }
+@media(max-width:460px){
+ .hm-month-title-full{display:none}
+ .hm-month-title-short{display:inline}
+ .hm-days{gap:0}
+ .hm-weekday{font-size:6px;line-height:10px}
+ .hm-months{gap:2px}
+ .hm-month{padding:3px 1px}
+ .hm-day{font-size:7px;line-height:11px;letter-spacing:-.15px}
+ .hm-count{font-size:5px;line-height:7px}
+}
 @media(max-width:370px){
- .hm-months{gap:4px}
- .hm-month{padding:5px 2px}
- .hm-day{font-size:9px;line-height:12px}
- .hm-count{font-size:7px;line-height:9px}
+ .hm-months{gap:2px}
+ .hm-month{padding:2px 0;border-radius:4px}
+ .hm-day{font-size:7px;line-height:11px;letter-spacing:-.15px}
+ .hm-count{font-size:5px;line-height:7px}
  .hm-gap,.hm-day-cell{height:27px}
 }
 </style></head><body><div class="app">
@@ -63,7 +73,7 @@
 <div class="card"><div class="title">Динамика по дням</div><div class="dyn" id="dyn"></div><div class="dx"><span id="ds"></span><span id="de"></span></div></div>
 <div class="card source-card section-gap"><div class="source-head"><div class="title" style="margin-bottom:0">Лиды по источникам</div><select id="sourceDateSelect" class="source-date-select" aria-label="Дата для лидов по источникам"></select></div><div class="hbars source-bars" id="sources"></div></div>
 <div class="card section-gap" id="eventHeatmapCard">
- <div class="hm-head"><div><div class="title">Тепловая карта обращений</div><div class="note" id="hmPeriod">9 месяцев · спрос по датам мероприятий</div></div><div class="hm-nav"><button type="button" id="hmPrev" aria-label="Предыдущие три месяца">‹</button><button type="button" id="hmNext" aria-label="Следующие три месяца">›</button></div></div>
+ <div class="hm-head"><div><div class="title">Тепловая карта обращений</div><div class="note" id="hmPeriod">10 месяцев · спрос по датам мероприятий</div></div><div class="hm-nav"><button type="button" id="hmPrev" aria-label="Предыдущие пять месяцев">‹</button><button type="button" id="hmNext" aria-label="Следующие пять месяцев">›</button></div></div>
  <div id="hmMonths" class="hm-months"></div>
  <div class="hm-legend"><div class="hm-legend-item"><span style="background:#162b21"></span>0</div><div class="hm-legend-item"><span style="background:#1c4530"></span>1–4</div><div class="hm-legend-item"><span style="background:#25633e"></span>5–9</div><div class="hm-legend-item"><span style="background:#2a7847"></span>10–19</div><div class="hm-legend-item"><span style="background:#328d50"></span>20–39</div><div class="hm-legend-item"><span style="background:#39a65b"></span>40+</div></div>
  <div id="hmDetail" class="hm-detail">Выберите дату, чтобы посмотреть число обращений</div>
@@ -108,12 +118,12 @@ function renderHeatmap(){
  heatMonthSeen=current.year+'-'+(current.month+1);
  root.textContent='';
  if(!counts){root.textContent='Данные тепловой карты ещё не загружены';return}
- var first=new Date(Date.UTC(current.year,current.month+heatOffset,1)),last=new Date(Date.UTC(current.year,current.month+heatOffset+8,1));
+ var first=new Date(Date.UTC(current.year,current.month+heatOffset,1)),last=new Date(Date.UTC(current.year,current.month+heatOffset+9,1));
  info.textContent=heatMonthNames[first.getUTCMonth()]+' '+first.getUTCFullYear()+' — '+heatMonthNames[last.getUTCMonth()].toLowerCase()+' '+last.getUTCFullYear();
- for(var index=0;index<9;index++){
+ for(var index=0;index<10;index++){
   var item=new Date(Date.UTC(current.year,current.month+heatOffset+index,1)),year=item.getUTCFullYear(),month=item.getUTCMonth(),weekDay=(item.getUTCDay()+6)%7,numberOfDays=new Date(Date.UTC(year,month+1,0)).getUTCDate();
   var section=document.createElement('div');section.className='hm-month';
-  var title=document.createElement('div');title.className='hm-month-title';title.textContent=heatMonthNames[month]+' '+year;section.appendChild(title);
+  var title=document.createElement('div'),fullTitle=document.createElement('span'),shortTitle=document.createElement('span');title.className='hm-month-title';fullTitle.className='hm-month-title-full';shortTitle.className='hm-month-title-short';fullTitle.textContent=heatMonthNames[month]+' '+year;shortTitle.textContent=heatMonthNames[month].slice(0,3)+' '+String(year).slice(-2);title.title=fullTitle.textContent;title.appendChild(fullTitle);title.appendChild(shortTitle);section.appendChild(title);
   var days=document.createElement('div');days.className='hm-days';
   ['П','В','С','Ч','П','С','В'].forEach(function(weekday){var e=document.createElement('span');e.className='hm-weekday';e.textContent=weekday;days.appendChild(e)});
   for(var space=0;space<weekDay;space++){var blank=document.createElement('div');blank.className='hm-gap';days.appendChild(blank)}
@@ -151,5 +161,5 @@ async function refreshDashboard(){if(refreshInProgress)return;refreshInProgress=
 async function initialLoad(){try{setRefreshState('Загрузка данных…',false);applyDashboard(await loadDashboardPayload());setRefreshState('',false)}catch(e){setRefreshState('Ошибка загрузки данных',true)}}
 function applyManagerView(){var personal=currentManager!=='all';id('generalDashboard').style.display=personal?'none':'';var ranges=document.querySelectorAll('[data-r]');for(var i=0;i<ranges.length;i++)ranges[i].style.display=personal?'none':'';renderFeedback();renderWaitingStage()}
 var ms=document.querySelectorAll('[data-manager]');for(var mi=0;mi<ms.length;mi++)ms[mi].onclick=function(){var q=document.querySelectorAll('[data-manager]');for(var j=0;j<q.length;j++)q[j].classList.remove('active');this.classList.add('active');currentManager=this.getAttribute('data-manager');applyManagerView()};
-var bs=document.querySelectorAll('[data-r]');for(var i=0;i<bs.length;i++)bs[i].onclick=function(){var q=document.querySelectorAll('[data-r]'),j;for(j=0;j<q.length;j++)q[j].classList.remove('active');this.classList.add('active');render(this.getAttribute('data-r'))};var heatRoot=id('hmMonths');heatRoot.onclick=function(event){var button=event.target.closest('button[data-hm-date]');if(!button)return;heatSelected=button.dataset.hmDate;id('hmDetail').textContent=fd(heatSelected)+' — '+button.dataset.hmCount+' обращений';heatRoot.querySelectorAll('.hm-selected').forEach(function(e){e.classList.remove('hm-selected')});button.classList.add('hm-selected')};id('hmPrev').onclick=function(){heatShift(-3)};id('hmNext').onclick=function(){heatShift(3)};setInterval(function(){var now=heatMskParts(),newMonth=now.year+'-'+(now.month+1);if(heatMonthSeen&&newMonth!==heatMonthSeen){heatOffset=0;renderHeatmap()}},600000);id('refreshBtn').onclick=refreshDashboard;initialLoad();
+var bs=document.querySelectorAll('[data-r]');for(var i=0;i<bs.length;i++)bs[i].onclick=function(){var q=document.querySelectorAll('[data-r]'),j;for(j=0;j<q.length;j++)q[j].classList.remove('active');this.classList.add('active');render(this.getAttribute('data-r'))};var heatRoot=id('hmMonths');heatRoot.onclick=function(event){var button=event.target.closest('button[data-hm-date]');if(!button)return;heatSelected=button.dataset.hmDate;id('hmDetail').textContent=fd(heatSelected)+' — '+button.dataset.hmCount+' обращений';heatRoot.querySelectorAll('.hm-selected').forEach(function(e){e.classList.remove('hm-selected')});button.classList.add('hm-selected')};id('hmPrev').onclick=function(){heatShift(-5)};id('hmNext').onclick=function(){heatShift(5)};setInterval(function(){var now=heatMskParts(),newMonth=now.year+'-'+(now.month+1);if(heatMonthSeen&&newMonth!==heatMonthSeen){heatOffset=0;renderHeatmap()}},600000);id('refreshBtn').onclick=refreshDashboard;initialLoad();
 </script></body></html>
