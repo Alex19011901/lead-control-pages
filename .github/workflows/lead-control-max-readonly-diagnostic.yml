@@ -93,3 +93,34 @@ jobs:
               print('GROUP_MESSAGES_SINCE_OCT24',recent)
               print('GROUP_LEADLIKE_MESSAGES_SINCE_OCT24',leadlike)
           PY
+
+      - name: Compare saved marker with filtered and unfiltered MAX event responses (do not persist marker)
+        env:
+          MAX_BOT_TOKEN: ${{ secrets.MAX_BOT_TOKEN }}
+        run: |
+          python - <<'PY'
+          import os,json,ssl,urllib.parse,urllib.request,urllib.error,collections
+          ctx=ssl.create_default_context(cafile='app/certs/max_ca_bundle.pem')
+          if hasattr(ssl,'VERIFY_X509_PARTIAL_CHAIN'):
+              ctx.verify_flags |= ssl.VERIFY_X509_PARTIAL_CHAIN
+          token=os.environ['MAX_BOT_TOKEN']
+          def poll(types):
+              p={'marker':727668,'limit':100,'timeout':0}
+              if types: p['types']=types
+              u='https://platform-api2.max.ru/updates?'+urllib.parse.urlencode(p)
+              req=urllib.request.Request(u,headers={'Authorization':token,'Accept':'application/json'})
+              try:
+                  with urllib.request.urlopen(req,context=ctx,timeout=25) as resp:
+                      data=json.loads(resp.read().decode('utf-8'))
+                  updates=data.get('updates') or []
+                  print('READONLY_UPDATES_WITH_FILTER_HTTP' if types else 'READONLY_UPDATES_ALL_TYPES_HTTP','200')
+                  print('EVENT_COUNT_FILTERED' if types else 'EVENT_COUNT_ALL_TYPES',len(updates))
+                  print('RESPONSE_MARKER_FILTERED' if types else 'RESPONSE_MARKER_ALL_TYPES',data.get('marker'))
+                  print('RETURNED_EVENT_TYPES_FILTERED' if types else 'RETURNED_EVENT_TYPES_ALL',dict(collections.Counter(str(u.get('update_type') or '?') for u in updates if isinstance(u,dict))))
+              except urllib.error.HTTPError as exc:
+                  print('READONLY_UPDATES_WITH_FILTER_HTTP' if types else 'READONLY_UPDATES_ALL_TYPES_HTTP',exc.code)
+              except Exception as exc:
+                  print('READONLY_UPDATES_WITH_FILTER_HTTP' if types else 'READONLY_UPDATES_ALL_TYPES_HTTP',type(exc).__name__)
+          poll('bot_added,message_created,message_edited')
+          poll(None)
+          PY
