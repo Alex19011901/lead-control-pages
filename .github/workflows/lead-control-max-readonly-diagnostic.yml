@@ -1,0 +1,95 @@
+name: Lead Control MAX read-only incident diagnostic
+
+on:
+  push:
+    paths:
+      - '.github/workflows/lead-control-max-readonly-diagnostic.yml'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: lead-control-max-diagnostic
+  cancel-in-progress: false
+
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Check MAX bot status, role, subscription and recent chat activity (no payload logging)
+        env:
+          MAX_BOT_TOKEN: ${{ secrets.MAX_BOT_TOKEN }}
+          MAX_CHAT_ID: '-71704692523093'
+        run: |
+          python - <<'PY'
+          import os,ssl,json,urllib.request,urllib.error,urllib.parse,datetime,re,collections
+          token=os.environ['MAX_BOT_TOKEN']
+          chat_id=os.environ['MAX_CHAT_ID']
+          ca='app/certs/max_ca_bundle.pem'
+          context=ssl.create_default_context(cafile=ca)
+          if hasattr(ssl,'VERIFY_X509_PARTIAL_CHAIN'):
+              context.verify_flags |= ssl.VERIFY_X509_PARTIAL_CHAIN
+          base='https://platform-api2.max.ru'
+          def get(path,params=None):
+              url=base+path+('?' + urllib.parse.urlencode(params) if params else '')
+              req=urllib.request.Request(url,headers={'Authorization':token,'Accept':'application/json'})
+              try:
+                  with urllib.request.urlopen(req,timeout=25,context=context) as response:
+                      return json.loads(response.read().decode('utf-8')),'200'
+              except urllib.error.HTTPError as exc:
+                  return None,str(exc.code)
+              except Exception as exc:
+                  return None,type(exc).__name__
+          me,code=get('/me')
+          print('BOT_AUTH_HTTP',code)
+          if me and isinstance(me,dict):
+              print('BOT_ID_PRESENT',bool(me.get('user_id')))
+          sub,code=get('/subscriptions')
+          print('SUBSCRIPTIONS_HTTP',code)
+          if sub is not None:
+              items=(sub.get('subscriptions',[]) if isinstance(sub,dict) else sub)
+              if not isinstance(items,list): items=[]
+              print('WEBHOOK_SUBSCRIPTIONS_COUNT',len(items))
+              for i,item in enumerate(items[:4],1):
+                  types=item.get('update_types') or item.get('updates') or []
+                  print('WEBHOOK_ENTRY',i,'TYPES',','.join(str(t) for t in types) if isinstance(types,list) else 'unknown')
+          mem,code=get('/chats/'+urllib.parse.quote(chat_id)+'/members/me')
+          print('GROUP_MEMBERSHIP_HTTP',code)
+          if isinstance(mem,dict):
+              print('GROUP_IS_ADMIN',bool(mem.get('is_admin') or mem.get('is_owner')))
+              print('GROUP_HAS_READ_ALL_MESSAGES', 'read_all_messages' in (mem.get('permissions') or []))
+              print('GROUP_PERMISSIONS_COUNT',len(mem.get('permissions') or []))
+          chat,code=get('/chats/'+urllib.parse.quote(chat_id))
+          print('GROUP_DETAILS_HTTP',code)
+          messages,code=get('/messages',{'chat_id':chat_id,'count':100})
+          print('GROUP_MESSAGES_HTTP',code)
+          if isinstance(messages,dict):
+              rows=messages.get('messages') or []
+              print('GROUP_MESSAGES_RETURNED',len(rows))
+              cutoff_ms=int(datetime.datetime(2026,10,24,0,0,tzinfo=datetime.timezone.utc).timestamp()*1000)
+              last_ts=0
+              days=collections.Counter()
+              recent=0
+              leadlike=0
+              for m in rows:
+                  if not isinstance(m,dict): continue
+                  ms=int(m.get('timestamp') or 0)
+                  if ms and ms<1e11:ms*=1000
+                  if ms:
+                      last_ts=max(last_ts,ms)
+                      days[datetime.datetime.fromtimestamp(ms/1000,datetime.timezone.utc).strftime('%Y-%m-%d')]+=1
+                  if ms>=cutoff_ms:
+                      recent+=1
+                      body=m.get('body') or {}
+                      txt=str(body.get('text') or '')
+                      if re.search(r'заявк|request details|phone:',txt,re.I):
+                          leadlike+=1
+              print('GROUP_LAST_MESSAGE_UTC',datetime.datetime.fromtimestamp(last_ts/1000,datetime.timezone.utc).isoformat() if last_ts else 'none')
+              print('GROUP_MESSAGE_DATES_UTC',json.dumps(dict(sorted(days.items())),ensure_ascii=False))
+              print('GROUP_MESSAGES_SINCE_OCT24',recent)
+              print('GROUP_LEADLIKE_MESSAGES_SINCE_OCT24',leadlike)
+          PY
