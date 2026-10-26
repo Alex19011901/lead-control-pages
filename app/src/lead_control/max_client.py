@@ -70,6 +70,36 @@ class MaxClient:
             raise RuntimeError("MAX /messages failed: messages is not a list")
         return [item for item in messages if isinstance(item, dict)]
 
+    def get_chat_messages(
+        self,
+        chat_id: int,
+        *,
+        before_ms: int | None = None,
+        since_ms: int | None = None,
+        count: int = 100,
+    ) -> list[dict[str, Any]]:
+        """Read a group history page (newest first) without changing /updates marker.
+
+        MAX names the earlier-than timestamp "from" and the later-than
+        timestamp "to"; both are Unix milliseconds. This API requires that
+        the bot be an administrator of the group.
+        """
+        params: dict[str, str | int] = {
+            "chat_id": int(chat_id),
+            "count": max(1, min(int(count), 100)),
+        }
+        if before_ms is not None:
+            params["from"] = int(before_ms)
+        if since_ms is not None:
+            params["to"] = int(since_ms)
+        body = self._request_json("/messages", params)
+        if not isinstance(body, dict) or not isinstance(body.get("messages"), list):
+            raise RuntimeError("MAX /messages failed: invalid chat history response")
+        items = body["messages"]
+        if not all(isinstance(item, dict) for item in items):
+            raise RuntimeError("MAX /messages failed: invalid message entry")
+        return items
+
     def _request_json(self, path: str, params: dict[str, str | int] | None = None) -> Any:
         query = ""
         if params:
