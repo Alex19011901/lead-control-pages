@@ -20,17 +20,17 @@ DATE_RANGE = re.compile(
     r"\s*[-–—]\s*(\d{1,2})[./](\d{1,2})(?:[./](20\d{2}|\d{2}))?(?!\d)"
 )
 DAY_RANGE = re.compile(
-    r"(?<![\d./])(\d{1,2})\s*[-–—]\s*(\d{1,2})\s*[./]\s*(\d{1,2})(?![.\d])"
+    r"(?<![\d./])(\d{1,2})\s*[-–—]\s*(\d{1,2})\s*[./]\s*(\d{1,2})(?!\.\d|\d)"
 )
 DAY_LIST = re.compile(
     r"(?<![\d./])((?:\d{1,2}\s*(?:[,;]|\bи\b)\s*)+)"
-    r"(\d{1,2})\s*[./]\s*(\d{1,2})(?![.\d])", re.IGNORECASE
+    r"(\d{1,2})\s*[./]\s*(\d{1,2})(?!\.\d|\d)", re.IGNORECASE
 )
 ISO_DATE = re.compile(r"(?<!\d)(20\d{2})-(\d{1,2})-(\d{1,2})(?!\d)")
 FULL_DATE = re.compile(
     r"(?<![\d./])(\d{1,2})([./-])(\d{1,2})\2(20\d{2}|\d{2})(?!\d)"
 )
-SHORT_DATE = re.compile(r"(?<![\d./])(\d{1,2})[./](\d{1,2})(?![.\d])")
+SHORT_DATE = re.compile(r"(?<![\d./])(\d{1,2})[./](\d{1,2})(?!\.\d|\d)")
 WORD_RANGE = re.compile(
     rf"(?<!\d)(?:с\s+)?(\d{{1,2}})\s*(?:[-–—]|\bпо\b)\s*(\d{{1,2}})"
     rf"\s+({MONTH_WORDS})\b", re.IGNORECASE
