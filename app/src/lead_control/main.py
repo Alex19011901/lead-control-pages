@@ -23,6 +23,7 @@ from .max_attachment_ocr import enrich_max_mail_attachments
 from .max_client import MaxClient, filter_new_max_events, normalize_max_updates
 from .max_edits import apply_max_message_edits
 from .max_forwarded import enrich_incomplete_forwarded_messages
+from .max_history import reconcile_max_history
 from .max_mail_lead_apply import apply_max_mail_leads
 from .normalize import now_moscow_iso, unix_to_moscow_iso
 from .processor import collect_known_manager_ids, normalize_updates, rebuild_leads_and_needs_review
@@ -147,6 +148,37 @@ def main() -> None:
         append_events(events_path, new_max_events)
         events.extend(new_max_events)
 
+    # The MAX /updates long-poll stream can silently return zero new events.
+    # Always reconcile the actual chat history by message ID; the bot's own
+    # morning reports are explicitly excluded by the history reader.
+    history = reconcile_max_history(
+        max_client,
+        chat_id=config.max_chat_id,
+        events=events,
+        state=max_state,
+    )
+    recovered_max_events = filter_new_max_events(
+        history.events,
+        {
+            str(event["message_id"])
+            for event in events
+            if event.get("source") == "MAX" and event.get("message_id")
+        },
+    )
+    if recovered_max_events:
+        append_events(events_path, recovered_max_events)
+        events.extend(recovered_max_events)
+    max_history_cursor_changed = (
+        history.watermark_ms > int(max_state.get("history_last_seen_ms") or 0)
+    )
+    if max_history_cursor_changed:
+        max_state["history_last_seen_ms"] = history.watermark_ms
+    LOG.info(
+        "MAX history: scanned=%s pages=%s newly_recovered=%s own_bot_skipped=%s watermark_ms=%s",
+        history.scanned, history.pages, len(recovered_max_events),
+        history.bot_messages_skipped, history.watermark_ms,
+    )
+
     max_edits_changed = apply_max_message_edits(events, max_result.updates, chat_id=config.max_chat_id)
     if max_edits_changed:
         save_events(events_path, events)
@@ -229,6 +261,8 @@ def main() -> None:
         or manual_history_events
         or new_events
         or new_max_events
+        or recovered_max_events
+        or max_history_cursor_changed
         or max_edits_changed
         or max_forwarded_changed
         or max_attachment_changed
