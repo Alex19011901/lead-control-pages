@@ -1,0 +1,57 @@
+name: Verify MAX history repair read-only
+on:
+  push:
+    branches:
+      - fix/max-history-recovery-20261026
+permissions:
+  contents: read
+concurrency:
+  group: lead-control-max-history-readonly-check
+  cancel-in-progress: false
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Offline tests for full paginated ingestion
+        working-directory: app
+        run: PYTHONPATH=src python -m unittest tests.test_max_history -v
+      - name: Check recovery against actual MAX group without changing data
+        working-directory: app
+        env:
+          MAX_BOT_TOKEN: ${{ secrets.MAX_BOT_TOKEN }}
+        run: |
+          PYTHONPATH=src python - <<'PY'
+          import json,os
+          from collections import Counter
+          from pathlib import Path
+          from datetime import datetime,timezone
+          from lead_control.max_client import MaxClient
+          from lead_control.max_history import reconcile_max_history
+          from lead_control.state import load_events
+          from lead_control.parsers.max_leads import classify_max_event, LEAD_CATEGORIES
+
+          events=load_events(Path('../runtime-data/events.ndjson'))
+          state=json.loads(Path('../runtime-data/state.json').read_text(encoding='utf-8'))['max']
+          client=MaxClient(os.environ['MAX_BOT_TOKEN'],ca_file='certs/max_ca_bundle.pem')
+          outcome=reconcile_max_history(
+              client, chat_id=-71704692523093,events=events,state=state,
+          )
+          classes=Counter(classify_max_event(e)['classification'] for e in outcome.events)
+          kinds=Counter(
+              datetime.fromtimestamp(e['timestamp']/1000,tz=timezone.utc).strftime('%Y-%m-%d')
+              for e in outcome.events
+          )
+          print('HISTORY_DIAGNOSTIC_LOADED_MESSAGES',outcome.scanned)
+          print('HISTORY_DIAGNOSTIC_PAGES',outcome.pages)
+          print('HISTORY_DIAGNOSTIC_NEW_EVENTS',len(outcome.events))
+          print('HISTORY_DIAGNOSTIC_OWN_BOT_SKIPPED',outcome.bot_messages_skipped)
+          print('HISTORY_DIAGNOSTIC_CLASSIFICATIONS',dict(sorted(classes.items())))
+          print('HISTORY_DIAGNOSTIC_DATES_UTC',dict(sorted(kinds.items())))
+          print('HISTORY_DIAGNOSTIC_LEADLIKE',sum(v for k,v in classes.items() if k in LEAD_CATEGORIES))
+          if outcome.pages>30 or len(outcome.events)<1:
+              raise RuntimeError('Recovery failed to find the MAX group messages known to be missing')
+          PY
