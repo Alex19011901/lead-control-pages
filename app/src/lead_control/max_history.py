@@ -157,7 +157,9 @@ def reconcile_max_history(
             # Reaching the overlap boundary (or exhausting history) means no gap.
             return MaxHistoryRecovery(discovered, highwater_ms, page, scanned, bot_skipped)
         previous_oldest_ms = oldest_ms
-        before_ms = oldest_ms - 1
+        # Include the boundary timestamp once, so equal-time messages are not lost.
+        # Deduplicate the overlapping boundary message by its immutable mid.
+        before_ms = oldest_ms
 
     # A partial backfill must not silently move the cursor and lose older leads.
     raise RuntimeError(
