@@ -58,7 +58,7 @@ jobs:
 
       - name: Test Lead Control parsers and advertising export
         working-directory: app
-        run: PYTHONPATH=. python -m unittest tests.test_tilda_parser tests.test_build_advertising_export tests.test_metrika_client_attribution_export tests.test_max_forwarded_wedwed tests.test_wedwed_enrichment tests.test_phone_deduplication tests.test_daily_lead_regressions tests.test_daily_duplicate_policy tests.test_lead_enrichment tests.test_max_explicit_client_name tests.test_linked_contact_followup tests.test_closed_not_realized tests.test_closed_not_realized_widget tests.test_crm_pipeline_activity tests.test_crm_feedback tests.test_dashboard_snapshot tests.test_dashboard_view_calendar tests.test_preclose_snapshot_regression tests.test_preclose_record_recovery tests.test_max_history -v
+        run: PYTHONPATH=. python -m unittest tests.test_tilda_parser tests.test_build_advertising_export tests.test_metrika_client_attribution_export tests.test_max_forwarded_wedwed tests.test_wedwed_enrichment tests.test_phone_deduplication tests.test_daily_lead_regressions tests.test_daily_duplicate_policy tests.test_lead_enrichment tests.test_max_explicit_client_name tests.test_linked_contact_followup tests.test_closed_not_realized tests.test_closed_not_realized_widget tests.test_crm_pipeline_activity tests.test_crm_feedback tests.test_dashboard_snapshot tests.test_dashboard_view_calendar tests.test_preclose_snapshot_regression tests.test_preclose_record_recovery tests.test_max_history tests.test_event_date_heatmap -v
 
       - name: Install OCR
         run: |
@@ -138,6 +138,7 @@ jobs:
           python app/scripts/build_dashboard_snapshot.py --input runtime-data/leads.json --output runtime-data/dashboard_daily.json
           python app/scripts/exclude_dashboard_duplicate_stats.py --leads runtime-data/leads.json --snapshot runtime-data/dashboard_daily.json
           python app/scripts/build_dashboard_view.py --input runtime-data/dashboard_daily.json --output runtime-data/dashboard_view.json
+          python app/scripts/build_event_date_heatmap.py --leads runtime-data/leads.json --events runtime-data/events.ndjson --view runtime-data/dashboard_view.json
           python app/scripts/apply_dashboard_crm_guest_priority.py --leads runtime-data/leads.json --view runtime-data/dashboard_view.json
           python app/scripts/apply_dashboard_mail_source.py --view runtime-data/dashboard_view.json
           python app/scripts/augment_dashboard_feedback.py --leads runtime-data/leads.json --view runtime-data/dashboard_view.json
