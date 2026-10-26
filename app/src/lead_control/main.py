@@ -20,7 +20,8 @@ from .linked_contact_followup import remove_linked_contact_followup_leads
 from .manual_history import missing_manual_history_events
 from .manual_review_fields import enrich_manual_review_fields
 from .max_attachment_ocr import enrich_max_mail_attachments
-from .max_client import MaxClient, filter_new_max_events, normalize_max_updates
+from .max_client import MaxClient, MaxUpdatesResult, filter_new_max_events, normalize_max_updates
+from .max_history import reconcile_max_history
 from .max_edits import apply_max_message_edits
 from .max_forwarded import enrich_incomplete_forwarded_messages
 from .max_history import reconcile_max_history
@@ -137,11 +138,17 @@ def main() -> None:
     max_state = state.setdefault("max", {})
     max_marker = max_state.get("marker")
     max_client = MaxClient(config.max_bot_token, ca_file=str(repo_root / "certs" / "max_ca_bundle.pem"))
-    max_result = max_client.get_updates(
-        marker=max_marker,
-        timeout=0,
-        update_types=("bot_added", "message_created", "message_edited"),
-    )
+    try:
+        max_result = max_client.get_updates(
+            marker=max_marker,
+            timeout=0,
+            update_types=("bot_added", "message_created", "message_edited"),
+        )
+    except RuntimeError as exc:
+        # Chat history is now an independent source. A failed event poll must
+        # not prevent recovery of group messages or incoming Telegram leads.
+        LOG.warning("MAX /updates unavailable, trying chat history: %s", exc)
+        max_result = MaxUpdatesResult(updates=[], marker=max_marker)
     normalized_max_events = normalize_max_updates(max_result.updates, chat_id=config.max_chat_id)
     new_max_events = filter_new_max_events(normalized_max_events, existing_max_message_ids)
     if new_max_events:
@@ -183,6 +190,26 @@ def main() -> None:
     if max_edits_changed:
         save_events(events_path, events)
         LOG.info("MAX edited messages applied")
+
+    # MAX may return an empty /updates feed while the group continues to
+    # receive messages. Reconcile the admin-accessible chat history by
+    # immutable message ID, excluding the bot's own notifications.
+    history = reconcile_max_history(
+        max_client, chat_id=config.max_chat_id, events=events, state=max_state,
+    )
+    new_history_events = history.events
+    if new_history_events:
+        append_events(events_path, new_history_events)
+        events.extend(new_history_events)
+    old_history_watermark = int(max_state.get("history_last_seen_ms") or 0)
+    history_watermark_changed = history.watermark_ms > old_history_watermark
+    if history_watermark_changed:
+        max_state["history_last_seen_ms"] = history.watermark_ms
+    LOG.info(
+        "MAX history: scanned=%s new_events=%s bot_messages_skipped=%s pages=%s",
+        history.scanned, len(new_history_events),
+        history.bot_messages_skipped, history.pages,
+    )
 
     max_forwarded_changed = enrich_incomplete_forwarded_messages(events, max_client)
     if max_forwarded_changed:
@@ -261,6 +288,8 @@ def main() -> None:
         or manual_history_events
         or new_events
         or new_max_events
+        or new_history_events
+        or history_watermark_changed
         or recovered_max_events
         or max_history_cursor_changed
         or max_edits_changed
