@@ -1,7 +1,7 @@
 {
   "alarm_no_crm": 2,
   "by_manager": {
-    "no_manager_reaction": 786,
+    "no_manager_reaction": 787,
     "Максим": 93,
     "Олеся": 85
   },
@@ -16,10 +16,10 @@
     "С улицы": 3,
     "САЙТ ТИЛЬДА": 241,
     "Тильда Веранда": 51,
-    "ТоМесто": 1
+    "ТоМесто": 2
   },
   "event_types": {
-    "unknown": 127,
+    "unknown": 126,
     "Бизнес мероприятие": 49,
     "Выпускной": 14,
     "ДР": 2,
@@ -28,16 +28,16 @@
     "Конференция": 1,
     "Корпоратив": 327,
     "Поминки": 2,
-    "Свадьба": 265,
+    "Свадьба": 266,
     "Съёмки": 2,
-    "Юбилей": 168
+    "Юбилей": 169
   },
   "guest_ranges": {
     "1-20": 252,
     "101-150": 72,
     "151+": 38,
     "21-50": 266,
-    "51-100": 165,
+    "51-100": 166,
     "unknown": 171
   },
   "late_crm": 175,
@@ -61,12 +61,30 @@
       "violations": []
     },
     {
-      "created_at": "2026-10-27T18:53:25+03:00",
+      "created_at": "2026-10-27T19:36:02+03:00",
       "crm_entity_id": null,
       "crm_entity_type": null,
       "crm_found": false,
+      "event_date": "2026-11-29",
+      "event_type": "Юбилей",
+      "guests_count": 55,
+      "identifier": "7********88",
+      "identifier_type": "phone",
+      "lead_id": "565fb7efdb95ff18",
+      "manager": "",
+      "manager_username": "",
+      "name": "Ильмира",
+      "source": "ТоМесто",
+      "status": "PENDING",
+      "violations": []
+    },
+    {
+      "created_at": "2026-10-27T18:53:25+03:00",
+      "crm_entity_id": 49913447,
+      "crm_entity_type": "lead",
+      "crm_found": true,
       "event_date": "",
-      "event_type": "",
+      "event_type": "Свадьба",
       "guests_count": null,
       "identifier": "7********84",
       "identifier_type": "phone",
@@ -75,7 +93,7 @@
       "manager_username": "",
       "name": "Андрей",
       "source": "Заявки хост",
-      "status": "PENDING",
+      "status": "OK",
       "violations": []
     },
     {
@@ -383,29 +401,11 @@
       "source": "Заявки хост",
       "status": "OK",
       "violations": []
-    },
-    {
-      "created_at": "2026-10-26T16:04:24+03:00",
-      "crm_entity_id": 49877895,
-      "crm_entity_type": "lead",
-      "crm_found": true,
-      "event_date": "2026-11-23",
-      "event_type": "Поминки",
-      "guests_count": 60,
-      "identifier": "7********02",
-      "identifier_type": "phone",
-      "lead_id": "165187f4feace885",
-      "manager": "",
-      "manager_username": "",
-      "name": "Алена",
-      "source": "Заявки хост",
-      "status": "OK",
-      "violations": []
     }
   ],
-  "needs_review": 140,
+  "needs_review": 136,
   "no_reaction": 0,
-  "ok": 729,
-  "total_leads": 964,
-  "updated_at": "2026-10-27T20:33:50+03:00"
+  "ok": 730,
+  "total_leads": 965,
+  "updated_at": "2026-10-27T22:29:45+03:00"
 }
