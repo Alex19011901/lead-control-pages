@@ -6,19 +6,19 @@
 
 /* Isolated calendar-demand heatmap; no effect on existing dashboard widgets. */
 #eventHeatmapCard{min-width:0}
-.hm-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:9px}
+.hm-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:6px}
 .hm-head .title{margin:0}
 .hm-nav{display:flex;align-items:center;gap:5px}
 .hm-nav button{min-width:32px;padding:6px 8px;border-radius:7px;font-size:15px}
 .hm-months{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px}
 .hm-month{min-width:0;padding:9px;border:1px solid #263549;border-radius:10px;background:#0d1825}
-.hm-month-title{text-align:center;font-size:13px;line-height:18px;font-weight:800;margin:0 0 6px}.hm-month-title-short{display:none}
+.hm-month-title{text-align:center;font-size:13px;line-height:18px;font-weight:800;margin:0 0 4px}.hm-month-title-short{display:none}
 .hm-days{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:3px}
 .hm-weekday{text-align:center;font-size:10px;color:#9fb0c5;line-height:16px}
-.hm-gap{height:38px}
-.hm-day-cell{min-width:0;width:100%;height:38px;padding:2px 0;border:0;border-radius:4px;background:#192637;color:#e7ecf5;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0;cursor:pointer}
-.hm-day{font-size:12px;font-weight:800;line-height:19px}
-.hm-count{font-size:8px;font-weight:600;line-height:12px;opacity:.85}
+.hm-gap{height:34px}
+.hm-day-cell{position:relative;min-width:0;width:100%;height:34px;padding:0;border:0;border-radius:4px;background:#192637;color:#e7ecf5;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0;cursor:pointer}
+.hm-day{position:absolute;top:2px;left:0;right:0;text-align:center;font-size:10px;font-weight:800;line-height:13px}
+.hm-count{position:absolute;right:1px;bottom:1px;text-align:right;font-size:8px;font-weight:600;line-height:10px;opacity:.9}
 .hm-level-0{background:#162b21;color:#9db5aa}
 .hm-level-1{background:#1c4530;color:#f0fff4}
 .hm-level-2{background:#25633e;color:#ffffff}
@@ -36,12 +36,12 @@
 @media(max-width:760px){
  .hm-months{gap:3px}
  .hm-month{padding:4px 2px;border-radius:6px}
- .hm-month-title{font-size:10px;line-height:13px;margin-bottom:3px}
+ .hm-month-title{font-size:10px;line-height:13px;margin-bottom:2px}
  .hm-days{gap:1px}
  .hm-weekday{font-size:7px;line-height:11px}
- .hm-gap,.hm-day-cell{height:29px}
+ .hm-gap,.hm-day-cell{height:27px}
  .hm-day-cell{padding:0}
- .hm-day{font-size:9px;line-height:12px}
+ .hm-day{font-size:7.5px;line-height:10px;top:1px}
  .hm-count{font-size:6px;line-height:8px}
  .hm-head .title{font-size:14px}
 }
@@ -52,15 +52,15 @@
  .hm-weekday{font-size:6px;line-height:10px}
  .hm-months{gap:2px}
  .hm-month{padding:3px 1px}
- .hm-day{font-size:7px;line-height:11px;letter-spacing:-.15px}
+ .hm-day{font-size:6.5px;line-height:9px;letter-spacing:-.15px;top:1px}
  .hm-count{font-size:5px;line-height:7px}
 }
 @media(max-width:370px){
  .hm-months{gap:2px}
  .hm-month{padding:2px 0;border-radius:4px}
- .hm-day{font-size:7px;line-height:11px;letter-spacing:-.15px}
+ .hm-day{font-size:6px;line-height:9px;letter-spacing:-.15px;top:1px}
  .hm-count{font-size:5px;line-height:7px}
- .hm-gap,.hm-day-cell{height:27px}
+ .hm-gap,.hm-day-cell{height:25px}
 }
 </style></head><body><div class="app">
 <div class="top"><div><h1>Дашборд лидов</h1><div class="sub">MAX + Telegram → amoCRM</div></div><div class="filters"><button data-r="today">Сегодня</button><button data-r="yesterday">Вчера</button><button data-r="7">7 дней</button><button data-r="30">30 дней</button><button data-r="all" class="active">Весь период</button><button id="refreshBtn" type="button">Обновить данные</button><span class="note refresh-status" id="refreshState"></span></div></div>
