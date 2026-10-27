@@ -545,8 +545,19 @@ def _apply_review_override(
 
     text = str(event.get("text") or override.get("original_text") or "")
     created_at = _review_event_timestamp_seconds(event)
-    fields = _manual_fields(text, decision, created_at)
-    crm_required = decision not in CRM_FREE_DECISIONS
+    if decision == TO_MESTO:
+        # A user-confirmed image paired to a generic "Заявка" caption:
+        # parse fields from the real OCR, not from that generic caption.
+        screenshot = classify_max_event({**event, "text": "Заявка то место:"})
+        if screenshot.get("classification") == TO_MESTO:
+            fields = _max_fields(screenshot, created_at)
+            crm_required = bool(screenshot.get("crm_check_required"))
+        else:
+            fields = _manual_fields(text, decision, created_at)
+            crm_required = False
+    else:
+        fields = _manual_fields(text, decision, created_at)
+        crm_required = decision not in CRM_FREE_DECISIONS
     channel = _event_channel(event, override)
     chat_id = int(event.get("chat_id") or override.get("chat_id"))
     message_id = event.get("message_id") or override.get("message_id")

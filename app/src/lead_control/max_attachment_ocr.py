@@ -18,6 +18,8 @@ MAIL_HEADER_RE = re.compile(
 PAIR_WINDOW_MS = 10_000
 ONE_OFF_MAIL_MESSAGE_IDS = {
     "mid.ffffbec8f345ffab01a12658ca2a1b96",
+    # User-confirmed ToMesto photo 19:35:59 and generic "Заявка" caption 19:36:02.
+    "mid.ffffbec8f345ffab01a17e38032a4d59",
 }
 
 
