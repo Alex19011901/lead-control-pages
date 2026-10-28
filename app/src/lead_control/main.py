@@ -18,6 +18,7 @@ from .explicit_client_name import apply_explicit_client_names
 from .lead_enrichment import enrich_leads_from_events
 from .linked_contact_followup import remove_linked_contact_followup_leads
 from .manual_history import missing_manual_history_events
+from .manual_lead_corrections import apply_manual_lead_corrections
 from .manual_review_fields import enrich_manual_review_fields
 from .max_attachment_ocr import enrich_max_mail_attachments
 from .max_client import MaxClient, filter_new_max_events, normalize_max_updates
@@ -82,6 +83,9 @@ def main() -> None:
     old_needs_review_payload = load_json(needs_review_path, {"schema_version": 1, "items": []})
     old_needs_review_json = stable_json(old_needs_review_payload)
     review_overrides_payload = load_json(review_overrides_path, {"schema_version": 1, "items": []})
+    manual_corrections_payload = load_json(
+        data_dir / "manual_lead_corrections.json", {"schema_version": 1, "items": []}
+    )
 
     events = normalize_known_source_events(load_events(events_path))
     manual_history_events = missing_manual_history_events(events)
@@ -253,6 +257,12 @@ def main() -> None:
             leads_payload["leads"], amocrm, previous_leads=previous_leads,
         )
     apply_crm_day_status_policy(leads_payload["leads"])
+    # Display-only fixes run after CRM checks and status computation, never before.
+    manual_correction_count = apply_manual_lead_corrections(
+        leads_payload["leads"], manual_corrections_payload.get("items", [])
+    )
+    if manual_correction_count:
+        LOG.info("User-verified MAX lead display corrections applied: %s", manual_correction_count)
 
     leads_changed = stable_json(leads_payload) != old_leads_json
     needs_review_changed = stable_json(needs_review_payload) != old_needs_review_json
