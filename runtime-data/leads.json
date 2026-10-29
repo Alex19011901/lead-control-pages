@@ -32385,21 +32385,63 @@
     {
       "category": "САЙТ ТИЛЬДА",
       "channel": "TELEGRAM",
+      "closed_not_realized": {
+        "closed_at": 1793268083,
+        "crm_lead_id": 49957814,
+        "last_comment": "не Ольга и заявку не оставляли",
+        "last_comment_at": 1793268086,
+        "last_record_at": 1793268086,
+        "last_record_author": "",
+        "last_record_display": "не Ольга и заявку не оставляли",
+        "last_record_errors": [],
+        "last_record_id": "323635810",
+        "last_record_rule_version": 5,
+        "last_record_status": "VERIFIED",
+        "last_record_type": "common",
+        "loss_reason_id": 24466290,
+        "loss_reason_name": "Спам"
+      },
       "crm": {
         "ambiguity_count": 0,
-        "created_at": null,
-        "entity_id": null,
-        "entity_type": null,
+        "created_at": 1793268083,
+        "entity_id": 49957814,
+        "entity_type": "lead",
         "event_type": null,
-        "found": false,
-        "responsible_user_id": null,
-        "responsible_user_name": null,
-        "updated_at": null
+        "found": true,
+        "guests": "20",
+        "guests_source": "CRM",
+        "responsible_user_id": 12982830,
+        "responsible_user_name": "Максим",
+        "updated_at": 1793268086
       },
-      "crm_created_at": null,
-      "crm_found": false,
+      "crm_created_at": 1793268083,
+      "crm_feedback": {
+        "closed_at": 1793268083,
+        "crm_lead_id": 49957814,
+        "excluded": true,
+        "first_activity_at": null,
+        "lead_created_at": 1793268083,
+        "loss_reason_checked": true,
+        "loss_reason_id": 24466290,
+        "loss_reason_name": "Спам",
+        "pipeline_id": 10081590,
+        "responsible_user_id": 12982830,
+        "rule_version": 6,
+        "state": "EXCLUDED",
+        "status_id": 143,
+        "status_name": "Закрыто и не реализовано"
+      },
+      "crm_found": true,
+      "crm_outcome": {
+        "closed_at": 1793268083,
+        "loss_reason_id": 24466290,
+        "loss_reason_name": "Спам",
+        "result": "LOST",
+        "status_id": 143,
+        "status_name": "Закрыто и не реализовано"
+      },
       "crm_required": true,
-      "crm_responsible": null,
+      "crm_responsible": 12982830,
       "deadline_msk_ts": 1793307599,
       "fields": {
         "category": "САЙТ ТИЛЬДА",
@@ -32426,13 +32468,40 @@
       },
       "last_seen_at": "2026-10-29T12:32:46+03:00",
       "last_seen_ts": 1793266366,
-      "manager_reaction": null,
+      "manager_reaction": {
+        "name": "Максим",
+        "reacted_at": "2026-10-29T12:59:00+03:00",
+        "reacted_ts": 1793267940,
+        "reaction": [
+          {
+            "emoji": "👍",
+            "type": "emoji"
+          }
+        ],
+        "update_id": 185609062,
+        "user_id": 392177002,
+        "username": "empairbey"
+      },
+      "preclose_record_cache": {
+        "closed_at": 1793268083,
+        "crm_lead_id": 49957814,
+        "last_comment": "не Ольга и заявку не оставляли",
+        "last_comment_at": 1793268086,
+        "last_record_at": 1793268086,
+        "last_record_author": "",
+        "last_record_display": "не Ольга и заявку не оставляли",
+        "last_record_errors": [],
+        "last_record_id": "323635810",
+        "last_record_rule_version": 5,
+        "last_record_status": "VERIFIED",
+        "last_record_type": "common"
+      },
       "received_at": "2026-10-29T12:32:46+03:00",
       "sender_name": "TildaForms",
       "sender_user_id": 265299531,
       "sender_username": "TildaFormsBot",
       "source": "САЙТ ТИЛЬДА",
-      "status": "PENDING",
+      "status": "OK",
       "telegram": {
         "chat_id": -1001645768111,
         "message_ids": [
@@ -101220,6 +101289,95 @@
       "status": "OK",
       "username": "",
       "violations": []
+    },
+    {
+      "category": "HOST",
+      "channel": "MAX",
+      "crm": {
+        "ambiguity_count": 0,
+        "created_at": 1793273086,
+        "entity_id": 49968910,
+        "entity_type": "lead",
+        "event_type": "Корпоратив",
+        "found": true,
+        "responsible_user_id": 12982830,
+        "responsible_user_name": "Максим",
+        "updated_at": 1793273088
+      },
+      "crm_created_at": 1793273086,
+      "crm_feedback": {
+        "closed_at": null,
+        "crm_lead_id": 49968910,
+        "deadline_at": 1793566800,
+        "excluded": false,
+        "first_activity_at": null,
+        "lead_created_at": 1793273086,
+        "loss_reason_checked": true,
+        "loss_reason_id": null,
+        "loss_reason_name": "",
+        "pipeline_id": 10081590,
+        "responsible_user_id": 12982830,
+        "rule_version": 6,
+        "state": "WAITING",
+        "status_id": 79927034,
+        "status_name": "Первичный контакт"
+      },
+      "crm_found": true,
+      "crm_required": true,
+      "crm_responsible": 12982830,
+      "deadline_msk_ts": 1793307599,
+      "event_date": "2026-12-25",
+      "event_type": "Корпоратив",
+      "event_type_source": "CRM",
+      "fields": {
+        "category": "HOST",
+        "email": "",
+        "event_date": "2026-12-25",
+        "event_date_raw": "25.12",
+        "event_type": "Корпоратив",
+        "guests_count": 25,
+        "guests_max": null,
+        "guests_min": null,
+        "guests_raw": "25п.",
+        "name": "Дарья",
+        "phone_digits": "79000960086",
+        "phone_raw": "89000960086",
+        "source": "Заявки хост",
+        "telegram_username": ""
+      },
+      "first_seen_at": "2026-10-29T14:01:19+03:00",
+      "first_seen_ts": 1793271679,
+      "guests": 25,
+      "guests_max": null,
+      "guests_min": null,
+      "guests_raw": "25п.",
+      "id": "de1eb65ccfeeeb36",
+      "identifier": {
+        "type": "phone",
+        "value": "79000960086"
+      },
+      "last_seen_at": "2026-10-29T14:01:19+03:00",
+      "last_seen_ts": 1793271679,
+      "manager_reaction": null,
+      "max": {
+        "chat_id": -71704692523093,
+        "message_ids": [
+          "mid.ffffbec8f345ffab01a187524ab95f74"
+        ],
+        "sender_name": "Елена",
+        "sender_user_id": 121513620,
+        "sender_username": null
+      },
+      "message_id": "mid.ffffbec8f345ffab01a187524ab95f74",
+      "name": "Дарья",
+      "phone": "89000960086",
+      "received_at": "2026-10-29T14:01:19+03:00",
+      "sender_name": "Елена",
+      "sender_user_id": 121513620,
+      "source": "Заявки хост",
+      "status": "OK",
+      "username": "",
+      "violations": []
     }
   ],
   "pipeline_activity": {
@@ -101357,7 +101515,7 @@
         "79927038": 1
       },
       "2026-10-29": {
-        "143": 3
+        "143": 4
       }
     },
     "pipeline_id": 10081590,
@@ -101440,7 +101598,7 @@
       }
     ],
     "today": "2026-10-29",
-    "total_movements": 430,
+    "total_movements": 431,
     "weeks": [
       {
         "dates": [
