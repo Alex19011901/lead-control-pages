@@ -19,16 +19,16 @@
     "ТоМесто": 2
   },
   "event_types": {
-    "unknown": 131,
-    "Бизнес мероприятие": 52,
+    "unknown": 129,
+    "Бизнес мероприятие": 53,
     "Выпускной": 15,
     "ДР": 2,
     "Деловое мероприятие": 1,
     "Детский праздник": 6,
     "Конференция": 1,
-    "Корпоратив": 343,
+    "Корпоратив": 342,
     "Поминки": 2,
-    "Свадьба": 274,
+    "Свадьба": 276,
     "Съёмки": 2,
     "Юбилей": 172
   },
@@ -36,19 +36,19 @@
     "1-20": 258,
     "101-150": 73,
     "151+": 39,
-    "21-50": 275,
+    "21-50": 274,
     "51-100": 177,
-    "unknown": 179
+    "unknown": 180
   },
   "late_crm": 175,
   "latest_leads": [
     {
       "created_at": "2026-10-30T17:30:59+03:00",
-      "crm_entity_id": null,
-      "crm_entity_type": null,
-      "crm_found": false,
+      "crm_entity_id": 50019025,
+      "crm_entity_type": "lead",
+      "crm_found": true,
       "event_date": "2026-11-30",
-      "event_type": "",
+      "event_type": "Бизнес мероприятие",
       "guests_count": 20,
       "identifier": "7********51",
       "identifier_type": "phone",
@@ -57,7 +57,7 @@
       "manager_username": "",
       "name": "Анастасия",
       "source": "Заявки хост",
-      "status": "PENDING",
+      "status": "OK",
       "violations": []
     },
     {
@@ -98,9 +98,9 @@
     },
     {
       "created_at": "2026-10-30T15:17:36+03:00",
-      "crm_entity_id": null,
-      "crm_entity_type": null,
-      "crm_found": false,
+      "crm_entity_id": 50019241,
+      "crm_entity_type": "lead",
+      "crm_found": true,
       "event_date": "",
       "event_type": "Корпоратив",
       "guests_count": 100,
@@ -111,7 +111,7 @@
       "manager_username": "",
       "name": "Мария",
       "source": "Заявки хост",
-      "status": "PENDING",
+      "status": "OK",
       "violations": []
     },
     {
@@ -152,11 +152,11 @@
     },
     {
       "created_at": "2026-10-30T13:32:47+03:00",
-      "crm_entity_id": null,
-      "crm_entity_type": null,
-      "crm_found": false,
+      "crm_entity_id": 50019419,
+      "crm_entity_type": "lead",
+      "crm_found": true,
       "event_date": "",
-      "event_type": "",
+      "event_type": "Свадьба",
       "guests_count": null,
       "identifier": "7********17",
       "identifier_type": "phone",
@@ -165,14 +165,14 @@
       "manager_username": "",
       "name": "Василиса",
       "source": "Заявка с ТГ",
-      "status": "PENDING",
+      "status": "OK",
       "violations": []
     },
     {
       "created_at": "2026-10-30T13:32:15+03:00",
-      "crm_entity_id": null,
-      "crm_entity_type": null,
-      "crm_found": false,
+      "crm_entity_id": 50019483,
+      "crm_entity_type": "lead",
+      "crm_found": true,
       "event_date": "",
       "event_type": "Свадьба",
       "guests_count": null,
@@ -183,16 +183,16 @@
       "manager_username": "",
       "name": "",
       "source": "Заявка с ТГ",
-      "status": "PENDING",
+      "status": "OK",
       "violations": []
     },
     {
       "created_at": "2026-10-30T13:28:06+03:00",
-      "crm_entity_id": null,
-      "crm_entity_type": null,
-      "crm_found": false,
+      "crm_entity_id": 50019453,
+      "crm_entity_type": "lead",
+      "crm_found": true,
       "event_date": "2026-06-26",
-      "event_type": "",
+      "event_type": "Свадьба",
       "guests_count": null,
       "identifier": "7********24",
       "identifier_type": "phone",
@@ -201,7 +201,7 @@
       "manager_username": "",
       "name": "Анастасия",
       "source": "Заявки хост",
-      "status": "PENDING",
+      "status": "OK",
       "violations": []
     },
     {
@@ -405,7 +405,7 @@
   ],
   "needs_review": 143,
   "no_reaction": 0,
-  "ok": 762,
+  "ok": 766,
   "total_leads": 1001,
-  "updated_at": "2026-10-30T18:56:37+03:00"
+  "updated_at": "2026-10-30T20:02:24+03:00"
 }
