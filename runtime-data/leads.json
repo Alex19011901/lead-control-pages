@@ -20640,7 +20640,7 @@
       },
       "crm_created_at": 1790234001,
       "crm_feedback": {
-        "closed_at": null,
+        "closed_at": 1793437669,
         "crm_lead_id": 48907189,
         "excluded": true,
         "first_activity_at": null,
@@ -20652,10 +20652,15 @@
         "responsible_user_id": 12982830,
         "rule_version": 6,
         "state": "EXCLUDED",
-        "status_id": 86372998,
-        "status_name": "ЖДУНЫ"
+        "status_id": 142,
+        "status_name": "Успешно реализовано"
       },
       "crm_found": true,
+      "crm_outcome": {
+        "result": "SUCCESS",
+        "status_id": 142,
+        "status_name": "Успешно реализовано"
+      },
       "crm_required": true,
       "crm_responsible": 12982830,
       "deadline_msk_ts": 1790283599,
@@ -32686,6 +32691,67 @@
         ],
         "update_ids": [
           185609065
+        ]
+      },
+      "violations": []
+    },
+    {
+      "category": "MARQUIZ",
+      "channel": "TELEGRAM",
+      "crm": {
+        "ambiguity_count": 0,
+        "created_at": null,
+        "entity_id": null,
+        "entity_type": null,
+        "event_type": null,
+        "found": false,
+        "responsible_user_id": null,
+        "responsible_user_name": null,
+        "updated_at": null
+      },
+      "crm_created_at": null,
+      "crm_found": false,
+      "crm_required": true,
+      "crm_responsible": null,
+      "deadline_msk_ts": 1793480399,
+      "fields": {
+        "category": "MARQUIZ",
+        "description": "🎯 Заявка на квиз \"Организуйте идеальное мероприятие в ресторане «Светлый».\"\n\nИмя: Динара\nТелефон: +79164535529\n\nКакое мероприятие вы планируете?\nКорпоратив\n\nСколько гостей ожидается?\n40\n\nУточните дату Вашего мероприятия?\n26.11.2026\n\nКакой формат мероприятия интересует?\nФуршет\n\nТовары:\n\nТовары не выбраны\n\n\nБонусы: Бесплатная дегустация, Без арендной платы\n\nМестоположение: Россия, Москва\nUTM-метки:\ncampaign: Bankety_poisk_quiz\nmedium: cpc\nsource: yandex_direct\n\nСтраница: https://mrqz.me/moscowbanket?callibri=yd_c:712849433_gb:5773918659_ad:1915822986185365500_ph:205773918659_st:search_s:none_dt:mobile&utm_source=yandex_direct&utm_medium=cpc&utm_campaign=Bankety_poisk_quiz&type=search&source=none&added=no&block=premium&position=1&keyword=---autotargeting&etext=2202.e5uVetdXuPMsnEhJb7pZdoYDZZ5GEC-_uB6reixOhUtOTrhYpfY5S5Uo3GpskUKVZuyrzcKfWYFceSgiyC_C2yPUXIxz4HsgyXXUlxgi3z54YWJobGZnc2h0cmFwbnp2.33ef50eae197ba61cc23be586118e6e5977516be&yclid=16715003430283771903\n\nСогласия:\nЯ согласен на обработку персональных данных: Да",
+        "event_date": "2026-11-26",
+        "event_date_raw": "26.11.2026",
+        "event_format": "Фуршет",
+        "event_type": "Корпоратив",
+        "guests_count": 40,
+        "guests_raw": "40",
+        "name": "Динара",
+        "phone_digits": "79164535529",
+        "phone_raw": "+79164535529",
+        "source": "MARQUIZ",
+        "telegram_username": ""
+      },
+      "first_seen_at": "2026-10-31T12:15:04+03:00",
+      "first_seen_ts": 1793438104,
+      "id": "d3a350121ec895f5",
+      "identifier": {
+        "type": "phone",
+        "value": "79164535529"
+      },
+      "last_seen_at": "2026-10-31T12:15:04+03:00",
+      "last_seen_ts": 1793438104,
+      "manager_reaction": null,
+      "received_at": "2026-10-31T12:15:04+03:00",
+      "sender_name": "MarquizBot",
+      "sender_user_id": 446491725,
+      "sender_username": "MarquizBot",
+      "source": "MARQUIZ",
+      "status": "PENDING",
+      "telegram": {
+        "chat_id": -1001645768111,
+        "message_ids": [
+          6323
+        ],
+        "update_ids": [
+          185609067
         ]
       },
       "violations": []
@@ -99171,6 +99237,22 @@
     {
       "category": "HOST",
       "channel": "MAX",
+      "closed_not_realized": {
+        "closed_at": 1793439946,
+        "crm_lead_id": 49908947,
+        "last_comment": "нет обратной связи",
+        "last_comment_at": 1793439936,
+        "last_record_at": 1793439936,
+        "last_record_author": "Олеся",
+        "last_record_display": "нет обратной связи",
+        "last_record_errors": [],
+        "last_record_id": "5ade142c-a9da-43a5-814b-70a612b1dac0",
+        "last_record_rule_version": 5,
+        "last_record_status": "VERIFIED",
+        "last_record_type": "entity_direct_message",
+        "loss_reason_id": 24466294,
+        "loss_reason_name": "Нет обратной связи"
+      },
       "crm": {
         "ambiguity_count": 0,
         "created_at": 1793114775,
@@ -99186,23 +99268,30 @@
       },
       "crm_created_at": 1793114775,
       "crm_feedback": {
-        "closed_at": null,
+        "closed_at": 1793439946,
         "crm_lead_id": 49908947,
-        "deadline_at": 1793394000,
-        "excluded": false,
+        "excluded": true,
         "first_activity_at": null,
         "lead_created_at": 1793114775,
         "loss_reason_checked": true,
-        "loss_reason_id": null,
-        "loss_reason_name": "",
+        "loss_reason_id": 24466294,
+        "loss_reason_name": "Нет обратной связи",
         "pipeline_id": 10081590,
         "responsible_user_id": 13009530,
         "rule_version": 6,
-        "state": "NO_FEEDBACK",
-        "status_id": 79927038,
-        "status_name": "Выслано предложение"
+        "state": "EXCLUDED",
+        "status_id": 143,
+        "status_name": "Закрыто и не реализовано"
       },
       "crm_found": true,
+      "crm_outcome": {
+        "closed_at": 1793439946,
+        "loss_reason_id": 24466294,
+        "loss_reason_name": "Нет обратной связи",
+        "result": "LOST",
+        "status_id": 143,
+        "status_name": "Закрыто и не реализовано"
+      },
       "crm_required": true,
       "crm_responsible": 13009530,
       "deadline_msk_ts": 1793134799,
@@ -99251,6 +99340,20 @@
       "message_id": "mid.ffffbec8f345ffab01a17ca62bdc6a48",
       "name": "свадьба. Анастасия",
       "phone": "89181844914",
+      "preclose_record_cache": {
+        "closed_at": 1793439946,
+        "crm_lead_id": 49908947,
+        "last_comment": "нет обратной связи",
+        "last_comment_at": 1793439936,
+        "last_record_at": 1793439936,
+        "last_record_author": "Олеся",
+        "last_record_display": "нет обратной связи",
+        "last_record_errors": [],
+        "last_record_id": "5ade142c-a9da-43a5-814b-70a612b1dac0",
+        "last_record_rule_version": 5,
+        "last_record_status": "VERIFIED",
+        "last_record_type": "entity_direct_message"
+      },
       "received_at": "2026-10-27T12:17:07+03:00",
       "sender_name": "Алёна",
       "sender_user_id": 432412696,
@@ -99390,6 +99493,22 @@
     {
       "category": "HOST",
       "channel": "MAX",
+      "closed_not_realized": {
+        "closed_at": 1793439718,
+        "crm_lead_id": 49908869,
+        "last_comment": "выбрали другую локацию",
+        "last_comment_at": 1793439711,
+        "last_record_at": 1793439711,
+        "last_record_author": "Олеся",
+        "last_record_display": "выбрали другую локацию",
+        "last_record_errors": [],
+        "last_record_id": "715f7d21-713e-4e52-8fe1-841ac808ab97",
+        "last_record_rule_version": 5,
+        "last_record_status": "VERIFIED",
+        "last_record_type": "entity_direct_message",
+        "loss_reason_id": 21779746,
+        "loss_reason_name": "Выбрали других"
+      },
       "crm": {
         "ambiguity_count": 0,
         "created_at": 1793114602,
@@ -99405,23 +99524,30 @@
       },
       "crm_created_at": 1793114602,
       "crm_feedback": {
-        "closed_at": null,
+        "closed_at": 1793439718,
         "crm_lead_id": 49908869,
-        "deadline_at": 1793394000,
-        "excluded": false,
+        "excluded": true,
         "first_activity_at": null,
         "lead_created_at": 1793114602,
         "loss_reason_checked": true,
-        "loss_reason_id": null,
-        "loss_reason_name": "",
+        "loss_reason_id": 21779746,
+        "loss_reason_name": "Выбрали других",
         "pipeline_id": 10081590,
         "responsible_user_id": 13009530,
         "rule_version": 6,
-        "state": "NO_FEEDBACK",
-        "status_id": 79927038,
-        "status_name": "Выслано предложение"
+        "state": "EXCLUDED",
+        "status_id": 143,
+        "status_name": "Закрыто и не реализовано"
       },
       "crm_found": true,
+      "crm_outcome": {
+        "closed_at": 1793439718,
+        "loss_reason_id": 21779746,
+        "loss_reason_name": "Выбрали других",
+        "result": "LOST",
+        "status_id": 143,
+        "status_name": "Закрыто и не реализовано"
+      },
       "crm_required": true,
       "crm_responsible": 13009530,
       "deadline_msk_ts": 1793134799,
@@ -99470,6 +99596,20 @@
       "message_id": "mid.ffffbec8f345ffab01a17cd898845183",
       "name": "день рождения. Ирина",
       "phone": "89104597466",
+      "preclose_record_cache": {
+        "closed_at": 1793439718,
+        "crm_lead_id": 49908869,
+        "last_comment": "выбрали другую локацию",
+        "last_comment_at": 1793439711,
+        "last_record_at": 1793439711,
+        "last_record_author": "Олеся",
+        "last_record_display": "выбрали другую локацию",
+        "last_record_errors": [],
+        "last_record_id": "715f7d21-713e-4e52-8fe1-841ac808ab97",
+        "last_record_rule_version": 5,
+        "last_record_status": "VERIFIED",
+        "last_record_type": "entity_direct_message"
+      },
       "received_at": "2026-10-27T13:12:12+03:00",
       "sender_name": "Алёна",
       "sender_user_id": 432412696,
@@ -99880,7 +100020,7 @@
         "crm_lead_id": 49908731,
         "deadline_at": 1793394000,
         "excluded": false,
-        "first_activity_at": null,
+        "first_activity_at": 1793437034,
         "lead_created_at": 1793114350,
         "loss_reason_checked": true,
         "loss_reason_id": null,
@@ -99888,9 +100028,9 @@
         "pipeline_id": 10081590,
         "responsible_user_id": 13009530,
         "rule_version": 6,
-        "state": "NO_FEEDBACK",
-        "status_id": 79927038,
-        "status_name": "Выслано предложение"
+        "state": "CLEAR",
+        "status_id": 88382034,
+        "status_name": "Запрошена ос"
       },
       "crm_found": true,
       "crm_required": true,
@@ -99980,8 +100120,8 @@
         "responsible_user_id": 13009530,
         "rule_version": 6,
         "state": "CLEAR",
-        "status_id": 79927038,
-        "status_name": "Выслано предложение"
+        "status_id": 88382034,
+        "status_name": "Запрошена ос"
       },
       "crm_found": true,
       "crm_required": true,
@@ -103121,6 +103261,22 @@
     {
       "category": "HOST",
       "channel": "MAX",
+      "closed_not_realized": {
+        "closed_at": 1793436899,
+        "crm_lead_id": 50021217,
+        "last_comment": "1",
+        "last_comment_at": 1793436894,
+        "last_record_at": 1793436894,
+        "last_record_author": "",
+        "last_record_display": "1",
+        "last_record_errors": [],
+        "last_record_id": "52329765",
+        "last_record_rule_version": 5,
+        "last_record_status": "VERIFIED",
+        "last_record_type": "task_result",
+        "loss_reason_id": 21779734,
+        "loss_reason_name": "Слишком дорого"
+      },
       "crm": {
         "ambiguity_count": 0,
         "created_at": 1793385934,
@@ -103136,23 +103292,30 @@
       },
       "crm_created_at": 1793385934,
       "crm_feedback": {
-        "closed_at": null,
+        "closed_at": 1793436899,
         "crm_lead_id": 50021217,
-        "deadline_at": 1793653200,
-        "excluded": false,
-        "first_activity_at": 1793436894,
+        "excluded": true,
+        "first_activity_at": null,
         "lead_created_at": 1793385934,
         "loss_reason_checked": true,
-        "loss_reason_id": null,
-        "loss_reason_name": "",
+        "loss_reason_id": 21779734,
+        "loss_reason_name": "Слишком дорого",
         "pipeline_id": 10081590,
         "responsible_user_id": 12982830,
         "rule_version": 6,
-        "state": "CLEAR",
-        "status_id": 79927034,
-        "status_name": "Первичный контакт"
+        "state": "EXCLUDED",
+        "status_id": 143,
+        "status_name": "Закрыто и не реализовано"
       },
       "crm_found": true,
+      "crm_outcome": {
+        "closed_at": 1793436899,
+        "loss_reason_id": 21779734,
+        "loss_reason_name": "Слишком дорого",
+        "result": "LOST",
+        "status_id": 143,
+        "status_name": "Закрыто и не реализовано"
+      },
       "crm_required": true,
       "crm_responsible": 12982830,
       "deadline_msk_ts": 1793451600,
@@ -103201,6 +103364,20 @@
       "message_id": "mid.ffffbec8f345ffab01a18e0e63d5160b",
       "name": "Антонина",
       "phone": "+79168418059",
+      "preclose_record_cache": {
+        "closed_at": 1793436899,
+        "crm_lead_id": 50021217,
+        "last_comment": "1",
+        "last_comment_at": 1793436894,
+        "last_record_at": 1793436894,
+        "last_record_author": "",
+        "last_record_display": "1",
+        "last_record_errors": [],
+        "last_record_id": "52329765",
+        "last_record_rule_version": 5,
+        "last_record_status": "VERIFIED",
+        "last_record_type": "task_result"
+      },
       "received_at": "2026-10-30T21:24:30+03:00",
       "sender_name": "Дмитрий Жуков",
       "sender_user_id": 201560258,
@@ -103353,10 +103530,11 @@
         "88382034": 4
       },
       "2026-10-31": {
-        "143": 7,
+        "142": 1,
+        "143": 9,
         "79927042": 3,
         "80331318": 1,
-        "88382034": 1
+        "88382034": 3
       }
     },
     "pipeline_id": 10081590,
@@ -103439,7 +103617,7 @@
       }
     ],
     "today": "2026-10-31",
-    "total_movements": 454,
+    "total_movements": 459,
     "weeks": [
       {
         "dates": [
