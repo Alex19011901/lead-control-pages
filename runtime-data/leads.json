@@ -97513,6 +97513,22 @@
     {
       "category": "HOST",
       "channel": "MAX",
+      "closed_not_realized": {
+        "closed_at": 1793434239,
+        "crm_lead_id": 49809595,
+        "last_comment": "мероприятие отменилось",
+        "last_comment_at": 1793434231,
+        "last_record_at": 1793434231,
+        "last_record_author": "Олеся",
+        "last_record_display": "мероприятие отменилось",
+        "last_record_errors": [],
+        "last_record_id": "7229b5cb-6365-4379-ac57-5a4410ce9ea2",
+        "last_record_rule_version": 5,
+        "last_record_status": "VERIFIED",
+        "last_record_type": "entity_direct_message",
+        "loss_reason_id": 21779738,
+        "loss_reason_name": "Пропала потребность"
+      },
       "crm": {
         "ambiguity_count": 0,
         "created_at": 1792750494,
@@ -97528,23 +97544,30 @@
       },
       "crm_created_at": 1792750494,
       "crm_feedback": {
-        "closed_at": null,
+        "closed_at": 1793434239,
         "crm_lead_id": 49809595,
-        "deadline_at": 1793048400,
-        "excluded": false,
+        "excluded": true,
         "first_activity_at": null,
         "lead_created_at": 1792750494,
         "loss_reason_checked": true,
-        "loss_reason_id": null,
-        "loss_reason_name": "",
+        "loss_reason_id": 21779738,
+        "loss_reason_name": "Пропала потребность",
         "pipeline_id": 10081590,
         "responsible_user_id": 13009530,
         "rule_version": 6,
-        "state": "NO_FEEDBACK",
-        "status_id": 80331318,
-        "status_name": "Предбронь"
+        "state": "EXCLUDED",
+        "status_id": 143,
+        "status_name": "Закрыто и не реализовано"
       },
       "crm_found": true,
+      "crm_outcome": {
+        "closed_at": 1793434239,
+        "loss_reason_id": 21779738,
+        "loss_reason_name": "Пропала потребность",
+        "result": "LOST",
+        "status_id": 143,
+        "status_name": "Закрыто и не реализовано"
+      },
       "crm_required": true,
       "crm_responsible": 13009530,
       "deadline_msk_ts": 1792789199,
@@ -97593,6 +97616,20 @@
       "message_id": "mid.ffffbec8f345ffab01a168195c0d219d",
       "name": "Людмила",
       "phone": "89099618930",
+      "preclose_record_cache": {
+        "closed_at": 1793434239,
+        "crm_lead_id": 49809595,
+        "last_comment": "мероприятие отменилось",
+        "last_comment_at": 1793434231,
+        "last_record_at": 1793434231,
+        "last_record_author": "Олеся",
+        "last_record_display": "мероприятие отменилось",
+        "last_record_errors": [],
+        "last_record_id": "7229b5cb-6365-4379-ac57-5a4410ce9ea2",
+        "last_record_rule_version": 5,
+        "last_record_status": "VERIFIED",
+        "last_record_type": "entity_direct_message"
+      },
       "received_at": "2026-10-23T12:30:54+03:00",
       "sender_name": "Eugen Deeva",
       "sender_user_id": 32902822,
@@ -100205,6 +100242,22 @@
     {
       "category": "TO_MESTO",
       "channel": "MAX",
+      "closed_not_realized": {
+        "closed_at": 1793434177,
+        "crm_lead_id": 49914239,
+        "last_comment": "",
+        "last_comment_at": null,
+        "last_record_at": null,
+        "last_record_author": "",
+        "last_record_display": "",
+        "last_record_errors": [],
+        "last_record_id": "",
+        "last_record_rule_version": 5,
+        "last_record_status": "EMPTY",
+        "last_record_type": "",
+        "loss_reason_id": 21779746,
+        "loss_reason_name": "Выбрали других"
+      },
       "crm": {
         "ambiguity_count": 0,
         "created_at": 1793130753,
@@ -100221,23 +100274,30 @@
       "crm_check_status": "PENDING",
       "crm_created_at": 1793130753,
       "crm_feedback": {
-        "closed_at": null,
+        "closed_at": 1793434177,
         "crm_lead_id": 49914239,
-        "deadline_at": 1793394000,
-        "excluded": false,
+        "excluded": true,
         "first_activity_at": null,
         "lead_created_at": 1793130753,
         "loss_reason_checked": true,
-        "loss_reason_id": null,
-        "loss_reason_name": "",
+        "loss_reason_id": 21779746,
+        "loss_reason_name": "Выбрали других",
         "pipeline_id": 10081590,
         "responsible_user_id": 13009530,
         "rule_version": 6,
-        "state": "NO_FEEDBACK",
-        "status_id": 79927038,
-        "status_name": "Выслано предложение"
+        "state": "EXCLUDED",
+        "status_id": 143,
+        "status_name": "Закрыто и не реализовано"
       },
       "crm_found": true,
+      "crm_outcome": {
+        "closed_at": 1793434177,
+        "loss_reason_id": 21779746,
+        "loss_reason_name": "Выбрали других",
+        "result": "LOST",
+        "status_id": 143,
+        "status_name": "Закрыто и не реализовано"
+      },
       "crm_required": true,
       "crm_responsible": 13009530,
       "deadline_msk_ts": 1793134799,
@@ -100291,6 +100351,20 @@
       "message_id": "mid.ffffbec8f345ffab01a17e38032a4d59",
       "name": "Ильмира",
       "phone": "+7 985 774-27-88",
+      "preclose_record_cache": {
+        "closed_at": 1793434177,
+        "crm_lead_id": 49914239,
+        "last_comment": "",
+        "last_comment_at": null,
+        "last_record_at": null,
+        "last_record_author": "",
+        "last_record_display": "",
+        "last_record_errors": [],
+        "last_record_id": "",
+        "last_record_rule_version": 5,
+        "last_record_status": "EMPTY",
+        "last_record_type": ""
+      },
       "received_at": "2026-10-27T19:36:02+03:00",
       "sender_name": "Al",
       "sender_user_id": 74336871,
@@ -101728,7 +101802,7 @@
         "crm_lead_id": 50010657,
         "deadline_at": 1793653200,
         "excluded": false,
-        "first_activity_at": null,
+        "first_activity_at": 1793429982,
         "lead_created_at": 1793357388,
         "loss_reason_checked": true,
         "loss_reason_id": null,
@@ -101736,7 +101810,7 @@
         "pipeline_id": 10081590,
         "responsible_user_id": 12982830,
         "rule_version": 6,
-        "state": "WAITING",
+        "state": "CLEAR",
         "status_id": 80331318,
         "status_name": "Предбронь"
       },
@@ -103129,6 +103203,9 @@
         "143": 6,
         "79927038": 1,
         "88382034": 4
+      },
+      "2026-10-31": {
+        "143": 2
       }
     },
     "pipeline_id": 10081590,
@@ -103211,7 +103288,7 @@
       }
     ],
     "today": "2026-10-31",
-    "total_movements": 442,
+    "total_movements": 444,
     "weeks": [
       {
         "dates": [
