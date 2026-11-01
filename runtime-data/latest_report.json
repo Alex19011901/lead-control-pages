@@ -1,7 +1,7 @@
 {
   "alarm_no_crm": 2,
   "by_manager": {
-    "no_manager_reaction": 814,
+    "no_manager_reaction": 815,
     "Максим": 104,
     "Олеся": 87
   },
@@ -12,14 +12,14 @@
     "ЗАЯВКА ПОЧТА": 22,
     "Заявка с ТГ": 39,
     "Заявка сайт": 3,
-    "Заявки хост": 565,
+    "Заявки хост": 566,
     "С улицы": 3,
     "САЙТ ТИЛЬДА": 253,
     "Тильда Веранда": 51,
     "ТоМесто": 2
   },
   "event_types": {
-    "unknown": 128,
+    "unknown": 129,
     "Бизнес мероприятие": 53,
     "Выпускной": 15,
     "ДР": 2,
@@ -38,10 +38,28 @@
     "151+": 39,
     "21-50": 277,
     "51-100": 177,
-    "unknown": 180
+    "unknown": 181
   },
   "late_crm": 175,
   "latest_leads": [
+    {
+      "created_at": "2026-11-01T12:02:22+03:00",
+      "crm_entity_id": null,
+      "crm_entity_type": null,
+      "crm_found": false,
+      "event_date": "2026-11-02",
+      "event_type": "",
+      "guests_count": null,
+      "identifier": "7********28",
+      "identifier_type": "phone",
+      "lead_id": "c5e8b6185bd17436",
+      "manager": "",
+      "manager_username": "",
+      "name": "с 12 до 16. камин. зал. Светлана",
+      "source": "Заявки хост",
+      "status": "PENDING",
+      "violations": []
+    },
     {
       "created_at": "2026-10-31T19:00:52+03:00",
       "crm_entity_id": 50041789,
@@ -383,29 +401,11 @@
       "source": "Заявки хост",
       "status": "OK",
       "violations": []
-    },
-    {
-      "created_at": "2026-10-29T12:32:46+03:00",
-      "crm_entity_id": 49957814,
-      "crm_entity_type": "lead",
-      "crm_found": true,
-      "event_date": "",
-      "event_type": "Корпоратив",
-      "guests_count": 20,
-      "identifier": "7********15",
-      "identifier_type": "phone",
-      "lead_id": "460f98996a56e205",
-      "manager": "Максим",
-      "manager_username": "empairbey",
-      "name": "ольга",
-      "source": "САЙТ ТИЛЬДА",
-      "status": "OK",
-      "violations": []
     }
   ],
   "needs_review": 136,
   "no_reaction": 0,
   "ok": 771,
-  "total_leads": 1005,
-  "updated_at": "2026-11-01T10:42:43+03:00"
+  "total_leads": 1006,
+  "updated_at": "2026-11-01T13:25:16+03:00"
 }
