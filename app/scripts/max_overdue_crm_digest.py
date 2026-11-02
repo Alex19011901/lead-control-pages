@@ -113,7 +113,7 @@ def message_for(leads: list[dict[str, Any]], date_today: datetime) -> str:
     )
     header = (
         "⚠️ **LEAD CONTROL — НЕ ВНЕСЕНЫ В CRM**\n\n"
-        f"📅 {date_str} | 09:00 МСК\n\n"
+        f"📅 {date_str} | Проверено: {date_today.strftime('%H:%M')} МСК\n\n"
         f"**Просрочено: {n} {noun}**\n\n"
     )
     footer = (
@@ -184,6 +184,7 @@ def send_max_message(text: str, token: str, chat_id: int, ca_file: Path) -> str:
 def execute(*, leads_path: Path, snapshot_path: Path, state_path: Path,
             token: str, crm_token: str, crm_domain: str, chat_id: int,
             ca_file: Path, now: datetime | None = None) -> str:
+    injected_now = now is not None
     now = now or datetime.now(MOSCOW_TZ)
     if now.tzinfo is None:
         raise ValueError("Timezone-aware timestamp required")
@@ -201,7 +202,8 @@ def execute(*, leads_path: Path, snapshot_path: Path, state_path: Path,
         raise ValueError("Lead data is not a list")
     candidates = overdue_candidates(leads, now)
     missing = still_missing(candidates, AmoCRMClient(crm_domain, crm_token)) if candidates else []
-    message_id = send_max_message(message_for(missing, now), token, chat_id, ca_file) if missing else ""
+    checked_at = now if injected_now else datetime.now(MOSCOW_TZ)
+    message_id = send_max_message(message_for(missing, checked_at), token, chat_id, ca_file) if missing else ""
     # Only store a daily marker after checks succeeded and MAX returned 200.
     # No client identifiers or message text are stored in the repo.
     new_state = {
@@ -210,7 +212,7 @@ def execute(*, leads_path: Path, snapshot_path: Path, state_path: Path,
         "last_count": len(missing),
         "last_sent": bool(missing),
         "last_message_id": message_id,
-        "last_checked_at": now.isoformat(timespec="seconds"),
+        "last_checked_at": checked_at.isoformat(timespec="seconds"),
     }
     state_path.parent.mkdir(parents=True, exist_ok=True)
     tmp = state_path.with_suffix(".tmp")

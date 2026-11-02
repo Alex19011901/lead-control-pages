@@ -77,12 +77,30 @@ class DigestTests(unittest.TestCase):
     def test_approved_text(self):
         text = digest.message_for([lead(23, 21), lead(24, 14)], NOW)
         self.assertIn("LEAD CONTROL — НЕ ВНЕСЕНЫ В CRM", text)
-        self.assertIn("25.10.2026 | 09:00 МСК", text)
+        self.assertIn("25.10.2026 | Проверено: 09:00 МСК", text)
         self.assertIn("Просрочено: 2 заявки", text)
         self.assertIn("23.10 в 21:15", text)
         self.assertIn("24.10 до 16:00", text)
         self.assertIn("+7 999 111-22-33", text)
         self.assertIn("Открыть Lead Control", text)
+
+    def test_late_run_shows_real_check_time_not_scheduled_time(self):
+        late = datetime(2026, 11, 2, 18, 20, tzinfo=MOSCOW)
+        text = digest.message_for([lead(23, 14)], late)
+        self.assertIn("02.11.2026 | Проверено: 18:20 МСК", text)
+        self.assertNotIn("02.11.2026 | Проверено: 09:00 МСК", text)
+
+    def test_wakeup_trigger_keeps_code_pushes_from_sending(self):
+        root = Path(__file__).resolve().parents[2]
+        digest_wf = (root / ".github/workflows/max-overdue-crm-digest.yml").read_text(encoding="utf-8")
+        collect_wf = (root / ".github/workflows/lead-control-public.yml").read_text(encoding="utf-8")
+        self.assertIn("automation/max-digest-wakeup.txt", digest_wf)
+        self.assertIn("Wake MAX overdue CRM digest", digest_wf)
+        self.assertIn("github.event.head_commit.message", digest_wf)
+        self.assertIn("automation/lead-control-refresh-wakeup.txt", collect_wf)
+        self.assertIn("group: lead-control-production", digest_wf)
+        self.assertIn("group: lead-control-production", collect_wf)
+        self.assertIn("0 6 * * *", digest_wf)
 
     def test_more_than_four_thousand_characters(self):
         rows = [lead(23, 14, phone=f"7999000{i:04d}", name="Ирина" * 20) for i in range(100)]

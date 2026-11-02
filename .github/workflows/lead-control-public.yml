@@ -34,6 +34,8 @@ on:
     paths:
       - ".github/workflows/lead-control-public.yml"
       - "app/dashboard/pageshare/index.html"
+      # External scheduler wake-up; GitHub schedule remains a backup.
+      - "automation/lead-control-refresh-wakeup.txt"
 
 permissions:
   contents: write
