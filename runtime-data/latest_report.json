@@ -19,16 +19,16 @@
     "ТоМесто": 2
   },
   "event_types": {
-    "unknown": 132,
+    "unknown": 128,
     "Бизнес мероприятие": 55,
     "Выпускной": 15,
     "ДР": 2,
     "Деловое мероприятие": 1,
     "Детский праздник": 6,
     "Конференция": 1,
-    "Корпоратив": 349,
+    "Корпоратив": 351,
     "Поминки": 2,
-    "Свадьба": 278,
+    "Свадьба": 280,
     "Съёмки": 2,
     "Юбилей": 174
   },
@@ -37,8 +37,8 @@
     "101-150": 75,
     "151+": 39,
     "21-50": 280,
-    "51-100": 180,
-    "unknown": 182
+    "51-100": 181,
+    "unknown": 181
   },
   "late_crm": 176,
   "latest_leads": [
@@ -152,11 +152,11 @@
     },
     {
       "created_at": "2026-11-02T11:47:52+03:00",
-      "crm_entity_id": null,
-      "crm_entity_type": null,
-      "crm_found": false,
+      "crm_entity_id": 50086461,
+      "crm_entity_type": "lead",
+      "crm_found": true,
       "event_date": "2027-02-19",
-      "event_type": "",
+      "event_type": "Свадьба",
       "guests_count": 81,
       "identifier": "7********95",
       "identifier_type": "phone",
@@ -165,7 +165,7 @@
       "manager_username": "Olesyagozhina",
       "name": "Андрей",
       "source": "САЙТ ТИЛЬДА",
-      "status": "PENDING",
+      "status": "OK",
       "violations": []
     },
     {
@@ -188,11 +188,11 @@
     },
     {
       "created_at": "2026-11-02T11:20:25+03:00",
-      "crm_entity_id": null,
-      "crm_entity_type": null,
-      "crm_found": false,
+      "crm_entity_id": 50086491,
+      "crm_entity_type": "lead",
+      "crm_found": true,
       "event_date": "",
-      "event_type": "",
+      "event_type": "Корпоратив",
       "guests_count": 100,
       "identifier": "7********65",
       "identifier_type": "phone",
@@ -201,16 +201,16 @@
       "manager_username": "",
       "name": "Ирина",
       "source": "Заявки хост",
-      "status": "PENDING",
+      "status": "OK",
       "violations": []
     },
     {
       "created_at": "2026-11-02T10:49:11+03:00",
-      "crm_entity_id": null,
-      "crm_entity_type": null,
-      "crm_found": false,
+      "crm_entity_id": 50086507,
+      "crm_entity_type": "lead",
+      "crm_found": true,
       "event_date": "2026-12-25",
-      "event_type": "",
+      "event_type": "Корпоратив",
       "guests_count": 130,
       "identifier": "7********05",
       "identifier_type": "phone",
@@ -219,14 +219,14 @@
       "manager_username": "Olesyagozhina",
       "name": "Анастасия",
       "source": "САЙТ ТИЛЬДА",
-      "status": "PENDING",
+      "status": "OK",
       "violations": []
     },
     {
       "created_at": "2026-11-02T10:41:31+03:00",
-      "crm_entity_id": null,
-      "crm_entity_type": null,
-      "crm_found": false,
+      "crm_entity_id": 50086545,
+      "crm_entity_type": "lead",
+      "crm_found": true,
       "event_date": "2027-04-28",
       "event_type": "Свадьба",
       "guests_count": 13,
@@ -237,7 +237,7 @@
       "manager_username": "Olesyagozhina",
       "name": "Анастасия Макарова",
       "source": "САЙТ ТИЛЬДА",
-      "status": "PENDING",
+      "status": "OK",
       "violations": []
     },
     {
@@ -407,7 +407,7 @@
   ],
   "needs_review": 136,
   "no_reaction": 0,
-  "ok": 777,
+  "ok": 782,
   "total_leads": 1017,
-  "updated_at": "2026-11-02T23:36:19+03:00"
+  "updated_at": "2026-11-03T00:02:22+03:00"
 }
