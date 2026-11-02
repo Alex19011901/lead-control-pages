@@ -1,5 +1,5 @@
 {
-  "alarm_no_crm": 3,
+  "alarm_no_crm": 2,
   "by_manager": {
     "no_manager_reaction": 821,
     "Максим": 104,
@@ -19,8 +19,8 @@
     "ТоМесто": 2
   },
   "event_types": {
-    "unknown": 134,
-    "Бизнес мероприятие": 53,
+    "unknown": 132,
+    "Бизнес мероприятие": 55,
     "Выпускной": 15,
     "ДР": 2,
     "Деловое мероприятие": 1,
@@ -40,15 +40,15 @@
     "51-100": 181,
     "unknown": 181
   },
-  "late_crm": 175,
+  "late_crm": 176,
   "latest_leads": [
     {
       "created_at": "2026-11-02T19:37:03+03:00",
-      "crm_entity_id": null,
-      "crm_entity_type": null,
-      "crm_found": false,
+      "crm_entity_id": 50083157,
+      "crm_entity_type": "lead",
+      "crm_found": true,
       "event_date": "2026-11-09",
-      "event_type": "",
+      "event_type": "Бизнес мероприятие",
       "guests_count": 8,
       "identifier": "7********71",
       "identifier_type": "phone",
@@ -57,14 +57,14 @@
       "manager_username": "",
       "name": "Екатерина",
       "source": "Заявки хост",
-      "status": "PENDING",
+      "status": "OK",
       "violations": []
     },
     {
       "created_at": "2026-11-02T17:01:16+03:00",
-      "crm_entity_id": null,
-      "crm_entity_type": null,
-      "crm_found": false,
+      "crm_entity_id": 50083175,
+      "crm_entity_type": "lead",
+      "crm_found": true,
       "event_date": "",
       "event_type": "Свадьба",
       "guests_count": 55,
@@ -75,7 +75,7 @@
       "manager_username": "",
       "name": "Татьяна",
       "source": "Заявки хост",
-      "status": "PENDING",
+      "status": "OK",
       "violations": []
     },
     {
@@ -242,11 +242,11 @@
     },
     {
       "created_at": "2026-11-01T12:02:22+03:00",
-      "crm_entity_id": null,
-      "crm_entity_type": null,
-      "crm_found": false,
+      "crm_entity_id": 50082997,
+      "crm_entity_type": "lead",
+      "crm_found": true,
       "event_date": "2026-11-02",
-      "event_type": "",
+      "event_type": "Бизнес мероприятие",
       "guests_count": null,
       "identifier": "7********28",
       "identifier_type": "phone",
@@ -255,9 +255,9 @@
       "manager_username": "",
       "name": "с 12 до 16. камин. зал. Светлана",
       "source": "Заявки хост",
-      "status": "ALARM_NO_CRM",
+      "status": "LATE_CRM",
       "violations": [
-        "ALARM_NO_CRM"
+        "LATE_CRM"
       ]
     },
     {
@@ -405,9 +405,9 @@
       "violations": []
     }
   ],
-  "needs_review": 137,
+  "needs_review": 138,
   "no_reaction": 0,
-  "ok": 772,
+  "ok": 774,
   "total_leads": 1017,
-  "updated_at": "2026-11-02T21:18:44+03:00"
+  "updated_at": "2026-11-02T21:41:57+03:00"
 }
