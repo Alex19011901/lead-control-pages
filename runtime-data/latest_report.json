@@ -1,7 +1,7 @@
 {
   "alarm_no_crm": 3,
   "by_manager": {
-    "no_manager_reaction": 821,
+    "no_manager_reaction": 822,
     "Максим": 104,
     "Олеся": 89
   },
@@ -12,36 +12,54 @@
     "ЗАЯВКА ПОЧТА": 22,
     "Заявка с ТГ": 39,
     "Заявка сайт": 3,
-    "Заявки хост": 569,
+    "Заявки хост": 570,
     "С улицы": 3,
     "САЙТ ТИЛЬДА": 257,
     "Тильда Веранда": 51,
     "ТоМесто": 2
   },
   "event_types": {
-    "unknown": 132,
+    "unknown": 135,
     "Бизнес мероприятие": 53,
     "Выпускной": 15,
     "ДР": 2,
     "Деловое мероприятие": 1,
     "Детский праздник": 6,
     "Конференция": 1,
-    "Корпоратив": 348,
+    "Корпоратив": 347,
     "Поминки": 2,
-    "Свадьба": 278,
+    "Свадьба": 277,
     "Съёмки": 2,
     "Юбилей": 174
   },
   "guest_ranges": {
-    "1-20": 260,
-    "101-150": 75,
+    "1-20": 259,
+    "101-150": 74,
     "151+": 39,
-    "21-50": 278,
+    "21-50": 280,
     "51-100": 180,
-    "unknown": 182
+    "unknown": 183
   },
-  "late_crm": 174,
+  "late_crm": 175,
   "latest_leads": [
+    {
+      "created_at": "2026-11-02T14:53:41+03:00",
+      "crm_entity_id": null,
+      "crm_entity_type": null,
+      "crm_found": false,
+      "event_date": "2026-12-05",
+      "event_type": "",
+      "guests_count": 35,
+      "identifier": "7********83",
+      "identifier_type": "phone",
+      "lead_id": "0fccd21f17323cf2",
+      "manager": "",
+      "manager_username": "",
+      "name": "Татьяна",
+      "source": "Заявки хост",
+      "status": "PENDING",
+      "violations": []
+    },
     {
       "created_at": "2026-11-02T12:58:06+03:00",
       "crm_entity_id": null,
@@ -385,29 +403,11 @@
       "source": "WedWed",
       "status": "OK",
       "violations": []
-    },
-    {
-      "created_at": "2026-10-30T13:32:47+03:00",
-      "crm_entity_id": 50019419,
-      "crm_entity_type": "lead",
-      "crm_found": true,
-      "event_date": "",
-      "event_type": "Свадьба",
-      "guests_count": null,
-      "identifier": "7********17",
-      "identifier_type": "phone",
-      "lead_id": "a84669184fbea7b2",
-      "manager": "",
-      "manager_username": "",
-      "name": "Василиса",
-      "source": "Заявка с ТГ",
-      "status": "OK",
-      "violations": []
     }
   ],
   "needs_review": 136,
   "no_reaction": 0,
-  "ok": 772,
-  "total_leads": 1014,
-  "updated_at": "2026-11-02T14:05:26+03:00"
+  "ok": 770,
+  "total_leads": 1015,
+  "updated_at": "2026-11-02T16:21:00+03:00"
 }
