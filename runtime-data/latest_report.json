@@ -1,7 +1,7 @@
 {
   "alarm_no_crm": 3,
   "by_manager": {
-    "no_manager_reaction": 822,
+    "no_manager_reaction": 823,
     "Максим": 104,
     "Олеся": 89
   },
@@ -12,36 +12,54 @@
     "ЗАЯВКА ПОЧТА": 22,
     "Заявка с ТГ": 39,
     "Заявка сайт": 3,
-    "Заявки хост": 570,
+    "Заявки хост": 571,
     "С улицы": 3,
     "САЙТ ТИЛЬДА": 257,
     "Тильда Веранда": 51,
     "ТоМесто": 2
   },
   "event_types": {
-    "unknown": 135,
+    "unknown": 133,
     "Бизнес мероприятие": 53,
     "Выпускной": 15,
     "ДР": 2,
     "Деловое мероприятие": 1,
     "Детский праздник": 6,
     "Конференция": 1,
-    "Корпоратив": 347,
+    "Корпоратив": 348,
     "Поминки": 2,
-    "Свадьба": 277,
+    "Свадьба": 279,
     "Съёмки": 2,
     "Юбилей": 174
   },
   "guest_ranges": {
-    "1-20": 259,
-    "101-150": 74,
+    "1-20": 260,
+    "101-150": 75,
     "151+": 39,
     "21-50": 280,
-    "51-100": 180,
-    "unknown": 183
+    "51-100": 181,
+    "unknown": 181
   },
   "late_crm": 175,
   "latest_leads": [
+    {
+      "created_at": "2026-11-02T17:01:16+03:00",
+      "crm_entity_id": null,
+      "crm_entity_type": null,
+      "crm_found": false,
+      "event_date": "",
+      "event_type": "Свадьба",
+      "guests_count": 55,
+      "identifier": "7********47",
+      "identifier_type": "phone",
+      "lead_id": "0537d08ea82ccdd4",
+      "manager": "",
+      "manager_username": "",
+      "name": "Татьяна",
+      "source": "Заявки хост",
+      "status": "PENDING",
+      "violations": []
+    },
     {
       "created_at": "2026-11-02T14:53:41+03:00",
       "crm_entity_id": null,
@@ -385,29 +403,11 @@
       "source": "Заявки хост",
       "status": "OK",
       "violations": []
-    },
-    {
-      "created_at": "2026-10-30T13:45:33+03:00",
-      "crm_entity_id": 50014633,
-      "crm_entity_type": "lead",
-      "crm_found": true,
-      "event_date": "2027-08-12",
-      "event_type": "Свадьба",
-      "guests_count": 50,
-      "identifier": "7********14",
-      "identifier_type": "phone",
-      "lead_id": "d4c27ad62d34cf58",
-      "manager": "",
-      "manager_username": "",
-      "name": "Юлия",
-      "source": "WedWed",
-      "status": "OK",
-      "violations": []
     }
   ],
   "needs_review": 136,
   "no_reaction": 0,
-  "ok": 770,
-  "total_leads": 1015,
-  "updated_at": "2026-11-02T16:21:00+03:00"
+  "ok": 772,
+  "total_leads": 1016,
+  "updated_at": "2026-11-02T18:42:13+03:00"
 }
