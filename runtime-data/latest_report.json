@@ -1,7 +1,7 @@
 {
   "alarm_no_crm": 2,
   "by_manager": {
-    "no_manager_reaction": 827,
+    "no_manager_reaction": 828,
     "Максим": 104,
     "Олеся": 92
   },
@@ -12,7 +12,7 @@
     "ЗАЯВКА ПОЧТА": 22,
     "Заявка с ТГ": 40,
     "Заявка сайт": 3,
-    "Заявки хост": 576,
+    "Заявки хост": 577,
     "С улицы": 3,
     "САЙТ ТИЛЬДА": 257,
     "Тильда Веранда": 51,
@@ -30,10 +30,10 @@
     "Поминки": 2,
     "Свадьба": 281,
     "Съёмки": 2,
-    "Юбилей": 174
+    "Юбилей": 175
   },
   "guest_ranges": {
-    "1-20": 263,
+    "1-20": 264,
     "101-150": 75,
     "151+": 39,
     "21-50": 282,
@@ -42,6 +42,24 @@
   },
   "late_crm": 176,
   "latest_leads": [
+    {
+      "created_at": "2026-11-03T15:03:14+03:00",
+      "crm_entity_id": null,
+      "crm_entity_type": null,
+      "crm_found": false,
+      "event_date": "2026-11-14",
+      "event_type": "Юбилей",
+      "guests_count": 20,
+      "identifier": "7********11",
+      "identifier_type": "phone",
+      "lead_id": "d4fb548b632518b9",
+      "manager": "",
+      "manager_username": "",
+      "name": "17:00. день рождения. ресторан.кафе. Елена",
+      "source": "Заявки хост",
+      "status": "PENDING",
+      "violations": []
+    },
     {
       "created_at": "2026-11-03T14:00:11+03:00",
       "crm_entity_id": 50086545,
@@ -385,29 +403,11 @@
       "source": "САЙТ ТИЛЬДА",
       "status": "OK",
       "violations": []
-    },
-    {
-      "created_at": "2026-10-31T12:15:04+03:00",
-      "crm_entity_id": 50041763,
-      "crm_entity_type": "lead",
-      "crm_found": true,
-      "event_date": "2026-11-26",
-      "event_type": "Корпоратив",
-      "guests_count": 40,
-      "identifier": "7********29",
-      "identifier_type": "phone",
-      "lead_id": "d3a350121ec895f5",
-      "manager": "Олеся",
-      "manager_username": "Olesyagozhina",
-      "name": "Динара",
-      "source": "MARQUIZ",
-      "status": "OK",
-      "violations": []
     }
   ],
   "needs_review": 136,
   "no_reaction": 0,
   "ok": 785,
-  "total_leads": 1023,
-  "updated_at": "2026-11-03T14:37:08+03:00"
+  "total_leads": 1024,
+  "updated_at": "2026-11-03T15:44:14+03:00"
 }

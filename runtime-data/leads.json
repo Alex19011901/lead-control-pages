@@ -105112,6 +105112,78 @@
       "status": "OK",
       "username": "",
       "violations": []
+    },
+    {
+      "category": "HOST",
+      "channel": "MAX",
+      "crm": {
+        "ambiguity_count": 0,
+        "created_at": null,
+        "entity_id": null,
+        "entity_type": null,
+        "event_type": null,
+        "found": false,
+        "responsible_user_id": null,
+        "responsible_user_name": null,
+        "updated_at": null
+      },
+      "crm_created_at": null,
+      "crm_found": false,
+      "crm_required": true,
+      "crm_responsible": null,
+      "deadline_msk_ts": 1793739599,
+      "event_date": "2026-11-14",
+      "event_type": "Юбилей",
+      "event_type_source": "MESSAGE",
+      "fields": {
+        "category": "HOST",
+        "email": "",
+        "event_date": "2026-11-14",
+        "event_date_raw": "14.11",
+        "event_type": "Юбилей",
+        "guests_count": 20,
+        "guests_max": null,
+        "guests_min": null,
+        "guests_raw": "20п.",
+        "name": "17:00. день рождения. ресторан.кафе. Елена",
+        "phone_digits": "79165192011",
+        "phone_raw": "89165192011",
+        "source": "Заявки хост",
+        "telegram_username": ""
+      },
+      "first_seen_at": "2026-11-03T15:03:14+03:00",
+      "first_seen_ts": 1793707394,
+      "guests": 20,
+      "guests_max": null,
+      "guests_min": null,
+      "guests_raw": "20п.",
+      "id": "d4fb548b632518b9",
+      "identifier": {
+        "type": "phone",
+        "value": "79165192011"
+      },
+      "last_seen_at": "2026-11-03T15:03:14+03:00",
+      "last_seen_ts": 1793707394,
+      "manager_reaction": null,
+      "max": {
+        "chat_id": -71704692523093,
+        "message_ids": [
+          "mid.ffffbec8f345ffab01a1a14ac70f5f6f"
+        ],
+        "sender_name": "Алёна",
+        "sender_user_id": 432412696,
+        "sender_username": null
+      },
+      "message_id": "mid.ffffbec8f345ffab01a1a14ac70f5f6f",
+      "name": "17:00. день рождения. ресторан.кафе. Елена",
+      "phone": "89165192011",
+      "received_at": "2026-11-03T15:03:14+03:00",
+      "sender_name": "Алёна",
+      "sender_user_id": 432412696,
+      "source": "Заявки хост",
+      "status": "PENDING",
+      "username": "",
+      "violations": []
     }
   ],
   "pipeline_activity": {
