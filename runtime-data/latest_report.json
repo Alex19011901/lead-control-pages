@@ -1,8 +1,8 @@
 {
   "alarm_no_crm": 2,
   "by_manager": {
-    "no_manager_reaction": 828,
-    "Максим": 104,
+    "no_manager_reaction": 829,
+    "Максим": 105,
     "Олеся": 92
   },
   "by_source": {
@@ -14,12 +14,12 @@
     "Заявка сайт": 3,
     "Заявки хост": 577,
     "С улицы": 3,
-    "САЙТ ТИЛЬДА": 257,
+    "САЙТ ТИЛЬДА": 259,
     "Тильда Веранда": 51,
     "ТоМесто": 2
   },
   "event_types": {
-    "unknown": 128,
+    "unknown": 129,
     "Бизнес мероприятие": 55,
     "Выпускной": 15,
     "ДР": 2,
@@ -28,7 +28,7 @@
     "Конференция": 1,
     "Корпоратив": 355,
     "Поминки": 2,
-    "Свадьба": 282,
+    "Свадьба": 283,
     "Съёмки": 2,
     "Юбилей": 175
   },
@@ -37,11 +37,47 @@
     "101-150": 75,
     "151+": 39,
     "21-50": 282,
-    "51-100": 181,
-    "unknown": 183
+    "51-100": 182,
+    "unknown": 184
   },
   "late_crm": 176,
   "latest_leads": [
+    {
+      "created_at": "2026-11-03T19:33:54+03:00",
+      "crm_entity_id": 50113433,
+      "crm_entity_type": "lead",
+      "crm_found": true,
+      "event_date": "2026-11-29",
+      "event_type": "Свадьба",
+      "guests_count": 7,
+      "identifier": "7********71",
+      "identifier_type": "phone",
+      "lead_id": "d87b89edde093bd2",
+      "manager": "Максим",
+      "manager_username": "empairbey",
+      "name": "Андрей",
+      "source": "САЙТ ТИЛЬДА",
+      "status": "OK",
+      "violations": []
+    },
+    {
+      "created_at": "2026-11-03T19:19:47+03:00",
+      "crm_entity_id": 50113329,
+      "crm_entity_type": "lead",
+      "crm_found": true,
+      "event_date": "2027-07-27",
+      "event_type": "Свадьба",
+      "guests_count": 70,
+      "identifier": "7********71",
+      "identifier_type": "phone",
+      "lead_id": "c5095ee3b622d113",
+      "manager": "",
+      "manager_username": "",
+      "name": "Анастасия",
+      "source": "САЙТ ТИЛЬДА",
+      "status": "OK",
+      "violations": []
+    },
     {
       "created_at": "2026-11-03T15:03:14+03:00",
       "crm_entity_id": 50106727,
@@ -365,49 +401,11 @@
       "source": "САЙТ ТИЛЬДА",
       "status": "OK",
       "violations": []
-    },
-    {
-      "created_at": "2026-11-01T12:02:22+03:00",
-      "crm_entity_id": 50082997,
-      "crm_entity_type": "lead",
-      "crm_found": true,
-      "event_date": "2026-11-02",
-      "event_type": "Бизнес мероприятие",
-      "guests_count": null,
-      "identifier": "7********28",
-      "identifier_type": "phone",
-      "lead_id": "c5e8b6185bd17436",
-      "manager": "",
-      "manager_username": "",
-      "name": "с 12 до 16. камин. зал. Светлана",
-      "source": "Заявки хост",
-      "status": "LATE_CRM",
-      "violations": [
-        "LATE_CRM"
-      ]
-    },
-    {
-      "created_at": "2026-10-31T19:00:52+03:00",
-      "crm_entity_id": 50041789,
-      "crm_entity_type": "lead",
-      "crm_found": true,
-      "event_date": "2027-06-19",
-      "event_type": "Свадьба",
-      "guests_count": 25,
-      "identifier": "7********70",
-      "identifier_type": "phone",
-      "lead_id": "e612cc781ef83fbf",
-      "manager": "Олеся",
-      "manager_username": "Olesyagozhina",
-      "name": "Ангелина",
-      "source": "САЙТ ТИЛЬДА",
-      "status": "OK",
-      "violations": []
     }
   ],
   "needs_review": 136,
   "no_reaction": 0,
-  "ok": 789,
-  "total_leads": 1024,
-  "updated_at": "2026-11-03T19:32:09+03:00"
+  "ok": 790,
+  "total_leads": 1026,
+  "updated_at": "2026-11-03T20:50:20+03:00"
 }
