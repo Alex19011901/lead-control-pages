@@ -5,8 +5,8 @@
       "end": "2026-11-03",
       "total": 7,
       "status": {
-        "PENDING": 4,
-        "OK": 3
+        "PENDING": 3,
+        "OK": 4
       },
       "source": {
         "Заявка с ТГ": 1,
@@ -73,10 +73,10 @@
       "end": "2026-11-03",
       "total": 59,
       "status": {
-        "OK": 53,
+        "OK": 54,
         "-": 1,
         "LATE_CRM": 1,
-        "PENDING": 4
+        "PENDING": 3
       },
       "source": {
         "САЙТ ТИЛЬДА": 16,
@@ -141,10 +141,10 @@
       "end": "2026-11-03",
       "total": 290,
       "status": {
-        "OK": 259,
+        "OK": 260,
         "LATE_CRM": 22,
         "-": 5,
-        "PENDING": 4
+        "PENDING": 3
       },
       "source": {
         "САЙТ ТИЛЬДА": 73,
@@ -307,8 +307,8 @@
         "LATE_CRM": 176,
         "ALARM_NO_CRM": 2,
         "-": 57,
-        "OK": 785,
-        "PENDING": 4
+        "OK": 786,
+        "PENDING": 3
       },
       "source": {
         "САЙТ ТИЛЬДА": 257,
@@ -991,16 +991,16 @@
       "date": "2026-11-03",
       "ts": "2026-11-03T15:03:14+03:00",
       "source": "Заявки хост",
-      "status": "PENDING",
+      "status": "OK",
       "channel": "MAX",
       "guest_range": "20",
       "guests": "20",
       "event_type": "Юбилей",
       "name": "17:00. день рождения. ресторан.кафе. Елена",
       "identifier": "79165192011",
-      "manager": "",
-      "crm_status": "",
-      "crm_loss_reason": ""
+      "manager": "Максим",
+      "crm_status": "Закрыто и не реализовано",
+      "crm_loss_reason": "Дата занята"
     },
     {
       "date": "2026-11-03",
@@ -1889,7 +1889,7 @@
     }
   ],
   "not_entered": [],
-  "snapshot_generated_at": "2026-11-03T12:44:15Z",
+  "snapshot_generated_at": "2026-11-03T15:48:38Z",
   "snapshot_at": "2026-11-03T15:03:14+03:00",
   "min_date": "2026-07-01",
   "max_date": "2026-11-03",
@@ -2193,7 +2193,7 @@
       "crm_status": "Выслано предложение",
       "first_activity_at": "",
       "first_activity_ts": null,
-      "age_seconds": 331486,
+      "age_seconds": 342549,
       "feedback_state": "NO_FEEDBACK"
     },
     {
@@ -2209,7 +2209,7 @@
       "crm_status": "Выслано предложение",
       "first_activity_at": "",
       "first_activity_ts": null,
-      "age_seconds": 332118,
+      "age_seconds": 343181,
       "feedback_state": "NO_FEEDBACK"
     },
     {
@@ -2225,7 +2225,7 @@
       "crm_status": "Выслано предложение",
       "first_activity_at": "",
       "first_activity_ts": null,
-      "age_seconds": 336141,
+      "age_seconds": 347204,
       "feedback_state": "NO_FEEDBACK"
     },
     {
@@ -2241,7 +2241,7 @@
       "crm_status": "Выслано предложение",
       "first_activity_at": "",
       "first_activity_ts": null,
-      "age_seconds": 342056,
+      "age_seconds": 353119,
       "feedback_state": "NO_FEEDBACK"
     },
     {
@@ -2257,7 +2257,7 @@
       "crm_status": "Первичный контакт",
       "first_activity_at": "",
       "first_activity_ts": null,
-      "age_seconds": 344668,
+      "age_seconds": 355731,
       "feedback_state": "NO_FEEDBACK"
     },
     {
@@ -2273,7 +2273,7 @@
       "crm_status": "Выслано предложение",
       "first_activity_at": "",
       "first_activity_ts": null,
-      "age_seconds": 345194,
+      "age_seconds": 356257,
       "feedback_state": "NO_FEEDBACK"
     },
     {
@@ -2289,7 +2289,7 @@
       "crm_status": "Выслано предложение",
       "first_activity_at": "",
       "first_activity_ts": null,
-      "age_seconds": 354049,
+      "age_seconds": 365112,
       "feedback_state": "NO_FEEDBACK"
     },
     {
@@ -2305,7 +2305,7 @@
       "crm_status": "Выслано предложение",
       "first_activity_at": "",
       "first_activity_ts": null,
-      "age_seconds": 359191,
+      "age_seconds": 370254,
       "feedback_state": "NO_FEEDBACK"
     },
     {
@@ -2321,7 +2321,7 @@
       "crm_status": "Выслано предложение",
       "first_activity_at": "",
       "first_activity_ts": null,
-      "age_seconds": 361009,
+      "age_seconds": 372072,
       "feedback_state": "NO_FEEDBACK"
     },
     {
@@ -2337,7 +2337,7 @@
       "crm_status": "Выслано предложение",
       "first_activity_at": "",
       "first_activity_ts": null,
-      "age_seconds": 237550,
+      "age_seconds": 248613,
       "feedback_state": "WAITING_BLUE"
     }
   ],
@@ -2512,6 +2512,23 @@
     }
   ],
   "closed_not_realized": [
+    {
+      "crm_lead_id": 50106727,
+      "closed_at": "2026-11-03T15:58:26+03:00",
+      "closed_ts": 1793710706,
+      "source": "Заявки хост",
+      "name": "17:00. день рождения. ресторан.кафе. Елена",
+      "identifier": "79165192011",
+      "guests": "20",
+      "event_type": "Юбилей",
+      "manager": "Максим",
+      "reason": "Дата занята",
+      "last_comment": "нужен отд зал, программа",
+      "last_record": "нужен отд зал, программа",
+      "last_record_at": "2026-11-03T15:58:27+03:00",
+      "last_record_type": "common",
+      "last_record_status": "VERIFIED"
+    },
     {
       "crm_lead_id": 50084037,
       "closed_at": "2026-11-02T22:56:30+03:00",
@@ -2871,10 +2888,17 @@
     }
   ],
   "closed_not_realized_summary": {
-    "total": 21,
+    "total": 22,
     "days": 5
   },
   "outcomes": [
+    {
+      "date": "2026-11-03",
+      "ts": "2026-11-03T15:03:14+03:00",
+      "manager": "Максим",
+      "result": "LOST",
+      "reason": "Дата занята"
+    },
     {
       "date": "2026-11-02",
       "ts": "2026-11-02T14:53:41+03:00",
@@ -8550,6 +8574,9 @@
         "79927038": 7,
         "80331318": 1,
         "88382034": 2
+      },
+      "2026-11-03": {
+        "143": 1
       }
     },
     "pipeline_id": 10081590,
@@ -8632,7 +8659,7 @@
       }
     ],
     "today": "2026-11-03",
-    "total_movements": 399,
+    "total_movements": 400,
     "weeks": [
       {
         "dates": [
