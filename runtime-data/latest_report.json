@@ -19,16 +19,16 @@
     "ТоМесто": 2
   },
   "event_types": {
-    "unknown": 131,
+    "unknown": 128,
     "Бизнес мероприятие": 55,
     "Выпускной": 15,
     "ДР": 2,
     "Деловое мероприятие": 1,
     "Детский праздник": 6,
     "Конференция": 1,
-    "Корпоратив": 353,
+    "Корпоратив": 355,
     "Поминки": 2,
-    "Свадьба": 281,
+    "Свадьба": 282,
     "Съёмки": 2,
     "Юбилей": 175
   },
@@ -116,11 +116,11 @@
     },
     {
       "created_at": "2026-11-03T12:30:45+03:00",
-      "crm_entity_id": null,
-      "crm_entity_type": null,
-      "crm_found": false,
+      "crm_entity_id": 50111739,
+      "crm_entity_type": "lead",
+      "crm_found": true,
       "event_date": "",
-      "event_type": "",
+      "event_type": "Корпоратив",
       "guests_count": null,
       "identifier": "7********20",
       "identifier_type": "phone",
@@ -129,16 +129,16 @@
       "manager_username": "",
       "name": "Анна",
       "source": "Заявки хост",
-      "status": "PENDING",
+      "status": "OK",
       "violations": []
     },
     {
       "created_at": "2026-11-03T11:21:02+03:00",
-      "crm_entity_id": null,
-      "crm_entity_type": null,
-      "crm_found": false,
+      "crm_entity_id": 50111675,
+      "crm_entity_type": "lead",
+      "crm_found": true,
       "event_date": "",
-      "event_type": "",
+      "event_type": "Корпоратив",
       "guests_count": 40,
       "identifier": "7********72",
       "identifier_type": "phone",
@@ -147,16 +147,16 @@
       "manager_username": "",
       "name": "Анна",
       "source": "Заявки хост",
-      "status": "PENDING",
+      "status": "OK",
       "violations": []
     },
     {
       "created_at": "2026-11-03T10:39:17+03:00",
-      "crm_entity_id": null,
-      "crm_entity_type": null,
-      "crm_found": false,
+      "crm_entity_id": 50111625,
+      "crm_entity_type": "lead",
+      "crm_found": true,
       "event_date": "2026-11-29",
-      "event_type": "",
+      "event_type": "Свадьба",
       "guests_count": 7,
       "identifier": "@splin666",
       "identifier_type": "telegram_username",
@@ -165,7 +165,7 @@
       "manager_username": "",
       "name": "",
       "source": "Заявка с ТГ",
-      "status": "PENDING",
+      "status": "OK",
       "violations": []
     },
     {
@@ -407,7 +407,7 @@
   ],
   "needs_review": 136,
   "no_reaction": 0,
-  "ok": 786,
+  "ok": 789,
   "total_leads": 1024,
-  "updated_at": "2026-11-03T18:48:37+03:00"
+  "updated_at": "2026-11-03T19:32:09+03:00"
 }
