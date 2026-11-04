@@ -1,7 +1,7 @@
 {
   "alarm_no_crm": 2,
   "by_manager": {
-    "no_manager_reaction": 834,
+    "no_manager_reaction": 835,
     "Максим": 105,
     "Олеся": 93
   },
@@ -12,14 +12,14 @@
     "ЗАЯВКА ПОЧТА": 22,
     "Заявка с ТГ": 40,
     "Заявка сайт": 3,
-    "Заявки хост": 581,
+    "Заявки хост": 582,
     "С улицы": 3,
     "САЙТ ТИЛЬДА": 260,
     "Тильда Веранда": 52,
     "ТоМесто": 2
   },
   "event_types": {
-    "unknown": 132,
+    "unknown": 133,
     "Бизнес мероприятие": 55,
     "Выпускной": 15,
     "ДР": 2,
@@ -38,10 +38,28 @@
     "151+": 39,
     "21-50": 285,
     "51-100": 182,
-    "unknown": 184
+    "unknown": 185
   },
   "late_crm": 176,
   "latest_leads": [
+    {
+      "created_at": "2026-11-04T20:35:37+03:00",
+      "crm_entity_id": null,
+      "crm_entity_type": null,
+      "crm_found": false,
+      "event_date": "2026-11-14",
+      "event_type": "",
+      "guests_count": null,
+      "identifier": "7********97",
+      "identifier_type": "phone",
+      "lead_id": "ca48d3cef320bda3",
+      "manager": "",
+      "manager_username": "",
+      "name": "Консьерж",
+      "source": "Заявки хост",
+      "status": "PENDING",
+      "violations": []
+    },
     {
       "created_at": "2026-11-04T15:52:31+03:00",
       "crm_entity_id": null,
@@ -383,29 +401,11 @@
       "source": "MARQUIZ",
       "status": "OK",
       "violations": []
-    },
-    {
-      "created_at": "2026-11-02T12:57:57+03:00",
-      "crm_entity_id": 34180047,
-      "crm_entity_type": "lead",
-      "crm_found": true,
-      "event_date": "2026-12-25",
-      "event_type": "Корпоратив",
-      "guests_count": 150,
-      "identifier": "7********49",
-      "identifier_type": "phone",
-      "lead_id": "4d1e42af562377de",
-      "manager": "",
-      "manager_username": "",
-      "name": "Елена",
-      "source": "Заявки хост",
-      "status": "OK",
-      "violations": []
     }
   ],
   "needs_review": 136,
   "no_reaction": 0,
   "ok": 791,
-  "total_leads": 1032,
-  "updated_at": "2026-11-04T15:56:04+03:00"
+  "total_leads": 1033,
+  "updated_at": "2026-11-04T21:13:54+03:00"
 }
