@@ -1,5 +1,5 @@
 {
-  "alarm_no_crm": 2,
+  "alarm_no_crm": 3,
   "by_manager": {
     "no_manager_reaction": 835,
     "Максим": 105,
@@ -19,18 +19,18 @@
     "ТоМесто": 2
   },
   "event_types": {
-    "unknown": 133,
-    "Бизнес мероприятие": 55,
+    "unknown": 129,
+    "Бизнес мероприятие": 56,
     "Выпускной": 15,
     "ДР": 2,
     "Деловое мероприятие": 1,
     "Детский праздник": 6,
     "Конференция": 1,
-    "Корпоратив": 355,
+    "Корпоратив": 356,
     "Поминки": 2,
-    "Свадьба": 286,
+    "Свадьба": 287,
     "Съёмки": 2,
-    "Юбилей": 175
+    "Юбилей": 176
   },
   "guest_ranges": {
     "1-20": 267,
@@ -44,11 +44,11 @@
   "latest_leads": [
     {
       "created_at": "2026-11-04T20:35:37+03:00",
-      "crm_entity_id": null,
-      "crm_entity_type": null,
-      "crm_found": false,
+      "crm_entity_id": 50136041,
+      "crm_entity_type": "lead",
+      "crm_found": true,
       "event_date": "2026-11-14",
-      "event_type": "",
+      "event_type": "Бизнес мероприятие",
       "guests_count": null,
       "identifier": "7********97",
       "identifier_type": "phone",
@@ -57,14 +57,14 @@
       "manager_username": "",
       "name": "Консьерж",
       "source": "Заявки хост",
-      "status": "PENDING",
+      "status": "OK",
       "violations": []
     },
     {
       "created_at": "2026-11-04T15:52:31+03:00",
-      "crm_entity_id": null,
-      "crm_entity_type": null,
-      "crm_found": false,
+      "crm_entity_id": 50136055,
+      "crm_entity_type": "lead",
+      "crm_found": true,
       "event_date": "2026-02-21",
       "event_type": "Свадьба",
       "guests_count": null,
@@ -75,16 +75,16 @@
       "manager_username": "",
       "name": "Сергей",
       "source": "Заявки хост",
-      "status": "PENDING",
+      "status": "OK",
       "violations": []
     },
     {
       "created_at": "2026-11-04T15:12:04+03:00",
-      "crm_entity_id": null,
-      "crm_entity_type": null,
-      "crm_found": false,
+      "crm_entity_id": 50136073,
+      "crm_entity_type": "lead",
+      "crm_found": true,
       "event_date": "2026-12-18",
-      "event_type": "",
+      "event_type": "Корпоратив",
       "guests_count": 25,
       "identifier": "7********55",
       "identifier_type": "phone",
@@ -93,16 +93,16 @@
       "manager_username": "",
       "name": "Роза",
       "source": "Заявки хост",
-      "status": "PENDING",
+      "status": "OK",
       "violations": []
     },
     {
       "created_at": "2026-11-04T14:46:57+03:00",
-      "crm_entity_id": null,
-      "crm_entity_type": null,
-      "crm_found": false,
+      "crm_entity_id": 50136221,
+      "crm_entity_type": "lead",
+      "crm_found": true,
       "event_date": "2027-07-02",
-      "event_type": "",
+      "event_type": "Свадьба",
       "guests_count": 35,
       "identifier": "7********33",
       "identifier_type": "phone",
@@ -111,7 +111,7 @@
       "manager_username": "Olesyagozhina",
       "name": "Сергей",
       "source": "САЙТ ТИЛЬДА",
-      "status": "PENDING",
+      "status": "OK",
       "violations": []
     },
     {
@@ -129,16 +129,18 @@
       "manager_username": "",
       "name": "Лариса",
       "source": "Заявки хост",
-      "status": "PENDING",
-      "violations": []
+      "status": "ALARM_NO_CRM",
+      "violations": [
+        "ALARM_NO_CRM"
+      ]
     },
     {
       "created_at": "2026-11-04T11:59:27+03:00",
-      "crm_entity_id": null,
-      "crm_entity_type": null,
-      "crm_found": false,
+      "crm_entity_id": 50136191,
+      "crm_entity_type": "lead",
+      "crm_found": true,
       "event_date": "2026-11-14",
-      "event_type": "",
+      "event_type": "Юбилей",
       "guests_count": 20,
       "identifier": "7********60",
       "identifier_type": "phone",
@@ -147,7 +149,7 @@
       "manager_username": "",
       "name": "Дмитрий",
       "source": "Заявки хост",
-      "status": "PENDING",
+      "status": "OK",
       "violations": []
     },
     {
@@ -405,7 +407,7 @@
   ],
   "needs_review": 136,
   "no_reaction": 0,
-  "ok": 791,
+  "ok": 796,
   "total_leads": 1033,
-  "updated_at": "2026-11-04T21:13:54+03:00"
+  "updated_at": "2026-11-05T08:31:12+03:00"
 }
