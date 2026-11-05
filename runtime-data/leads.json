@@ -108016,6 +108016,76 @@
       "status": "PENDING",
       "username": "",
       "violations": []
+    },
+    {
+      "category": "HOST",
+      "channel": "MAX",
+      "crm": {
+        "ambiguity_count": 0,
+        "created_at": null,
+        "entity_id": null,
+        "entity_type": null,
+        "event_type": null,
+        "found": false,
+        "responsible_user_id": null,
+        "responsible_user_name": null,
+        "updated_at": null
+      },
+      "crm_created_at": null,
+      "crm_found": false,
+      "crm_required": true,
+      "crm_responsible": null,
+      "deadline_msk_ts": 1793912399,
+      "event_date": "",
+      "fields": {
+        "category": "HOST",
+        "email": "",
+        "event_date": "",
+        "event_date_raw": "22.05.27",
+        "event_type": "",
+        "guests_count": null,
+        "guests_max": 50,
+        "guests_min": 40,
+        "guests_raw": "40-50п.",
+        "name": "Родион",
+        "phone_digits": "79818230230",
+        "phone_raw": "89818230230",
+        "source": "Заявки хост",
+        "telegram_username": ""
+      },
+      "first_seen_at": "2026-11-05T19:17:10+03:00",
+      "first_seen_ts": 1793895430,
+      "guests": null,
+      "guests_max": 50,
+      "guests_min": 40,
+      "guests_raw": "40-50п.",
+      "id": "7243cd0fbb14593b",
+      "identifier": {
+        "type": "phone",
+        "value": "79818230230"
+      },
+      "last_seen_at": "2026-11-05T19:17:10+03:00",
+      "last_seen_ts": 1793895430,
+      "manager_reaction": null,
+      "max": {
+        "chat_id": -71704692523093,
+        "message_ids": [
+          "mid.ffffbec8f345ffab01a1ac7ff8504078"
+        ],
+        "sender_name": "Алёна",
+        "sender_user_id": 432412696,
+        "sender_username": null
+      },
+      "message_id": "mid.ffffbec8f345ffab01a1ac7ff8504078",
+      "name": "Родион",
+      "phone": "89818230230",
+      "received_at": "2026-11-05T19:17:10+03:00",
+      "sender_name": "Алёна",
+      "sender_user_id": 432412696,
+      "source": "Заявки хост",
+      "status": "PENDING",
+      "username": "",
+      "violations": []
     }
   ],
   "pipeline_activity": {
