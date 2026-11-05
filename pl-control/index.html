@@ -39,6 +39,26 @@ th:first-child,td:first-child{text-align:left;position:sticky;left:0;background:
 
 </div>
 
+
+<div class="ind-section-title">Итого расходы</div>
+<div class="note">Общий расход = себестоимость + постоянные расходы. Подстатьи постоянных расходов повторно не суммируются, чтобы не было задвоения.</div>
+
+<div class="ind-kpis" id="totalExpKpis"></div>
+
+<div class="card pad section">
+  <div class="title">Итого расходы · месяцы год к году</div>
+  <div class="ib-scroll"><div class="ib-frame"><div class="ib-axis" id="totalExpAxis"></div><div class="ib-chart" id="totalExpChart"></div></div></div>
+  <div class="ind-legend"><span><i class="ind-dot s1"></i>2025</span><span><i class="ind-dot s2"></i>2026</span></div>
+</div>
+
+<div class="card pad section">
+  <div class="title">Итого расходы · кварталы год к году</div>
+  <div class="scroll"><table>
+    <thead><tr><th>Год / изменение</th><th>Q1</th><th>Q2</th><th>Q3</th></tr></thead>
+    <tbody id="totalExpQuarterTable"></tbody>
+  </table></div>
+</div>
+
 <div id="analysisIndicators" class="ind-section-title">Показатели для анализа</div>
 <div class="note">Отдельный аналитический блок по одноимённой вкладке Excel: 2025 целиком и январь–сентябрь 2026. Q1 2026 сверено с отдельным ранним файлом — используемые показатели совпадают.</div>
 
@@ -327,6 +347,39 @@ function renderIndicatorBars(chartId,axisId,groups,series,mode){
  }).join('');
  $(chartId).innerHTML=grid+body;
 }
+function totalExpensesMonth(m){return Number(m.cogs||0)+Number(m.fixed||0)}
+function renderTotalExpenses(){
+ const months=[1,2,3,4,5,6,7,8,9];
+ const m25=months.map(n=>D.months.find(x=>x.year===2025&&x.month===n));
+ const m26=months.map(n=>D.months.find(x=>x.year===2026&&x.month===n));
+ const v25=m25.map(m=>m?totalExpensesMonth(m):null);
+ const v26=m26.map(m=>m?totalExpensesMonth(m):null);
+ const y25=v25.reduce((s,v)=>s+Number(v||0),0);
+ const y26=v26.reduce((s,v)=>s+Number(v||0),0);
+ const d=y26-y25, r=rel(y26,y25);
+ $('totalExpKpis').innerHTML=[
+   ['Янв–сен 2025',mln(y25),'база'],
+   ['Янв–сен 2026',mln(y26),'факт'],
+   ['Изменение ₽',(d>0?'+':'')+mln(d),'к 2025'],
+   ['Изменение %',r==null?'—':((r>0?'+':'')+(r*100).toLocaleString('ru-RU',{minimumFractionDigits:1,maximumFractionDigits:1})+'%'),'год к году']
+ ].map((x,i)=>'<div class="card ind-kpi"><div class="label">'+x[0]+'</div><div class="val '+(i>=2?cls(d,false):'')+'">'+x[1]+'</div><div class="hint">'+x[2]+'</div></div>').join('');
+
+ const labels=['Янв','Фев','Мар','Апр','Май','Июн','Июл','Авг','Сен'];
+ const groups=months.map((n,i)=>({label:labels[i],i}));
+ renderIndicatorBars('totalExpChart','totalExpAxis',groups,[
+   {label:'2025',value:g=>v25[g.i],tip:indMoney},
+   {label:'2026',value:g=>v26[g.i],tip:indMoney}
+ ],'money');
+
+ const qsum=(vals,q)=>vals.slice((q-1)*3,q*3).reduce((s,v)=>s+Number(v||0),0);
+ const q25=[1,2,3].map(q=>qsum(v25,q));
+ const q26=[1,2,3].map(q=>qsum(v26,q));
+ const qd=q26.map((v,i)=>v-q25[i]);
+ $('totalExpQuarterTable').innerHTML=
+   '<tr><td class="metric">2025</td>'+q25.map(v=>'<td>'+indMoney(v)+'</td>').join('')+'</tr>'+
+   '<tr><td class="metric">2026</td>'+q26.map(v=>'<td><b>'+indMoney(v)+'</b></td>').join('')+'</tr>'+
+   '<tr><td class="metric">Δ YoY</td>'+qd.map((d,i)=>'<td><div class="yoy-cell-main '+cls(d,false)+'">'+reltxt(q26[i],q25[i])+'</div><div class="yoy-cell-sub">'+(d>0?'+':'')+indMoney(d)+'</div></td>').join('')+'</tr>';
+}
 function aggregateInd(ms){
  const s={revenue:0,checks:0,bar_revenue:0,kitchen_revenue:0,extra_revenue:0,ebitda:0,
  household_amt:0,staff_food_amt:0,spoilage_amt:0,grind_amt:0,testing_amt:0,inventory_amt:0,representation_amt:0,total_writeoff_amt:0};
@@ -428,5 +481,5 @@ async function loadIndicators(){
   $('indKpis').innerHTML='<div class="card ind-kpi"><div class="label">Показатели</div><div class="hint red">Ошибка загрузки данных</div></div>';
  }
 }
-fetch(DATA+'?v='+Date.now(),{cache:'no-store'}).then(r=>r.json()).then(x=>{D=x;summary();buildMonthHead();matrix();chart();quarters();renderYoyYtd();renderYoyQuarters();renderYoyMonths();loadIndicators()}).catch(()=>{$('matrix').innerHTML='<tr><td>Ошибка загрузки данных</td></tr>'});
+fetch(DATA+'?v='+Date.now(),{cache:'no-store'}).then(r=>r.json()).then(x=>{D=x;summary();buildMonthHead();matrix();chart();quarters();renderYoyYtd();renderYoyQuarters();renderYoyMonths();renderTotalExpenses();loadIndicators()}).catch(()=>{$('matrix').innerHTML='<tr><td>Ошибка загрузки данных</td></tr>'});
 </script></body></html>
