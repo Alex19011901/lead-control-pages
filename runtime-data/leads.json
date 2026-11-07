@@ -32233,22 +32233,6 @@
     {
       "category": "САЙТ ТИЛЬДА",
       "channel": "TELEGRAM",
-      "closed_not_realized": {
-        "closed_at": 1793611460,
-        "crm_lead_id": 49956038,
-        "last_comment": "не дозв, откл тел",
-        "last_comment_at": 1793611455,
-        "last_record_at": 1793611455,
-        "last_record_author": "Лаура",
-        "last_record_display": "не дозв, откл тел",
-        "last_record_errors": [],
-        "last_record_id": "ff9fe08e-ad32-483d-9d30-d39b270d29cb",
-        "last_record_rule_version": 5,
-        "last_record_status": "VERIFIED",
-        "last_record_type": "entity_direct_message",
-        "loss_reason_id": 24466294,
-        "loss_reason_name": "Нет обратной связи"
-      },
       "crm": {
         "ambiguity_count": 0,
         "created_at": 1793265523,
@@ -33499,22 +33483,6 @@
     {
       "category": "MARQUIZ",
       "channel": "TELEGRAM",
-      "closed_not_realized": {
-        "closed_at": 1793649390,
-        "crm_lead_id": 50084037,
-        "last_comment": "",
-        "last_comment_at": null,
-        "last_record_at": null,
-        "last_record_author": "",
-        "last_record_display": "",
-        "last_record_errors": [],
-        "last_record_id": "",
-        "last_record_rule_version": 5,
-        "last_record_status": "EMPTY",
-        "last_record_type": "",
-        "loss_reason_id": 21780202,
-        "loss_reason_name": "Дата занята"
-      },
       "crm": {
         "ambiguity_count": 0,
         "created_at": 1793649380,
@@ -33658,7 +33626,7 @@
         "pipeline_id": 10081590,
         "responsible_user_id": 12982830,
         "rule_version": 6,
-        "state": "WAITING",
+        "state": "NO_FEEDBACK",
         "status_id": 79927042,
         "status_name": "Принимают решение"
       },
@@ -34558,6 +34526,68 @@
         ],
         "update_ids": [
           185609097
+        ]
+      },
+      "violations": []
+    },
+    {
+      "category": "САЙТ ТИЛЬДА",
+      "channel": "TELEGRAM",
+      "crm": {
+        "ambiguity_count": 0,
+        "created_at": null,
+        "entity_id": null,
+        "entity_type": null,
+        "event_type": null,
+        "found": false,
+        "responsible_user_id": null,
+        "responsible_user_name": null,
+        "updated_at": null
+      },
+      "crm_created_at": null,
+      "crm_found": false,
+      "crm_required": true,
+      "crm_responsible": null,
+      "deadline_msk_ts": 1794056400,
+      "fields": {
+        "category": "САЙТ ТИЛЬДА",
+        "description": "Содержание заявки:\nname: Тамара\nphone: +79282707529\nDate: 16-02-2027\nInput: 40\nCheckbox: yes\npage_url: https://moscowbanket.ru/page66576519.html\npage_referrer: https://moscowbanket.ru/\nform_submit_timestamp: 1793996997\nmetrika_client_id: 1793996773655961373\nym_client_id: 1793996773655961373\nym_clientid: 1793996773655961373\nym_uid: 1793996773655961373\n_ym_uid: 1793996773655961373\nclient_id: 1793996773655961373\nclientid: 1793996773655961373\nyandex_client_id: 1793996773655961373\nya_client_id: 1793996773655961373\n\nДополнительная информация:\nКод заявки: 2925975:8794375893\nКод блока: rec2245057621\nhttps://moscowbanket.ru/page66576519.html\n-----",
+        "event_date": "2027-02-16",
+        "event_date_raw": "16-02-2027",
+        "event_type": "",
+        "form_submit_timestamp": 1793996997,
+        "guests_count": 40,
+        "metrika_client_id": "1793996773655961373",
+        "name": "Тамара",
+        "phone_digits": "79282707529",
+        "phone_raw": "+79282707529",
+        "source": "САЙТ ТИЛЬДА",
+        "telegram_username": "",
+        "yclid": ""
+      },
+      "first_seen_at": "2026-11-06T23:29:58+03:00",
+      "first_seen_ts": 1793996998,
+      "id": "71de24c1f36061cf",
+      "identifier": {
+        "type": "phone",
+        "value": "79282707529"
+      },
+      "last_seen_at": "2026-11-06T23:29:58+03:00",
+      "last_seen_ts": 1793996998,
+      "manager_reaction": null,
+      "received_at": "2026-11-06T23:29:58+03:00",
+      "sender_name": "TildaForms",
+      "sender_user_id": 265299531,
+      "sender_username": "TildaFormsBot",
+      "source": "САЙТ ТИЛЬДА",
+      "status": "PENDING",
+      "telegram": {
+        "chat_id": -1001645768111,
+        "message_ids": [
+          6338
+        ],
+        "update_ids": [
+          185609101
         ]
       },
       "violations": []
@@ -105846,22 +105876,6 @@
     {
       "category": "HOST",
       "channel": "MAX",
-      "closed_not_realized": {
-        "closed_at": 1793645249,
-        "crm_lead_id": 50083335,
-        "last_comment": "",
-        "last_comment_at": null,
-        "last_record_at": null,
-        "last_record_author": "",
-        "last_record_display": "",
-        "last_record_errors": [],
-        "last_record_id": "",
-        "last_record_rule_version": 5,
-        "last_record_status": "EMPTY",
-        "last_record_type": "",
-        "loss_reason_id": 21780202,
-        "loss_reason_name": "Дата занята"
-      },
       "crm": {
         "ambiguity_count": 0,
         "created_at": 1793645226,
@@ -106064,22 +106078,6 @@
     {
       "category": "HOST",
       "channel": "MAX",
-      "closed_not_realized": {
-        "closed_at": 1793645043,
-        "crm_lead_id": 50083271,
-        "last_comment": "",
-        "last_comment_at": null,
-        "last_record_at": null,
-        "last_record_author": "",
-        "last_record_display": "",
-        "last_record_errors": [],
-        "last_record_id": "",
-        "last_record_rule_version": 5,
-        "last_record_status": "EMPTY",
-        "last_record_type": "",
-        "loss_reason_id": 21780202,
-        "loss_reason_name": "Дата занята"
-      },
       "crm": {
         "ambiguity_count": 1,
         "created_at": 1793645033,
@@ -106402,7 +106400,7 @@
         "pipeline_id": 10081590,
         "responsible_user_id": 12982830,
         "rule_version": 6,
-        "state": "WAITING",
+        "state": "NO_FEEDBACK",
         "status_id": 79927034,
         "status_name": "Первичный контакт"
       },
@@ -106493,7 +106491,7 @@
         "pipeline_id": 10081590,
         "responsible_user_id": 12982830,
         "rule_version": 6,
-        "state": "WAITING",
+        "state": "NO_FEEDBACK",
         "status_id": 79927038,
         "status_name": "Выслано предложение"
       },
@@ -106584,7 +106582,7 @@
         "pipeline_id": 10081590,
         "responsible_user_id": 12982830,
         "rule_version": 6,
-        "state": "WAITING",
+        "state": "NO_FEEDBACK",
         "status_id": 79927038,
         "status_name": "Выслано предложение"
       },
@@ -106675,7 +106673,7 @@
         "pipeline_id": 10081590,
         "responsible_user_id": 12982830,
         "rule_version": 6,
-        "state": "WAITING",
+        "state": "NO_FEEDBACK",
         "status_id": 79927038,
         "status_name": "Выслано предложение"
       },
@@ -106835,7 +106833,7 @@
         "pipeline_id": 10081590,
         "responsible_user_id": 12982830,
         "rule_version": 6,
-        "state": "WAITING",
+        "state": "NO_FEEDBACK",
         "status_id": 79927038,
         "status_name": "Выслано предложение"
       },
@@ -109700,7 +109698,7 @@
         "sort": 11000
       }
     ],
-    "today": "2026-11-06",
+    "today": "2026-11-07",
     "total_movements": 466,
     "weeks": [
       {
