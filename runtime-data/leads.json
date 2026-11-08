@@ -33755,22 +33755,6 @@
     {
       "category": "САЙТ ТИЛЬДА",
       "channel": "TELEGRAM",
-      "closed_not_realized": {
-        "closed_at": 1793727998,
-        "crm_lead_id": 50113433,
-        "last_comment": "дубль в работе вип тг @splin666",
-        "last_comment_at": 1793727998,
-        "last_record_at": 1793727998,
-        "last_record_author": "",
-        "last_record_display": "дубль в работе вип тг @splin666",
-        "last_record_errors": [],
-        "last_record_id": "324232987",
-        "last_record_rule_version": 5,
-        "last_record_status": "VERIFIED",
-        "last_record_type": "common",
-        "loss_reason_id": null,
-        "loss_reason_name": "Не указана"
-      },
       "crm": {
         "ambiguity_count": 0,
         "created_at": 1793727998,
@@ -33915,7 +33899,7 @@
         "pipeline_id": 10081590,
         "responsible_user_id": 13009530,
         "rule_version": 6,
-        "state": "WAITING",
+        "state": "NO_FEEDBACK",
         "status_id": 79927038,
         "status_name": "Выслано предложение"
       },
@@ -34764,26 +34748,46 @@
       "channel": "TELEGRAM",
       "crm": {
         "ambiguity_count": 0,
-        "created_at": null,
-        "entity_id": null,
-        "entity_type": null,
-        "event_type": null,
-        "found": false,
-        "responsible_user_id": null,
-        "responsible_user_name": null,
-        "updated_at": null
+        "created_at": 1794051496,
+        "entity_id": 50206537,
+        "entity_type": "lead",
+        "event_type": "Свадьба",
+        "found": true,
+        "guests": "16",
+        "guests_source": "CRM",
+        "responsible_user_id": 12982830,
+        "responsible_user_name": "Максим",
+        "updated_at": 1794053658
       },
-      "crm_created_at": null,
-      "crm_found": false,
+      "crm_created_at": 1794051496,
+      "crm_feedback": {
+        "closed_at": null,
+        "crm_lead_id": 50206537,
+        "excluded": true,
+        "first_activity_at": null,
+        "lead_created_at": 1794051496,
+        "loss_reason_checked": true,
+        "loss_reason_id": null,
+        "loss_reason_name": "",
+        "pipeline_id": 10081590,
+        "responsible_user_id": 12982830,
+        "rule_version": 6,
+        "state": "EXCLUDED",
+        "status_id": 86372998,
+        "status_name": "ЖДУНЫ"
+      },
+      "crm_found": true,
       "crm_required": true,
-      "crm_responsible": null,
+      "crm_responsible": 12982830,
       "deadline_msk_ts": 1794085199,
+      "event_type": "Свадьба",
+      "event_type_source": "CRM",
       "fields": {
         "category": "САЙТ ТИЛЬДА",
         "description": "Содержание заявки:\nName: Анна\nPhone: +79153278402\nДата: 28-11-2026\nКол-во_гостей: 16\nCheckbox: yes\npage_url: https://moscowbanket.ru/polukabinet#dati\npage_referrer: https://moscowbanket.ru/\nform_submit_timestamp: 1794045573\nmetrika_client_id: 1794045376310888319\nym_client_id: 1794045376310888319\nym_clientid: 1794045376310888319\nym_uid: 1794045376310888319\n_ym_uid: 1794045376310888319\nclient_id: 1794045376310888319\nclientid: 1794045376310888319\nyandex_client_id: 1794045376310888319\nya_client_id: 1794045376310888319\n\nДополнительная информация:\nКод заявки: 2925975:8795113862\nКод блока: rec1193957381\nhttps://moscowbanket.ru/polukabinet#dati\n-----",
         "event_date": "2026-11-28",
         "event_date_raw": "28-11-2026",
-        "event_type": "",
+        "event_type": "Свадьба",
         "form_submit_timestamp": 1794045573,
         "guests_count": 16,
         "metrika_client_id": "1794045376310888319",
@@ -34822,7 +34826,7 @@
       "sender_user_id": 265299531,
       "sender_username": "TildaFormsBot",
       "source": "САЙТ ТИЛЬДА",
-      "status": "PENDING",
+      "status": "OK",
       "telegram": {
         "chat_id": -1001645768111,
         "message_ids": [
@@ -105504,8 +105508,7 @@
       "crm_feedback": {
         "closed_at": null,
         "crm_lead_id": 50017745,
-        "deadline_at": 1793653200,
-        "excluded": false,
+        "excluded": true,
         "first_activity_at": null,
         "lead_created_at": 1793373714,
         "loss_reason_checked": true,
@@ -105514,9 +105517,9 @@
         "pipeline_id": 10081590,
         "responsible_user_id": 12982250,
         "rule_version": 6,
-        "state": "NO_FEEDBACK",
-        "status_id": 79927038,
-        "status_name": "Выслано предложение"
+        "state": "EXCLUDED",
+        "status_id": 84995274,
+        "status_name": "Внесена п/о идет текущая работа"
       },
       "crm_found": true,
       "crm_required": true,
@@ -107233,22 +107236,6 @@
     {
       "category": "HOST",
       "channel": "MAX",
-      "closed_not_realized": {
-        "closed_at": 1793710706,
-        "crm_lead_id": 50106727,
-        "last_comment": "нужен отд зал, программа",
-        "last_comment_at": 1793710707,
-        "last_record_at": 1793710707,
-        "last_record_author": "",
-        "last_record_display": "нужен отд зал, программа",
-        "last_record_errors": [],
-        "last_record_id": "324200233",
-        "last_record_rule_version": 5,
-        "last_record_status": "VERIFIED",
-        "last_record_type": "common",
-        "loss_reason_id": 21780202,
-        "loss_reason_name": "Дата занята"
-      },
       "crm": {
         "ambiguity_count": 0,
         "created_at": 1793710706,
@@ -107802,7 +107789,7 @@
         "pipeline_id": 10081590,
         "responsible_user_id": 13009530,
         "rule_version": 6,
-        "state": "WAITING",
+        "state": "NO_FEEDBACK",
         "status_id": 79927038,
         "status_name": "Выслано предложение"
       },
@@ -107893,7 +107880,7 @@
         "pipeline_id": 10081590,
         "responsible_user_id": 13009530,
         "rule_version": 6,
-        "state": "WAITING",
+        "state": "NO_FEEDBACK",
         "status_id": 79927038,
         "status_name": "Выслано предложение"
       },
@@ -109861,7 +109848,9 @@
         "80331318": 1
       },
       "2026-11-07": {
-        "143": 1
+        "143": 1,
+        "84995274": 1,
+        "86372998": 1
       }
     },
     "pipeline_id": 10081590,
@@ -109943,8 +109932,8 @@
         "sort": 11000
       }
     ],
-    "today": "2026-11-07",
-    "total_movements": 467,
+    "today": "2026-11-08",
+    "total_movements": 469,
     "weeks": [
       {
         "dates": [
