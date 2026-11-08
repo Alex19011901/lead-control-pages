@@ -34839,6 +34839,81 @@
       "violations": []
     },
     {
+      "category": "САЙТ ТИЛЬДА",
+      "channel": "TELEGRAM",
+      "crm": {
+        "ambiguity_count": 0,
+        "created_at": null,
+        "entity_id": null,
+        "entity_type": null,
+        "event_type": null,
+        "found": false,
+        "responsible_user_id": null,
+        "responsible_user_name": null,
+        "updated_at": null
+      },
+      "crm_created_at": null,
+      "crm_found": false,
+      "crm_required": true,
+      "crm_responsible": null,
+      "deadline_msk_ts": 1794171599,
+      "fields": {
+        "category": "САЙТ ТИЛЬДА",
+        "description": "Содержание заявки:\nName: Заявка\nPhone: +79017436467\nДата: 10-11-2026\nКол-во_гостей: 12\nCheckbox: yes\nyclid: 13754112892342370303\nutm_source: yandex_direct\nutm_medium: cpc\nutm_campaign: Bankety_konverii_RSYA\nutm_term: банкет 45\npage_url: https://moscowbanket.ru/?utm_source=yandex_direct&utm_medium=cpc&utm_campaign=Bankety_konverii_RSYA&type=context&source=ya.ru&added=no&block=none&position=0&keyword=%D0%B1%D0%B0%D0%BD%D0%BA%D0%B5%D1%82%2045&utm_term=%D0%B1%D0%B0%D0%BD%D0%BA%D0%B5%D1%82%2045&callibri=yd_c:700792063_gb:5598457174_ad:17085709725_ph:54982632637_st:context_s:ya.ru_dt:desktop&yclid=13754112892342370303#dati\npage_referrer: https://ya.ru/\nform_submit_timestamp: 1794125153\nmetrika_client_id: 1794125139828561552\nym_client_id: 1794125139828561552\nym_clientid: 1794125139828561552\nym_uid: 1794125139828561552\n_ym_uid: 1794125139828561552\nclient_id: 1794125139828561552\nclientid: 1794125139828561552\nyandex_client_id: 1794125139828561552\nya_client_id: 1794125139828561552\n\nДополнительная информация:\nКод заявки: 2925975:8796715702\nКод блока: rec1193957381\nhttps://moscowbanket.ru/#dati\nUTM source: yandex_direct\nUTM medium: cpc\nUTM campaign: Bankety_konverii_RSYA\nUTM term: банкет 45\n-----",
+        "event_date": "2026-11-10",
+        "event_date_raw": "10-11-2026",
+        "event_type": "",
+        "form_submit_timestamp": 1794125153,
+        "guests_count": 12,
+        "metrika_client_id": "1794125139828561552",
+        "name": "Заявка",
+        "phone_digits": "79017436467",
+        "phone_raw": "+79017436467",
+        "source": "САЙТ ТИЛЬДА",
+        "telegram_username": "",
+        "yclid": "13754112892342370303"
+      },
+      "first_seen_at": "2026-11-08T11:05:14+03:00",
+      "first_seen_ts": 1794125114,
+      "id": "e348d94233f091e0",
+      "identifier": {
+        "type": "phone",
+        "value": "79017436467"
+      },
+      "last_seen_at": "2026-11-08T11:05:14+03:00",
+      "last_seen_ts": 1794125114,
+      "manager_reaction": {
+        "name": "Олеся",
+        "reacted_at": "2026-11-08T11:16:00+03:00",
+        "reacted_ts": 1794125760,
+        "reaction": [
+          {
+            "emoji": "❤",
+            "type": "emoji"
+          }
+        ],
+        "update_id": 185609110,
+        "user_id": 328611361,
+        "username": "Olesyagozhina"
+      },
+      "received_at": "2026-11-08T11:05:14+03:00",
+      "sender_name": "TildaForms",
+      "sender_user_id": 265299531,
+      "sender_username": "TildaFormsBot",
+      "source": "САЙТ ТИЛЬДА",
+      "status": "PENDING",
+      "telegram": {
+        "chat_id": -1001645768111,
+        "message_ids": [
+          6341
+        ],
+        "update_ids": [
+          185609107
+        ]
+      },
+      "violations": []
+    },
+    {
       "category": "TG_LEAD",
       "channel": "TELEGRAM",
       "crm": {
@@ -109282,8 +109357,7 @@
       "crm_feedback": {
         "closed_at": null,
         "crm_lead_id": 50178259,
-        "deadline_at": 1794258000,
-        "excluded": false,
+        "excluded": true,
         "first_activity_at": null,
         "lead_created_at": 1793956911,
         "loss_reason_checked": true,
@@ -109292,9 +109366,9 @@
         "pipeline_id": 10081590,
         "responsible_user_id": 12982830,
         "rule_version": 6,
-        "state": "WAITING",
-        "status_id": 79927914,
-        "status_name": "Приедут на просмотр"
+        "state": "EXCLUDED",
+        "status_id": 84995274,
+        "status_name": "Внесена п/о идет текущая работа"
       },
       "crm_found": true,
       "crm_required": true,
@@ -109851,6 +109925,9 @@
         "143": 1,
         "84995274": 1,
         "86372998": 1
+      },
+      "2026-11-08": {
+        "84995274": 1
       }
     },
     "pipeline_id": 10081590,
@@ -109933,7 +110010,7 @@
       }
     ],
     "today": "2026-11-08",
-    "total_movements": 469,
+    "total_movements": 470,
     "weeks": [
       {
         "dates": [
