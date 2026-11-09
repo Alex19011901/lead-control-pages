@@ -24425,22 +24425,6 @@
     {
       "category": "MARQUIZ",
       "channel": "TELEGRAM",
-      "closed_not_realized": {
-        "closed_at": 1793793982,
-        "crm_lead_id": 49394101,
-        "last_comment": "нл",
-        "last_comment_at": 1791873860,
-        "last_record_at": 1791873860,
-        "last_record_author": "Лаура",
-        "last_record_display": "нл",
-        "last_record_errors": [],
-        "last_record_id": "f7722d05-8bf8-4061-88ef-58b4590461df",
-        "last_record_rule_version": 5,
-        "last_record_status": "VERIFIED",
-        "last_record_type": "entity_direct_message",
-        "loss_reason_id": 24466294,
-        "loss_reason_name": "Нет обратной связи"
-      },
       "crm": {
         "ambiguity_count": 0,
         "created_at": 1791545834,
@@ -24790,22 +24774,6 @@
     {
       "category": "САЙТ ТИЛЬДА",
       "channel": "TELEGRAM",
-      "closed_not_realized": {
-        "closed_at": 1793794177,
-        "crm_lead_id": 49425391,
-        "last_comment": "нл",
-        "last_comment_at": 1792046824,
-        "last_record_at": 1792046824,
-        "last_record_author": "Лаура",
-        "last_record_display": "нл",
-        "last_record_errors": [],
-        "last_record_id": "21125cf1-e6fe-42f5-89bc-7e011c0888b6",
-        "last_record_rule_version": 5,
-        "last_record_status": "VERIFIED",
-        "last_record_type": "entity_direct_message",
-        "loss_reason_id": 24466294,
-        "loss_reason_name": "Нет обратной связи"
-      },
       "crm": {
         "ambiguity_count": 0,
         "created_at": 1791652036,
@@ -25542,22 +25510,6 @@
     {
       "category": "САЙТ ТИЛЬДА",
       "channel": "TELEGRAM",
-      "closed_not_realized": {
-        "closed_at": 1793794647,
-        "crm_lead_id": 49496479,
-        "last_comment": "нл",
-        "last_comment_at": 1792249444,
-        "last_record_at": 1792249444,
-        "last_record_author": "Лаура",
-        "last_record_display": "нл",
-        "last_record_errors": [],
-        "last_record_id": "d346c2ed-00be-4a90-9024-1b7ef77bb2da",
-        "last_record_rule_version": 5,
-        "last_record_status": "VERIFIED",
-        "last_record_type": "entity_direct_message",
-        "loss_reason_id": 21779746,
-        "loss_reason_name": "Выбрали других"
-      },
       "crm": {
         "ambiguity_count": 1,
         "created_at": 1791882980,
@@ -34843,19 +34795,38 @@
       "channel": "TELEGRAM",
       "crm": {
         "ambiguity_count": 0,
-        "created_at": null,
-        "entity_id": null,
-        "entity_type": null,
+        "created_at": 1794172431,
+        "entity_id": 50230329,
+        "entity_type": "lead",
         "event_type": null,
-        "found": false,
-        "responsible_user_id": null,
-        "responsible_user_name": null,
-        "updated_at": null
+        "found": true,
+        "guests": "12",
+        "guests_source": "CRM",
+        "responsible_user_id": 13009530,
+        "responsible_user_name": "Олеся",
+        "updated_at": 1794179098
       },
-      "crm_created_at": null,
-      "crm_found": false,
+      "crm_created_at": 1794172431,
+      "crm_feedback": {
+        "closed_at": null,
+        "crm_lead_id": 50230329,
+        "deadline_at": 1794517200,
+        "excluded": false,
+        "first_activity_at": null,
+        "lead_created_at": 1794172431,
+        "loss_reason_checked": true,
+        "loss_reason_id": null,
+        "loss_reason_name": "",
+        "pipeline_id": 10081590,
+        "responsible_user_id": 13009530,
+        "rule_version": 6,
+        "state": "WAITING",
+        "status_id": 79927034,
+        "status_name": "Первичный контакт"
+      },
+      "crm_found": true,
       "crm_required": true,
-      "crm_responsible": null,
+      "crm_responsible": 13009530,
       "deadline_msk_ts": 1794171599,
       "fields": {
         "category": "САЙТ ТИЛЬДА",
@@ -34901,7 +34872,7 @@
       "sender_user_id": 265299531,
       "sender_username": "TildaFormsBot",
       "source": "САЙТ ТИЛЬДА",
-      "status": "PENDING",
+      "status": "LATE_CRM",
       "telegram": {
         "chat_id": -1001645768111,
         "message_ids": [
@@ -34911,7 +34882,9 @@
           185609107
         ]
       },
-      "violations": []
+      "violations": [
+        "LATE_CRM"
+      ]
     },
     {
       "category": "TG_LEAD",
@@ -90227,22 +90200,6 @@
     {
       "category": "ЗАЯВКА ПОЧТА",
       "channel": "MAX",
-      "closed_not_realized": {
-        "closed_at": 1793794026,
-        "crm_lead_id": 49399301,
-        "last_comment": "нл",
-        "last_comment_at": 1791873758,
-        "last_record_at": 1791873758,
-        "last_record_author": "Лаура",
-        "last_record_display": "нл",
-        "last_record_errors": [],
-        "last_record_id": "f5ef018c-9e9b-4b66-835c-c71d466d261c",
-        "last_record_rule_version": 5,
-        "last_record_status": "VERIFIED",
-        "last_record_type": "entity_direct_message",
-        "loss_reason_id": 21779746,
-        "loss_reason_name": "Выбрали других"
-      },
       "crm": {
         "ambiguity_count": 0,
         "created_at": 1791556741,
@@ -90479,22 +90436,6 @@
     {
       "category": "ЗАЯВКА ПОЧТА",
       "channel": "MAX",
-      "closed_not_realized": {
-        "closed_at": 1793794082,
-        "crm_lead_id": 49403343,
-        "last_comment": "нл",
-        "last_comment_at": 1791870947,
-        "last_record_at": 1791870947,
-        "last_record_author": "Лаура",
-        "last_record_display": "нл",
-        "last_record_errors": [],
-        "last_record_id": "b99eb3e8-2b19-42ee-8045-2bd6731df011",
-        "last_record_rule_version": 5,
-        "last_record_status": "VERIFIED",
-        "last_record_type": "entity_direct_message",
-        "loss_reason_id": 24466294,
-        "loss_reason_name": "Нет обратной связи"
-      },
       "crm": {
         "ambiguity_count": 0,
         "created_at": 1791568441,
@@ -90836,22 +90777,6 @@
     {
       "category": "ЗАЯВКА ПОЧТА",
       "channel": "MAX",
-      "closed_not_realized": {
-        "closed_at": 1793794102,
-        "crm_lead_id": 49421237,
-        "last_comment": "НЛ",
-        "last_comment_at": 1792047155,
-        "last_record_at": 1792047155,
-        "last_record_author": "Лаура",
-        "last_record_display": "НЛ",
-        "last_record_errors": [],
-        "last_record_id": "6e53cb9b-7fde-4a2c-91dc-b7104a6173d2",
-        "last_record_rule_version": 5,
-        "last_record_status": "VERIFIED",
-        "last_record_type": "entity_direct_message",
-        "loss_reason_id": 24466294,
-        "loss_reason_name": "Нет обратной связи"
-      },
       "crm": {
         "ambiguity_count": 0,
         "created_at": 1791639253,
@@ -92751,22 +92676,6 @@
     {
       "category": "HOST",
       "channel": "MAX",
-      "closed_not_realized": {
-        "closed_at": 1793794711,
-        "crm_lead_id": 49501303,
-        "last_comment": "нл",
-        "last_comment_at": 1792240015,
-        "last_record_at": 1792240015,
-        "last_record_author": "Лаура",
-        "last_record_display": "нл",
-        "last_record_errors": [],
-        "last_record_id": "7c11c501-5818-4dac-a316-51d947b42ea3",
-        "last_record_rule_version": 5,
-        "last_record_status": "VERIFIED",
-        "last_record_type": "entity_direct_message",
-        "loss_reason_id": 24466294,
-        "loss_reason_name": "Нет обратной связи"
-      },
       "crm": {
         "ambiguity_count": 0,
         "created_at": 1791891320,
@@ -92879,22 +92788,6 @@
     {
       "category": "HOST",
       "channel": "MAX",
-      "closed_not_realized": {
-        "closed_at": 1793794943,
-        "crm_lead_id": 49506607,
-        "last_comment": "НЛ",
-        "last_comment_at": 1792238155,
-        "last_record_at": 1792238155,
-        "last_record_author": "Лаура",
-        "last_record_display": "НЛ",
-        "last_record_errors": [],
-        "last_record_id": "973ef34e-62fa-4b37-946b-a0896c34e629",
-        "last_record_rule_version": 5,
-        "last_record_status": "VERIFIED",
-        "last_record_type": "entity_direct_message",
-        "loss_reason_id": 21779746,
-        "loss_reason_name": "Выбрали других"
-      },
       "crm": {
         "ambiguity_count": 0,
         "created_at": 1791901685,
@@ -93568,22 +93461,6 @@
     {
       "category": "HOST",
       "channel": "MAX",
-      "closed_not_realized": {
-        "closed_at": 1793794991,
-        "crm_lead_id": 49526953,
-        "last_comment": "нл",
-        "last_comment_at": 1792485525,
-        "last_record_at": 1792485525,
-        "last_record_author": "Лаура",
-        "last_record_display": "нл",
-        "last_record_errors": [],
-        "last_record_id": "ae1b4901-a52a-4cbe-a0e6-ccd639982b17",
-        "last_record_rule_version": 5,
-        "last_record_status": "VERIFIED",
-        "last_record_type": "entity_direct_message",
-        "loss_reason_id": 21779746,
-        "loss_reason_name": "Выбрали других"
-      },
       "crm": {
         "ambiguity_count": 0,
         "created_at": 1791968152,
@@ -95856,22 +95733,6 @@
     {
       "category": "WEDWED",
       "channel": "MAX",
-      "closed_not_realized": {
-        "closed_at": 1793795234,
-        "crm_lead_id": 49650867,
-        "last_comment": "не может",
-        "last_comment_at": 1792589207,
-        "last_record_at": 1792589207,
-        "last_record_author": "Лаура",
-        "last_record_display": "не может",
-        "last_record_errors": [],
-        "last_record_id": "2151bc03-00ac-4619-a42b-8967f30d2479",
-        "last_record_rule_version": 5,
-        "last_record_status": "VERIFIED",
-        "last_record_type": "entity_direct_message",
-        "loss_reason_id": 21779746,
-        "loss_reason_name": "Выбрали других"
-      },
       "crm": {
         "ambiguity_count": 0,
         "created_at": 1792256666,
@@ -99124,22 +98985,6 @@
     {
       "category": "HOST",
       "channel": "MAX",
-      "closed_not_realized": {
-        "closed_at": 1793793929,
-        "crm_lead_id": 49758287,
-        "last_comment": "1",
-        "last_comment_at": 1792734843,
-        "last_record_at": 1792734843,
-        "last_record_author": "",
-        "last_record_display": "1",
-        "last_record_errors": [],
-        "last_record_id": "51956867",
-        "last_record_rule_version": 5,
-        "last_record_status": "VERIFIED",
-        "last_record_type": "task_result",
-        "loss_reason_id": 21779746,
-        "loss_reason_name": "Выбрали других"
-      },
       "crm": {
         "ambiguity_count": 2,
         "created_at": 1792593250,
@@ -103663,22 +103508,6 @@
     {
       "category": "HOST",
       "channel": "MAX",
-      "closed_not_realized": {
-        "closed_at": 1793772663,
-        "crm_lead_id": 49934451,
-        "last_comment": "не отв",
-        "last_comment_at": 1793772655,
-        "last_record_at": 1793772655,
-        "last_record_author": "Лаура",
-        "last_record_display": "не отв",
-        "last_record_errors": [],
-        "last_record_id": "9019095d-d6d6-4702-a8ff-49421a94960b",
-        "last_record_rule_version": 5,
-        "last_record_status": "VERIFIED",
-        "last_record_type": "entity_direct_message",
-        "loss_reason_id": 24466294,
-        "loss_reason_name": "Нет обратной связи"
-      },
       "crm": {
         "ambiguity_count": 2,
         "created_at": 1793195132,
@@ -105656,22 +105485,6 @@
     {
       "category": "HOST",
       "channel": "MAX",
-      "closed_not_realized": {
-        "closed_at": 1793776616,
-        "crm_lead_id": 50019025,
-        "last_comment": "нет ос от заказчика",
-        "last_comment_at": 1793776610,
-        "last_record_at": 1793776610,
-        "last_record_author": "",
-        "last_record_display": "нет ос от заказчика",
-        "last_record_errors": [],
-        "last_record_id": "52465069",
-        "last_record_rule_version": 5,
-        "last_record_status": "VERIFIED",
-        "last_record_type": "task_result",
-        "loss_reason_id": 24466294,
-        "loss_reason_name": "Нет обратной связи"
-      },
       "crm": {
         "ambiguity_count": 0,
         "created_at": 1793377737,
@@ -107487,22 +107300,6 @@
     {
       "category": "HOST",
       "channel": "MAX",
-      "closed_not_realized": {
-        "closed_at": 1793820934,
-        "crm_lead_id": 50136191,
-        "last_comment": "",
-        "last_comment_at": null,
-        "last_record_at": null,
-        "last_record_author": "",
-        "last_record_display": "",
-        "last_record_errors": [],
-        "last_record_id": "",
-        "last_record_rule_version": 5,
-        "last_record_status": "EMPTY",
-        "last_record_type": "",
-        "loss_reason_id": 21780202,
-        "loss_reason_name": "Дата занята"
-      },
       "crm": {
         "ambiguity_count": 0,
         "created_at": 1793820881,
@@ -107642,7 +107439,7 @@
         "pipeline_id": 10081590,
         "responsible_user_id": 13009530,
         "rule_version": 6,
-        "state": "WAITING",
+        "state": "NO_FEEDBACK",
         "status_id": 79927038,
         "status_name": "Выслано предложение"
       },
@@ -107709,22 +107506,6 @@
     {
       "category": "HOST",
       "channel": "MAX",
-      "closed_not_realized": {
-        "closed_at": 1793820378,
-        "crm_lead_id": 50136073,
-        "last_comment": "",
-        "last_comment_at": null,
-        "last_record_at": null,
-        "last_record_author": "",
-        "last_record_display": "",
-        "last_record_errors": [],
-        "last_record_id": "",
-        "last_record_rule_version": 5,
-        "last_record_status": "EMPTY",
-        "last_record_type": "",
-        "loss_reason_id": 21780202,
-        "loss_reason_name": "Дата занята"
-      },
       "crm": {
         "ambiguity_count": 0,
         "created_at": 1793820355,
@@ -108490,7 +108271,7 @@
         "pipeline_id": 10081590,
         "responsible_user_id": 13009530,
         "rule_version": 6,
-        "state": "WAITING",
+        "state": "NO_FEEDBACK",
         "status_id": 79927038,
         "status_name": "Выслано предложение"
       },
@@ -108582,7 +108363,7 @@
         "pipeline_id": 10081590,
         "responsible_user_id": 13009530,
         "rule_version": 6,
-        "state": "WAITING",
+        "state": "NO_FEEDBACK",
         "status_id": 80331318,
         "status_name": "Предбронь"
       },
@@ -108673,7 +108454,7 @@
         "pipeline_id": 10081590,
         "responsible_user_id": 13009530,
         "rule_version": 6,
-        "state": "WAITING",
+        "state": "NO_FEEDBACK",
         "status_id": 79927038,
         "status_name": "Выслано предложение"
       },
@@ -109148,7 +108929,7 @@
         "pipeline_id": 10081590,
         "responsible_user_id": 13009530,
         "rule_version": 6,
-        "state": "WAITING",
+        "state": "NO_FEEDBACK",
         "status_id": 79927038,
         "status_name": "Выслано предложение"
       },
@@ -109777,50 +109558,6 @@
   ],
   "pipeline_activity": {
     "days": {
-      "2026-10-12": {
-        "142": 6,
-        "143": 12,
-        "79927038": 7,
-        "84995274": 1,
-        "88382034": 7
-      },
-      "2026-10-13": {
-        "143": 6,
-        "79927038": 1,
-        "79927042": 1,
-        "88382034": 3
-      },
-      "2026-10-14": {
-        "143": 8,
-        "79927038": 1
-      },
-      "2026-10-15": {
-        "142": 4,
-        "143": 17,
-        "79927038": 4,
-        "79927042": 2,
-        "79927914": 1,
-        "80331318": 1,
-        "84995274": 2,
-        "88382034": 16
-      },
-      "2026-10-16": {
-        "143": 13,
-        "79927038": 1
-      },
-      "2026-10-17": {
-        "143": 8,
-        "84995274": 1,
-        "88382034": 3
-      },
-      "2026-10-18": {
-        "142": 1,
-        "143": 24,
-        "79927914": 1,
-        "80331318": 1,
-        "84995274": 2,
-        "86372998": 1
-      },
       "2026-10-19": {
         "143": 6,
         "79927038": 8,
@@ -110010,9 +109747,24 @@
         "sort": 11000
       }
     ],
-    "today": "2026-11-08",
-    "total_movements": 476,
+    "today": "2026-11-09",
+    "total_movements": 320,
     "weeks": [
+      {
+        "dates": [
+          "2026-11-09",
+          "2026-11-10",
+          "2026-11-11",
+          "2026-11-12",
+          "2026-11-13",
+          "2026-11-14",
+          "2026-11-15"
+        ],
+        "end": "2026-11-15",
+        "index": 0,
+        "label": "09.11–15.11 · Текущая",
+        "start": "2026-11-09"
+      },
       {
         "dates": [
           "2026-11-02",
@@ -110024,8 +109776,8 @@
           "2026-11-08"
         ],
         "end": "2026-11-08",
-        "index": 0,
-        "label": "02.11–08.11 · Текущая",
+        "index": 1,
+        "label": "02.11–08.11",
         "start": "2026-11-02"
       },
       {
@@ -110039,7 +109791,7 @@
           "2026-11-01"
         ],
         "end": "2026-11-01",
-        "index": 1,
+        "index": 2,
         "label": "26.10–01.11",
         "start": "2026-10-26"
       },
@@ -110054,24 +109806,9 @@
           "2026-10-25"
         ],
         "end": "2026-10-25",
-        "index": 2,
+        "index": 3,
         "label": "19.10–25.10",
         "start": "2026-10-19"
-      },
-      {
-        "dates": [
-          "2026-10-12",
-          "2026-10-13",
-          "2026-10-14",
-          "2026-10-15",
-          "2026-10-16",
-          "2026-10-17",
-          "2026-10-18"
-        ],
-        "end": "2026-10-18",
-        "index": 3,
-        "label": "12.10–18.10",
-        "start": "2026-10-12"
       }
     ]
   },
