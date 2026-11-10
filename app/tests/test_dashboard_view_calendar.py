@@ -118,5 +118,27 @@ class DashboardViewCalendarTests(unittest.TestCase):
             self.assertEqual(view["ranges"]["yesterday"]["total"], 10)
 
 
+    def test_whole_period_dynamics_is_responsive_and_shows_first_of_every_month(self) -> None:
+        root = Path(__file__).resolve().parents[1]
+        html = (root / "dashboard" / "pageshare" / "index.html").read_text(encoding="utf-8")
+        self.assertIn('id="dynAxis"', html)
+        self.assertIn('id="dynMonthTicks"', html)
+        self.assertIn("#dyn .dcol{flex:1 1 0;min-width:0", html)
+        self.assertIn("#dyn.dyn-all{gap:1px}", html)
+        self.assertIn("#dyn.dyn-all.dyn-dense{gap:0}", html)
+        self.assertIn("dateKey.slice(8)!=='01'", html)
+        self.assertIn("marker.textContent='01.'+dateKey.slice(5,7)", html)
+        self.assertIn("marker.style.left=(100*i/d.length).toFixed(3)+'%'", html)
+        self.assertIn("for(var stamp=start;stamp<=end;stamp+=86400000)", html)
+        self.assertIn("axis.classList.toggle('dyn-all-axis',all)", html)
+        self.assertIn("renderDynamics(a);", html)
+        # The PageShare -> GitHub Pages transform and legacy widget injection
+        # must remain compatible after adding the month-axis markup.
+        from scripts.build_github_pages_mirror import build_mirror
+        from scripts.inject_closed_not_realized_widget import inject
+        published = inject(build_mirror(html))
+        self.assertIn('id="dynMonthTicks"', published)
+        self.assertIn("renderDynamics(a);", published)
+
 if __name__ == "__main__":
     unittest.main()
