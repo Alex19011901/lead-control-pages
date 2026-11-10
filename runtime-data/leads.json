@@ -111275,6 +111275,132 @@
       "status": "DUPLICATE",
       "username": "",
       "violations": []
+    },
+    {
+      "category": "HOST",
+      "channel": "MAX",
+      "closed_not_realized": {
+        "closed_at": 1794330088,
+        "crm_lead_id": 50276824,
+        "last_comment": "сборник",
+        "last_comment_at": 1794330090,
+        "last_record_at": 1794330090,
+        "last_record_author": "",
+        "last_record_display": "сборник",
+        "last_record_errors": [],
+        "last_record_id": "324957392",
+        "last_record_rule_version": 5,
+        "last_record_status": "VERIFIED",
+        "last_record_type": "common",
+        "loss_reason_id": 21780202,
+        "loss_reason_name": "Дата занята"
+      },
+      "crm": {
+        "ambiguity_count": 0,
+        "created_at": 1794330088,
+        "entity_id": 50276824,
+        "entity_type": "lead",
+        "event_type": "Корпоратив",
+        "found": true,
+        "responsible_user_id": 12982830,
+        "responsible_user_name": "Максим",
+        "updated_at": 1794330090
+      },
+      "crm_created_at": 1794330088,
+      "crm_feedback": {
+        "closed_at": 1794330088,
+        "crm_lead_id": 50276824,
+        "excluded": true,
+        "first_activity_at": null,
+        "lead_created_at": 1794330088,
+        "loss_reason_checked": true,
+        "loss_reason_id": 21780202,
+        "loss_reason_name": "Дата занята",
+        "pipeline_id": 10081590,
+        "responsible_user_id": 12982830,
+        "rule_version": 6,
+        "state": "EXCLUDED",
+        "status_id": 143,
+        "status_name": "Закрыто и не реализовано"
+      },
+      "crm_found": true,
+      "crm_outcome": {
+        "closed_at": 1794330088,
+        "loss_reason_id": 21780202,
+        "loss_reason_name": "Дата занята",
+        "result": "LOST",
+        "status_id": 143,
+        "status_name": "Закрыто и не реализовано"
+      },
+      "crm_required": true,
+      "crm_responsible": 12982830,
+      "deadline_msk_ts": 1794344399,
+      "event_date": "",
+      "event_type": "Корпоратив",
+      "event_type_source": "CRM",
+      "fields": {
+        "category": "HOST",
+        "email": "",
+        "event_date": "",
+        "event_date_raw": "10-11.12",
+        "event_type": "Корпоратив",
+        "guests_count": null,
+        "guests_max": 15,
+        "guests_min": 10,
+        "guests_raw": "10-15п.",
+        "name": "Любовь",
+        "phone_digits": "79828913252",
+        "phone_raw": "89828913252",
+        "source": "Заявки хост",
+        "telegram_username": ""
+      },
+      "first_seen_at": "2026-11-10T17:44:41+03:00",
+      "first_seen_ts": 1794321881,
+      "guests": null,
+      "guests_max": 15,
+      "guests_min": 10,
+      "guests_raw": "10-15п.",
+      "id": "006bbb144af2d175",
+      "identifier": {
+        "type": "phone",
+        "value": "79828913252"
+      },
+      "last_seen_at": "2026-11-10T17:44:41+03:00",
+      "last_seen_ts": 1794321881,
+      "manager_reaction": null,
+      "max": {
+        "chat_id": -71704692523093,
+        "message_ids": [
+          "mid.ffffbec8f345ffab01a1c5eb18c43cb9"
+        ],
+        "sender_name": "Алёна",
+        "sender_user_id": 432412696,
+        "sender_username": null
+      },
+      "message_id": "mid.ffffbec8f345ffab01a1c5eb18c43cb9",
+      "name": "Любовь",
+      "phone": "89828913252",
+      "preclose_record_cache": {
+        "closed_at": 1794330088,
+        "crm_lead_id": 50276824,
+        "last_comment": "сборник",
+        "last_comment_at": 1794330090,
+        "last_record_at": 1794330090,
+        "last_record_author": "",
+        "last_record_display": "сборник",
+        "last_record_errors": [],
+        "last_record_id": "324957392",
+        "last_record_rule_version": 5,
+        "last_record_status": "VERIFIED",
+        "last_record_type": "common"
+      },
+      "received_at": "2026-11-10T17:44:41+03:00",
+      "sender_name": "Алёна",
+      "sender_user_id": 432412696,
+      "source": "Заявки хост",
+      "status": "OK",
+      "username": "",
+      "violations": []
     }
   ],
   "pipeline_activity": {
@@ -111400,7 +111526,7 @@
         "88382034": 8
       },
       "2026-11-10": {
-        "143": 3
+        "143": 4
       }
     },
     "pipeline_id": 10081590,
@@ -111483,7 +111609,7 @@
       }
     ],
     "today": "2026-11-10",
-    "total_movements": 351,
+    "total_movements": 352,
     "weeks": [
       {
         "dates": [
