@@ -5,8 +5,7 @@
       "end": "2026-11-10",
       "total": 8,
       "status": {
-        "OK": 5,
-        "PENDING": 3
+        "OK": 8
       },
       "source": {
         "САЙТ ТИЛЬДА": 4,
@@ -24,8 +23,7 @@
         "151+": 1
       },
       "event": {
-        "Корпоратив": 7,
-        "Не определено": 1
+        "Корпоратив": 8
       },
       "days": [
         [
@@ -71,10 +69,9 @@
       "end": "2026-11-10",
       "total": 47,
       "status": {
-        "OK": 37,
+        "OK": 40,
         "-": 1,
-        "LATE_CRM": 6,
-        "PENDING": 3
+        "LATE_CRM": 6
       },
       "source": {
         "САЙТ ТИЛЬДА": 13,
@@ -96,9 +93,9 @@
       "event": {
         "Свадьба": 11,
         "Юбилей": 7,
-        "Корпоратив": 24,
+        "Корпоратив": 25,
         "Бизнес мероприятие": 2,
-        "Не определено": 2
+        "Не определено": 1
       },
       "days": [
         [
@@ -136,10 +133,9 @@
       "end": "2026-11-10",
       "total": 271,
       "status": {
-        "OK": 244,
+        "OK": 247,
         "LATE_CRM": 18,
-        "-": 6,
-        "PENDING": 3
+        "-": 6
       },
       "source": {
         "САЙТ ТИЛЬДА": 81,
@@ -163,12 +159,12 @@
         "Не указано": 3
       },
       "event": {
-        "Корпоратив": 137,
+        "Корпоратив": 138,
         "Юбилей": 31,
         "Бизнес мероприятие": 21,
         "Свадьба": 60,
         "Выпускной": 7,
-        "Не определено": 9,
+        "Не определено": 8,
         "Деловое мероприятие": 1,
         "Поминки": 1
       },
@@ -299,8 +295,7 @@
         "LATE_CRM": 182,
         "ALARM_NO_CRM": 2,
         "-": 58,
-        "OK": 828,
-        "PENDING": 3
+        "OK": 831
       },
       "source": {
         "САЙТ ТИЛЬДА": 272,
@@ -329,9 +324,9 @@
       },
       "event": {
         "Юбилей": 184,
-        "Корпоратив": 379,
+        "Корпоратив": 380,
         "Свадьба": 295,
-        "Не определено": 79,
+        "Не определено": 78,
         "Бизнес мероприятие": 57,
         "Детский праздник": 6,
         "Съёмки": 2,
@@ -1094,46 +1089,46 @@
       "date": "2026-11-10",
       "ts": "2026-11-10T11:53:53+03:00",
       "source": "САЙТ ТИЛЬДА",
-      "status": "PENDING",
+      "status": "OK",
       "channel": "TELEGRAM",
       "guest_range": "25",
       "guests": "25",
-      "event_type": "unknown",
+      "event_type": "Корпоратив",
       "name": "Валерия",
       "identifier": "79627473366",
-      "manager": "",
-      "crm_status": "",
+      "manager": "Максим",
+      "crm_status": "Выслано предложение",
       "crm_loss_reason": ""
     },
     {
       "date": "2026-11-10",
       "ts": "2026-11-10T11:53:52+03:00",
       "source": "MARQUIZ",
-      "status": "PENDING",
+      "status": "OK",
       "channel": "TELEGRAM",
       "guest_range": "15",
       "guests": "15",
       "event_type": "Корпоратив",
       "name": "Елизавета",
       "identifier": "79773919847",
-      "manager": "",
-      "crm_status": "",
+      "manager": "Максим",
+      "crm_status": "Первичный контакт",
       "crm_loss_reason": ""
     },
     {
       "date": "2026-11-10",
       "ts": "2026-11-10T11:53:27+03:00",
       "source": "САЙТ ТИЛЬДА",
-      "status": "PENDING",
+      "status": "OK",
       "channel": "TELEGRAM",
       "guest_range": "40",
       "guests": "40",
       "event_type": "Корпоратив",
       "name": "Игнашкова Зарина",
       "identifier": "79036938352",
-      "manager": "",
-      "crm_status": "",
-      "crm_loss_reason": ""
+      "manager": "Максим",
+      "crm_status": "Закрыто и не реализовано",
+      "crm_loss_reason": "Дата занята"
     },
     {
       "date": "2026-11-10",
@@ -1902,7 +1897,7 @@
     }
   ],
   "not_entered": [],
-  "snapshot_generated_at": "2026-11-10T13:24:42Z",
+  "snapshot_generated_at": "2026-11-10T14:13:54Z",
   "snapshot_at": "2026-11-10T15:11:59+03:00",
   "min_date": "2026-07-01",
   "max_date": "2026-11-10",
@@ -2199,7 +2194,7 @@
   "feedback_summary": {
     "total": 3,
     "no_feedback": 2,
-    "waiting": 10,
+    "waiting": 12,
     "waiting_blue": 1,
     "waiting_yellow": 0,
     "clear": 109
@@ -2218,7 +2213,7 @@
       "crm_status": "Выслано предложение",
       "first_activity_at": "",
       "first_activity_ts": null,
-      "age_seconds": 349169,
+      "age_seconds": 352121,
       "feedback_state": "NO_FEEDBACK"
     },
     {
@@ -2234,7 +2229,7 @@
       "crm_status": "Первичный контакт",
       "first_activity_at": "",
       "first_activity_ts": null,
-      "age_seconds": 359172,
+      "age_seconds": 362124,
       "feedback_state": "NO_FEEDBACK"
     },
     {
@@ -2250,7 +2245,7 @@
       "crm_status": "Выслано предложение",
       "first_activity_at": "",
       "first_activity_ts": null,
-      "age_seconds": 266545,
+      "age_seconds": 269497,
       "feedback_state": "WAITING_BLUE"
     }
   ],
@@ -2437,6 +2432,23 @@
     }
   ],
   "closed_not_realized": [
+    {
+      "crm_lead_id": 50272501,
+      "closed_at": "2026-11-10T17:09:50+03:00",
+      "closed_ts": 1794319790,
+      "source": "САЙТ ТИЛЬДА",
+      "name": "Игнашкова Зарина",
+      "identifier": "79036938352",
+      "guests": "40",
+      "event_type": "Корпоратив",
+      "manager": "Максим",
+      "reason": "Дата занята",
+      "last_comment": "др не рассм",
+      "last_record": "др не рассм",
+      "last_record_at": "2026-11-10T17:10:15+03:00",
+      "last_record_type": "entity_direct_message",
+      "last_record_status": "VERIFIED"
+    },
     {
       "crm_lead_id": 50269597,
       "closed_at": "2026-11-10T15:22:31+03:00",
@@ -2745,7 +2757,7 @@
     }
   ],
   "closed_not_realized_summary": {
-    "total": 18,
+    "total": 19,
     "days": 5
   },
   "outcomes": [
@@ -2755,6 +2767,13 @@
       "manager": "Максим",
       "result": "LOST",
       "reason": "Не устроили условия"
+    },
+    {
+      "date": "2026-11-10",
+      "ts": "2026-11-10T11:53:27+03:00",
+      "manager": "Максим",
+      "result": "LOST",
+      "reason": "Дата занята"
     },
     {
       "date": "2026-11-10",
@@ -8837,7 +8856,7 @@
         "88382034": 8
       },
       "2026-11-10": {
-        "143": 2
+        "143": 3
       }
     },
     "pipeline_id": 10081590,
@@ -8920,7 +8939,7 @@
       }
     ],
     "today": "2026-11-10",
-    "total_movements": 350,
+    "total_movements": 351,
     "weeks": [
       {
         "dates": [
