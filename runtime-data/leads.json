@@ -34123,7 +34123,7 @@
         "crm_lead_id": 50178889,
         "deadline_at": 1794258000,
         "excluded": false,
-        "first_activity_at": null,
+        "first_activity_at": 1794378882,
         "lead_created_at": 1793957910,
         "loss_reason_checked": true,
         "loss_reason_id": null,
@@ -34131,9 +34131,9 @@
         "pipeline_id": 10081590,
         "responsible_user_id": 12982830,
         "rule_version": 6,
-        "state": "NO_FEEDBACK",
-        "status_id": 79927034,
-        "status_name": "Первичный контакт"
+        "state": "CLEAR",
+        "status_id": 79927038,
+        "status_name": "Выслано предложение"
       },
       "crm_found": true,
       "crm_required": true,
@@ -34450,7 +34450,7 @@
         "crm_lead_id": 50206279,
         "deadline_at": 1794344400,
         "excluded": false,
-        "first_activity_at": null,
+        "first_activity_at": 1794378523,
         "lead_created_at": 1794050537,
         "loss_reason_checked": true,
         "loss_reason_id": null,
@@ -34458,9 +34458,9 @@
         "pipeline_id": 10081590,
         "responsible_user_id": 12982830,
         "rule_version": 6,
-        "state": "NO_FEEDBACK",
-        "status_id": 79927038,
-        "status_name": "Выслано предложение"
+        "state": "CLEAR",
+        "status_id": 88382034,
+        "status_name": "Запрошена ос"
       },
       "crm_found": true,
       "crm_required": true,
@@ -109658,7 +109658,7 @@
         "crm_lead_id": 50187429,
         "deadline_at": 1794258000,
         "excluded": false,
-        "first_activity_at": null,
+        "first_activity_at": 1794378592,
         "lead_created_at": 1793967913,
         "loss_reason_checked": true,
         "loss_reason_id": null,
@@ -109666,9 +109666,9 @@
         "pipeline_id": 10081590,
         "responsible_user_id": 12982830,
         "rule_version": 6,
-        "state": "NO_FEEDBACK",
-        "status_id": 79927038,
-        "status_name": "Выслано предложение"
+        "state": "CLEAR",
+        "status_id": 88382034,
+        "status_name": "Запрошена ос"
       },
       "crm_found": true,
       "crm_required": true,
@@ -111415,6 +111415,10 @@
       },
       "2026-11-10": {
         "143": 4
+      },
+      "2026-11-11": {
+        "79927038": 1,
+        "88382034": 2
       }
     },
     "pipeline_id": 10081590,
@@ -111497,7 +111501,7 @@
       }
     ],
     "today": "2026-11-11",
-    "total_movements": 352,
+    "total_movements": 355,
     "weeks": [
       {
         "dates": [

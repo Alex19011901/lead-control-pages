@@ -1318,7 +1318,7 @@
       "name": "Тамара",
       "identifier": "79282707529",
       "manager": "Максим",
-      "crm_status": "Выслано предложение",
+      "crm_status": "Запрошена ос",
       "crm_loss_reason": ""
     },
     {
@@ -1363,7 +1363,7 @@
       "name": "Анна",
       "identifier": "79775394292",
       "manager": "Максим",
-      "crm_status": "Выслано предложение",
+      "crm_status": "Запрошена ос",
       "crm_loss_reason": ""
     },
     {
@@ -1438,7 +1438,7 @@
       "name": "Валентина",
       "identifier": "79636110891",
       "manager": "Максим",
-      "crm_status": "Первичный контакт",
+      "crm_status": "Выслано предложение",
       "crm_loss_reason": ""
     },
     {
@@ -1863,7 +1863,7 @@
     }
   ],
   "not_entered": [],
-  "snapshot_generated_at": "2026-11-11T06:19:29Z",
+  "snapshot_generated_at": "2026-11-11T06:37:15Z",
   "snapshot_at": "2026-11-10T17:44:41+03:00",
   "min_date": "2026-07-01",
   "max_date": "2026-11-10",
@@ -2158,62 +2158,14 @@
     "total_date_requests": 1132
   },
   "feedback_summary": {
-    "total": 9,
-    "no_feedback": 3,
+    "total": 6,
+    "no_feedback": 0,
     "waiting": 11,
     "waiting_blue": 0,
     "waiting_yellow": 6,
-    "clear": 109
+    "clear": 112
   },
   "feedback": [
-    {
-      "crm_lead_id": 50206279,
-      "created_at": "2026-11-07T14:22:17+03:00",
-      "created_ts": 1794050537,
-      "source": "САЙТ ТИЛЬДА",
-      "name": "Тамара",
-      "identifier": "79282707529",
-      "guests": "40",
-      "event_type": "Юбилей",
-      "manager": "Максим",
-      "crm_status": "Выслано предложение",
-      "first_activity_at": "",
-      "first_activity_ts": null,
-      "age_seconds": 327432,
-      "feedback_state": "NO_FEEDBACK"
-    },
-    {
-      "crm_lead_id": 50187429,
-      "created_at": "2026-11-06T15:25:13+03:00",
-      "created_ts": 1793967913,
-      "source": "Заявки хост",
-      "name": "Анна",
-      "identifier": "79775394292",
-      "guests": "100",
-      "event_type": "Корпоратив",
-      "manager": "Максим",
-      "crm_status": "Выслано предложение",
-      "first_activity_at": "",
-      "first_activity_ts": null,
-      "age_seconds": 410056,
-      "feedback_state": "NO_FEEDBACK"
-    },
-    {
-      "crm_lead_id": 50178889,
-      "created_at": "2026-11-06T12:38:30+03:00",
-      "created_ts": 1793957910,
-      "source": "САЙТ ТИЛЬДА",
-      "name": "Валентина",
-      "identifier": "79636110891",
-      "guests": "30",
-      "event_type": "Свадьба",
-      "manager": "Максим",
-      "crm_status": "Первичный контакт",
-      "first_activity_at": "",
-      "first_activity_ts": null,
-      "age_seconds": 420059,
-      "feedback_state": "NO_FEEDBACK"
-    },
     {
       "crm_lead_id": 50252299,
       "created_at": "2026-11-09T19:57:44+03:00",
@@ -2227,7 +2179,7 @@
       "crm_status": "Выслано предложение",
       "first_activity_at": "",
       "first_activity_ts": null,
-      "age_seconds": 134505,
+      "age_seconds": 135572,
       "feedback_state": "WAITING_YELLOW"
     },
     {
@@ -2243,7 +2195,7 @@
       "crm_status": "Выслано предложение",
       "first_activity_at": "",
       "first_activity_ts": null,
-      "age_seconds": 134728,
+      "age_seconds": 135795,
       "feedback_state": "WAITING_YELLOW"
     },
     {
@@ -2259,7 +2211,7 @@
       "crm_status": "Выслано предложение",
       "first_activity_at": "",
       "first_activity_ts": null,
-      "age_seconds": 134813,
+      "age_seconds": 135880,
       "feedback_state": "WAITING_YELLOW"
     },
     {
@@ -2275,7 +2227,7 @@
       "crm_status": "Выслано предложение",
       "first_activity_at": "",
       "first_activity_ts": null,
-      "age_seconds": 134980,
+      "age_seconds": 136047,
       "feedback_state": "WAITING_YELLOW"
     },
     {
@@ -2291,7 +2243,7 @@
       "crm_status": "Выслано предложение",
       "first_activity_at": "",
       "first_activity_ts": null,
-      "age_seconds": 135031,
+      "age_seconds": 136098,
       "feedback_state": "WAITING_YELLOW"
     },
     {
@@ -2307,7 +2259,7 @@
       "crm_status": "Первичный контакт",
       "first_activity_at": "",
       "first_activity_ts": null,
-      "age_seconds": 205538,
+      "age_seconds": 206605,
       "feedback_state": "WAITING_YELLOW"
     }
   ],
@@ -8824,6 +8776,10 @@
       },
       "2026-11-10": {
         "143": 4
+      },
+      "2026-11-11": {
+        "79927038": 1,
+        "88382034": 2
       }
     },
     "pipeline_id": 10081590,
@@ -8906,7 +8862,7 @@
       }
     ],
     "today": "2026-11-11",
-    "total_movements": 352,
+    "total_movements": 355,
     "weeks": [
       {
         "dates": [
