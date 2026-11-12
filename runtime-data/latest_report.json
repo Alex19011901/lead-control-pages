@@ -19,14 +19,14 @@
     "ТоМесто": 2
   },
   "event_types": {
-    "unknown": 132,
+    "unknown": 131,
     "Бизнес мероприятие": 57,
     "Выпускной": 17,
     "ДР": 2,
     "Деловое мероприятие": 1,
     "Детский праздник": 6,
     "Конференция": 1,
-    "Корпоратив": 387,
+    "Корпоратив": 388,
     "Поминки": 2,
     "Свадьба": 297,
     "Съёмки": 2,
@@ -44,11 +44,11 @@
   "latest_leads": [
     {
       "created_at": "2026-11-11T20:26:17+03:00",
-      "crm_entity_id": null,
-      "crm_entity_type": null,
-      "crm_found": false,
+      "crm_entity_id": 50314605,
+      "crm_entity_type": "lead",
+      "crm_found": true,
       "event_date": "",
-      "event_type": "",
+      "event_type": "Корпоратив",
       "guests_count": 60,
       "identifier": "7********55",
       "identifier_type": "phone",
@@ -57,7 +57,7 @@
       "manager_username": "",
       "name": "Ирина",
       "source": "Заявки хост",
-      "status": "PENDING",
+      "status": "OK",
       "violations": []
     },
     {
@@ -405,7 +405,7 @@
   ],
   "needs_review": 136,
   "no_reaction": 0,
-  "ok": 847,
+  "ok": 848,
   "total_leads": 1090,
-  "updated_at": "2026-11-11T21:59:40+03:00"
+  "updated_at": "2026-11-12T05:10:01+03:00"
 }
