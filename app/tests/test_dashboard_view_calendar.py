@@ -140,5 +140,30 @@ class DashboardViewCalendarTests(unittest.TestCase):
         self.assertIn('id="dynMonthTicks"', published)
         self.assertIn("renderDynamics(a);", published)
 
+    def test_only_selected_december_2026_dates_receive_colored_contours(self) -> None:
+        import re
+        root = Path(__file__).resolve().parents[1]
+        html = (root / "dashboard" / "pageshare" / "index.html").read_text(encoding="utf-8")
+        match = re.search(r"var heatDecember2026Borders=\{(.*?)\};", html, flags=re.S)
+        self.assertIsNotNone(match)
+        mapping = dict((int(day), color) for day, color in re.findall(r"(\d+):'(green|yellow|purple)'", match.group(1)))
+        self.assertEqual(mapping, {
+            4: "green", 5: "green", 11: "green", 18: "green",
+            22: "green", 24: "green", 25: "green", 29: "green",
+            10: "yellow", 20: "yellow", 23: "yellow",
+            12: "purple", 17: "purple",
+        })
+        self.assertIn("if(dateKey.slice(0,7)!=='2026-12')return '';", html)
+        self.assertIn("return color?' hm-border-'+color:'';", html)
+        self.assertIn("heatBorderClass(dateKey);", html)
+        for color in ("green", "yellow", "purple"):
+            self.assertIn(".hm-day-cell.hm-border-" + color + "{box-shadow:inset", html)
+        self.assertIn(".hm-level-5{background:#39a65b", html)
+        self.assertIn("grid-template-columns:repeat(5,minmax(0,1fr))", html)
+        from scripts.build_github_pages_mirror import build_mirror
+        from scripts.inject_closed_not_realized_widget import inject
+        published = inject(build_mirror(html))
+        self.assertIn("heatBorderClass(dateKey);", published)
+
 if __name__ == "__main__":
     unittest.main()

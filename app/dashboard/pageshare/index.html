@@ -63,6 +63,16 @@
  .hm-gap,.hm-day-cell{height:25px}
 }
 
+/* December 2026 requested-day outlines: preserve existing heat colors and sizing. */
+#eventHeatmapCard .hm-day-cell.hm-border-green{box-shadow:inset 0 0 0 2px #4ade80}
+#eventHeatmapCard .hm-day-cell.hm-border-yellow{box-shadow:inset 0 0 0 2px #facc15}
+#eventHeatmapCard .hm-day-cell.hm-border-purple{box-shadow:inset 0 0 0 2px #c084fc}
+@media(max-width:760px){
+ #eventHeatmapCard .hm-day-cell.hm-border-green{box-shadow:inset 0 0 0 1px #4ade80}
+ #eventHeatmapCard .hm-day-cell.hm-border-yellow{box-shadow:inset 0 0 0 1px #facc15}
+ #eventHeatmapCard .hm-day-cell.hm-border-purple{box-shadow:inset 0 0 0 1px #c084fc}
+}
+
 /* Daily leads chart: fluid columns and calendar-aligned month ticks. */
 #dyn{width:100%;min-width:0;max-width:100%;overflow:hidden}
 #dyn .dcol{flex:1 1 0;min-width:0;border-radius:2px 2px 0 0}
@@ -167,6 +177,16 @@ var heatMonthNames=['Январь','Февраль','Март','Апрель','�
 function heatMskParts(){var parts=new Intl.DateTimeFormat('en-GB',{timeZone:'Europe/Moscow',year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(new Date()),v={};for(var i=0;i<parts.length;i++)if(parts[i].type==='year'||parts[i].type==='month'||parts[i].type==='day')v[parts[i].type]=parts[i].value;return {year:Number(v.year),month:Number(v.month)-1,day:Number(v.day),iso:v.year+'-'+v.month+'-'+v.day}}
 function heatKey(year,month,day){return year+'-'+String(month+1).padStart(2,'0')+'-'+String(day).padStart(2,'0')}
 function heatColor(n){return n>=40?5:n>=20?4:n>=10?3:n>=5?2:n>0?1:0}
+var heatDecember2026Borders={
+ 4:'green',5:'green',11:'green',18:'green',22:'green',24:'green',25:'green',29:'green',
+ 10:'yellow',20:'yellow',23:'yellow',
+ 12:'purple',17:'purple'
+};
+function heatBorderClass(dateKey){
+ if(dateKey.slice(0,7)!=='2026-12')return '';
+ var color=heatDecember2026Borders[Number(dateKey.slice(8))];
+ return color?' hm-border-'+color:'';
+}
 function renderHeatmap(){
  var root=id('hmMonths'),info=id('hmPeriod'),summary=id('hmSummary'),current=heatMskParts(),counts=heatData.counts||null;
  if(!root||!info)return;
@@ -184,7 +204,7 @@ function renderHeatmap(){
   for(var space=0;space<weekDay;space++){var blank=document.createElement('div');blank.className='hm-gap';days.appendChild(blank)}
   for(var day=1;day<=numberOfDays;day++){
    var dateKey=heatKey(year,month,day),n=Number(counts[dateKey]||0),b=document.createElement('button');
-   b.type='button';b.className='hm-day-cell hm-level-'+heatColor(n)+(dateKey<current.iso?' hm-past':'')+(dateKey===current.iso?' hm-today':'')+(dateKey===heatSelected?' hm-selected':'');
+   b.type='button';b.className='hm-day-cell hm-level-'+heatColor(n)+(dateKey<current.iso?' hm-past':'')+(dateKey===current.iso?' hm-today':'')+(dateKey===heatSelected?' hm-selected':'')+heatBorderClass(dateKey);
    b.title=dateKey+': '+n+' обращений';b.setAttribute('aria-label',day+' '+heatMonthNames[month]+' '+year+': '+n+' обращений');
    b.dataset.hmDate=dateKey;b.dataset.hmCount=n;
    var big=document.createElement('span'),small=document.createElement('span');
