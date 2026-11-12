@@ -35659,7 +35659,7 @@
         "crm_lead_id": 50295289,
         "deadline_at": 1794690000,
         "excluded": false,
-        "first_activity_at": null,
+        "first_activity_at": 1794450201,
         "lead_created_at": 1794401283,
         "loss_reason_checked": true,
         "loss_reason_id": null,
@@ -35667,9 +35667,9 @@
         "pipeline_id": 10081590,
         "responsible_user_id": 12982830,
         "rule_version": 6,
-        "state": "WAITING",
-        "status_id": 79927034,
-        "status_name": "Первичный контакт"
+        "state": "CLEAR",
+        "status_id": 79927038,
+        "status_name": "Выслано предложение"
       },
       "crm_found": true,
       "crm_required": true,
@@ -84833,6 +84833,22 @@
     {
       "category": "HOST",
       "channel": "MAX",
+      "closed_not_realized": {
+        "closed_at": 1794459633,
+        "crm_lead_id": 49138615,
+        "last_comment": "без ОС",
+        "last_comment_at": 1794378377,
+        "last_record_at": 1794378377,
+        "last_record_author": "Лаура",
+        "last_record_display": "без ОС",
+        "last_record_errors": [],
+        "last_record_id": "78f2fe7b-6d19-400e-8935-d05a9b189781",
+        "last_record_rule_version": 5,
+        "last_record_status": "VERIFIED",
+        "last_record_type": "entity_direct_message",
+        "loss_reason_id": 24466294,
+        "loss_reason_name": "Нет обратной связи"
+      },
       "crm": {
         "ambiguity_count": 0,
         "created_at": 1790849101,
@@ -84848,23 +84864,30 @@
       },
       "crm_created_at": 1790849101,
       "crm_feedback": {
-        "closed_at": null,
+        "closed_at": 1794459633,
         "crm_lead_id": 49138615,
-        "deadline_at": 1791147600,
-        "excluded": false,
-        "first_activity_at": 1791195624,
+        "excluded": true,
+        "first_activity_at": null,
         "lead_created_at": 1790849101,
         "loss_reason_checked": true,
-        "loss_reason_id": null,
-        "loss_reason_name": "",
+        "loss_reason_id": 24466294,
+        "loss_reason_name": "Нет обратной связи",
         "pipeline_id": 10081590,
         "responsible_user_id": 12982830,
         "rule_version": 6,
-        "state": "CLEAR",
-        "status_id": 79927038,
-        "status_name": "Выслано предложение"
+        "state": "EXCLUDED",
+        "status_id": 143,
+        "status_name": "Закрыто и не реализовано"
       },
       "crm_found": true,
+      "crm_outcome": {
+        "closed_at": 1794459633,
+        "loss_reason_id": 24466294,
+        "loss_reason_name": "Нет обратной связи",
+        "result": "LOST",
+        "status_id": 143,
+        "status_name": "Закрыто и не реализовано"
+      },
       "crm_required": true,
       "crm_responsible": 12982830,
       "deadline_msk_ts": 1790888399,
@@ -84913,6 +84936,20 @@
       "message_id": "mid.ffffbec8f345ffab01a0f6ae6be36f80",
       "name": "Василиса.(организатор)",
       "phone": "89161547513",
+      "preclose_record_cache": {
+        "closed_at": 1794459633,
+        "crm_lead_id": 49138615,
+        "last_comment": "без ОС",
+        "last_comment_at": 1794378377,
+        "last_record_at": 1794378377,
+        "last_record_author": "Лаура",
+        "last_record_display": "без ОС",
+        "last_record_errors": [],
+        "last_record_id": "78f2fe7b-6d19-400e-8935-d05a9b189781",
+        "last_record_rule_version": 5,
+        "last_record_status": "VERIFIED",
+        "last_record_type": "entity_direct_message"
+      },
       "received_at": "2026-10-01T11:57:01+03:00",
       "sender_name": "Елена",
       "sender_user_id": 121513620,
@@ -91755,9 +91792,8 @@
       "crm_feedback": {
         "closed_at": null,
         "crm_lead_id": 49421875,
-        "deadline_at": 1791925200,
-        "excluded": false,
-        "first_activity_at": 1791904886,
+        "excluded": true,
+        "first_activity_at": null,
         "lead_created_at": 1791641359,
         "loss_reason_checked": true,
         "loss_reason_id": null,
@@ -91765,9 +91801,9 @@
         "pipeline_id": 10081590,
         "responsible_user_id": 12982830,
         "rule_version": 6,
-        "state": "CLEAR",
-        "status_id": 80331318,
-        "status_name": "Предбронь"
+        "state": "EXCLUDED",
+        "status_id": 84995274,
+        "status_name": "Внесена п/о идет текущая работа"
       },
       "crm_found": true,
       "crm_required": true,
@@ -107432,8 +107468,8 @@
         "responsible_user_id": 12982830,
         "rule_version": 6,
         "state": "CLEAR",
-        "status_id": 88382034,
-        "status_name": "Запрошена ос"
+        "status_id": 80182874,
+        "status_name": "ЖДЕМ НА ДЕГУСТАЦИЮ"
       },
       "crm_found": true,
       "crm_required": true,
@@ -109849,6 +109885,22 @@
     {
       "category": "HOST",
       "channel": "MAX",
+      "closed_not_realized": {
+        "closed_at": 1794459702,
+        "crm_lead_id": 50187429,
+        "last_comment": "нл",
+        "last_comment_at": 1794378592,
+        "last_record_at": 1794378592,
+        "last_record_author": "Лаура",
+        "last_record_display": "нл",
+        "last_record_errors": [],
+        "last_record_id": "75d74480-0cc1-42b5-8ffd-d3ef6332f88e",
+        "last_record_rule_version": 5,
+        "last_record_status": "VERIFIED",
+        "last_record_type": "entity_direct_message",
+        "loss_reason_id": 24466294,
+        "loss_reason_name": "Нет обратной связи"
+      },
       "crm": {
         "ambiguity_count": 0,
         "created_at": 1793967913,
@@ -109864,23 +109916,30 @@
       },
       "crm_created_at": 1793967913,
       "crm_feedback": {
-        "closed_at": null,
+        "closed_at": 1794459702,
         "crm_lead_id": 50187429,
-        "deadline_at": 1794258000,
-        "excluded": false,
-        "first_activity_at": 1794378592,
+        "excluded": true,
+        "first_activity_at": null,
         "lead_created_at": 1793967913,
         "loss_reason_checked": true,
-        "loss_reason_id": null,
-        "loss_reason_name": "",
+        "loss_reason_id": 24466294,
+        "loss_reason_name": "Нет обратной связи",
         "pipeline_id": 10081590,
         "responsible_user_id": 12982830,
         "rule_version": 6,
-        "state": "CLEAR",
-        "status_id": 88382034,
-        "status_name": "Запрошена ос"
+        "state": "EXCLUDED",
+        "status_id": 143,
+        "status_name": "Закрыто и не реализовано"
       },
       "crm_found": true,
+      "crm_outcome": {
+        "closed_at": 1794459702,
+        "loss_reason_id": 24466294,
+        "loss_reason_name": "Нет обратной связи",
+        "result": "LOST",
+        "status_id": 143,
+        "status_name": "Закрыто и не реализовано"
+      },
       "crm_required": true,
       "crm_responsible": 12982830,
       "deadline_msk_ts": 1793998799,
@@ -109929,6 +109988,20 @@
       "message_id": "mid.ffffbec8f345ffab01a1b09c3951495a",
       "name": "Анна",
       "phone": "89775394292",
+      "preclose_record_cache": {
+        "closed_at": 1794459702,
+        "crm_lead_id": 50187429,
+        "last_comment": "нл",
+        "last_comment_at": 1794378592,
+        "last_record_at": 1794378592,
+        "last_record_author": "Лаура",
+        "last_record_display": "нл",
+        "last_record_errors": [],
+        "last_record_id": "75d74480-0cc1-42b5-8ffd-d3ef6332f88e",
+        "last_record_rule_version": 5,
+        "last_record_status": "VERIFIED",
+        "last_record_type": "entity_direct_message"
+      },
       "received_at": "2026-11-06T14:26:30+03:00",
       "sender_name": "Елена",
       "sender_user_id": 121513620,
@@ -111248,8 +111321,8 @@
         "responsible_user_id": 12982830,
         "rule_version": 6,
         "state": "WAITING",
-        "status_id": 79927034,
-        "status_name": "Первичный контакт"
+        "status_id": 79927038,
+        "status_name": "Выслано предложение"
       },
       "crm_found": true,
       "crm_required": true,
@@ -111833,7 +111906,7 @@
         "crm_lead_id": 50294091,
         "deadline_at": 1794690000,
         "excluded": false,
-        "first_activity_at": null,
+        "first_activity_at": 1794450367,
         "lead_created_at": 1794398144,
         "loss_reason_checked": true,
         "loss_reason_id": null,
@@ -111841,9 +111914,9 @@
         "pipeline_id": 10081590,
         "responsible_user_id": 12982830,
         "rule_version": 6,
-        "state": "WAITING",
-        "status_id": 79927034,
-        "status_name": "Первичный контакт"
+        "state": "CLEAR",
+        "status_id": 80331318,
+        "status_name": "Предбронь"
       },
       "crm_found": true,
       "crm_required": true,
@@ -113046,6 +113119,13 @@
         "143": 3,
         "79927038": 2,
         "88382034": 2
+      },
+      "2026-11-12": {
+        "143": 2,
+        "79927038": 2,
+        "80182874": 1,
+        "80331318": 1,
+        "84995274": 1
       }
     },
     "pipeline_id": 10081590,
@@ -113128,7 +113208,7 @@
       }
     ],
     "today": "2026-11-12",
-    "total_movements": 359,
+    "total_movements": 366,
     "weeks": [
       {
         "dates": [

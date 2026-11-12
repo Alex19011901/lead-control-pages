@@ -1117,7 +1117,7 @@
       "name": "Виктория",
       "identifier": "79152252266",
       "manager": "Максим",
-      "crm_status": "Первичный контакт",
+      "crm_status": "Выслано предложение",
       "crm_loss_reason": ""
     },
     {
@@ -1177,7 +1177,7 @@
       "name": "Яна",
       "identifier": "79164489896",
       "manager": "Максим",
-      "crm_status": "Первичный контакт",
+      "crm_status": "Предбронь",
       "crm_loss_reason": ""
     },
     {
@@ -1312,7 +1312,7 @@
       "name": "Алина",
       "identifier": "74992623426",
       "manager": "Максим",
-      "crm_status": "Первичный контакт",
+      "crm_status": "Выслано предложение",
       "crm_loss_reason": ""
     },
     {
@@ -1627,8 +1627,8 @@
       "name": "Анна",
       "identifier": "79775394292",
       "manager": "Максим",
-      "crm_status": "Запрошена ос",
-      "crm_loss_reason": ""
+      "crm_status": "Закрыто и не реализовано",
+      "crm_loss_reason": "Нет обратной связи"
     },
     {
       "date": "2026-11-06",
@@ -1872,7 +1872,7 @@
     }
   ],
   "not_entered": [],
-  "snapshot_generated_at": "2026-11-12T02:10:02Z",
+  "snapshot_generated_at": "2026-11-12T06:30:41Z",
   "snapshot_at": "2026-11-11T20:26:17+03:00",
   "min_date": "2026-07-01",
   "max_date": "2026-11-11",
@@ -2171,10 +2171,10 @@
   "feedback_summary": {
     "total": 11,
     "no_feedback": 0,
-    "waiting": 24,
+    "waiting": 22,
     "waiting_blue": 6,
     "waiting_yellow": 5,
-    "clear": 112
+    "clear": 111
   },
   "feedback": [
     {
@@ -2190,7 +2190,7 @@
       "crm_status": "Выслано предложение",
       "first_activity_at": "",
       "first_activity_ts": null,
-      "age_seconds": 205938,
+      "age_seconds": 221578,
       "feedback_state": "WAITING_BLUE"
     },
     {
@@ -2206,7 +2206,7 @@
       "crm_status": "Выслано предложение",
       "first_activity_at": "",
       "first_activity_ts": null,
-      "age_seconds": 206161,
+      "age_seconds": 221801,
       "feedback_state": "WAITING_BLUE"
     },
     {
@@ -2222,7 +2222,7 @@
       "crm_status": "Выслано предложение",
       "first_activity_at": "",
       "first_activity_ts": null,
-      "age_seconds": 206246,
+      "age_seconds": 221886,
       "feedback_state": "WAITING_BLUE"
     },
     {
@@ -2238,7 +2238,7 @@
       "crm_status": "Выслано предложение",
       "first_activity_at": "",
       "first_activity_ts": null,
-      "age_seconds": 206413,
+      "age_seconds": 222053,
       "feedback_state": "WAITING_BLUE"
     },
     {
@@ -2254,7 +2254,7 @@
       "crm_status": "Выслано предложение",
       "first_activity_at": "",
       "first_activity_ts": null,
-      "age_seconds": 206464,
+      "age_seconds": 222104,
       "feedback_state": "WAITING_BLUE"
     },
     {
@@ -2270,7 +2270,7 @@
       "crm_status": "Первичный контакт",
       "first_activity_at": "",
       "first_activity_ts": null,
-      "age_seconds": 276971,
+      "age_seconds": 292611,
       "feedback_state": "WAITING_BLUE"
     },
     {
@@ -2286,7 +2286,7 @@
       "crm_status": "Первичный контакт",
       "first_activity_at": "",
       "first_activity_ts": null,
-      "age_seconds": 130121,
+      "age_seconds": 145761,
       "feedback_state": "WAITING_YELLOW"
     },
     {
@@ -2302,7 +2302,7 @@
       "crm_status": "Выслано предложение",
       "first_activity_at": "",
       "first_activity_ts": null,
-      "age_seconds": 131705,
+      "age_seconds": 147345,
       "feedback_state": "WAITING_YELLOW"
     },
     {
@@ -2318,7 +2318,7 @@
       "crm_status": "Выслано предложение",
       "first_activity_at": "",
       "first_activity_ts": null,
-      "age_seconds": 132615,
+      "age_seconds": 148255,
       "feedback_state": "WAITING_YELLOW"
     },
     {
@@ -2331,10 +2331,10 @@
       "guests": "до 100",
       "event_type": "Корпоратив",
       "manager": "Максим",
-      "crm_status": "Первичный контакт",
+      "crm_status": "Выслано предложение",
       "first_activity_at": "",
       "first_activity_ts": null,
-      "age_seconds": 135316,
+      "age_seconds": 150956,
       "feedback_state": "WAITING_YELLOW"
     },
     {
@@ -2350,7 +2350,7 @@
       "crm_status": "Выслано предложение",
       "first_activity_at": "",
       "first_activity_ts": null,
-      "age_seconds": 143736,
+      "age_seconds": 159376,
       "feedback_state": "WAITING_YELLOW"
     }
   ],
@@ -2537,6 +2537,40 @@
     }
   ],
   "closed_not_realized": [
+    {
+      "crm_lead_id": 50187429,
+      "closed_at": "2026-11-12T08:01:42+03:00",
+      "closed_ts": 1794459702,
+      "source": "Заявки хост",
+      "name": "Анна",
+      "identifier": "79775394292",
+      "guests": "100",
+      "event_type": "Корпоратив",
+      "manager": "Максим",
+      "reason": "Нет обратной связи",
+      "last_comment": "нл",
+      "last_record": "нл",
+      "last_record_at": "2026-11-11T09:29:52+03:00",
+      "last_record_type": "entity_direct_message",
+      "last_record_status": "VERIFIED"
+    },
+    {
+      "crm_lead_id": 49138615,
+      "closed_at": "2026-11-12T08:00:33+03:00",
+      "closed_ts": 1794459633,
+      "source": "Заявки хост",
+      "name": "Василиса.(организатор)",
+      "identifier": "79161547513",
+      "guests": "110",
+      "event_type": "Корпоратив",
+      "manager": "Максим",
+      "reason": "Нет обратной связи",
+      "last_comment": "без ОС",
+      "last_record": "без ОС",
+      "last_record_at": "2026-11-11T09:26:17+03:00",
+      "last_record_type": "entity_direct_message",
+      "last_record_status": "VERIFIED"
+    },
     {
       "crm_lead_id": 50295197,
       "closed_at": "2026-11-11T15:44:19+03:00",
@@ -2794,7 +2828,7 @@
     }
   ],
   "closed_not_realized_summary": {
-    "total": 15,
+    "total": 17,
     "days": 5
   },
   "outcomes": [
@@ -2888,6 +2922,13 @@
       "manager": "Максим",
       "result": "LOST",
       "reason": "Слишком дорого"
+    },
+    {
+      "date": "2026-11-06",
+      "ts": "2026-11-06T14:26:30+03:00",
+      "manager": "Максим",
+      "result": "LOST",
+      "reason": "Нет обратной связи"
     },
     {
       "date": "2026-11-06",
@@ -4481,6 +4522,13 @@
     {
       "date": "2026-10-01",
       "ts": "2026-10-01T12:08:39+03:00",
+      "manager": "Максим",
+      "result": "LOST",
+      "reason": "Нет обратной связи"
+    },
+    {
+      "date": "2026-10-01",
+      "ts": "2026-10-01T11:57:01+03:00",
       "manager": "Максим",
       "result": "LOST",
       "reason": "Нет обратной связи"
@@ -8927,6 +8975,13 @@
         "143": 3,
         "79927038": 2,
         "88382034": 2
+      },
+      "2026-11-12": {
+        "143": 2,
+        "79927038": 2,
+        "80182874": 1,
+        "80331318": 1,
+        "84995274": 1
       }
     },
     "pipeline_id": 10081590,
@@ -9009,7 +9064,7 @@
       }
     ],
     "today": "2026-11-12",
-    "total_movements": 359,
+    "total_movements": 366,
     "weeks": [
       {
         "dates": [
