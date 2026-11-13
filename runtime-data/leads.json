@@ -34804,7 +34804,7 @@
         "pipeline_id": 10081590,
         "responsible_user_id": 13009530,
         "rule_version": 6,
-        "state": "WAITING",
+        "state": "NO_FEEDBACK",
         "status_id": 79927034,
         "status_name": "Первичный контакт"
       },
@@ -36146,6 +36146,68 @@
         ],
         "update_ids": [
           185609137
+        ]
+      },
+      "violations": []
+    },
+    {
+      "category": "САЙТ ТИЛЬДА",
+      "channel": "TELEGRAM",
+      "crm": {
+        "ambiguity_count": 0,
+        "created_at": null,
+        "entity_id": null,
+        "entity_type": null,
+        "event_type": null,
+        "found": false,
+        "responsible_user_id": null,
+        "responsible_user_name": null,
+        "updated_at": null
+      },
+      "crm_created_at": null,
+      "crm_found": false,
+      "crm_required": true,
+      "crm_responsible": null,
+      "deadline_msk_ts": 1794603599,
+      "fields": {
+        "category": "САЙТ ТИЛЬДА",
+        "description": "Содержание заявки:\nname: Юлия\nphone: +79295640807\nDate: 23-07-2027\nInput: 20-25\nCheckbox: yes\nutm_source: ya-map\npage_url: https://moscowbanket.ru/page66581743.html\npage_referrer: https://moscowbanket.ru/?utm_source=ya-map\nform_submit_timestamp: 1794517831\nmetrika_client_id: 1794517675968497286\nym_client_id: 1794517675968497286\nym_clientid: 1794517675968497286\nym_uid: 1794517675968497286\n_ym_uid: 1794517675968497286\nclient_id: 1794517675968497286\nclientid: 1794517675968497286\nyandex_client_id: 1794517675968497286\nya_client_id: 1794517675968497286\n\nДополнительная информация:\nКод заявки: 2925975:8809592922\nКод блока: rec2245070081\nhttps://moscowbanket.ru/page66581743.html\n-----",
+        "event_date": "2027-07-23",
+        "event_date_raw": "23-07-2027",
+        "event_type": "",
+        "form_submit_timestamp": 1794517831,
+        "guests_count": 20,
+        "metrika_client_id": "1794517675968497286",
+        "name": "Юлия",
+        "phone_digits": "79295640807",
+        "phone_raw": "+79295640807",
+        "source": "САЙТ ТИЛЬДА",
+        "telegram_username": "",
+        "yclid": ""
+      },
+      "first_seen_at": "2026-11-13T00:10:32+03:00",
+      "first_seen_ts": 1794517832,
+      "id": "2a1e06519602186c",
+      "identifier": {
+        "type": "phone",
+        "value": "79295640807"
+      },
+      "last_seen_at": "2026-11-13T00:10:32+03:00",
+      "last_seen_ts": 1794517832,
+      "manager_reaction": null,
+      "received_at": "2026-11-13T00:10:32+03:00",
+      "sender_name": "TildaForms",
+      "sender_user_id": 265299531,
+      "sender_username": "TildaFormsBot",
+      "source": "САЙТ ТИЛЬДА",
+      "status": "PENDING",
+      "telegram": {
+        "chat_id": -1001645768111,
+        "message_ids": [
+          6382
+        ],
+        "update_ids": [
+          185609168
         ]
       },
       "violations": []
@@ -110682,7 +110744,7 @@
         "pipeline_id": 10081590,
         "responsible_user_id": 13009530,
         "rule_version": 6,
-        "state": "WAITING",
+        "state": "NO_FEEDBACK",
         "status_id": 79927038,
         "status_name": "Выслано предложение"
       },
@@ -110901,7 +110963,7 @@
         "pipeline_id": 10081590,
         "responsible_user_id": 13009530,
         "rule_version": 6,
-        "state": "WAITING",
+        "state": "NO_FEEDBACK",
         "status_id": 79927038,
         "status_name": "Выслано предложение"
       },
@@ -110992,7 +111054,7 @@
         "pipeline_id": 10081590,
         "responsible_user_id": 13009530,
         "rule_version": 6,
-        "state": "WAITING",
+        "state": "NO_FEEDBACK",
         "status_id": 79927038,
         "status_name": "Выслано предложение"
       },
@@ -111211,7 +111273,7 @@
         "pipeline_id": 10081590,
         "responsible_user_id": 13009530,
         "rule_version": 6,
-        "state": "WAITING",
+        "state": "NO_FEEDBACK",
         "status_id": 79927038,
         "status_name": "Выслано предложение"
       },
@@ -111302,7 +111364,7 @@
         "pipeline_id": 10081590,
         "responsible_user_id": 13009530,
         "rule_version": 6,
-        "state": "WAITING",
+        "state": "NO_FEEDBACK",
         "status_id": 79927038,
         "status_name": "Выслано предложение"
       },
@@ -114171,7 +114233,7 @@
         "sort": 11000
       }
     ],
-    "today": "2026-11-12",
+    "today": "2026-11-13",
     "total_movements": 378,
     "weeks": [
       {
