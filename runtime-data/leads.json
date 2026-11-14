@@ -35144,6 +35144,22 @@
     {
       "category": "MARQUIZ",
       "channel": "TELEGRAM",
+      "closed_not_realized": {
+        "closed_at": 1794650982,
+        "crm_lead_id": 50272391,
+        "last_comment": "написал ва (тг премиум)",
+        "last_comment_at": 1794319473,
+        "last_record_at": 1794319473,
+        "last_record_author": "Лаура",
+        "last_record_display": "написал ва (тг премиум)",
+        "last_record_errors": [],
+        "last_record_id": "676d7e68-7d32-4a0f-a187-02103137245c",
+        "last_record_rule_version": 5,
+        "last_record_status": "VERIFIED",
+        "last_record_type": "entity_direct_message",
+        "loss_reason_id": 24466294,
+        "loss_reason_name": "Нет обратной связи"
+      },
       "crm": {
         "ambiguity_count": 0,
         "created_at": 1794319281,
@@ -35159,23 +35175,30 @@
       },
       "crm_created_at": 1794319281,
       "crm_feedback": {
-        "closed_at": null,
+        "closed_at": 1794650982,
         "crm_lead_id": 50272391,
-        "deadline_at": 1794603600,
-        "excluded": false,
+        "excluded": true,
         "first_activity_at": null,
         "lead_created_at": 1794319281,
         "loss_reason_checked": true,
-        "loss_reason_id": null,
-        "loss_reason_name": "",
+        "loss_reason_id": 24466294,
+        "loss_reason_name": "Нет обратной связи",
         "pipeline_id": 10081590,
         "responsible_user_id": 12982830,
         "rule_version": 6,
-        "state": "NO_FEEDBACK",
-        "status_id": 79927034,
-        "status_name": "Первичный контакт"
+        "state": "EXCLUDED",
+        "status_id": 143,
+        "status_name": "Закрыто и не реализовано"
       },
       "crm_found": true,
+      "crm_outcome": {
+        "closed_at": 1794650982,
+        "loss_reason_id": 24466294,
+        "loss_reason_name": "Нет обратной связи",
+        "result": "LOST",
+        "status_id": 143,
+        "status_name": "Закрыто и не реализовано"
+      },
       "crm_required": true,
       "crm_responsible": 12982830,
       "deadline_msk_ts": 1794344399,
@@ -35219,6 +35242,20 @@
         "user_id": 392177002,
         "username": "empairbey"
       },
+      "preclose_record_cache": {
+        "closed_at": 1794650982,
+        "crm_lead_id": 50272391,
+        "last_comment": "написал ва (тг премиум)",
+        "last_comment_at": 1794319473,
+        "last_record_at": 1794319473,
+        "last_record_author": "Лаура",
+        "last_record_display": "написал ва (тг премиум)",
+        "last_record_errors": [],
+        "last_record_id": "676d7e68-7d32-4a0f-a187-02103137245c",
+        "last_record_rule_version": 5,
+        "last_record_status": "VERIFIED",
+        "last_record_type": "entity_direct_message"
+      },
       "received_at": "2026-11-10T11:53:52+03:00",
       "sender_name": "MarquizBot",
       "sender_user_id": 446491725,
@@ -35258,7 +35295,7 @@
         "crm_lead_id": 50271779,
         "deadline_at": 1794603600,
         "excluded": false,
-        "first_activity_at": null,
+        "first_activity_at": 1794651068,
         "lead_created_at": 1794317697,
         "loss_reason_checked": true,
         "loss_reason_id": null,
@@ -35266,9 +35303,9 @@
         "pipeline_id": 10081590,
         "responsible_user_id": 12982830,
         "rule_version": 6,
-        "state": "NO_FEEDBACK",
-        "status_id": 79927038,
-        "status_name": "Выслано предложение"
+        "state": "CLEAR",
+        "status_id": 88382034,
+        "status_name": "Запрошена ос"
       },
       "crm_found": true,
       "crm_required": true,
@@ -35354,7 +35391,7 @@
         "crm_lead_id": 50271133,
         "deadline_at": 1794603600,
         "excluded": false,
-        "first_activity_at": null,
+        "first_activity_at": 1794651122,
         "lead_created_at": 1794316787,
         "loss_reason_checked": true,
         "loss_reason_id": null,
@@ -35362,9 +35399,9 @@
         "pipeline_id": 10081590,
         "responsible_user_id": 12982830,
         "rule_version": 6,
-        "state": "NO_FEEDBACK",
-        "status_id": 79927038,
-        "status_name": "Выслано предложение"
+        "state": "CLEAR",
+        "status_id": 88382034,
+        "status_name": "Запрошена ос"
       },
       "crm_found": true,
       "crm_required": true,
@@ -36252,6 +36289,100 @@
       "violations": [
         "LATE_CRM"
       ]
+    },
+    {
+      "category": "САЙТ ТИЛЬДА",
+      "channel": "TELEGRAM",
+      "crm": {
+        "ambiguity_count": 0,
+        "created_at": 1794650883,
+        "entity_id": 50382263,
+        "entity_type": "lead",
+        "event_type": null,
+        "found": true,
+        "guests": "30",
+        "guests_source": "CRM",
+        "responsible_user_id": 12982830,
+        "responsible_user_name": "Максим",
+        "updated_at": 1794657557
+      },
+      "crm_created_at": 1794650883,
+      "crm_feedback": {
+        "closed_at": null,
+        "crm_lead_id": 50382263,
+        "deadline_at": 1794949200,
+        "excluded": false,
+        "first_activity_at": null,
+        "lead_created_at": 1794650883,
+        "loss_reason_checked": true,
+        "loss_reason_id": null,
+        "loss_reason_name": "",
+        "pipeline_id": 10081590,
+        "responsible_user_id": 12982830,
+        "rule_version": 6,
+        "state": "WAITING",
+        "status_id": 79927034,
+        "status_name": "Первичный контакт"
+      },
+      "crm_found": true,
+      "crm_required": true,
+      "crm_responsible": 12982830,
+      "deadline_msk_ts": 1794689999,
+      "fields": {
+        "category": "САЙТ ТИЛЬДА",
+        "description": "Содержание заявки:\nName: Полина\nPhone: +79935657068\nInput: 30\nCheckbox: yes\nyclid: 16852553780709294079\nutm_source: yandex_direct\nutm_medium: cpc\nutm_campaign: Поиск Корпоративы (ОЗК)_715589369\nutm_content: 1925509958503689634\nutm_term: ---autotargeting\npage_url: https://moscowbanket.ru/corporate/?callibri=yd_c:715589369_gb:5817697393_ad:1925509958503689634_ph:205817697393_st:search_s:none_dt:desktop&utm_source=yandex_direct&utm_medium=cpc&utm_campaign=%D0%9F%D0%BE%D0%B8%D1%81%D0%BA%20%D0%9A%D0%BE%D1%80%D0%BF%D0%BE%D1%80%D0%B0%D1%82%D0%B8%D0%B2%D1%8B%20%28%D0%9E%D0%97%D0%9A%29_715589369&utm_content=1925509958503689634&utm_term=---autotargeting&etext=2202.vMGlY2vvZOLH8XVeCqeoDX7iOsPjmxL5w3EkkndA_bz7Uwn6CdBc6zwrVEGJtjAMRePQB9my07zn5sZE7ZyGZGltaG94bXpzbWt4d25uY2w.c398cb048a740a4aa65be92c21f558eccb6f1ac2&yclid=16852553780709294079\npage_referrer: https://ya.ru/\nform_submit_timestamp: 1794646308\nmetrika_client_id: 1794646274963056818\nym_client_id: 1794646274963056818\nym_clientid: 1794646274963056818\nym_uid: 1794646274963056818\n_ym_uid: 1794646274963056818\nclient_id: 1794646274963056818\nclientid: 1794646274963056818\nyandex_client_id: 1794646274963056818\nya_client_id: 1794646274963056818\n\nДополнительная информация:\nКод заявки: 2925975:8813026782\nКод блока: rec2244692421\nhttps://moscowbanket.ru/corporate/\nUTM source: yandex_direct\nUTM medium: cpc\nUTM campaign: Поиск Корпоративы (ОЗК)_715589369\nUTM content: 1925509958503689634\nUTM term: ---autotargeting\n-----",
+        "event_date": "",
+        "event_date_raw": "",
+        "event_type": "Корпоратив",
+        "form_submit_timestamp": 1794646308,
+        "guests_count": 30,
+        "metrika_client_id": "1794646274963056818",
+        "name": "Полина",
+        "phone_digits": "79935657068",
+        "phone_raw": "+79935657068",
+        "source": "САЙТ ТИЛЬДА",
+        "telegram_username": "",
+        "yclid": "16852553780709294079"
+      },
+      "first_seen_at": "2026-11-14T11:51:50+03:00",
+      "first_seen_ts": 1794646310,
+      "id": "9a7ed9815526524d",
+      "identifier": {
+        "type": "phone",
+        "value": "79935657068"
+      },
+      "last_seen_at": "2026-11-14T11:51:50+03:00",
+      "last_seen_ts": 1794646310,
+      "manager_reaction": {
+        "name": "Максим",
+        "reacted_at": "2026-11-14T11:58:10+03:00",
+        "reacted_ts": 1794646690,
+        "reaction": [
+          {
+            "emoji": "👍",
+            "type": "emoji"
+          }
+        ],
+        "update_id": 185609189,
+        "user_id": 392177002,
+        "username": "empairbey"
+      },
+      "received_at": "2026-11-14T11:51:50+03:00",
+      "sender_name": "TildaForms",
+      "sender_user_id": 265299531,
+      "sender_username": "TildaFormsBot",
+      "source": "САЙТ ТИЛЬДА",
+      "status": "OK",
+      "telegram": {
+        "chat_id": -1001645768111,
+        "message_ids": [
+          6387
+        ],
+        "update_ids": [
+          185609188
+        ]
+      },
+      "violations": []
     },
     {
       "category": "TG_LEAD",
@@ -111520,7 +111651,7 @@
         "crm_lead_id": 50265445,
         "deadline_at": 1794603600,
         "excluded": false,
-        "first_activity_at": null,
+        "first_activity_at": 1794651453,
         "lead_created_at": 1794305666,
         "loss_reason_checked": true,
         "loss_reason_id": null,
@@ -111528,9 +111659,9 @@
         "pipeline_id": 10081590,
         "responsible_user_id": 12982830,
         "rule_version": 6,
-        "state": "NO_FEEDBACK",
-        "status_id": 79927038,
-        "status_name": "Выслано предложение"
+        "state": "CLEAR",
+        "status_id": 88382034,
+        "status_name": "Запрошена ос"
       },
       "crm_found": true,
       "crm_required": true,
@@ -111737,7 +111868,7 @@
         "crm_lead_id": 50269925,
         "deadline_at": 1794603600,
         "excluded": false,
-        "first_activity_at": null,
+        "first_activity_at": 1794651337,
         "lead_created_at": 1794314086,
         "loss_reason_checked": true,
         "loss_reason_id": null,
@@ -111745,9 +111876,9 @@
         "pipeline_id": 10081590,
         "responsible_user_id": 12982830,
         "rule_version": 6,
-        "state": "NO_FEEDBACK",
-        "status_id": 79927038,
-        "status_name": "Выслано предложение"
+        "state": "CLEAR",
+        "status_id": 88382034,
+        "status_name": "Запрошена ос"
       },
       "crm_found": true,
       "crm_required": true,
@@ -114513,8 +114644,9 @@
         "88382034": 1
       },
       "2026-11-14": {
-        "143": 1,
-        "79927038": 3
+        "143": 2,
+        "79927038": 3,
+        "88382034": 4
       }
     },
     "pipeline_id": 10081590,
@@ -114597,7 +114729,7 @@
       }
     ],
     "today": "2026-11-14",
-    "total_movements": 388,
+    "total_movements": 393,
     "weeks": [
       {
         "dates": [
