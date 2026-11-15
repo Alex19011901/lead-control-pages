@@ -1,5 +1,5 @@
 {
-  "alarm_no_crm": 3,
+  "alarm_no_crm": 2,
   "by_manager": {
     "no_manager_reaction": 892,
     "Максим": 118,
@@ -19,14 +19,14 @@
     "ТоМесто": 2
   },
   "event_types": {
-    "unknown": 132,
+    "unknown": 131,
     "Бизнес мероприятие": 57,
     "Выпускной": 17,
     "ДР": 2,
     "Деловое мероприятие": 1,
     "Детский праздник": 7,
     "Конференция": 1,
-    "Корпоратив": 397,
+    "Корпоратив": 398,
     "Поминки": 2,
     "Свадьба": 300,
     "Съёмки": 2,
@@ -40,13 +40,13 @@
     "51-100": 191,
     "unknown": 202
   },
-  "late_crm": 186,
+  "late_crm": 187,
   "latest_leads": [
     {
       "created_at": "2026-11-14T21:35:22+03:00",
-      "crm_entity_id": null,
-      "crm_entity_type": null,
-      "crm_found": false,
+      "crm_entity_id": 50394827,
+      "crm_entity_type": "lead",
+      "crm_found": true,
       "event_date": "2026-08-01",
       "event_type": "Свадьба",
       "guests_count": null,
@@ -57,16 +57,16 @@
       "manager_username": "",
       "name": "Вячеслав",
       "source": "Заявки хост",
-      "status": "PENDING",
+      "status": "OK",
       "violations": []
     },
     {
       "created_at": "2026-11-14T17:39:33+03:00",
-      "crm_entity_id": null,
-      "crm_entity_type": null,
-      "crm_found": false,
+      "crm_entity_id": 50394801,
+      "crm_entity_type": "lead",
+      "crm_found": true,
       "event_date": "2026-12-18",
-      "event_type": "",
+      "event_type": "Корпоратив",
       "guests_count": 50,
       "identifier": "7********04",
       "identifier_type": "phone",
@@ -75,9 +75,9 @@
       "manager_username": "",
       "name": "Яна",
       "source": "Заявки хост",
-      "status": "ALARM_NO_CRM",
+      "status": "LATE_CRM",
       "violations": [
-        "ALARM_NO_CRM"
+        "LATE_CRM"
       ]
     },
     {
@@ -415,7 +415,7 @@
   ],
   "needs_review": 140,
   "no_reaction": 0,
-  "ok": 859,
+  "ok": 860,
   "total_leads": 1107,
-  "updated_at": "2026-11-15T08:31:17+03:00"
+  "updated_at": "2026-11-15T08:59:14+03:00"
 }
