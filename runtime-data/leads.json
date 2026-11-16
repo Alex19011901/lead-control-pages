@@ -113549,8 +113549,7 @@
       "crm_feedback": {
         "closed_at": null,
         "crm_lead_id": 50342805,
-        "deadline_at": 1794776400,
-        "excluded": false,
+        "excluded": true,
         "first_activity_at": null,
         "lead_created_at": 1794506981,
         "loss_reason_checked": true,
@@ -113559,9 +113558,9 @@
         "pipeline_id": 10081590,
         "responsible_user_id": 13009530,
         "rule_version": 6,
-        "state": "NO_FEEDBACK",
-        "status_id": 80331318,
-        "status_name": "Предбронь"
+        "state": "EXCLUDED",
+        "status_id": 86372998,
+        "status_name": "ЖДУНЫ"
       },
       "crm_found": true,
       "crm_required": true,
@@ -113640,8 +113639,7 @@
       "crm_feedback": {
         "closed_at": null,
         "crm_lead_id": 50342805,
-        "deadline_at": 1794776400,
-        "excluded": false,
+        "excluded": true,
         "first_activity_at": null,
         "lead_created_at": 1794506981,
         "loss_reason_checked": true,
@@ -113650,9 +113648,9 @@
         "pipeline_id": 10081590,
         "responsible_user_id": 13009530,
         "rule_version": 6,
-        "state": "NO_FEEDBACK",
-        "status_id": 80331318,
-        "status_name": "Предбронь"
+        "state": "EXCLUDED",
+        "status_id": 86372998,
+        "status_name": "ЖДУНЫ"
       },
       "crm_found": true,
       "crm_required": true,
@@ -113806,6 +113804,22 @@
     {
       "category": "HOST",
       "channel": "MAX",
+      "closed_not_realized": {
+        "closed_at": 1794813127,
+        "crm_lead_id": 50341353,
+        "last_comment": "отмена",
+        "last_comment_at": 1794813120,
+        "last_record_at": 1794813120,
+        "last_record_author": "Олеся",
+        "last_record_display": "отмена",
+        "last_record_errors": [],
+        "last_record_id": "2ef277af-c41a-4fbc-bf8b-a175e7a07acf",
+        "last_record_rule_version": 5,
+        "last_record_status": "VERIFIED",
+        "last_record_type": "entity_direct_message",
+        "loss_reason_id": 21779746,
+        "loss_reason_name": "Выбрали других"
+      },
       "crm": {
         "ambiguity_count": 0,
         "created_at": 1794503676,
@@ -113821,23 +113835,30 @@
       },
       "crm_created_at": 1794503676,
       "crm_feedback": {
-        "closed_at": null,
+        "closed_at": 1794813127,
         "crm_lead_id": 50341353,
-        "deadline_at": 1794776400,
-        "excluded": false,
+        "excluded": true,
         "first_activity_at": null,
         "lead_created_at": 1794503676,
         "loss_reason_checked": true,
-        "loss_reason_id": null,
-        "loss_reason_name": "",
+        "loss_reason_id": 21779746,
+        "loss_reason_name": "Выбрали других",
         "pipeline_id": 10081590,
         "responsible_user_id": 13009530,
         "rule_version": 6,
-        "state": "NO_FEEDBACK",
-        "status_id": 80331318,
-        "status_name": "Предбронь"
+        "state": "EXCLUDED",
+        "status_id": 143,
+        "status_name": "Закрыто и не реализовано"
       },
       "crm_found": true,
+      "crm_outcome": {
+        "closed_at": 1794813127,
+        "loss_reason_id": 21779746,
+        "loss_reason_name": "Выбрали других",
+        "result": "LOST",
+        "status_id": 143,
+        "status_name": "Закрыто и не реализовано"
+      },
       "crm_required": true,
       "crm_responsible": 13009530,
       "deadline_msk_ts": 1794517199,
@@ -113886,6 +113907,20 @@
       "message_id": "mid.ffffbec8f345ffab01a1cfc8c78f0c63",
       "name": "Юлия",
       "phone": "89163417042",
+      "preclose_record_cache": {
+        "closed_at": 1794813127,
+        "crm_lead_id": 50341353,
+        "last_comment": "отмена",
+        "last_comment_at": 1794813120,
+        "last_record_at": 1794813120,
+        "last_record_author": "Олеся",
+        "last_record_display": "отмена",
+        "last_record_errors": [],
+        "last_record_id": "2ef277af-c41a-4fbc-bf8b-a175e7a07acf",
+        "last_record_rule_version": 5,
+        "last_record_status": "VERIFIED",
+        "last_record_type": "entity_direct_message"
+      },
       "received_at": "2026-11-12T15:43:24+03:00",
       "sender_name": "Елена",
       "sender_user_id": 121513620,
@@ -114096,8 +114131,7 @@
       "crm_feedback": {
         "closed_at": null,
         "crm_lead_id": 50341603,
-        "deadline_at": 1794776400,
-        "excluded": false,
+        "excluded": true,
         "first_activity_at": null,
         "lead_created_at": 1794504112,
         "loss_reason_checked": true,
@@ -114106,9 +114140,9 @@
         "pipeline_id": 10081590,
         "responsible_user_id": 13009530,
         "rule_version": 6,
-        "state": "NO_FEEDBACK",
-        "status_id": 80331318,
-        "status_name": "Предбронь"
+        "state": "EXCLUDED",
+        "status_id": 79927046,
+        "status_name": "Согласование договора"
       },
       "crm_found": true,
       "crm_required": true,
@@ -114764,27 +114798,48 @@
       "channel": "MAX",
       "crm": {
         "ambiguity_count": 0,
-        "created_at": null,
-        "entity_id": null,
-        "entity_type": null,
-        "event_type": null,
-        "found": false,
-        "responsible_user_id": null,
-        "responsible_user_name": null,
-        "updated_at": null
+        "created_at": 1794811020,
+        "entity_id": 50413769,
+        "entity_type": "lead",
+        "event_type": "Юбилей",
+        "found": true,
+        "guests": "18",
+        "guests_source": "CRM",
+        "responsible_user_id": 12982830,
+        "responsible_user_name": "Максим",
+        "updated_at": 1794813790
       },
-      "crm_created_at": null,
-      "crm_found": false,
+      "crm_created_at": 1794811020,
+      "crm_feedback": {
+        "closed_at": null,
+        "crm_lead_id": 50413769,
+        "deadline_at": 1795122000,
+        "excluded": false,
+        "first_activity_at": null,
+        "lead_created_at": 1794811020,
+        "loss_reason_checked": true,
+        "loss_reason_id": null,
+        "loss_reason_name": "",
+        "pipeline_id": 10081590,
+        "responsible_user_id": 12982830,
+        "rule_version": 6,
+        "state": "WAITING",
+        "status_id": 79927034,
+        "status_name": "Первичный контакт"
+      },
+      "crm_found": true,
       "crm_required": true,
-      "crm_responsible": null,
+      "crm_responsible": 12982830,
       "deadline_msk_ts": 1794776399,
       "event_date": "2026-11-22",
+      "event_type": "Юбилей",
+      "event_type_source": "CRM",
       "fields": {
         "category": "HOST",
         "email": "",
         "event_date": "2026-11-22",
         "event_date_raw": "22.11",
-        "event_type": "ДР",
+        "event_type": "Юбилей",
         "guests_count": 18,
         "guests_max": null,
         "guests_min": null,
@@ -114825,10 +114880,10 @@
       "sender_name": "Мария Гри",
       "sender_user_id": 21057333,
       "source": "Заявки хост",
-      "status": "ALARM_NO_CRM",
+      "status": "LATE_CRM",
       "username": "",
       "violations": [
-        "ALARM_NO_CRM"
+        "LATE_CRM"
       ]
     },
     {
@@ -114853,7 +114908,7 @@
         "crm_lead_id": 50406159,
         "deadline_at": 1795035600,
         "excluded": false,
-        "first_activity_at": null,
+        "first_activity_at": 1794814381,
         "lead_created_at": 1794765999,
         "loss_reason_checked": true,
         "loss_reason_id": null,
@@ -114861,7 +114916,7 @@
         "pipeline_id": 10081590,
         "responsible_user_id": 12982830,
         "rule_version": 6,
-        "state": "WAITING",
+        "state": "CLEAR",
         "status_id": 79927034,
         "status_name": "Первичный контакт"
       },
@@ -115040,6 +115095,11 @@
       },
       "2026-11-15": {
         "79927038": 1
+      },
+      "2026-11-16": {
+        "143": 1,
+        "79927046": 1,
+        "86372998": 1
       }
     },
     "pipeline_id": 10081590,
@@ -115122,7 +115182,7 @@
       }
     ],
     "today": "2026-11-16",
-    "total_movements": 255,
+    "total_movements": 258,
     "weeks": [
       {
         "dates": [

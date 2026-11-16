@@ -1,5 +1,5 @@
 {
-  "alarm_no_crm": 3,
+  "alarm_no_crm": 2,
   "by_manager": {
     "no_manager_reaction": 895,
     "Максим": 119,
@@ -22,7 +22,7 @@
     "unknown": 131,
     "Бизнес мероприятие": 58,
     "Выпускной": 17,
-    "ДР": 3,
+    "ДР": 2,
     "Деловое мероприятие": 1,
     "Детский праздник": 7,
     "Конференция": 1,
@@ -30,7 +30,7 @@
     "Поминки": 2,
     "Свадьба": 300,
     "Съёмки": 2,
-    "Юбилей": 190
+    "Юбилей": 191
   },
   "guest_ranges": {
     "1-20": 287,
@@ -40,7 +40,7 @@
     "51-100": 191,
     "unknown": 202
   },
-  "late_crm": 187,
+  "late_crm": 188,
   "latest_leads": [
     {
       "created_at": "2026-11-15T19:53:18+03:00",
@@ -62,11 +62,11 @@
     },
     {
       "created_at": "2026-11-15T17:48:47+03:00",
-      "crm_entity_id": null,
-      "crm_entity_type": null,
-      "crm_found": false,
+      "crm_entity_id": 50413769,
+      "crm_entity_type": "lead",
+      "crm_found": true,
       "event_date": "2026-11-22",
-      "event_type": "ДР",
+      "event_type": "Юбилей",
       "guests_count": 18,
       "identifier": "7********92",
       "identifier_type": "phone",
@@ -75,9 +75,9 @@
       "manager_username": "",
       "name": "Людмила",
       "source": "Заявки хост",
-      "status": "ALARM_NO_CRM",
+      "status": "LATE_CRM",
       "violations": [
-        "ALARM_NO_CRM"
+        "LATE_CRM"
       ]
     },
     {
@@ -419,5 +419,5 @@
   "no_reaction": 0,
   "ok": 863,
   "total_leads": 1111,
-  "updated_at": "2026-11-16T08:49:30+03:00"
+  "updated_at": "2026-11-16T10:43:39+03:00"
 }
