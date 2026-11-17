@@ -19,14 +19,14 @@
     "ТоМесто": 2
   },
   "event_types": {
-    "unknown": 133,
+    "unknown": 131,
     "Бизнес мероприятие": 58,
-    "Выпускной": 17,
+    "Выпускной": 18,
     "ДР": 2,
     "Деловое мероприятие": 1,
     "Детский праздник": 7,
     "Конференция": 1,
-    "Корпоратив": 400,
+    "Корпоратив": 401,
     "Поминки": 2,
     "Свадьба": 300,
     "Съёмки": 2,
@@ -44,11 +44,11 @@
   "latest_leads": [
     {
       "created_at": "2026-11-16T16:29:55+03:00",
-      "crm_entity_id": null,
-      "crm_entity_type": null,
-      "crm_found": false,
+      "crm_entity_id": 50431789,
+      "crm_entity_type": "lead",
+      "crm_found": true,
       "event_date": "2026-12-23",
-      "event_type": "",
+      "event_type": "Корпоратив",
       "guests_count": 45,
       "identifier": "7********32",
       "identifier_type": "phone",
@@ -57,16 +57,16 @@
       "manager_username": "",
       "name": "Елена",
       "source": "Заявки хост",
-      "status": "PENDING",
+      "status": "OK",
       "violations": []
     },
     {
       "created_at": "2026-11-16T12:33:47+03:00",
-      "crm_entity_id": null,
-      "crm_entity_type": null,
-      "crm_found": false,
+      "crm_entity_id": 50431803,
+      "crm_entity_type": "lead",
+      "crm_found": true,
       "event_date": "",
-      "event_type": "",
+      "event_type": "Выпускной",
       "guests_count": 55,
       "identifier": "7********55",
       "identifier_type": "phone",
@@ -75,14 +75,14 @@
       "manager_username": "",
       "name": "Дмитрий",
       "source": "Заявки хост",
-      "status": "PENDING",
+      "status": "OK",
       "violations": []
     },
     {
       "created_at": "2026-11-16T12:29:21+03:00",
-      "crm_entity_id": null,
-      "crm_entity_type": null,
-      "crm_found": false,
+      "crm_entity_id": 50431815,
+      "crm_entity_type": "lead",
+      "crm_found": true,
       "event_date": "2026-01-30",
       "event_type": "Юбилей",
       "guests_count": null,
@@ -93,7 +93,7 @@
       "manager_username": "",
       "name": "Татьяна",
       "source": "Заявки хост",
-      "status": "PENDING",
+      "status": "OK",
       "violations": []
     },
     {
@@ -417,7 +417,7 @@
   ],
   "needs_review": 136,
   "no_reaction": 0,
-  "ok": 864,
+  "ok": 867,
   "total_leads": 1115,
-  "updated_at": "2026-11-16T21:32:25+03:00"
+  "updated_at": "2026-11-17T08:32:37+03:00"
 }
