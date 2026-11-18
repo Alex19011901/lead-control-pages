@@ -19,16 +19,14 @@
     "ТоМесто": 2
   },
   "event_types": {
-    "unknown": 136,
-    "Бизнес игра": 1,
-    "Бизнес мероприятие": 58,
+    "unknown": 131,
+    "Бизнес мероприятие": 61,
     "Выпускной": 18,
     "ДР": 2,
     "Деловое мероприятие": 1,
-    "Детский праздник": 7,
+    "Детский праздник": 8,
     "Конференция": 1,
-    "Корпоратив": 402,
-    "Поминальный обед": 1,
+    "Корпоратив": 405,
     "Поминки": 2,
     "Свадьба": 301,
     "Съёмки": 2,
@@ -42,15 +40,15 @@
     "51-100": 193,
     "unknown": 206
   },
-  "late_crm": 188,
+  "late_crm": 195,
   "latest_leads": [
     {
       "created_at": "2026-11-17T20:46:56+03:00",
-      "crm_entity_id": null,
-      "crm_entity_type": null,
-      "crm_found": false,
+      "crm_entity_id": 50457587,
+      "crm_entity_type": "lead",
+      "crm_found": true,
       "event_date": "2026-11-19",
-      "event_type": "",
+      "event_type": "Бизнес мероприятие",
       "guests_count": 6,
       "identifier": "7********31",
       "identifier_type": "phone",
@@ -59,16 +57,16 @@
       "manager_username": "",
       "name": "Евгений",
       "source": "Заявки хост",
-      "status": "PENDING",
+      "status": "OK",
       "violations": []
     },
     {
       "created_at": "2026-11-17T20:22:19+03:00",
-      "crm_entity_id": null,
-      "crm_entity_type": null,
-      "crm_found": false,
+      "crm_entity_id": 50457589,
+      "crm_entity_type": "lead",
+      "crm_found": true,
       "event_date": "2026-12-06",
-      "event_type": "",
+      "event_type": "Детский праздник",
       "guests_count": null,
       "identifier": "7********13",
       "identifier_type": "phone",
@@ -77,16 +75,16 @@
       "manager_username": "",
       "name": "Гендер",
       "source": "Заявки хост",
-      "status": "PENDING",
+      "status": "OK",
       "violations": []
     },
     {
       "created_at": "2026-11-17T14:23:11+03:00",
-      "crm_entity_id": null,
-      "crm_entity_type": null,
-      "crm_found": false,
+      "crm_entity_id": 50457595,
+      "crm_entity_type": "lead",
+      "crm_found": true,
       "event_date": "2026-11-26",
-      "event_type": "",
+      "event_type": "Бизнес мероприятие",
       "guests_count": null,
       "identifier": "7********62",
       "identifier_type": "phone",
@@ -95,14 +93,16 @@
       "manager_username": "",
       "name": "Татьяна",
       "source": "Заявки хост",
-      "status": "PENDING",
-      "violations": []
+      "status": "LATE_CRM",
+      "violations": [
+        "LATE_CRM"
+      ]
     },
     {
       "created_at": "2026-11-17T13:57:17+03:00",
-      "crm_entity_id": null,
-      "crm_entity_type": null,
-      "crm_found": false,
+      "crm_entity_id": 50457597,
+      "crm_entity_type": "lead",
+      "crm_found": true,
       "event_date": "2026-12-25",
       "event_type": "Корпоратив",
       "guests_count": 60,
@@ -113,16 +113,18 @@
       "manager_username": "",
       "name": "Мария",
       "source": "Заявки хост",
-      "status": "PENDING",
-      "violations": []
+      "status": "LATE_CRM",
+      "violations": [
+        "LATE_CRM"
+      ]
     },
     {
       "created_at": "2026-11-17T13:45:16+03:00",
-      "crm_entity_id": null,
-      "crm_entity_type": null,
-      "crm_found": false,
+      "crm_entity_id": 50457601,
+      "crm_entity_type": "lead",
+      "crm_found": true,
       "event_date": "2026-12-17",
-      "event_type": "",
+      "event_type": "Корпоратив",
       "guests_count": 40,
       "identifier": "7********53",
       "identifier_type": "phone",
@@ -131,16 +133,18 @@
       "manager_username": "",
       "name": "Анастасия",
       "source": "Заявки хост",
-      "status": "PENDING",
-      "violations": []
+      "status": "LATE_CRM",
+      "violations": [
+        "LATE_CRM"
+      ]
     },
     {
       "created_at": "2026-11-17T13:25:56+03:00",
-      "crm_entity_id": null,
-      "crm_entity_type": null,
-      "crm_found": false,
+      "crm_entity_id": 50457611,
+      "crm_entity_type": "lead",
+      "crm_found": true,
       "event_date": "2026-12-19",
-      "event_type": "",
+      "event_type": "Корпоратив",
       "guests_count": 30,
       "identifier": "7********55",
       "identifier_type": "phone",
@@ -149,14 +153,16 @@
       "manager_username": "",
       "name": "Саида",
       "source": "Заявки хост",
-      "status": "PENDING",
-      "violations": []
+      "status": "LATE_CRM",
+      "violations": [
+        "LATE_CRM"
+      ]
     },
     {
       "created_at": "2026-11-17T13:21:53+03:00",
-      "crm_entity_id": null,
-      "crm_entity_type": null,
-      "crm_found": false,
+      "crm_entity_id": 50457615,
+      "crm_entity_type": "lead",
+      "crm_found": true,
       "event_date": "",
       "event_type": "Свадьба",
       "guests_count": 10,
@@ -167,16 +173,18 @@
       "manager_username": "",
       "name": "Яна",
       "source": "Заявки хост",
-      "status": "PENDING",
-      "violations": []
+      "status": "LATE_CRM",
+      "violations": [
+        "LATE_CRM"
+      ]
     },
     {
       "created_at": "2026-11-17T12:30:00+03:00",
-      "crm_entity_id": null,
-      "crm_entity_type": null,
-      "crm_found": false,
+      "crm_entity_id": 50457621,
+      "crm_entity_type": "lead",
+      "crm_found": true,
       "event_date": "2026-11-19",
-      "event_type": "Поминальный обед",
+      "event_type": "Корпоратив",
       "guests_count": 30,
       "identifier": "7********73",
       "identifier_type": "phone",
@@ -185,16 +193,18 @@
       "manager_username": "",
       "name": "Арина",
       "source": "Заявки хост",
-      "status": "PENDING",
-      "violations": []
+      "status": "LATE_CRM",
+      "violations": [
+        "LATE_CRM"
+      ]
     },
     {
       "created_at": "2026-11-17T11:45:32+03:00",
-      "crm_entity_id": null,
-      "crm_entity_type": null,
-      "crm_found": false,
+      "crm_entity_id": 50457629,
+      "crm_entity_type": "lead",
+      "crm_found": true,
       "event_date": "2026-11-28",
-      "event_type": "Бизнес игра",
+      "event_type": "Бизнес мероприятие",
       "guests_count": 12,
       "identifier": "7********58",
       "identifier_type": "phone",
@@ -203,8 +213,10 @@
       "manager_username": "",
       "name": "Анастасия",
       "source": "Заявки хост",
-      "status": "PENDING",
-      "violations": []
+      "status": "LATE_CRM",
+      "violations": [
+        "LATE_CRM"
+      ]
     },
     {
       "created_at": "2026-11-16T16:29:55+03:00",
@@ -411,7 +423,7 @@
   ],
   "needs_review": 136,
   "no_reaction": 0,
-  "ok": 867,
+  "ok": 869,
   "total_leads": 1124,
-  "updated_at": "2026-11-17T21:55:01+03:00"
+  "updated_at": "2026-11-18T08:29:51+03:00"
 }
