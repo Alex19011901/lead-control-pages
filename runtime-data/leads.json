@@ -117033,6 +117033,76 @@
       "status": "OK",
       "username": "",
       "violations": []
+    },
+    {
+      "category": "HOST",
+      "channel": "MAX",
+      "crm": {
+        "ambiguity_count": 0,
+        "created_at": null,
+        "entity_id": null,
+        "entity_type": null,
+        "event_type": null,
+        "found": false,
+        "responsible_user_id": null,
+        "responsible_user_name": null,
+        "updated_at": null
+      },
+      "crm_created_at": null,
+      "crm_found": false,
+      "crm_required": true,
+      "crm_responsible": null,
+      "deadline_msk_ts": 1795035599,
+      "event_date": "2026-07-23",
+      "fields": {
+        "category": "HOST",
+        "email": "",
+        "event_date": "2026-07-23",
+        "event_date_raw": "23 июля",
+        "event_type": "",
+        "guests_count": 12,
+        "guests_max": null,
+        "guests_min": null,
+        "guests_raw": "12 персон",
+        "name": "Виталий",
+        "phone_digits": "79166663121",
+        "phone_raw": "8916-666-31-21",
+        "source": "Заявки хост",
+        "telegram_username": ""
+      },
+      "first_seen_at": "2026-11-18T15:19:05+03:00",
+      "first_seen_ts": 1795004345,
+      "guests": 12,
+      "guests_max": null,
+      "guests_min": null,
+      "guests_raw": "12 персон",
+      "id": "da09f17ce5b2a0ec",
+      "identifier": {
+        "type": "phone",
+        "value": "79166663121"
+      },
+      "last_seen_at": "2026-11-18T15:19:05+03:00",
+      "last_seen_ts": 1795004345,
+      "manager_reaction": null,
+      "max": {
+        "chat_id": -71704692523093,
+        "message_ids": [
+          "mid.ffffbec8f345ffab01a1ee98ab993002"
+        ],
+        "sender_name": "Алёна",
+        "sender_user_id": 154877013,
+        "sender_username": null
+      },
+      "message_id": "mid.ffffbec8f345ffab01a1ee98ab993002",
+      "name": "Виталий",
+      "phone": "8916-666-31-21",
+      "received_at": "2026-11-18T15:19:05+03:00",
+      "sender_name": "Алёна",
+      "sender_user_id": 154877013,
+      "source": "Заявки хост",
+      "status": "PENDING",
+      "username": "",
+      "violations": []
     }
   ],
   "pipeline_activity": {
