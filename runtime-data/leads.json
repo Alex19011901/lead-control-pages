@@ -36996,28 +36996,72 @@
     {
       "category": "САЙТ ТИЛЬДА",
       "channel": "TELEGRAM",
+      "closed_not_realized": {
+        "closed_at": 1795097092,
+        "crm_lead_id": 50499813,
+        "last_comment": "МЗ не рассм (была). ОЗ дорогр",
+        "last_comment_at": 1795097094,
+        "last_record_at": 1795097094,
+        "last_record_author": "",
+        "last_record_display": "МЗ не рассм (была). ОЗ дорогр",
+        "last_record_errors": [],
+        "last_record_id": "325953719",
+        "last_record_rule_version": 5,
+        "last_record_status": "VERIFIED",
+        "last_record_type": "common",
+        "loss_reason_id": 21779734,
+        "loss_reason_name": "Слишком дорого"
+      },
       "crm": {
         "ambiguity_count": 0,
-        "created_at": null,
-        "entity_id": null,
-        "entity_type": null,
-        "event_type": null,
-        "found": false,
-        "responsible_user_id": null,
-        "responsible_user_name": null,
-        "updated_at": null
+        "created_at": 1795097092,
+        "entity_id": 50499813,
+        "entity_type": "lead",
+        "event_type": "Корпоратив",
+        "found": true,
+        "guests": "40",
+        "guests_source": "CRM",
+        "responsible_user_id": 12982830,
+        "responsible_user_name": "Максим",
+        "updated_at": 1795097094
       },
-      "crm_created_at": null,
-      "crm_found": false,
+      "crm_created_at": 1795097092,
+      "crm_feedback": {
+        "closed_at": 1795097092,
+        "crm_lead_id": 50499813,
+        "excluded": true,
+        "first_activity_at": null,
+        "lead_created_at": 1795097092,
+        "loss_reason_checked": true,
+        "loss_reason_id": 21779734,
+        "loss_reason_name": "Слишком дорого",
+        "pipeline_id": 10081590,
+        "responsible_user_id": 12982830,
+        "rule_version": 6,
+        "state": "EXCLUDED",
+        "status_id": 143,
+        "status_name": "Закрыто и не реализовано"
+      },
+      "crm_found": true,
+      "crm_outcome": {
+        "closed_at": 1795097092,
+        "loss_reason_id": 21779734,
+        "loss_reason_name": "Слишком дорого",
+        "result": "LOST",
+        "status_id": 143,
+        "status_name": "Закрыто и не реализовано"
+      },
       "crm_required": true,
-      "crm_responsible": null,
+      "crm_responsible": 12982830,
       "deadline_msk_ts": 1795121999,
+      "event_type": "Корпоратив",
+      "event_type_source": "CRM",
       "fields": {
         "category": "САЙТ ТИЛЬДА",
         "description": "Содержание заявки:\nName: Алина\nPhone: +79031052414\nДата: 08-12-2026\nКол-во_гостей: 40\nCheckbox: yes\npage_url: https://moscowbanket.ru/#dati\npage_referrer: https://svetliy-moscow.ru/\nform_submit_timestamp: 1795096042\nmetrika_client_id: 1795080006643173142\nym_client_id: 1795080006643173142\nym_clientid: 1795080006643173142\nym_uid: 1795080006643173142\n_ym_uid: 1795080006643173142\nclient_id: 1795080006643173142\nclientid: 1795080006643173142\nyandex_client_id: 1795080006643173142\nya_client_id: 1795080006643173142\n\nДополнительная информация:\nКод заявки: 2925975:8825910582\nКод блока: rec1193957381\nhttps://moscowbanket.ru/#dati\n-----",
         "event_date": "2026-12-08",
         "event_date_raw": "08-12-2026",
-        "event_type": "",
+        "event_type": "Корпоратив",
         "form_submit_timestamp": 1795096042,
         "guests_count": 40,
         "metrika_client_id": "1795080006643173142",
@@ -37051,12 +37095,26 @@
         "user_id": 392177002,
         "username": "empairbey"
       },
+      "preclose_record_cache": {
+        "closed_at": 1795097092,
+        "crm_lead_id": 50499813,
+        "last_comment": "МЗ не рассм (была). ОЗ дорогр",
+        "last_comment_at": 1795097094,
+        "last_record_at": 1795097094,
+        "last_record_author": "",
+        "last_record_display": "МЗ не рассм (была). ОЗ дорогр",
+        "last_record_errors": [],
+        "last_record_id": "325953719",
+        "last_record_rule_version": 5,
+        "last_record_status": "VERIFIED",
+        "last_record_type": "common"
+      },
       "received_at": "2026-11-19T16:47:23+03:00",
       "sender_name": "TildaForms",
       "sender_user_id": 265299531,
       "sender_username": "TildaFormsBot",
       "source": "САЙТ ТИЛЬДА",
-      "status": "PENDING",
+      "status": "OK",
       "telegram": {
         "chat_id": -1001645768111,
         "message_ids": [
@@ -118133,7 +118191,7 @@
         "80331318": 2
       },
       "2026-11-19": {
-        "143": 3,
+        "143": 4,
         "79927038": 1,
         "79927914": 1
       }
@@ -118218,7 +118276,7 @@
       }
     ],
     "today": "2026-11-19",
-    "total_movements": 295,
+    "total_movements": 296,
     "weeks": [
       {
         "dates": [

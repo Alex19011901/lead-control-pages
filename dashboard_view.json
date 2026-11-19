@@ -5,8 +5,7 @@
       "end": "2026-11-19",
       "total": 7,
       "status": {
-        "OK": 5,
-        "PENDING": 1,
+        "OK": 6,
         "-": 1
       },
       "source": {
@@ -26,9 +25,9 @@
       },
       "event": {
         "Юбилей": 2,
-        "Корпоратив": 1,
+        "Корпоратив": 2,
         "Свадьба": 1,
-        "Не определено": 2
+        "Не определено": 1
       },
       "days": [
         [
@@ -77,8 +76,7 @@
       "total": 40,
       "status": {
         "LATE_CRM": 13,
-        "OK": 25,
-        "PENDING": 1,
+        "OK": 26,
         "-": 1
       },
       "source": {
@@ -101,11 +99,11 @@
       "event": {
         "Свадьба": 6,
         "Юбилей": 7,
-        "Корпоратив": 17,
+        "Корпоратив": 18,
         "Бизнес мероприятие": 4,
         "Выпускной": 1,
         "Детский праздник": 1,
-        "Не определено": 3
+        "Не определено": 2
       },
       "days": [
         [
@@ -143,10 +141,9 @@
       "end": "2026-11-19",
       "total": 244,
       "status": {
-        "OK": 218,
+        "OK": 219,
         "-": 5,
-        "LATE_CRM": 20,
-        "PENDING": 1
+        "LATE_CRM": 20
       },
       "source": {
         "MARQUIZ": 9,
@@ -171,13 +168,13 @@
       },
       "event": {
         "Деловое мероприятие": 1,
-        "Корпоратив": 118,
+        "Корпоратив": 119,
         "Свадьба": 50,
         "Бизнес мероприятие": 18,
         "Юбилей": 35,
         "Выпускной": 6,
         "Поминки": 1,
-        "Не определено": 9,
+        "Не определено": 8,
         "Детский праздник": 2
       },
       "days": [
@@ -307,8 +304,7 @@
         "LATE_CRM": 195,
         "ALARM_NO_CRM": 2,
         "-": 59,
-        "OK": 882,
-        "PENDING": 1
+        "OK": 883
       },
       "source": {
         "САЙТ ТИЛЬДА": 285,
@@ -337,9 +333,9 @@
       },
       "event": {
         "Юбилей": 197,
-        "Корпоратив": 410,
+        "Корпоратив": 411,
         "Свадьба": 304,
-        "Не определено": 82,
+        "Не определено": 81,
         "Бизнес мероприятие": 61,
         "Детский праздник": 8,
         "Съёмки": 2,
@@ -1045,16 +1041,16 @@
       "date": "2026-11-19",
       "ts": "2026-11-19T16:47:23+03:00",
       "source": "САЙТ ТИЛЬДА",
-      "status": "PENDING",
+      "status": "OK",
       "channel": "TELEGRAM",
       "guest_range": "40",
       "guests": "40",
-      "event_type": "unknown",
+      "event_type": "Корпоратив",
       "name": "Алина",
       "identifier": "79031052414",
-      "manager": "",
-      "crm_status": "",
-      "crm_loss_reason": ""
+      "manager": "Максим",
+      "crm_status": "Закрыто и не реализовано",
+      "crm_loss_reason": "Слишком дорого"
     },
     {
       "date": "2026-11-19",
@@ -1943,7 +1939,7 @@
     }
   ],
   "not_entered": [],
-  "snapshot_generated_at": "2026-11-19T13:59:24Z",
+  "snapshot_generated_at": "2026-11-19T14:17:23Z",
   "snapshot_at": "2026-11-19T16:47:23+03:00",
   "min_date": "2026-07-01",
   "max_date": "2026-11-19",
@@ -2268,7 +2264,7 @@
       "crm_status": "Первичный контакт",
       "first_activity_at": "",
       "first_activity_ts": null,
-      "age_seconds": 344620,
+      "age_seconds": 345700,
       "feedback_state": "NO_FEEDBACK"
     },
     {
@@ -2284,7 +2280,7 @@
       "crm_status": "Выслано предложение",
       "first_activity_at": "",
       "first_activity_ts": null,
-      "age_seconds": 354944,
+      "age_seconds": 356024,
       "feedback_state": "NO_FEEDBACK"
     },
     {
@@ -2300,7 +2296,7 @@
       "crm_status": "Выслано предложение",
       "first_activity_at": "",
       "first_activity_ts": null,
-      "age_seconds": 374699,
+      "age_seconds": 375779,
       "feedback_state": "NO_FEEDBACK"
     },
     {
@@ -2316,7 +2312,7 @@
       "crm_status": "Первичный контакт",
       "first_activity_at": "",
       "first_activity_ts": null,
-      "age_seconds": 374816,
+      "age_seconds": 375896,
       "feedback_state": "NO_FEEDBACK"
     },
     {
@@ -2332,7 +2328,7 @@
       "crm_status": "Первичный контакт",
       "first_activity_at": "",
       "first_activity_ts": null,
-      "age_seconds": 445881,
+      "age_seconds": 446961,
       "feedback_state": "NO_FEEDBACK"
     },
     {
@@ -2348,7 +2344,7 @@
       "crm_status": "Выслано предложение",
       "first_activity_at": "",
       "first_activity_ts": null,
-      "age_seconds": 490563,
+      "age_seconds": 491643,
       "feedback_state": "NO_FEEDBACK"
     },
     {
@@ -2364,7 +2360,7 @@
       "crm_status": "Выслано предложение",
       "first_activity_at": "",
       "first_activity_ts": null,
-      "age_seconds": 490798,
+      "age_seconds": 491878,
       "feedback_state": "NO_FEEDBACK"
     },
     {
@@ -2380,7 +2376,7 @@
       "crm_status": "Выслано предложение",
       "first_activity_at": "",
       "first_activity_ts": null,
-      "age_seconds": 491069,
+      "age_seconds": 492149,
       "feedback_state": "NO_FEEDBACK"
     },
     {
@@ -2396,7 +2392,7 @@
       "crm_status": "Выслано предложение",
       "first_activity_at": "",
       "first_activity_ts": null,
-      "age_seconds": 234963,
+      "age_seconds": 236043,
       "feedback_state": "WAITING_BLUE"
     },
     {
@@ -2412,7 +2408,7 @@
       "crm_status": "Выслано предложение",
       "first_activity_at": "",
       "first_activity_ts": null,
-      "age_seconds": 235018,
+      "age_seconds": 236098,
       "feedback_state": "WAITING_BLUE"
     },
     {
@@ -2428,7 +2424,7 @@
       "crm_status": "Выслано предложение",
       "first_activity_at": "",
       "first_activity_ts": null,
-      "age_seconds": 273226,
+      "age_seconds": 274306,
       "feedback_state": "WAITING_BLUE"
     },
     {
@@ -2444,7 +2440,7 @@
       "crm_status": "Первичный контакт",
       "first_activity_at": "",
       "first_activity_ts": null,
-      "age_seconds": 285744,
+      "age_seconds": 286824,
       "feedback_state": "WAITING_BLUE"
     }
   ],
@@ -2643,6 +2639,23 @@
     }
   ],
   "closed_not_realized": [
+    {
+      "crm_lead_id": 50499813,
+      "closed_at": "2026-11-19T17:04:52+03:00",
+      "closed_ts": 1795097092,
+      "source": "САЙТ ТИЛЬДА",
+      "name": "Алина",
+      "identifier": "79031052414",
+      "guests": "40",
+      "event_type": "Корпоратив",
+      "manager": "Максим",
+      "reason": "Слишком дорого",
+      "last_comment": "МЗ не рассм (была). ОЗ дорогр",
+      "last_record": "МЗ не рассм (была). ОЗ дорогр",
+      "last_record_at": "2026-11-19T17:04:54+03:00",
+      "last_record_type": "common",
+      "last_record_status": "VERIFIED"
+    },
     {
       "crm_lead_id": 50497043,
       "closed_at": "2026-11-19T15:06:32+03:00",
@@ -2934,10 +2947,17 @@
     }
   ],
   "closed_not_realized_summary": {
-    "total": 17,
+    "total": 18,
     "days": 5
   },
   "outcomes": [
+    {
+      "date": "2026-11-19",
+      "ts": "2026-11-19T16:47:23+03:00",
+      "manager": "Максим",
+      "result": "LOST",
+      "reason": "Слишком дорого"
+    },
     {
       "date": "2026-11-19",
       "ts": "2026-11-19T14:40:45+03:00",
@@ -9242,7 +9262,7 @@
         "80331318": 2
       },
       "2026-11-19": {
-        "143": 3,
+        "143": 4,
         "79927038": 1,
         "79927914": 1
       }
@@ -9327,7 +9347,7 @@
       }
     ],
     "today": "2026-11-19",
-    "total_movements": 295,
+    "total_movements": 296,
     "weeks": [
       {
         "dates": [
