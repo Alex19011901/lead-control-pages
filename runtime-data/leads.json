@@ -115690,7 +115690,7 @@
         "pipeline_id": 10081590,
         "responsible_user_id": 12982830,
         "rule_version": 6,
-        "state": "WAITING",
+        "state": "NO_FEEDBACK",
         "status_id": 79927034,
         "status_name": "Первичный контакт"
       },
@@ -115875,7 +115875,7 @@
         "pipeline_id": 10081590,
         "responsible_user_id": 13009530,
         "rule_version": 6,
-        "state": "WAITING",
+        "state": "NO_FEEDBACK",
         "status_id": 79927038,
         "status_name": "Выслано предложение"
       },
@@ -116094,7 +116094,7 @@
         "pipeline_id": 10081590,
         "responsible_user_id": 13009530,
         "rule_version": 6,
-        "state": "WAITING",
+        "state": "NO_FEEDBACK",
         "status_id": 79927038,
         "status_name": "Выслано предложение"
       },
@@ -116185,7 +116185,7 @@
         "pipeline_id": 10081590,
         "responsible_user_id": 13009530,
         "rule_version": 6,
-        "state": "WAITING",
+        "state": "NO_FEEDBACK",
         "status_id": 79927038,
         "status_name": "Выслано предложение"
       },
@@ -118164,6 +118164,97 @@
       "status": "OK",
       "username": "ya_a_nya",
       "violations": []
+    },
+    {
+      "category": "HOST",
+      "channel": "MAX",
+      "crm": {
+        "ambiguity_count": 0,
+        "created_at": 1795134432,
+        "entity_id": 50507163,
+        "entity_type": "lead",
+        "event_type": "Корпоратив",
+        "found": true,
+        "guests": "120",
+        "guests_source": "CRM",
+        "responsible_user_id": 12982830,
+        "responsible_user_name": "Максим",
+        "updated_at": 1795141096
+      },
+      "crm_created_at": 1795134432,
+      "crm_feedback": {
+        "closed_at": null,
+        "crm_lead_id": 50507163,
+        "deadline_at": 1795467600,
+        "excluded": false,
+        "first_activity_at": null,
+        "lead_created_at": 1795134432,
+        "loss_reason_checked": true,
+        "loss_reason_id": null,
+        "loss_reason_name": "",
+        "pipeline_id": 10081590,
+        "responsible_user_id": 12982830,
+        "rule_version": 6,
+        "state": "WAITING",
+        "status_id": 79927034,
+        "status_name": "Первичный контакт"
+      },
+      "crm_found": true,
+      "crm_required": true,
+      "crm_responsible": 12982830,
+      "deadline_msk_ts": 1795179600,
+      "event_date": "",
+      "event_type": "Корпоратив",
+      "event_type_source": "CRM",
+      "fields": {
+        "category": "HOST",
+        "email": "",
+        "event_date": "",
+        "event_date_raw": "",
+        "event_type": "Корпоратив",
+        "guests_count": 120,
+        "guests_max": null,
+        "guests_min": null,
+        "guests_raw": "",
+        "name": "Ольга",
+        "phone_digits": "79859986088",
+        "phone_raw": "89859986088",
+        "source": "Заявки хост",
+        "telegram_username": ""
+      },
+      "first_seen_at": "2026-11-19T21:50:41+03:00",
+      "first_seen_ts": 1795114241,
+      "guests": 120,
+      "guests_max": null,
+      "guests_min": null,
+      "guests_raw": "",
+      "id": "cc96debb67e13a69",
+      "identifier": {
+        "type": "phone",
+        "value": "79859986088"
+      },
+      "last_seen_at": "2026-11-19T21:50:41+03:00",
+      "last_seen_ts": 1795114241,
+      "manager_reaction": null,
+      "max": {
+        "chat_id": -71704692523093,
+        "message_ids": [
+          "mid.ffffbec8f345ffab01a1f5258c415f02"
+        ],
+        "sender_name": "SV",
+        "sender_user_id": 205529129,
+        "sender_username": null
+      },
+      "message_id": "mid.ffffbec8f345ffab01a1f5258c415f02",
+      "name": "Ольга",
+      "phone": "89859986088",
+      "received_at": "2026-11-19T21:50:41+03:00",
+      "sender_name": "SV",
+      "sender_user_id": 205529129,
+      "source": "Заявки хост",
+      "status": "OK",
+      "username": "",
+      "violations": []
     }
   ],
   "pipeline_activity": {
@@ -118387,7 +118478,7 @@
         "sort": 11000
       }
     ],
-    "today": "2026-11-19",
+    "today": "2026-11-20",
     "total_movements": 301,
     "weeks": [
       {
