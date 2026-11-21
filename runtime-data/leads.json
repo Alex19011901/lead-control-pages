@@ -37379,6 +37379,8 @@
       "crm_required": true,
       "crm_responsible": null,
       "deadline_msk_ts": 1795294799,
+      "event_date": "2026-12-05",
+      "event_type": "Свадьба",
       "fields": {
         "category": "САЙТ ТИЛЬДА",
         "description": "Содержание заявки:\nname: Григорий\nphone: +79661949179\nDate: 05-12-2026\nInput: 40\nCheckbox: yes\npage_url: https://moscowbanket.ru/weddings#dati\npage_referrer: https://moscowbanket.ru/weddings\nform_submit_timestamp: 1795209158\nmetrika_client_id: 1795208981237977914\nym_client_id: 1795208981237977914\nym_clientid: 1795208981237977914\nym_uid: 1795208981237977914\n_ym_uid: 1795208981237977914\nclient_id: 1795208981237977914\nclientid: 1795208981237977914\nyandex_client_id: 1795208981237977914\nya_client_id: 1795208981237977914\n\nДополнительная информация:\nКод заявки: 2925975:8829300682\nКод блока: rec917331922\nhttps://moscowbanket.ru/weddings#dati\n-----",
@@ -37397,6 +37399,8 @@
       },
       "first_seen_at": "2026-11-21T00:12:39+03:00",
       "first_seen_ts": 1795209159,
+      "guests": 40,
+      "guests_raw": "",
       "id": "a8b0e3a568f14911",
       "identifier": {
         "type": "phone",
@@ -37405,6 +37409,8 @@
       "last_seen_at": "2026-11-21T00:12:39+03:00",
       "last_seen_ts": 1795209159,
       "manager_reaction": null,
+      "name": "Григорий",
+      "phone": "+79661949179",
       "received_at": "2026-11-21T00:12:39+03:00",
       "sender_name": "TildaForms",
       "sender_user_id": 265299531,
@@ -37418,6 +37424,70 @@
         ],
         "update_ids": [
           185609325
+        ]
+      },
+      "violations": []
+    },
+    {
+      "category": "САЙТ ТИЛЬДА",
+      "channel": "TELEGRAM",
+      "crm": {
+        "found": false,
+        "required": false
+      },
+      "crm_check_status": "NOT_REQUIRED",
+      "crm_created_at": null,
+      "crm_found": false,
+      "crm_required": false,
+      "crm_responsible": null,
+      "deadline_msk_ts": 1795294799,
+      "duplicate_of": "a8b0e3a568f14911",
+      "event_date": "2026-12-05",
+      "event_type": "",
+      "fields": {
+        "category": "САЙТ ТИЛЬДА",
+        "description": "Содержание заявки:\nName: Григорий\nPhone: +79661949179\nДата: 05-12-2026\nКол-во_гостей: 35\nCheckbox: yes\npage_url: https://moscowbanket.ru/#dati\npage_referrer: https://www.google.com/\nform_submit_timestamp: 1795253903\nmetrika_client_id: 1795208981237977914\nym_client_id: 1795208981237977914\nym_clientid: 1795208981237977914\nym_uid: 1795208981237977914\n_ym_uid: 1795208981237977914\nclient_id: 1795208981237977914\nclientid: 1795208981237977914\nyandex_client_id: 1795208981237977914\nya_client_id: 1795208981237977914\n\nДополнительная информация:\nКод заявки: 2925975:8829965922\nКод блока: rec1193957381\nhttps://moscowbanket.ru/#dati\n-----",
+        "event_date": "2026-12-05",
+        "event_date_raw": "05-12-2026",
+        "event_type": "",
+        "form_submit_timestamp": 1795253903,
+        "guests_count": 35,
+        "metrika_client_id": "1795208981237977914",
+        "name": "Григорий",
+        "phone_digits": "79661949179",
+        "phone_raw": "+79661949179",
+        "source": "САЙТ ТИЛЬДА",
+        "telegram_username": "",
+        "yclid": ""
+      },
+      "first_seen_at": "2026-11-21T12:38:23+03:00",
+      "first_seen_ts": 1795253903,
+      "guests": 35,
+      "guests_raw": "",
+      "id": "e914411987c00c73",
+      "identifier": {
+        "type": "phone",
+        "value": "79661949179"
+      },
+      "is_duplicate": true,
+      "last_seen_at": "2026-11-21T12:38:23+03:00",
+      "last_seen_ts": 1795253903,
+      "manager_reaction": null,
+      "name": "Григорий",
+      "phone": "+79661949179",
+      "received_at": "2026-11-21T12:38:23+03:00",
+      "sender_name": "TildaForms",
+      "sender_user_id": 265299531,
+      "sender_username": "TildaFormsBot",
+      "source": "САЙТ ТИЛЬДА",
+      "status": "DUPLICATE",
+      "telegram": {
+        "chat_id": -1001645768111,
+        "message_ids": [
+          6476
+        ],
+        "update_ids": [
+          185609326
         ]
       },
       "violations": []
@@ -119264,6 +119334,144 @@
       "sender_user_id": 121513620,
       "source": "Заявки хост",
       "status": "OK",
+      "username": "",
+      "violations": []
+    },
+    {
+      "category": "HOST",
+      "channel": "MAX",
+      "crm": {
+        "found": false,
+        "required": false
+      },
+      "crm_check_status": "NOT_REQUIRED",
+      "crm_created_at": null,
+      "crm_found": false,
+      "crm_required": false,
+      "crm_responsible": null,
+      "deadline_msk_ts": 1795294799,
+      "duplicate_of": "a8b0e3a568f14911",
+      "event_date": "2026-12-05",
+      "event_type": "Свадьба",
+      "event_type_source": "MESSAGE",
+      "fields": {
+        "category": "HOST",
+        "email": "",
+        "event_date": "2026-12-05",
+        "event_date_raw": "05.12",
+        "event_type": "Свадьба",
+        "guests_count": null,
+        "guests_max": 35,
+        "guests_min": null,
+        "guests_raw": "до 35п.",
+        "name": "Свадьба. Григорий",
+        "phone_digits": "79661949179",
+        "phone_raw": "89661949179",
+        "source": "Заявки хост",
+        "telegram_username": ""
+      },
+      "first_seen_at": "2026-11-21T14:10:30+03:00",
+      "first_seen_ts": 1795259430,
+      "guests": null,
+      "guests_max": 35,
+      "guests_min": null,
+      "guests_raw": "до 35п.",
+      "id": "0e6e4150950d354f",
+      "identifier": {
+        "type": "phone",
+        "value": "79661949179"
+      },
+      "is_duplicate": true,
+      "last_seen_at": "2026-11-21T14:10:30+03:00",
+      "last_seen_ts": 1795259430,
+      "manager_reaction": null,
+      "max": {
+        "chat_id": -71704692523093,
+        "message_ids": [
+          "mid.ffffbec8f345ffab01a1fdccf5af7087"
+        ],
+        "sender_name": "Алёна",
+        "sender_user_id": 432412696,
+        "sender_username": null
+      },
+      "message_id": "mid.ffffbec8f345ffab01a1fdccf5af7087",
+      "name": "Свадьба. Григорий",
+      "phone": "89661949179",
+      "received_at": "2026-11-21T14:10:30+03:00",
+      "sender_name": "Алёна",
+      "sender_user_id": 432412696,
+      "source": "Заявки хост",
+      "status": "DUPLICATE",
+      "username": "",
+      "violations": []
+    },
+    {
+      "category": "HOST",
+      "channel": "MAX",
+      "crm": {
+        "ambiguity_count": 0,
+        "created_at": null,
+        "entity_id": null,
+        "entity_type": null,
+        "event_type": null,
+        "found": false,
+        "responsible_user_id": null,
+        "responsible_user_name": null,
+        "updated_at": null
+      },
+      "crm_created_at": null,
+      "crm_found": false,
+      "crm_required": true,
+      "crm_responsible": null,
+      "deadline_msk_ts": 1795294799,
+      "event_date": "2026-12-22",
+      "fields": {
+        "category": "HOST",
+        "email": "",
+        "event_date": "2026-12-22",
+        "event_date_raw": "22.12",
+        "event_type": "ДР",
+        "guests_count": null,
+        "guests_max": 100,
+        "guests_min": null,
+        "guests_raw": "до 100п.",
+        "name": "Светлана",
+        "phone_digits": "79647730509",
+        "phone_raw": "89647730509",
+        "source": "Заявки хост",
+        "telegram_username": ""
+      },
+      "first_seen_at": "2026-11-21T14:34:40+03:00",
+      "first_seen_ts": 1795260880,
+      "guests": null,
+      "guests_max": 100,
+      "guests_min": null,
+      "guests_raw": "до 100п.",
+      "id": "d1a29af249357a4f",
+      "identifier": {
+        "type": "phone",
+        "value": "79647730509"
+      },
+      "last_seen_at": "2026-11-21T14:34:40+03:00",
+      "last_seen_ts": 1795260880,
+      "manager_reaction": null,
+      "max": {
+        "chat_id": -71704692523093,
+        "message_ids": [
+          "mid.ffffbec8f345ffab01a1fde3150f2875"
+        ],
+        "sender_name": "Алёна",
+        "sender_user_id": 432412696,
+        "sender_username": null
+      },
+      "message_id": "mid.ffffbec8f345ffab01a1fde3150f2875",
+      "name": "Светлана",
+      "phone": "89647730509",
+      "received_at": "2026-11-21T14:34:40+03:00",
+      "sender_name": "Алёна",
+      "sender_user_id": 432412696,
+      "source": "Заявки хост",
+      "status": "PENDING",
       "username": "",
       "violations": []
     }
