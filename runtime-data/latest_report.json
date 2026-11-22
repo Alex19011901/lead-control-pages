@@ -22,7 +22,7 @@
     "unknown": 135,
     "Бизнес мероприятие": 61,
     "Выпускной": 18,
-    "ДР": 3,
+    "ДР": 2,
     "Деловое мероприятие": 1,
     "Детский праздник": 8,
     "Конференция": 1,
@@ -30,7 +30,7 @@
     "Поминки": 2,
     "Свадьба": 308,
     "Съёмки": 3,
-    "Юбилей": 195
+    "Юбилей": 196
   },
   "guest_ranges": {
     "1-20": 298,
@@ -44,11 +44,11 @@
   "latest_leads": [
     {
       "created_at": "2026-11-21T14:34:40+03:00",
-      "crm_entity_id": null,
-      "crm_entity_type": null,
-      "crm_found": false,
+      "crm_entity_id": 50552293,
+      "crm_entity_type": "lead",
+      "crm_found": true,
       "event_date": "2026-12-22",
-      "event_type": "ДР",
+      "event_type": "Юбилей",
       "guests_count": null,
       "identifier": "7********09",
       "identifier_type": "phone",
@@ -57,14 +57,14 @@
       "manager_username": "",
       "name": "Светлана",
       "source": "Заявки хост",
-      "status": "PENDING",
+      "status": "OK",
       "violations": []
     },
     {
       "created_at": "2026-11-21T00:12:39+03:00",
-      "crm_entity_id": null,
-      "crm_entity_type": null,
-      "crm_found": false,
+      "crm_entity_id": 50552413,
+      "crm_entity_type": "lead",
+      "crm_found": true,
       "event_date": "2026-12-05",
       "event_type": "Свадьба",
       "guests_count": 40,
@@ -75,7 +75,7 @@
       "manager_username": "",
       "name": "Григорий",
       "source": "САЙТ ТИЛЬДА",
-      "status": "PENDING",
+      "status": "OK",
       "violations": []
     },
     {
@@ -409,7 +409,7 @@
   ],
   "needs_review": 136,
   "no_reaction": 0,
-  "ok": 890,
+  "ok": 892,
   "total_leads": 1151,
-  "updated_at": "2026-11-21T16:21:14+03:00"
+  "updated_at": "2026-11-22T08:37:53+03:00"
 }
