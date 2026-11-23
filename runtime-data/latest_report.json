@@ -19,7 +19,7 @@
     "ТоМесто": 2
   },
   "event_types": {
-    "unknown": 136,
+    "unknown": 135,
     "Бизнес мероприятие": 61,
     "Выпускной": 18,
     "ДР": 2,
@@ -30,7 +30,7 @@
     "Поминки": 2,
     "Свадьба": 310,
     "Съёмки": 3,
-    "Юбилей": 198
+    "Юбилей": 199
   },
   "guest_ranges": {
     "1-20": 299,
@@ -44,11 +44,11 @@
   "latest_leads": [
     {
       "created_at": "2026-11-22T15:58:10+03:00",
-      "crm_entity_id": null,
-      "crm_entity_type": null,
-      "crm_found": false,
+      "crm_entity_id": 50565045,
+      "crm_entity_type": "lead",
+      "crm_found": true,
       "event_date": "2026-12-16",
-      "event_type": "",
+      "event_type": "Юбилей",
       "guests_count": 25,
       "identifier": "7********10",
       "identifier_type": "phone",
@@ -57,7 +57,7 @@
       "manager_username": "",
       "name": "Наталья",
       "source": "Заявки хост",
-      "status": "PENDING",
+      "status": "OK",
       "violations": []
     },
     {
@@ -409,7 +409,7 @@
   ],
   "needs_review": 136,
   "no_reaction": 0,
-  "ok": 896,
+  "ok": 897,
   "total_leads": 1156,
-  "updated_at": "2026-11-22T16:13:30+03:00"
+  "updated_at": "2026-11-23T08:32:52+03:00"
 }
