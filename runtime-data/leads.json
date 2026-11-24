@@ -119881,6 +119881,22 @@
     {
       "category": "HOST",
       "channel": "MAX",
+      "closed_not_realized": {
+        "closed_at": 1795540153,
+        "crm_lead_id": 50532945,
+        "last_comment": "фотосессия для детей, не известно ни время, ни день. закрываю пока",
+        "last_comment_at": 1795540174,
+        "last_record_at": 1795540174,
+        "last_record_author": "Олеся",
+        "last_record_display": "фотосессия для детей, не известно ни время, ни день. закрываю пока",
+        "last_record_errors": [],
+        "last_record_id": "28bbdb53-5d15-4317-b2af-f3d03fbc77f7",
+        "last_record_rule_version": 5,
+        "last_record_status": "VERIFIED",
+        "last_record_type": "entity_direct_message",
+        "loss_reason_id": null,
+        "loss_reason_name": "Не указана"
+      },
       "crm": {
         "ambiguity_count": 0,
         "created_at": 1795205642,
@@ -119896,10 +119912,9 @@
       },
       "crm_created_at": 1795205642,
       "crm_feedback": {
-        "closed_at": null,
+        "closed_at": 1795540153,
         "crm_lead_id": 50532945,
-        "deadline_at": 1795467600,
-        "excluded": false,
+        "excluded": true,
         "first_activity_at": null,
         "lead_created_at": 1795205642,
         "loss_reason_checked": true,
@@ -119908,11 +119923,19 @@
         "pipeline_id": 10081590,
         "responsible_user_id": 13009530,
         "rule_version": 6,
-        "state": "NO_FEEDBACK",
-        "status_id": 79927038,
-        "status_name": "Выслано предложение"
+        "state": "EXCLUDED",
+        "status_id": 143,
+        "status_name": "Закрыто и не реализовано"
       },
       "crm_found": true,
+      "crm_outcome": {
+        "closed_at": 1795540153,
+        "loss_reason_id": null,
+        "loss_reason_name": "Не указана",
+        "result": "LOST",
+        "status_id": 143,
+        "status_name": "Закрыто и не реализовано"
+      },
       "crm_required": true,
       "crm_responsible": 13009530,
       "deadline_msk_ts": 1795208399,
@@ -119961,6 +119984,20 @@
       "message_id": "mid.ffffbec8f345ffab01a1f8a229a03f15",
       "name": "Интересуют",
       "phone": "89299004321",
+      "preclose_record_cache": {
+        "closed_at": 1795540153,
+        "crm_lead_id": 50532945,
+        "last_comment": "фотосессия для детей, не известно ни время, ни день. закрываю пока",
+        "last_comment_at": 1795540174,
+        "last_record_at": 1795540174,
+        "last_record_author": "Олеся",
+        "last_record_display": "фотосессия для детей, не известно ни время, ни день. закрываю пока",
+        "last_record_errors": [],
+        "last_record_id": "28bbdb53-5d15-4317-b2af-f3d03fbc77f7",
+        "last_record_rule_version": 5,
+        "last_record_status": "VERIFIED",
+        "last_record_type": "entity_direct_message"
+      },
       "received_at": "2026-11-20T14:05:39+03:00",
       "sender_name": "Елена",
       "sender_user_id": 121513620,
@@ -119991,7 +120028,7 @@
         "crm_lead_id": 50532797,
         "deadline_at": 1795467600,
         "excluded": false,
-        "first_activity_at": null,
+        "first_activity_at": 1795539597,
         "lead_created_at": 1795204740,
         "loss_reason_checked": true,
         "loss_reason_id": null,
@@ -119999,9 +120036,9 @@
         "pipeline_id": 10081590,
         "responsible_user_id": 13009530,
         "rule_version": 6,
-        "state": "NO_FEEDBACK",
-        "status_id": 79927038,
-        "status_name": "Выслано предложение"
+        "state": "CLEAR",
+        "status_id": 88382034,
+        "status_name": "Запрошена ос"
       },
       "crm_found": true,
       "crm_required": true,
@@ -121625,7 +121662,8 @@
         "88382034": 3
       },
       "2026-11-24": {
-        "143": 1
+        "143": 2,
+        "88382034": 1
       }
     },
     "pipeline_id": 10081590,
@@ -121708,7 +121746,7 @@
       }
     ],
     "today": "2026-11-24",
-    "total_movements": 242,
+    "total_movements": 244,
     "weeks": [
       {
         "dates": [

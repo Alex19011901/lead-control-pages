@@ -1479,7 +1479,7 @@
       "name": "Светлана",
       "identifier": "79106403781",
       "manager": "Олеся",
-      "crm_status": "Выслано предложение",
+      "crm_status": "Запрошена ос",
       "crm_loss_reason": ""
     },
     {
@@ -1494,8 +1494,8 @@
       "name": "Интересуют",
       "identifier": "79299004321",
       "manager": "Олеся",
-      "crm_status": "Выслано предложение",
-      "crm_loss_reason": ""
+      "crm_status": "Закрыто и не реализовано",
+      "crm_loss_reason": "Не указана"
     },
     {
       "date": "2026-11-20",
@@ -1964,7 +1964,7 @@
     }
   ],
   "not_entered": [],
-  "snapshot_generated_at": "2026-11-24T15:42:57Z",
+  "snapshot_generated_at": "2026-11-24T17:36:55Z",
   "snapshot_at": "2026-11-24T16:13:11+03:00",
   "min_date": "2026-07-01",
   "max_date": "2026-11-24",
@@ -2270,12 +2270,12 @@
     "total_date_requests": 1241
   },
   "feedback_summary": {
-    "total": 12,
-    "no_feedback": 7,
+    "total": 10,
+    "no_feedback": 5,
     "waiting": 10,
     "waiting_blue": 2,
     "waiting_yellow": 3,
-    "clear": 141
+    "clear": 142
   },
   "feedback": [
     {
@@ -2291,7 +2291,7 @@
       "crm_status": "Выслано предложение",
       "first_activity_at": "",
       "first_activity_ts": null,
-      "age_seconds": 327361,
+      "age_seconds": 334200,
       "feedback_state": "NO_FEEDBACK"
     },
     {
@@ -2307,7 +2307,7 @@
       "crm_status": "Выслано предложение",
       "first_activity_at": "",
       "first_activity_ts": null,
-      "age_seconds": 327437,
+      "age_seconds": 334276,
       "feedback_state": "NO_FEEDBACK"
     },
     {
@@ -2323,7 +2323,7 @@
       "crm_status": "Выслано предложение",
       "first_activity_at": "",
       "first_activity_ts": null,
-      "age_seconds": 327487,
+      "age_seconds": 334326,
       "feedback_state": "NO_FEEDBACK"
     },
     {
@@ -2339,39 +2339,7 @@
       "crm_status": "Выслано предложение",
       "first_activity_at": "",
       "first_activity_ts": null,
-      "age_seconds": 328909,
-      "feedback_state": "NO_FEEDBACK"
-    },
-    {
-      "crm_lead_id": 50532945,
-      "created_at": "2026-11-20T23:14:02+03:00",
-      "created_ts": 1795205642,
-      "source": "Заявки хост",
-      "name": "Интересуют",
-      "identifier": "79299004321",
-      "guests": "30",
-      "event_type": "Съёмки",
-      "manager": "Олеся",
-      "crm_status": "Выслано предложение",
-      "first_activity_at": "",
-      "first_activity_ts": null,
-      "age_seconds": 329335,
-      "feedback_state": "NO_FEEDBACK"
-    },
-    {
-      "crm_lead_id": 50532797,
-      "created_at": "2026-11-20T22:59:00+03:00",
-      "created_ts": 1795204740,
-      "source": "Заявки хост",
-      "name": "Светлана",
-      "identifier": "79106403781",
-      "guests": "50",
-      "event_type": "Корпоратив",
-      "manager": "Олеся",
-      "crm_status": "Выслано предложение",
-      "first_activity_at": "",
-      "first_activity_ts": null,
-      "age_seconds": 330237,
+      "age_seconds": 335748,
       "feedback_state": "NO_FEEDBACK"
     },
     {
@@ -2387,7 +2355,7 @@
       "crm_status": "Первичный контакт",
       "first_activity_at": "",
       "first_activity_ts": null,
-      "age_seconds": 400545,
+      "age_seconds": 407384,
       "feedback_state": "NO_FEEDBACK"
     },
     {
@@ -2403,7 +2371,7 @@
       "crm_status": "Первичный контакт",
       "first_activity_at": "",
       "first_activity_ts": null,
-      "age_seconds": 326180,
+      "age_seconds": 333019,
       "feedback_state": "WAITING_BLUE"
     },
     {
@@ -2419,7 +2387,7 @@
       "crm_status": "Выслано предложение",
       "first_activity_at": "",
       "first_activity_ts": null,
-      "age_seconds": 326221,
+      "age_seconds": 333060,
       "feedback_state": "WAITING_BLUE"
     },
     {
@@ -2435,7 +2403,7 @@
       "crm_status": "Принимают решение",
       "first_activity_at": "",
       "first_activity_ts": null,
-      "age_seconds": 180589,
+      "age_seconds": 187428,
       "feedback_state": "WAITING_YELLOW"
     },
     {
@@ -2451,7 +2419,7 @@
       "crm_status": "Предбронь",
       "first_activity_at": "",
       "first_activity_ts": null,
-      "age_seconds": 190507,
+      "age_seconds": 197346,
       "feedback_state": "WAITING_YELLOW"
     },
     {
@@ -2467,7 +2435,7 @@
       "crm_status": "Выслано предложение",
       "first_activity_at": "",
       "first_activity_ts": null,
-      "age_seconds": 198243,
+      "age_seconds": 205082,
       "feedback_state": "WAITING_YELLOW"
     }
   ],
@@ -2678,6 +2646,23 @@
     }
   ],
   "closed_not_realized": [
+    {
+      "crm_lead_id": 50532945,
+      "closed_at": "2026-11-24T20:09:13+03:00",
+      "closed_ts": 1795540153,
+      "source": "Заявки хост",
+      "name": "Интересуют",
+      "identifier": "79299004321",
+      "guests": "30",
+      "event_type": "Съёмки",
+      "manager": "Олеся",
+      "reason": "Не указана",
+      "last_comment": "фотосессия для детей, не известно ни время, ни день. закрываю пока",
+      "last_record": "фотосессия для детей, не известно ни время, ни день. закрываю пока",
+      "last_record_at": "2026-11-24T20:09:34+03:00",
+      "last_record_type": "entity_direct_message",
+      "last_record_status": "VERIFIED"
+    },
     {
       "crm_lead_id": 50622639,
       "closed_at": "2026-11-24T18:01:38+03:00",
@@ -2935,7 +2920,7 @@
     }
   ],
   "closed_not_realized_summary": {
-    "total": 15,
+    "total": 16,
     "days": 5
   },
   "outcomes": [
@@ -2987,6 +2972,13 @@
       "manager": "Олеся",
       "result": "LOST",
       "reason": "Дата занята"
+    },
+    {
+      "date": "2026-11-20",
+      "ts": "2026-11-20T14:05:39+03:00",
+      "manager": "Олеся",
+      "result": "LOST",
+      "reason": "Не указана"
     },
     {
       "date": "2026-11-19",
@@ -9378,7 +9370,8 @@
         "88382034": 3
       },
       "2026-11-24": {
-        "143": 1
+        "143": 2,
+        "88382034": 1
       }
     },
     "pipeline_id": 10081590,
@@ -9461,7 +9454,7 @@
       }
     ],
     "today": "2026-11-24",
-    "total_movements": 242,
+    "total_movements": 244,
     "weeks": [
       {
         "dates": [
