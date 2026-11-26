@@ -38654,20 +38654,41 @@
       "channel": "TELEGRAM",
       "crm": {
         "ambiguity_count": 0,
-        "created_at": null,
-        "entity_id": null,
-        "entity_type": null,
-        "event_type": null,
-        "found": false,
-        "responsible_user_id": null,
-        "responsible_user_name": null,
-        "updated_at": null
+        "created_at": 1795674144,
+        "entity_id": 50656349,
+        "entity_type": "lead",
+        "event_type": "Свадьба",
+        "found": true,
+        "guests": "30",
+        "guests_source": "CRM",
+        "responsible_user_id": 13009530,
+        "responsible_user_name": "Олеся",
+        "updated_at": 1795677759
       },
-      "crm_created_at": null,
-      "crm_found": false,
+      "crm_created_at": 1795674144,
+      "crm_feedback": {
+        "closed_at": null,
+        "crm_lead_id": 50656349,
+        "deadline_at": 1795986000,
+        "excluded": false,
+        "first_activity_at": null,
+        "lead_created_at": 1795674144,
+        "loss_reason_checked": true,
+        "loss_reason_id": null,
+        "loss_reason_name": "",
+        "pipeline_id": 10081590,
+        "responsible_user_id": 13009530,
+        "rule_version": 6,
+        "state": "WAITING",
+        "status_id": 79927038,
+        "status_name": "Выслано предложение"
+      },
+      "crm_found": true,
       "crm_required": true,
-      "crm_responsible": null,
+      "crm_responsible": 13009530,
       "deadline_msk_ts": 1795640399,
+      "event_type": "Свадьба",
+      "event_type_source": "CRM",
       "fields": {
         "category": "САЙТ ТИЛЬДА",
         "description": "Содержание заявки:\nname: Ирина\nphone: +79168583329\nDate: 30-04-2027\nInput: 30\nCheckbox: yes\nyclid: 2685967090637864959\nutm_source: yandex_direct\nutm_medium: cpc\nutm_campaign: Svadba_RSYA\nutm_term: ресторан для свадьбы\npage_url: https://moscowbanket.ru/weddings/?utm_source=yandex_direct&utm_medium=cpc&utm_campaign=Svadba_RSYA&type=context&source=com.avito.android&added=no&block=none&position=0&keyword=%D1%80%D0%B5%D1%81%D1%82%D0%BE%D1%80%D0%B0%D0%BD%20%D0%B4%D0%BB%D1%8F%20%D1%81%D0%B2%D0%B0%D0%B4%D1%8C%D0%B1%D1%8B&utm_term=%D1%80%D0%B5%D1%81%D1%82%D0%BE%D1%80%D0%B0%D0%BD%20%D0%B4%D0%BB%D1%8F%20%D1%81%D0%B2%D0%B0%D0%B4%D1%8C%D0%B1%D1%8B&callibri=yd_c:700792084_gb:5598457360_ad:17085710564_ph:54982636755_st:context_s:com.avito.android_dt:mobile&yclid=2685967090637864959#rec917331922\nform_submit_timestamp: 1795608289\nmetrika_client_id: 1795608068979565665\nym_client_id: 1795608068979565665\nym_clientid: 1795608068979565665\nym_uid: 1795608068979565665\n_ym_uid: 1795608068979565665\nclient_id: 1795608068979565665\nclientid: 1795608068979565665\nyandex_client_id: 1795608068979565665\nya_client_id: 1795608068979565665\n\nДополнительная информация:\nКод заявки: 2925975:8839691643\nКод блока: rec917331922\nhttps://moscowbanket.ru/weddings/#rec917331922\nUTM source: yandex_direct\nUTM medium: cpc\nUTM campaign: Svadba_RSYA\nUTM term: ресторан для свадьбы\n-----",
@@ -38712,7 +38733,7 @@
       "sender_user_id": 265299531,
       "sender_username": "TildaFormsBot",
       "source": "САЙТ ТИЛЬДА",
-      "status": "ALARM_NO_CRM",
+      "status": "LATE_CRM",
       "telegram": {
         "chat_id": -1001645768111,
         "message_ids": [
@@ -38723,7 +38744,7 @@
         ]
       },
       "violations": [
-        "ALARM_NO_CRM"
+        "LATE_CRM"
       ]
     },
     {
@@ -115235,6 +115256,22 @@
     {
       "category": "HOST",
       "channel": "MAX",
+      "closed_not_realized": {
+        "closed_at": 1795679165,
+        "crm_lead_id": 50294907,
+        "last_comment": "Максим, доброго утра!\nСпасибо, откажусь в этот раз. Решили всё же найти зал поближе к работе. Но мне очень понравился ваш ресторан, так что следующие мероприятия будем планировать у вас)",
+        "last_comment_at": 1795679161,
+        "last_record_at": 1795679161,
+        "last_record_author": "Лаура",
+        "last_record_display": "Максим, доброго утра!\nСпасибо, откажусь в этот раз. Решили всё же найти зал поближе к работе. Но мне очень понравился ваш ресторан, так что следующие мероприятия будем планировать у вас)",
+        "last_record_errors": [],
+        "last_record_id": "b0e1f963-d4c6-4490-8836-49cf0b98818d",
+        "last_record_rule_version": 5,
+        "last_record_status": "VERIFIED",
+        "last_record_type": "entity_direct_message",
+        "loss_reason_id": 21779746,
+        "loss_reason_name": "Выбрали других"
+      },
       "crm": {
         "ambiguity_count": 0,
         "created_at": 1794400299,
@@ -115250,23 +115287,30 @@
       },
       "crm_created_at": 1794400299,
       "crm_feedback": {
-        "closed_at": null,
+        "closed_at": 1795679165,
         "crm_lead_id": 50294907,
-        "deadline_at": 1794690000,
-        "excluded": false,
-        "first_activity_at": 1794833806,
+        "excluded": true,
+        "first_activity_at": null,
         "lead_created_at": 1794400299,
         "loss_reason_checked": true,
-        "loss_reason_id": null,
-        "loss_reason_name": "",
+        "loss_reason_id": 21779746,
+        "loss_reason_name": "Выбрали других",
         "pipeline_id": 10081590,
         "responsible_user_id": 12982830,
         "rule_version": 6,
-        "state": "CLEAR",
-        "status_id": 80331318,
-        "status_name": "Предбронь"
+        "state": "EXCLUDED",
+        "status_id": 143,
+        "status_name": "Закрыто и не реализовано"
       },
       "crm_found": true,
+      "crm_outcome": {
+        "closed_at": 1795679165,
+        "loss_reason_id": 21779746,
+        "loss_reason_name": "Выбрали других",
+        "result": "LOST",
+        "status_id": 143,
+        "status_name": "Закрыто и не реализовано"
+      },
       "crm_required": true,
       "crm_responsible": 12982830,
       "deadline_msk_ts": 1794430799,
@@ -115315,6 +115359,20 @@
       "message_id": "mid.ffffbec8f345ffab01a1ca798ada6fc9",
       "name": "Юлия",
       "phone": "89037580479",
+      "preclose_record_cache": {
+        "closed_at": 1795679165,
+        "crm_lead_id": 50294907,
+        "last_comment": "Максим, доброго утра!\nСпасибо, откажусь в этот раз. Решили всё же найти зал поближе к работе. Но мне очень понравился ваш ресторан, так что следующие мероприятия будем планировать у вас)",
+        "last_comment_at": 1795679161,
+        "last_record_at": 1795679161,
+        "last_record_author": "Лаура",
+        "last_record_display": "Максим, доброго утра!\nСпасибо, откажусь в этот раз. Решили всё же найти зал поближе к работе. Но мне очень понравился ваш ресторан, так что следующие мероприятия будем планировать у вас)",
+        "last_record_errors": [],
+        "last_record_id": "b0e1f963-d4c6-4490-8836-49cf0b98818d",
+        "last_record_rule_version": 5,
+        "last_record_status": "VERIFIED",
+        "last_record_type": "entity_direct_message"
+      },
       "received_at": "2026-11-11T14:58:45+03:00",
       "sender_name": "Алёна",
       "sender_user_id": 432412696,
@@ -119730,7 +119788,7 @@
         "crm_lead_id": 50507163,
         "deadline_at": 1795467600,
         "excluded": false,
-        "first_activity_at": null,
+        "first_activity_at": 1795679704,
         "lead_created_at": 1795134432,
         "loss_reason_checked": true,
         "loss_reason_id": null,
@@ -119738,9 +119796,9 @@
         "pipeline_id": 10081590,
         "responsible_user_id": 12982830,
         "rule_version": 6,
-        "state": "NO_FEEDBACK",
-        "status_id": 79927034,
-        "status_name": "Первичный контакт"
+        "state": "CLEAR",
+        "status_id": 88382034,
+        "status_name": "Запрошена ос"
       },
       "crm_found": true,
       "crm_required": true,
@@ -120629,6 +120687,22 @@
     {
       "category": "HOST",
       "channel": "MAX",
+      "closed_not_realized": {
+        "closed_at": 1795679405,
+        "crm_lead_id": 50559263,
+        "last_comment": "не акт",
+        "last_comment_at": 1795679398,
+        "last_record_at": 1795679398,
+        "last_record_author": "Лаура",
+        "last_record_display": "не акт",
+        "last_record_errors": [],
+        "last_record_id": "c436c36b-ecc3-4001-82b9-0cc436fd9637",
+        "last_record_rule_version": 5,
+        "last_record_status": "VERIFIED",
+        "last_record_type": "entity_direct_message",
+        "loss_reason_id": 21779738,
+        "loss_reason_name": "Пропала потребность"
+      },
       "crm": {
         "ambiguity_count": 0,
         "created_at": 1795336734,
@@ -120644,23 +120718,30 @@
       },
       "crm_created_at": 1795336734,
       "crm_feedback": {
-        "closed_at": null,
+        "closed_at": 1795679405,
         "crm_lead_id": 50559263,
-        "deadline_at": 1795640400,
-        "excluded": false,
+        "excluded": true,
         "first_activity_at": null,
         "lead_created_at": 1795336734,
         "loss_reason_checked": true,
-        "loss_reason_id": null,
-        "loss_reason_name": "",
+        "loss_reason_id": 21779738,
+        "loss_reason_name": "Пропала потребность",
         "pipeline_id": 10081590,
         "responsible_user_id": 12982830,
         "rule_version": 6,
-        "state": "NO_FEEDBACK",
-        "status_id": 79927038,
-        "status_name": "Выслано предложение"
+        "state": "EXCLUDED",
+        "status_id": 143,
+        "status_name": "Закрыто и не реализовано"
       },
       "crm_found": true,
+      "crm_outcome": {
+        "closed_at": 1795679405,
+        "loss_reason_id": 21779738,
+        "loss_reason_name": "Пропала потребность",
+        "result": "LOST",
+        "status_id": 143,
+        "status_name": "Закрыто и не реализовано"
+      },
       "crm_required": true,
       "crm_responsible": 12982830,
       "deadline_msk_ts": 1795381199,
@@ -120709,6 +120790,20 @@
       "message_id": "mid.ffffbec8f345ffab01a20257849b50d0",
       "name": "День рождения. Марина",
       "phone": "89169150389",
+      "preclose_record_cache": {
+        "closed_at": 1795679405,
+        "crm_lead_id": 50559263,
+        "last_comment": "не акт",
+        "last_comment_at": 1795679398,
+        "last_record_at": 1795679398,
+        "last_record_author": "Лаура",
+        "last_record_display": "не акт",
+        "last_record_errors": [],
+        "last_record_id": "c436c36b-ecc3-4001-82b9-0cc436fd9637",
+        "last_record_rule_version": 5,
+        "last_record_status": "VERIFIED",
+        "last_record_type": "entity_direct_message"
+      },
       "received_at": "2026-11-22T11:20:19+03:00",
       "sender_name": "Алёна",
       "sender_user_id": 432412696,
@@ -120737,8 +120832,7 @@
       "crm_feedback": {
         "closed_at": null,
         "crm_lead_id": 50561975,
-        "deadline_at": 1795640400,
-        "excluded": false,
+        "excluded": true,
         "first_activity_at": null,
         "lead_created_at": 1795344470,
         "loss_reason_checked": true,
@@ -120747,9 +120841,9 @@
         "pipeline_id": 10081590,
         "responsible_user_id": 12982830,
         "rule_version": 6,
-        "state": "NO_FEEDBACK",
-        "status_id": 80331318,
-        "status_name": "Предбронь"
+        "state": "EXCLUDED",
+        "status_id": 84995274,
+        "status_name": "Внесена п/о идет текущая работа"
       },
       "crm_found": true,
       "crm_required": true,
@@ -121048,7 +121142,7 @@
         "crm_lead_id": 50565045,
         "deadline_at": 1795640400,
         "excluded": false,
-        "first_activity_at": null,
+        "first_activity_at": 1795679228,
         "lead_created_at": 1795354388,
         "loss_reason_checked": true,
         "loss_reason_id": null,
@@ -121056,9 +121150,9 @@
         "pipeline_id": 10081590,
         "responsible_user_id": 12982830,
         "rule_version": 6,
-        "state": "NO_FEEDBACK",
-        "status_id": 79927042,
-        "status_name": "Принимают решение"
+        "state": "CLEAR",
+        "status_id": 88382034,
+        "status_name": "Запрошена ос"
       },
       "crm_found": true,
       "crm_required": true,
@@ -122303,7 +122397,10 @@
         "79927038": 1
       },
       "2026-11-26": {
-        "79927038": 3
+        "143": 2,
+        "79927038": 4,
+        "84995274": 1,
+        "88382034": 2
       }
     },
     "pipeline_id": 10081590,
@@ -122386,7 +122483,7 @@
       }
     ],
     "today": "2026-11-26",
-    "total_movements": 258,
+    "total_movements": 264,
     "weeks": [
       {
         "dates": [
