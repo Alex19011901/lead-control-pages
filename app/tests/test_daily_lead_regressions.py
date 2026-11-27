@@ -141,46 +141,68 @@ class DailyLeadRegressionTests(unittest.TestCase):
 
 
     def test_confirmed_restaurant_rating_lead_has_own_source_and_photo_fields(self) -> None:
-        message_id = "mid.ffffbec8f345ffab01a21c1606c2719a"
-        received_ts = 1795767535298
+        # MAX sends a header and a separate forwarded message at 11:18.
+        # Only the forwarded message is a lead; the header must not create another.
+        header_id = "mid.ffffbec8f345ffab01a21c1606c2719a"
+        forwarded_id = "mid.ffffbec8f345ffab01a21c1607613147"
+        chat_id = -71704692523093
+        header_text = "ЗАЯВКА РЕСТОРАННЫЙ РЕЙТИНГ"
+        forwarded_text = (
+            "Тема банкета\\nКорпоративный Новый Год\\n"
+            "Название мероприятия\\nКНГ Студия АР Рум/Олеся Жердецкая\\n"
+            "Предполагаемая дата проведения и время\\n10 декабря 2026 в 16:00\\n"
+            "Количество человек\\n15\\n"
+            "Контактное лицо\\nОлеся Жердецкая\\n"
+            "Контакты\\nТелефон: +7 915 188-73-72"
+        )
         review = {
-            "channel": "MAX",
-            "source": "MAX",
-            "chat_id": -71704692523093,
-            "message_id": message_id,
+            "channel": "MAX", "source": "MAX", "chat_id": chat_id,
+            "message_id": header_id, "status": "NEEDS_REVIEW",
+            "timestamp": 1795767535298, "text": header_text,
             "sender": {"name": "Олеся", "user_id": 48906491},
-            "status": "NEEDS_REVIEW",
-            "timestamp": received_ts,
-            "text": "ЗАЯВКА РЕСТОРАННЫЙ РЕЙТИНГ",
         }
-        event = {
-            "type": "max_message_created",
-            "source": "MAX",
-            "chat_id": review["chat_id"],
-            "message_id": message_id,
-            "sender_name": "Олеся",
-            "sender_user_id": 48906491,
-            "text": review["text"],
-            "timestamp": received_ts,
+        header_event = {
+            "type": "max_message_created", "source": "MAX",
+            "chat_id": chat_id, "message_id": header_id,
+            "sender_name": "Олеся", "sender_user_id": 48906491,
+            "text": header_text, "timestamp": 1795767535298,
         }
-        override = build_override(review, RESTAURANT_RATING, "2026-11-27T18:41:00+03:00")
-        override["lead_fields"] = {
-            "name": "Олеся Жердецкая",
-            "phone_raw": "+7 915 188-73-72",
-            "event_date_raw": "10 декабря 2026",
-            "event_date": "2026-12-10",
-            "event_time": "16:00",
-            "guests_count": 15,
-            "event_type": "Корпоративный Новый год",
-            "event_name": "КНГ Студия АР Рум/Олеся Жердецкая",
+        forwarded_event = {
+            "type": "max_message_created", "source": "MAX",
+            "chat_id": chat_id, "message_id": forwarded_id,
+            "sender_name": "Олеся", "sender_user_id": 48906491,
+            "text": "", "has_linked_or_forwarded_message": True,
+            "linked_or_forwarded_text": forwarded_text,
+            "timestamp": 1795767535457,
+        }
+        reviewed_at = "2026-11-27T18:41:00+03:00"
+        header_override = build_override(review, "IGNORE", reviewed_at)
+        forwarded_override = {
+            "channel": "MAX", "chat_id": chat_id, "message_id": forwarded_id,
+            "decision": RESTAURANT_RATING, "decided_at": reviewed_at,
+            "original_text": forwarded_text,
+            "lead_fields": {
+                "name": "Олеся Жердецкая",
+                "phone_raw": "+7 915 188-73-72",
+                "event_date_raw": "10 декабря 2026 в 16:00",
+                "event_date": "2026-12-10",
+                "event_time": "16:00",
+                "guests_count": 15,
+                "event_type": "Корпоративный Новый год",
+                "event_name": "КНГ Студия АР Рум/Олеся Жердецкая",
+            },
         }
 
-        leads, pending = rebuild_leads_and_needs_review([event, dict(event)], [review], [override])
+        leads, pending = rebuild_leads_and_needs_review(
+            [header_event, forwarded_event, dict(forwarded_event)],
+            [review], [header_override, forwarded_override],
+        )
         normalize_lead_sources(leads)
-        enrich_manual_review_fields(leads, [override])
+        enrich_manual_review_fields(leads, [header_override, forwarded_override])
 
         self.assertEqual(pending, [])
         self.assertEqual(len(leads), 1)
+        self.assertEqual(leads[0]["message_id"], forwarded_id)
         self.assertEqual(leads[0]["category"], RESTAURANT_RATING)
         self.assertEqual(leads[0]["source"], "Ресторанный рейтинг")
         self.assertEqual(leads[0]["name"], "Олеся Жердецкая")
