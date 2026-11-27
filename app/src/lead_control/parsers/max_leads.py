@@ -14,6 +14,7 @@ STREET = "STREET"
 TG_LEAD = "TG_LEAD"
 RESTORAN_CAFE = "RESTORAN_CAFE"
 TO_MESTO = "TO_MESTO"
+RESTAURANT_RATING = "RESTAURANT_RATING"
 SITE_LEAD = "SITE_LEAD"
 IGNORE = "IGNORE"
 NEEDS_REVIEW = "NEEDS_REVIEW"
@@ -26,6 +27,7 @@ DISPLAY_NAMES = {
     TG_LEAD: "Заявка с ТГ",
     RESTORAN_CAFE: "Restoran.Cafe",
     TO_MESTO: "ТоМесто",
+    RESTAURANT_RATING: "Ресторанный рейтинг",
     SITE_LEAD: "Заявка сайт",
     IGNORE: "IGNORE",
     NEEDS_REVIEW: "NEEDS_REVIEW",
@@ -39,10 +41,11 @@ BUSINESS_SOURCES = {
     TG_LEAD: "Заявка с ТГ",
     RESTORAN_CAFE: "Restoran.Cafe",
     TO_MESTO: "ТоМесто",
+    RESTAURANT_RATING: "Ресторанный рейтинг",
     SITE_LEAD: "Заявка сайт",
 }
 
-LEAD_CATEGORIES = {TILDA_VERANDA, WEDWED, HOST, STREET, TG_LEAD, RESTORAN_CAFE, TO_MESTO, SITE_LEAD}
+LEAD_CATEGORIES = {TILDA_VERANDA, WEDWED, HOST, STREET, TG_LEAD, RESTORAN_CAFE, TO_MESTO, RESTAURANT_RATING, SITE_LEAD}
 
 MONTHS_PATTERN = (
     "января|февраля|марта|апреля|мая|июня|июля|августа|сентября|"
